@@ -9,6 +9,10 @@
     "export": "node export-tickets.js",
     "kpis": "node analyze-kpis.js",
     "transitions": "node analyze-transitions.js",
+    "staff": "node analyze-staff.js",
+    "voice": "node analyze-voice.js",
+    "livefeed": "node livefeed.js",
+    "livefeed:watch": "node livefeed.js --continuous",
     "test": "jest",
     "lint": "eslint src/**/*.js",
     "format": "prettier --write src/**/*.js"

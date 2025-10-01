@@ -1,0 +1,17 @@
+{
+  "timestamp": "2025-10-01T19:38:27.132Z",
+  "lastUpdated": "2025-10-01, 3:38:27 p.m.",
+  "callsInQueue": 8,
+  "agents": {
+    "totalAgents": 57,
+    "agentsOnline": 4,
+    "agentsOnCall": 1,
+    "agentsAway": 17,
+    "agentsOffline": 32,
+    "agentsTransfersOnly": 0,
+    "agentsOutboundCall": 0,
+    "currentlyWorking": 12,
+    "activeToday": 22
+  },
+  "status": "live"
+}

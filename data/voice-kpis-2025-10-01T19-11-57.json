@@ -1,0 +1,64 @@
+{
+  "totalCalls": 156,
+  "inboundCalls": 0,
+  "outboundCalls": 0,
+  "answeredCalls": 28,
+  "notAnsweredCalls": 16,
+  "droppedCalls": 0,
+  "callbackRequested": 0,
+  "totalCallDurationSeconds": 103699,
+  "longestCallSeconds": 4336,
+  "shortestCallSeconds": 13,
+  "averageCallDurationSeconds": 1140,
+  "validDurations": 91,
+  "callsByHour": {
+    "8": 9,
+    "9": 23,
+    "10": 11,
+    "11": 30,
+    "12": 27,
+    "13": 31,
+    "14": 22,
+    "15": 3
+  },
+  "peakHour": {
+    "hour": 13,
+    "calls": 31
+  },
+  "quietestHour": {
+    "hour": 15,
+    "calls": 3
+  },
+  "callsByAgent": {
+    "20700138351892": 18,
+    "26806117506452": 3,
+    "20700081012756": 6,
+    "20700130113300": 1
+  },
+  "topAgent": {
+    "agentId": "20700138351892",
+    "calls": 18
+  },
+  "callsByPriority": {
+    "normal": 156
+  },
+  "callsByStatus": {
+    "new": 16,
+    "closed": 112,
+    "solved": 27,
+    "pending": 1
+  },
+  "callsWithDuration": 91,
+  "estimatedDurations": 0,
+  "analysisDate": "2025-10-01T19:11:57.788Z",
+  "periodStart": "2025-10-01T04:00:00.000Z",
+  "periodEnd": "2025-10-01T19:11:31.323Z",
+  "uniqueCallers": 0,
+  "answerRate": "17.95",
+  "callbackRate": "0.00",
+  "dropRate": "0.00",
+  "longestCallFormatted": "1:12:16",
+  "shortestCallFormatted": "0:13",
+  "averageCallFormatted": "19:00",
+  "totalCallTimeFormatted": "28:48:19"
+}
