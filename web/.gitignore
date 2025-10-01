@@ -1,0 +1,2 @@
+# Ignore synced data files (they are generated from main data directory)
+web/assets/data/live-feed-latest.json

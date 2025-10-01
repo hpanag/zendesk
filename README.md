@@ -1,6 +1,6 @@
-# Zendesk API Client
+# Zendesk Call Center Analytics & Dashboard
 
-A Node.js JavaScript client for interacting with the Zendesk API.
+A comprehensive Node.js solution for Zendesk API integration with real-time call center analytics and a modern web dashboard.
 
 ## Setup
 
@@ -96,6 +96,36 @@ npm run dev
 ## Examples
 
 Check `src/examples.js` for more detailed examples of common operations.
+
+## 🌐 Web Dashboard
+
+A modern, responsive web dashboard for visualizing call center metrics in real-time.
+
+### Quick Start
+```bash
+# Sync latest data and start web server
+npm run dashboard
+
+# Or run individually:
+npm run web-sync    # Sync latest data
+npm run web-serve   # Start web server (http://localhost:8080)
+```
+
+### Features
+- **Real-time Metrics**: Live call queue, agent status, and performance data
+- **Interactive Charts**: Beautiful visualizations with Chart.js
+- **Mobile Responsive**: Works on desktop, tablet, and mobile
+- **Auto-refresh**: Updates every 30 seconds automatically
+- **Export Data**: Download metrics as JSON
+
+### Dashboard Components
+- Agent status breakdown (online/away/offline/on call)
+- Call volume trends and analytics
+- Queue performance metrics
+- Wait time distribution analysis
+- Detailed timing and performance metrics
+
+See `web/README.md` for detailed documentation.
 
 ## Error Handling
 

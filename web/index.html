@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Call Center Dashboard - Live Feed</title>
+    <link rel="stylesheet" href="./assets/css/dashboard.css">
+    <!-- Chart.js for beautiful charts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Chart.js Date Adapter -->
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Header -->
+        <header class="dashboard-header">
+            <div class="header-content">
+                <h1><i class="fas fa-phone"></i> Call Center Live Dashboard</h1>
+                <div class="status-indicators">
+                    <div class="status-item">
+                        <span class="status-dot live"></span>
+                        <span class="status-text">Live Data</span>
+                    </div>
+                    <div class="last-updated" id="lastUpdated">
+                        Last Updated: Loading...
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Real-time Statistics Cards -->
+        <section class="stats-grid">
+            <div class="stat-card urgent">
+                <div class="stat-icon">
+                    <i class="fas fa-phone-volume"></i>
+                </div>
+                <div class="stat-content">
+                    <h3>Calls in Queue</h3>
+                    <div class="stat-value" id="callsInQueue">-</div>
+                    <div class="stat-change" id="queueChange"></div>
+                </div>
+            </div>
+
+            <div class="stat-card success">
+                <div class="stat-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <div class="stat-content">
+                    <h3>Agents Online</h3>
+                    <div class="stat-value" id="agentsOnline">-</div>
+                    <div class="stat-subtitle" id="totalAgents">of - agents</div>
+                </div>
+            </div>
+
+            <div class="stat-card info">
+                <div class="stat-icon">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <div class="stat-content">
+                    <h3>Total Calls Today</h3>
+                    <div class="stat-value" id="totalCalls">-</div>
+                    <div class="stat-subtitle" id="callBreakdown">- inbound, - outbound</div>
+                </div>
+            </div>
+
+            <div class="stat-card warning">
+                <div class="stat-icon">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <div class="stat-content">
+                    <h3>Avg Wait Time</h3>
+                    <div class="stat-value" id="avgWaitTime">-</div>
+                    <div class="stat-subtitle">minutes</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Charts Section -->
+        <section class="charts-grid">
+            <!-- Agent Status Pie Chart -->
+            <div class="chart-container">
+                <div class="chart-header">
+                    <h3><i class="fas fa-users-cog"></i> Agent Status Distribution</h3>
+                    <div class="chart-controls">
+                        <button class="refresh-btn" onclick="refreshAgentChart()">
+                            <i class="fas fa-sync-alt"></i>
+                        </button>
+                    </div>
+                </div>
+                <canvas id="agentStatusChart"></canvas>
+            </div>
+
+            <!-- Call Volume Line Chart -->
+            <div class="chart-container">
+                <div class="chart-header">
+                    <h3><i class="fas fa-phone-alt"></i> Call Volume Trends</h3>
+                    <div class="chart-controls">
+                        <select id="timeRange" onchange="updateCallChart()">
+                            <option value="today">Today</option>
+                            <option value="week">This Week</option>
+                            <option value="month">This Month</option>
+                        </select>
+                    </div>
+                </div>
+                <canvas id="callVolumeChart"></canvas>
+            </div>
+
+            <!-- Queue Performance Bar Chart -->
+            <div class="chart-container">
+                <div class="chart-header">
+                    <h3><i class="fas fa-tachometer-alt"></i> Queue Performance</h3>
+                </div>
+                <canvas id="queuePerformanceChart"></canvas>
+            </div>
+
+            <!-- Wait Time Distribution -->
+            <div class="chart-container">
+                <div class="chart-header">
+                    <h3><i class="fas fa-hourglass-half"></i> Wait Time Analysis</h3>
+                </div>
+                <canvas id="waitTimeChart"></canvas>
+            </div>
+        </section>
+
+        <!-- Detailed Metrics Table -->
+        <section class="metrics-section">
+            <div class="section-header">
+                <h3><i class="fas fa-table"></i> Detailed Metrics</h3>
+                <button class="export-btn" onclick="exportData()">
+                    <i class="fas fa-download"></i> Export Data
+                </button>
+            </div>
+            <div class="metrics-grid">
+                <div class="metric-group">
+                    <h4>Call Volume</h4>
+                    <div class="metric-item">
+                        <span>Total Calls:</span>
+                        <span id="detailTotalCalls">-</span>
+                    </div>
+                    <div class="metric-item">
+                        <span>Inbound Calls:</span>
+                        <span id="detailInboundCalls">-</span>
+                    </div>
+                    <div class="metric-item">
+                        <span>Outbound Calls:</span>
+                        <span id="detailOutboundCalls">-</span>
+                    </div>
+                    <div class="metric-item">
+                        <span>Callback Calls:</span>
+                        <span id="detailCallbackCalls">-</span>
+                    </div>
+                </div>
+
+                <div class="metric-group">
+                    <h4>Queue Performance</h4>
+                    <div class="metric-item">
+                        <span>Abandoned Calls:</span>
+                        <span id="detailAbandonedCalls">-</span>
+                    </div>
+                    <div class="metric-item">
+                        <span>Exceeded Wait Time:</span>
+                        <span id="detailExceededWait">-</span>
+                    </div>
+                    <div class="metric-item">
+                        <span>Max Calls Waiting:</span>
+                        <span id="detailMaxWaiting">-</span>
+                    </div>
+                </div>
+
+                <div class="metric-group">
+                    <h4>Timing Metrics</h4>
+                    <div class="metric-item">
+                        <span>Avg Duration:</span>
+                        <span id="detailAvgDuration">-</span>
+                    </div>
+                    <div class="metric-item">
+                        <span>Avg Time to Answer:</span>
+                        <span id="detailAvgAnswer">-</span>
+                    </div>
+                    <div class="metric-item">
+                        <span>Avg Hold Time:</span>
+                        <span id="detailAvgHold">-</span>
+                    </div>
+                    <div class="metric-item">
+                        <span>Avg Callback Wait:</span>
+                        <span id="detailAvgCallbackWait">-</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="dashboard-footer">
+            <div class="footer-content">
+                <p>&copy; 2025 Call Center Dashboard. Data refreshes every 30 seconds.</p>
+                <div class="footer-links">
+                    <a href="#" onclick="toggleAutoRefresh()">
+                        <i class="fas fa-pause" id="autoRefreshIcon"></i>
+                        <span id="autoRefreshText">Pause Auto-Refresh</span>
+                    </a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay">
+        <div class="spinner"></div>
+        <p>Loading dashboard data...</p>
+    </div>
+
+    <!-- Scripts -->
+    <script src="./assets/js/dashboard.js"></script>
+</body>
+</html>
