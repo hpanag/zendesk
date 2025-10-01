@@ -1,0 +1,5891 @@
+{
+  "totalTransitions": 390,
+  "transitionCounts": {
+    "new → open": 43,
+    "hold → solved": 27,
+    "open → hold": 14,
+    "new → closed": 56,
+    "open → solved": 35,
+    "new → hold": 5,
+    "solved → open": 20,
+    "new → solved": 102,
+    "pending → solved": 5,
+    "new → pending": 10,
+    "open → pending": 22,
+    "pending → open": 17,
+    "hold → open": 9,
+    "open → closed": 2,
+    "solved → closed": 21,
+    "pending → hold": 2
+  },
+  "fromStatusCounts": {
+    "new": 216,
+    "hold": 36,
+    "open": 73,
+    "solved": 41,
+    "pending": 24
+  },
+  "toStatusCounts": {
+    "open": 89,
+    "solved": 169,
+    "hold": 21,
+    "closed": 79,
+    "pending": 32
+  },
+  "transitionDetails": [
+    {
+      "ticketId": 288869,
+      "from": "new",
+      "to": "open",
+      "when": "2025-10-01T18:10:50Z",
+      "by": 20705690271636
+    },
+    {
+      "ticketId": 275261,
+      "from": "hold",
+      "to": "solved",
+      "when": "2025-10-01T18:10:23Z",
+      "by": 20837541429524
+    },
+    {
+      "ticketId": 289602,
+      "from": "new",
+      "to": "open",
+      "when": "2025-10-01T18:10:21Z",
+      "by": -1
+    },
+    {
+      "ticketId": 289316,
+      "from": "open",
+      "to": "hold",
+      "when": "2025-10-01T18:10:18Z",
+      "by": 20702390811796
+    },
+    {
+      "ticketId": 286163,
+      "from": "hold",
+      "to": "solved",
+      "when": "2025-10-01T18:09:13Z",
+      "by": 20837541429524
+    },
+    {
+      "ticketId": 289611,
+      "from": "new",
+      "to": "closed",
+      "when": "2025-10-01T18:08:54Z",
+      "by": -1
+    },
+    {
+      "ticketId": 289592,
+      "from": "open",
+      "to": "solved",
+      "when": "2025-10-01T18:08:53Z",
+      "by": 20700138351892
+    },
+    {
+      "ticketId": 289630,
+      "from": "new",
+      "to": "closed",
+      "when": "2025-10-01T18:08:36Z",
+      "by": -1
+    },
+    {
+      "ticketId": 285851,
+      "from": "hold",
+      "to": "solved",
+      "when": "2025-10-01T18:07:39Z",
+      "by": 20837541429524
+    },
+    {
+      "ticketId": 288816,
+      "from": "new",
+      "to": "hold",
+      "when": "2025-10-01T18:07:34Z",
+      "by": 20705690271636
+    },
+    {
+      "ticketId": 287920,
+      "from": "solved",
+      "to": "open",
+      "when": "2025-10-01T18:07:09Z",
+      "by": 24099144674196
+    },
+    {
+      "ticketId": 285353,
+      "from": "solved",
+      "to": "open",
+      "when": "2025-10-01T18:05:04Z",
+      "by": 41501087705236
+    },
+    {
+      "ticketId": 289629,
+      "from": "new",
+      "to": "open",
+      "when": "2025-10-01T18:04:48Z",
+      "by": 20709103407252
+    },
+    {
+      "ticketId": 289620,
+      "from": "new",
+      "to": "closed",
+      "when": "2025-10-01T18:04:42Z",
+      "by": -1
+    },
+    {
+      "ticketId": 283005,
+      "from": "solved",
+      "to": "open",
+      "when": "2025-10-01T18:03:10Z",
+      "by": 24099144674196
+    },
+    {
+      "ticketId": 283978,
+      "from": "solved",
+      "to": "open",
+      "when": "2025-10-01T18:03:09Z",
+      "by": 24099144674196
+    },
+    {
+      "ticketId": 289628,
+      "from": "new",
+      "to": "closed",
+      "when": "2025-10-01T18:03:06Z",
+      "by": -1
+    },
+    {
+      "ticketId": 273828,
+      "from": "solved",
+      "to": "open",
+      "when": "2025-10-01T18:02:24Z",
+      "by": 26999329713300
+    },
+    {
+      "ticketId": 287803,
+      "from": "solved",
+      "to": "open",
+      "when": "2025-10-01T18:02:08Z",
+      "by": 24099144674196
+    },
+    {
+      "ticketId": 287314,
+      "from": "solved",
+      "to": "open",
+      "when": "2025-10-01T18:02:06Z",
+      "by": 24099144674196
+    },
+    {
+      "ticketId": 289518,
+      "from": "new",
+      "to": "solved",
+      "when": "2025-10-01T18:01:51Z",
+      "by": -1
+    },
+    {
+      "ticketId": 285586,
+      "from": "hold",
+      "to": "solved",
+      "when": "2025-10-01T18:01:40Z",
+      "by": 20837541429524
+    },
+    {
+      "ticketId": 286674,
+      "from": "pending",
+      "to": "solved",
+      "when": "2025-10-01T18:01:38Z",
+      "by": -1
+    },
+    {
+      "ticketId": 282211,
+      "from": "pending",
+      "to": "solved",
+      "when": "2025-10-01T18:01:38Z",
+      "by": -1
+    },
+    {
+      "ticketId": 289473,
+      "from": "new",
+      "to": "closed",
+      "when": "2025-10-01T18:01:37Z",
+      "by": -1
+    },
+    {
+      "ticketId": 289474,
+      "from": "new",
+      "to": "closed",
+      "when": "2025-10-01T18:01:36Z",
+      "by": -1
+    },
+    {
+      "ticketId": 289494,
+      "from": "new",
+      "to": "closed",
+      "when": "2025-10-01T18:01:35Z",
+      "by": -1
+    },
+    {
+      "ticketId": 289493,
+      "from": "new",
+      "to": "closed",
+      "when": "2025-10-01T18:01:35Z",
+      "by": -1
+    },
+    {
+      "ticketId": 289509,
+      "from": "new",
+      "to": "closed",
+      "when": "2025-10-01T18:01:34Z",
+      "by": -1
+    },
+    {
+      "ticketId": 288782,
+      "from": "new",
+      "to": "pending",
+      "when": "2025-10-01T17:59:38Z",
+      "by": 20705690271636
+    },
+    {
+      "ticketId": 282975,
+      "from": "open",
+      "to": "pending",
+      "when": "2025-10-01T17:59:28Z",
+      "by": 39097856345748
+    },
+    {
+      "ticketId": 285353,
+      "from": "hold",
+      "to": "solved",
+      "when": "2025-10-01T17:59:10Z",
+      "by": 20837541429524
+    },
+    {
+      "ticketId": 289604,
+      "from": "new",
+      "to": "closed",
+      "when": "2025-10-01T17:58:43Z",
+      "by": -1
+    },
+    {
+      "ticketId": 288351,
+      "from": "open",
+      "to": "pending",
+      "when": "2025-10-01T17:58:26Z",
+      "by": 20837541429524
+    },
+    {
+      "ticketId": 288776,
+      "from": "new",
+      "to": "closed",
+      "when": "2025-10-01T17:58:04Z",
+      "by": 20705690271636
+    },
+    {
+      "ticketId": 287618,
+      "from": "open",
+      "to": "pending",
+      "when": "2025-10-01T17:57:28Z",
+      "by": 20837541429524
+    },
+    {
+      "ticketId": 286526,
+      "from": "open",
+      "to": "solved",
+      "when": "2025-10-01T17:57:09Z",
+      "by": 20837541429524
+    },
+    {
+      "ticketId": 289449,
+      "from": "open",
+      "to": "solved",
+      "when": "2025-10-01T17:56:36Z",
+      "by": 20702390811796
+    },
+    {
+      "ticketId": 278660,
+      "from": "hold",
+      "to": "solved",
+      "when": "2025-10-01T17:54:16Z",
+      "by": 20705690271636
+    },
+    {
+      "ticketId": 287898,
+      "from": "pending",
+      "to": "open",
+      "when": "2025-10-01T17:53:47Z",
+      "by": 41657961963540
+    },
+    {
+      "ticketId": 288550,
+      "from": "open",
+      "to": "solved",
+      "when": "2025-10-01T17:52:57Z",
+      "by": 32309607652116
+    },
+    {
+      "ticketId": 288648,
+      "from": "new",
+      "to": "hold",
+      "when": "2025-10-01T17:52:12Z",
+      "by": 20705690271636
+    },
+    {
+      "ticketId": 289449,
+      "from": "hold",
+      "to": "open",
+      "when": "2025-10-01T17:51:43Z",
+      "by": 41749791416340
+    },
+    {
+      "ticketId": 289613,
+      "from": "new",
+      "to": "closed",
+      "when": "2025-10-01T17:50:12Z",
+      "by": -1
+    },
+    {
+      "ticketId": 274864,
+      "from": "open",
+      "to": "solved",
+      "when": "2025-10-01T17:49:40Z",
+      "by": 26806117506452
+    },
+    {
+      "ticketId": 289600,
+      "from": "new",
+      "to": "closed",
+      "when": "2025-10-01T17:49:12Z",
+      "by": -1
+    },
+    {
+      "ticketId": 289592,
+      "from": "new",
+      "to": "open",
+      "when": "2025-10-01T17:49:03Z",
+      "by": -1
+    },
+    {
+      "ticketId": 289570,
+      "from": "open",
+      "to": "solved",
+      "when": "2025-10-01T17:48:50Z",
+      "by": 20700138351892
+    },
+    {
+      "ticketId": 289219,
+      "from": "open",
+      "to": "solved",
+      "when": "2025-10-01T17:48:46Z",
+      "by": 20700188817812
+    },
+    {
+      "ticketId": 289445,
+      "from": "new",
+      "to": "solved",
+      "when": "2025-10-01T17:48:31Z",
+      "by": 20702390811796
+    },
+    {
+      "ticketId": 289540,
+      "from": "open",
+      "to": "solved",
+      "when": "2025-10-01T17:48:23Z",
+      "by": 26806117506452
+    },
+    {
+      "ticketId": 289608,
+      "from": "new",
+      "to": "closed",
+      "when": "2025-10-01T17:47:44Z",
+      "by": -1
+    },
+    {
+      "ticketId": 289357,
+      "from": "solved",
+      "to": "open",
+      "when": "2025-10-01T17:47:09Z",
+      "by": 24001691390228
+    },
+    {
+      "ticketId": 289597,
+      "from": "new",
+      "to": "closed",
+      "when": "2025-10-01T17:46:46Z",
+      "by": -1
+    },
+    {
+      "ticketId": 289606,
+      "from": "new",
+      "to": "closed",
+      "when": "2025-10-01T17:44:45Z",
+      "by": -1
+    },
+    {
+      "ticketId": 289382,
+      "from": "new",
+      "to": "open",
+      "when": "2025-10-01T17:43:02Z",
+      "by": 32309607652116
+    },
+    {
+      "ticketId": 289603,
+      "from": "new",
+      "to": "closed",
+      "when": "2025-10-01T17:42:34Z",
+      "by": -1
+    },
+    {
+      "ticketId": 289599,
+      "from": "new",
+      "to": "open",
+      "when": "2025-10-01T17:42:02Z",
+      "by": 32309607652116
+    },
+    {
+      "ticketId": 288080,
+      "from": "open",
+      "to": "hold",
+      "when": "2025-10-01T17:41:44Z",
+      "by": 20702456045716
+    },
+    {
+      "ticketId": 289601,
+      "from": "new",
+      "to": "closed",
+      "when": "2025-10-01T17:41:13Z",
+      "by": 41293515843988
+    },
+    {
+      "ticketId": 289585,
+      "from": "new",
+      "to": "closed",
+      "when": "2025-10-01T17:40:08Z",
+      "by": -1
+    },
+    {
+      "ticketId": 278045,
+      "from": "hold",
+      "to": "solved",
+      "when": "2025-10-01T17:39:04Z",
+      "by": 20702390811796
+    },
+    {
+      "ticketId": 286160,
+      "from": "pending",
+      "to": "open",
+      "when": "2025-10-01T17:37:41Z",
+      "by": 41535837074708
+    },
+    {
+      "ticketId": 288426,
+      "from": "new",
+      "to": "open",
+      "when": "2025-10-01T17:36:18Z",
+      "by": -1
+    },
+    {
+      "ticketId": 289596,
+      "from": "new",
+      "to": "closed",
+      "when": "2025-10-01T17:35:32Z",
+      "by": -1
+    },
+    {
+      "ticketId": 289063,
+      "from": "pending",
+      "to": "open",
+      "when": "2025-10-01T17:34:08Z",
+      "by": 41574282127508
+    },
+    {
+      "ticketId": 289534,
+      "from": "open",
+      "to": "solved",
+      "when": "2025-10-01T17:29:05Z",
+      "by": 20700081012756
+    },
+    {
+      "ticketId": 285421,
+      "from": "hold",
+      "to": "solved",
+      "when": "2025-10-01T17:28:17Z",
+      "by": 20837541429524
+    },
+    {
+      "ticketId": 289580,
+      "from": "new",
+      "to": "closed",
+      "when": "2025-10-01T17:27:55Z",
+      "by": -1
+    },
+    {
+      "ticketId": 285352,
+      "from": "hold",
+      "to": "solved",
+      "when": "2025-10-01T17:27:16Z",
+      "by": 20837541429524
+    },
+    {
+      "ticketId": 289570,
+      "from": "new",
+      "to": "open",
+      "when": "2025-10-01T17:26:55Z",
+      "by": -1
+    },
+    {
+      "ticketId": 289557,
+      "from": "open",
+      "to": "solved",
+      "when": "2025-10-01T17:26:26Z",
+      "by": 20700138351892
+    },
+    {
+      "ticketId": 289546,
+      "from": "open",
+      "to": "solved",
+      "when": "2025-10-01T17:25:43Z",
+      "by": 20700138351892
+    },
+    {
+      "ticketId": 289557,
+      "from": "new",
+      "to": "open",
+      "when": "2025-10-01T17:23:52Z",
+      "by": -1
+    },
+    {
+      "ticketId": 288334,
+      "from": "new",
+      "to": "open",
+      "when": "2025-10-01T17:22:15Z",
+      "by": -1
+    },
+    {
+      "ticketId": 288318,
+      "from": "open",
+      "to": "pending",
+      "when": "2025-10-01T17:22:15Z",
+      "by": 20702398846868
+    },
+    {
+      "ticketId": 288080,
+      "from": "hold",
+      "to": "open",
+      "when": "2025-10-01T17:21:59Z",
+      "by": 38293641376404
+    },
+    {
+      "ticketId": 289091,
+      "from": "open",
+      "to": "hold",
+      "when": "2025-10-01T17:21:48Z",
+      "by": 20702390811796
+    },
+    {
+      "ticketId": 277479,
+      "from": "hold",
+      "to": "solved",
+      "when": "2025-10-01T17:20:31Z",
+      "by": 20837541429524
+    },
+    {
+      "ticketId": 289572,
+      "from": "new",
+      "to": "closed",
+      "when": "2025-10-01T17:20:00Z",
+      "by": -1
+    },
+    {
+      "ticketId": 278531,
+      "from": "hold",
+      "to": "solved",
+      "when": "2025-10-01T17:19:20Z",
+      "by": 20837541429524
+    },
+    {
+      "ticketId": 289584,
+      "from": "new",
+      "to": "closed",
+      "when": "2025-10-01T17:19:14Z",
+      "by": -1
+    },
+    {
+      "ticketId": 289523,
+      "from": "new",
+      "to": "closed",
+      "when": "2025-10-01T17:19:00Z",
+      "by": 20702398846868
+    },
+    {
+      "ticketId": 287742,
+      "from": "hold",
+      "to": "solved",
+      "when": "2025-10-01T17:18:08Z",
+      "by": 20837541429524
+    },
+    {
+      "ticketId": 289581,
+      "from": "new",
+      "to": "closed",
+      "when": "2025-10-01T17:17:03Z",
+      "by": -1
+    },
+    {
+      "ticketId": 282403,
+      "from": "hold",
+      "to": "solved",
+      "when": "2025-10-01T17:16:48Z",
+      "by": 20837541429524
+    },
+    {
+      "ticketId": 288318,
+      "from": "new",
+      "to": "open",
+      "when": "2025-10-01T17:16:38Z",
+      "by": -1
+    },
+    {
+      "ticketId": 288313,
+      "from": "open",
+      "to": "pending",
+      "when": "2025-10-01T17:16:37Z",
+      "by": 20702398846868
+    },
+    {
+      "ticketId": 282166,
+      "from": "hold",
+      "to": "solved",
+      "when": "2025-10-01T17:15:51Z",
+      "by": 20837541429524
+    },
+    {
+      "ticketId": 282231,
+      "from": "hold",
+      "to": "solved",
+      "when": "2025-10-01T17:13:47Z",
+      "by": 20837541429524
+    },
+    {
+      "ticketId": 286526,
+      "from": "solved",
+      "to": "open",
+      "when": "2025-10-01T17:13:08Z",
+      "by": 30115496168212
+    },
+    {
+      "ticketId": 289579,
+      "from": "new",
+      "to": "open",
+      "when": "2025-10-01T17:13:02Z",
+      "by": 20709103407252
+    },
+    {
+      "ticketId": 286526,
+      "from": "pending",
+      "to": "solved",
+      "when": "2025-10-01T17:12:46Z",
+      "by": 20837541429524
+    },
+    {
+      "ticketId": 289578,
+      "from": "new",
+      "to": "closed",
+      "when": "2025-10-01T17:12:06Z",
+      "by": -1
+    },
+    {
+      "ticketId": 289574,
+      "from": "new",
+      "to": "closed",
+      "when": "2025-10-01T17:12:02Z",
+      "by": -1
+    },
+    {
+      "ticketId": 283830,
+      "from": "hold",
+      "to": "solved",
+      "when": "2025-10-01T17:11:41Z",
+      "by": 20837541429524
+    },
+    {
+      "ticketId": 289546,
+      "from": "new",
+      "to": "open",
+      "when": "2025-10-01T17:11:22Z",
+      "by": -1
+    },
+    {
+      "ticketId": 289540,
+      "from": "new",
+      "to": "open",
+      "when": "2025-10-01T17:10:55Z",
+      "by": -1
+    },
+    {
+      "ticketId": 289535,
+      "from": "open",
+      "to": "solved",
+      "when": "2025-10-01T17:10:35Z",
+      "by": 26806117506452
+    },
+    {
+      "ticketId": 283865,
+      "from": "hold",
+      "to": "solved",
+      "when": "2025-10-01T17:09:49Z",
+      "by": 20837541429524
+    },
+    {
+      "ticketId": 289535,
+      "from": "new",
+      "to": "open",
+      "when": "2025-10-01T17:09:37Z",
+      "by": -1
+    },
+    {
+      "ticketId": 289437,
+      "from": "open",
+      "to": "solved",
+      "when": "2025-10-01T17:09:28Z",
+      "by": 20709096709524
+    },
+    {
+      "ticketId": 289576,
+      "from": "new",
+      "to": "closed",
+      "when": "2025-10-01T17:09:17Z",
+      "by": -1
+    },
+    {
+      "ticketId": 289290,
+      "from": "open",
+      "to": "solved",
+      "when": "2025-10-01T17:09:02Z",
+      "by": 20978102907156
+    },
+    {
+      "ticketId": 289316,
+      "from": "new",
+      "to": "open",
+      "when": "2025-10-01T17:08:43Z",
+      "by": 20702390811796
+    },
+    {
+      "ticketId": 288313,
+      "from": "new",
+      "to": "open",
+      "when": "2025-10-01T17:08:39Z",
+      "by": -1
+    },
+    {
+      "ticketId": 285359,
+      "from": "open",
+      "to": "closed",
+      "when": "2025-10-01T17:08:37Z",
+      "by": 20702398846868
+    },
+    {
+      "ticketId": 288639,
+      "from": "new",
+      "to": "solved",
+      "when": "2025-10-01T17:08:31Z",
+      "by": 20705690271636
+    },
+    {
+      "ticketId": 289560,
+      "from": "new",
+      "to": "closed",
+      "when": "2025-10-01T17:07:02Z",
+      "by": -1
+    },
+    {
+      "ticketId": 289575,
+      "from": "new",
+      "to": "closed",
+      "when": "2025-10-01T17:06:53Z",
+      "by": -1
+    },
+    {
+      "ticketId": 288624,
+      "from": "new",
+      "to": "solved",
+      "when": "2025-10-01T17:06:03Z",
+      "by": 20837541429524
+    },
+    {
+      "ticketId": 289555,
+      "from": "new",
+      "to": "closed",
+      "when": "2025-10-01T17:05:47Z",
+      "by": -1
+    },
+    {
+      "ticketId": 289573,
+      "from": "new",
+      "to": "closed",
+      "when": "2025-10-01T17:05:25Z",
+      "by": -1
+    },
+    {
+      "ticketId": 288615,
+      "from": "new",
+      "to": "solved",
+      "when": "2025-10-01T17:05:03Z",
+      "by": 20705690271636
+    },
+    {
+      "ticketId": 288564,
+      "from": "open",
+      "to": "hold",
+      "when": "2025-10-01T17:04:50Z",
+      "by": 20702456045716
+    },
+    {
+      "ticketId": 288080,
+      "from": "open",
+      "to": "hold",
+      "when": "2025-10-01T17:03:30Z",
+      "by": 20702456045716
+    },
+    {
+      "ticketId": 281757,
+      "from": "hold",
+      "to": "solved",
+      "when": "2025-10-01T17:03:09Z",
+      "by": 20837541429524
+    },
+    {
+      "ticketId": 289571,
+      "from": "new",
+      "to": "open",
+      "when": "2025-10-01T17:02:58Z",
+      "by": 20709103407252
+    },
+    {
+      "ticketId": 287618,
+      "from": "pending",
+      "to": "open",
+      "when": "2025-10-01T17:02:24Z",
+      "by": 20956160611732
+    },
+    {
+      "ticketId": 289567,
+      "from": "new",
+      "to": "closed",
+      "when": "2025-10-01T17:02:22Z",
+      "by": -1
+    },
+    {
+      "ticketId": 278212,
+      "from": "pending",
+      "to": "solved",
+      "when": "2025-10-01T17:02:21Z",
+      "by": -1
+    },
+    {
+      "ticketId": 282107,
+      "from": "pending",
+      "to": "solved",
+      "when": "2025-10-01T17:02:20Z",
+      "by": -1
+    },
+    {
+      "ticketId": 289464,
+      "from": "new",
+      "to": "closed",
+      "when": "2025-10-01T17:02:19Z",
+      "by": -1
+    },
+    {
+      "ticketId": 289447,
+      "from": "new",
+      "to": "closed",
+      "when": "2025-10-01T17:02:19Z",
+      "by": -1
+    },
+    {
+      "ticketId": 289561,
+      "from": "new",
+      "to": "closed",
+      "when": "2025-10-01T17:02:03Z",
+      "by": -1
+    },
+    {
+      "ticketId": 282351,
+      "from": "hold",
+      "to": "solved",
+      "when": "2025-10-01T17:01:41Z",
+      "by": 20837541429524
+    },
+    {
+      "ticketId": 288502,
+      "from": "new",
+      "to": "pending",
+      "when": "2025-10-01T17:01:28Z",
+      "by": 20705690271636
+    },
+    {
+      "ticketId": 289290,
+      "from": "new",
+      "to": "open",
+      "when": "2025-10-01T16:59:49Z",
+      "by": 20702398846868
+    },
+    {
+      "ticketId": 278663,
+      "from": "hold",
+      "to": "solved",
+      "when": "2025-10-01T16:59:44Z",
+      "by": 20837541429524
+    },
+    {
+      "ticketId": 289566,
+      "from": "new",
+      "to": "solved",
+      "when": "2025-10-01T16:58:54Z",
+      "by": 20702398846868
+    },
+    {
+      "ticketId": 282473,
+      "from": "hold",
+      "to": "solved",
+      "when": "2025-10-01T16:58:29Z",
+      "by": 20837541429524
+    },
+    {
+      "ticketId": 289519,
+      "from": "new",
+      "to": "solved",
+      "when": "2025-10-01T16:57:59Z",
+      "by": 32309607652116
+    },
+    {
+      "ticketId": 289569,
+      "from": "new",
+      "to": "closed",
+      "when": "2025-10-01T16:57:28Z",
+      "by": -1
+    },
+    {
+      "ticketId": 289568,
+      "from": "new",
+      "to": "closed",
+      "when": "2025-10-01T16:56:42Z",
+      "by": -1
+    },
+    {
+      "ticketId": 289528,
+      "from": "open",
+      "to": "solved",
+      "when": "2025-10-01T16:55:42Z",
+      "by": 20700138351892
+    },
+    {
+      "ticketId": 289550,
+      "from": "new",
+      "to": "closed",
+      "when": "2025-10-01T16:55:15Z",
+      "by": -1
+    },
+    {
+      "ticketId": 273128,
+      "from": "hold",
+      "to": "solved",
+      "when": "2025-10-01T16:54:37Z",
+      "by": 20837541429524
+    },
+    {
+      "ticketId": 289532,
+      "from": "solved",
+      "to": "open",
+      "when": "2025-10-01T16:54:13Z",
+      "by": 20888538485524
+    },
+    {
+      "ticketId": 289532,
+      "from": "open",
+      "to": "solved",
+      "when": "2025-10-01T16:54:13Z",
+      "by": 20888538485524
+    },
+    {
+      "ticketId": 271487,
+      "from": "open",
+      "to": "pending",
+      "when": "2025-10-01T16:53:47Z",
+      "by": 20702398846868
+    },
+    {
+      "ticketId": 275778,
+      "from": "hold",
+      "to": "solved",
+      "when": "2025-10-01T16:52:55Z",
+      "by": 20837541429524
+    },
+    {
+      "ticketId": 287737,
+      "from": "open",
+      "to": "hold",
+      "when": "2025-10-01T16:52:11Z",
+      "by": 20700188817812
+    },
+    {
+      "ticketId": 289534,
+      "from": "new",
+      "to": "open",
+      "when": "2025-10-01T16:51:18Z",
+      "by": -1
+    },
+    {
+      "ticketId": 269870,
+      "from": "open",
+      "to": "solved",
+      "when": "2025-10-01T16:50:35Z",
+      "by": 20700081012756
+    },
+    {
+      "ticketId": 288080,
+      "from": "hold",
+      "to": "open",
+      "when": "2025-10-01T16:50:29Z",
+      "by": 38199745993108
+    },
+    {
+      "ticketId": 274148,
+      "from": "hold",
+      "to": "solved",
+      "when": "2025-10-01T16:50:13Z",
+      "by": 20837541429524
+    },
+    {
+      "ticketId": 289512,
+      "from": "hold",
+      "to": "solved",
+      "when": "2025-10-01T16:49:45Z",
+      "by": 20702456045716
+    },
+    {
+      "ticketId": 287738,
+      "from": "solved",
+      "to": "closed",
+      "when": "2025-10-01T16:48:58Z",
+      "by": -1
+    },
+    {
+      "ticketId": 287735,
+      "from": "solved",
+      "to": "closed",
+      "when": "2025-10-01T16:48:58Z",
+      "by": -1
+    },
+    {
+      "ticketId": 287734,
+      "from": "solved",
+      "to": "closed",
+      "when": "2025-10-01T16:48:58Z",
+      "by": -1
+    },
+    {
+      "ticketId": 287730,
+      "from": "solved",
+      "to": "closed",
+      "when": "2025-10-01T16:48:58Z",
+      "by": -1
+    },
+    {
+      "ticketId": 287726,
+      "from": "solved",
+      "to": "closed",
+      "when": "2025-10-01T16:48:58Z",
+      "by": -1
+    },
+    {
+      "ticketId": 287718,
+      "from": "solved",
+      "to": "closed",
+      "when": "2025-10-01T16:48:58Z",
+      "by": -1
+    },
+    {
+      "ticketId": 287723,
+      "from": "solved",
+      "to": "closed",
+      "when": "2025-10-01T16:48:57Z",
+      "by": -1
+    },
+    {
+      "ticketId": 287721,
+      "from": "solved",
+      "to": "closed",
+      "when": "2025-10-01T16:48:57Z",
+      "by": -1
+    },
+    {
+      "ticketId": 287720,
+      "from": "solved",
+      "to": "closed",
+      "when": "2025-10-01T16:48:57Z",
+      "by": -1
+    },
+    {
+      "ticketId": 287719,
+      "from": "solved",
+      "to": "closed",
+      "when": "2025-10-01T16:48:57Z",
+      "by": -1
+    },
+    {
+      "ticketId": 287717,
+      "from": "solved",
+      "to": "closed",
+      "when": "2025-10-01T16:48:57Z",
+      "by": -1
+    },
+    {
+      "ticketId": 287716,
+      "from": "solved",
+      "to": "closed",
+      "when": "2025-10-01T16:48:57Z",
+      "by": -1
+    },
+    {
+      "ticketId": 287229,
+      "from": "solved",
+      "to": "closed",
+      "when": "2025-10-01T16:48:56Z",
+      "by": -1
+    },
+    {
+      "ticketId": 284083,
+      "from": "solved",
+      "to": "closed",
+      "when": "2025-10-01T16:48:56Z",
+      "by": -1
+    },
+    {
+      "ticketId": 275181,
+      "from": "hold",
+      "to": "solved",
+      "when": "2025-10-01T16:48:56Z",
+      "by": 20837541429524
+    },
+    {
+      "ticketId": 286099,
+      "from": "solved",
+      "to": "closed",
+      "when": "2025-10-01T16:48:55Z",
+      "by": -1
+    },
+    {
+      "ticketId": 278535,
+      "from": "solved",
+      "to": "closed",
+      "when": "2025-10-01T16:48:55Z",
+      "by": -1
+    },
+    {
+      "ticketId": 276201,
+      "from": "solved",
+      "to": "closed",
+      "when": "2025-10-01T16:48:55Z",
+      "by": -1
+    },
+    {
+      "ticketId": 287733,
+      "from": "solved",
+      "to": "closed",
+      "when": "2025-10-01T16:48:54Z",
+      "by": -1
+    },
+    {
+      "ticketId": 287731,
+      "from": "solved",
+      "to": "closed",
+      "when": "2025-10-01T16:48:54Z",
+      "by": -1
+    },
+    {
+      "ticketId": 287732,
+      "from": "solved",
+      "to": "closed",
+      "when": "2025-10-01T16:48:54Z",
+      "by": -1
+    },
+    {
+      "ticketId": 287724,
+      "from": "solved",
+      "to": "closed",
+      "when": "2025-10-01T16:48:54Z",
+      "by": -1
+    },
+    {
+      "ticketId": 289556,
+      "from": "new",
+      "to": "solved",
+      "when": "2025-10-01T16:48:48Z",
+      "by": 20702398846868
+    },
+    {
+      "ticketId": 289558,
+      "from": "new",
+      "to": "solved",
+      "when": "2025-10-01T16:48:33Z",
+      "by": 20702398846868
+    },
+    {
+      "ticketId": 289317,
+      "from": "new",
+      "to": "closed",
+      "when": "2025-10-01T16:47:17Z",
+      "by": 20702398846868
+    },
+    {
+      "ticketId": 288723,
+      "from": "pending",
+      "to": "open",
+      "when": "2025-10-01T16:47:03Z",
+      "by": 41708425284372
+    },
+    {
+      "ticketId": 289559,
+      "from": "new",
+      "to": "closed",
+      "when": "2025-10-01T16:46:13Z",
+      "by": -1
+    },
+    {
+      "ticketId": 287737,
+      "from": "hold",
+      "to": "open",
+      "when": "2025-10-01T16:45:22Z",
+      "by": 41629227521428
+    },
+    {
+      "ticketId": 288305,
+      "from": "new",
+      "to": "closed",
+      "when": "2025-10-01T16:45:07Z",
+      "by": 20700188817812
+    },
+    {
+      "ticketId": 289554,
+      "from": "new",
+      "to": "closed",
+      "when": "2025-10-01T16:44:18Z",
+      "by": -1
+    },
+    {
+      "ticketId": 287737,
+      "from": "open",
+      "to": "hold",
+      "when": "2025-10-01T16:43:39Z",
+      "by": 20700188817812
+    },
+    {
+      "ticketId": 289552,
+      "from": "new",
+      "to": "solved",
+      "when": "2025-10-01T16:42:59Z",
+      "by": 20702398846868
+    },
+    {
+      "ticketId": 289553,
+      "from": "new",
+      "to": "solved",
+      "when": "2025-10-01T16:42:44Z",
+      "by": 20702398846868
+    },
+    {
+      "ticketId": 289551,
+      "from": "new",
+      "to": "solved",
+      "when": "2025-10-01T16:41:58Z",
+      "by": 20702398846868
+    },
+    {
+      "ticketId": 288644,
+      "from": "new",
+      "to": "pending",
+      "when": "2025-10-01T16:41:58Z",
+      "by": 20837541429524
+    },
+    {
+      "ticketId": 289531,
+      "from": "new",
+      "to": "closed",
+      "when": "2025-10-01T16:41:40Z",
+      "by": 20702398846868
+    },
+    {
+      "ticketId": 289525,
+      "from": "new",
+      "to": "open",
+      "when": "2025-10-01T16:40:53Z",
+      "by": 20702398846868
+    },
+    {
+      "ticketId": 288619,
+      "from": "open",
+      "to": "pending",
+      "when": "2025-10-01T16:39:40Z",
+      "by": 39097856345748
+    },
+    {
+      "ticketId": 289549,
+      "from": "new",
+      "to": "closed",
+      "when": "2025-10-01T16:39:08Z",
+      "by": 41735913350420
+    },
+    {
+      "ticketId": 289544,
+      "from": "new",
+      "to": "solved",
+      "when": "2025-10-01T16:38:31Z",
+      "by": 20702398846868
+    },
+    {
+      "ticketId": 289533,
+      "from": "new",
+      "to": "closed",
+      "when": "2025-10-01T16:37:53Z",
+      "by": -1
+    },
+    {
+      "ticketId": 289543,
+      "from": "new",
+      "to": "solved",
+      "when": "2025-10-01T16:36:23Z",
+      "by": 20783189468308
+    },
+    {
+      "ticketId": 289541,
+      "from": "new",
+      "to": "closed",
+      "when": "2025-10-01T16:36:08Z",
+      "by": -1
+    },
+    {
+      "ticketId": 289528,
+      "from": "new",
+      "to": "open",
+      "when": "2025-10-01T16:36:01Z",
+      "by": -1
+    },
+    {
+      "ticketId": 289508,
+      "from": "open",
+      "to": "solved",
+      "when": "2025-10-01T16:35:53Z",
+      "by": 20700138351892
+    },
+    {
+      "ticketId": 285810,
+      "from": "open",
+      "to": "solved",
+      "when": "2025-10-01T16:34:30Z",
+      "by": 20700188817812
+    },
+    {
+      "ticketId": 289539,
+      "from": "new",
+      "to": "closed",
+      "when": "2025-10-01T16:34:18Z",
+      "by": -1
+    },
+    {
+      "ticketId": 288611,
+      "from": "new",
+      "to": "solved",
+      "when": "2025-10-01T16:34:14Z",
+      "by": 20837541429524
+    },
+    {
+      "ticketId": 289437,
+      "from": "new",
+      "to": "open",
+      "when": "2025-10-01T16:33:34Z",
+      "by": 20702398846868
+    },
+    {
+      "ticketId": 289538,
+      "from": "new",
+      "to": "closed",
+      "when": "2025-10-01T16:32:01Z",
+      "by": -1
+    },
+    {
+      "ticketId": 289537,
+      "from": "new",
+      "to": "solved",
+      "when": "2025-10-01T16:31:23Z",
+      "by": 20702398846868
+    },
+    {
+      "ticketId": 269870,
+      "from": "solved",
+      "to": "open",
+      "when": "2025-10-01T16:31:07Z",
+      "by": 40600590925844
+    },
+    {
+      "ticketId": 289536,
+      "from": "new",
+      "to": "solved",
+      "when": "2025-10-01T16:31:03Z",
+      "by": 20702398846868
+    },
+    {
+      "ticketId": 281068,
+      "from": "solved",
+      "to": "open",
+      "when": "2025-10-01T16:30:52Z",
+      "by": 41270513955732
+    },
+    {
+      "ticketId": 288740,
+      "from": "open",
+      "to": "pending",
+      "when": "2025-10-01T16:30:18Z",
+      "by": 20837541429524
+    },
+    {
+      "ticketId": 287899,
+      "from": "open",
+      "to": "hold",
+      "when": "2025-10-01T16:30:17Z",
+      "by": 20702390811796
+    },
+    {
+      "ticketId": 288568,
+      "from": "pending",
+      "to": "hold",
+      "when": "2025-10-01T16:29:53Z",
+      "by": 20837541429524
+    },
+    {
+      "ticketId": 288176,
+      "from": "new",
+      "to": "open",
+      "when": "2025-10-01T16:29:52Z",
+      "by": -1
+    },
+    {
+      "ticketId": 289505,
+      "from": "new",
+      "to": "closed",
+      "when": "2025-10-01T16:29:50Z",
+      "by": 20702398846868
+    },
+    {
+      "ticketId": 286559,
+      "from": "open",
+      "to": "closed",
+      "when": "2025-10-01T16:29:49Z",
+      "by": 20702398846868
+    },
+    {
+      "ticketId": 289508,
+      "from": "new",
+      "to": "open",
+      "when": "2025-10-01T16:28:37Z",
+      "by": -1
+    },
+    {
+      "ticketId": 289530,
+      "from": "new",
+      "to": "open",
+      "when": "2025-10-01T16:28:06Z",
+      "by": 20702398846868
+    },
+    {
+      "ticketId": 289507,
+      "from": "open",
+      "to": "pending",
+      "when": "2025-10-01T16:27:41Z",
+      "by": 20700138351892
+    },
+    {
+      "ticketId": 289532,
+      "from": "new",
+      "to": "solved",
+      "when": "2025-10-01T16:27:30Z",
+      "by": 20702398846868
+    },
+    {
+      "ticketId": 289512,
+      "from": "new",
+      "to": "hold",
+      "when": "2025-10-01T16:27:13Z",
+      "by": 20702456045716
+    },
+    {
+      "ticketId": 288140,
+      "from": "open",
+      "to": "pending",
+      "when": "2025-10-01T16:24:55Z",
+      "by": 20702398846868
+    },
+    {
+      "ticketId": 289513,
+      "from": "new",
+      "to": "solved",
+      "when": "2025-10-01T16:23:44Z",
+      "by": 20702456045716
+    },
+    {
+      "ticketId": 289514,
+      "from": "new",
+      "to": "solved",
+      "when": "2025-10-01T16:23:37Z",
+      "by": 20702456045716
+    },
+    {
+      "ticketId": 289515,
+      "from": "new",
+      "to": "solved",
+      "when": "2025-10-01T16:23:27Z",
+      "by": 20702456045716
+    },
+    {
+      "ticketId": 287299,
+      "from": "pending",
+      "to": "open",
+      "when": "2025-10-01T16:23:06Z",
+      "by": 40015898380052
+    },
+    {
+      "ticketId": 289456,
+      "from": "open",
+      "to": "hold",
+      "when": "2025-10-01T16:22:54Z",
+      "by": 20702390811796
+    },
+    {
+      "ticketId": 289521,
+      "from": "new",
+      "to": "closed",
+      "when": "2025-10-01T16:22:20Z",
+      "by": -1
+    },
+    {
+      "ticketId": 289510,
+      "from": "new",
+      "to": "closed",
+      "when": "2025-10-01T16:20:16Z",
+      "by": -1
+    },
+    {
+      "ticketId": 288568,
+      "from": "new",
+      "to": "pending",
+      "when": "2025-10-01T16:19:39Z",
+      "by": 20837541429524
+    },
+    {
+      "ticketId": 289522,
+      "from": "new",
+      "to": "closed",
+      "when": "2025-10-01T16:19:35Z",
+      "by": -1
+    },
+    {
+      "ticketId": 288487,
+      "from": "new",
+      "to": "pending",
+      "when": "2025-10-01T16:19:16Z",
+      "by": 20837541429524
+    },
+    {
+      "ticketId": 288140,
+      "from": "new",
+      "to": "open",
+      "when": "2025-10-01T16:19:05Z",
+      "by": -1
+    },
+    {
+      "ticketId": 285346,
+      "from": "open",
+      "to": "solved",
+      "when": "2025-10-01T16:19:02Z",
+      "by": 20702398846868
+    },
+    {
+      "ticketId": 288493,
+      "from": "new",
+      "to": "closed",
+      "when": "2025-10-01T16:18:31Z",
+      "by": 20837541429524
+    },
+    {
+      "ticketId": 289480,
+      "from": "open",
+      "to": "solved",
+      "when": "2025-10-01T16:17:58Z",
+      "by": 20702390811796
+    },
+    {
+      "ticketId": 288466,
+      "from": "pending",
+      "to": "hold",
+      "when": "2025-10-01T16:16:45Z",
+      "by": 20837541429524
+    },
+    {
+      "ticketId": 289529,
+      "from": "new",
+      "to": "open",
+      "when": "2025-10-01T16:16:17Z",
+      "by": 20709103407252
+    },
+    {
+      "ticketId": 289484,
+      "from": "open",
+      "to": "solved",
+      "when": "2025-10-01T16:15:36Z",
+      "by": 20700081012756
+    },
+    {
+      "ticketId": 289527,
+      "from": "new",
+      "to": "closed",
+      "when": "2025-10-01T16:14:27Z",
+      "by": -1
+    },
+    {
+      "ticketId": 289524,
+      "from": "new",
+      "to": "closed",
+      "when": "2025-10-01T16:13:22Z",
+      "by": -1
+    },
+    {
+      "ticketId": 282975,
+      "from": "pending",
+      "to": "open",
+      "when": "2025-10-01T16:11:28Z",
+      "by": 41359366037012
+    },
+    {
+      "ticketId": 289507,
+      "from": "new",
+      "to": "open",
+      "when": "2025-10-01T16:09:19Z",
+      "by": -1
+    },
+    {
+      "ticketId": 289503,
+      "from": "open",
+      "to": "solved",
+      "when": "2025-10-01T16:08:24Z",
+      "by": 20700138351892
+    },
+    {
+      "ticketId": 289503,
+      "from": "new",
+      "to": "open",
+      "when": "2025-10-01T16:08:00Z",
+      "by": -1
+    },
+    {
+      "ticketId": 277441,
+      "from": "open",
+      "to": "solved",
+      "when": "2025-10-01T16:07:15Z",
+      "by": 20702398846868
+    },
+    {
+      "ticketId": 288097,
+      "from": "open",
+      "to": "solved",
+      "when": "2025-10-01T16:06:53Z",
+      "by": 20702398846868
+    },
+    {
+      "ticketId": 289456,
+      "from": "hold",
+      "to": "open",
+      "when": "2025-10-01T16:06:13Z",
+      "by": 23385344083988
+    },
+    {
+      "ticketId": 289456,
+      "from": "open",
+      "to": "hold",
+      "when": "2025-10-01T16:04:40Z",
+      "by": 20702390811796
+    },
+    {
+      "ticketId": 289449,
+      "from": "open",
+      "to": "hold",
+      "when": "2025-10-01T16:03:51Z",
+      "by": 20702390811796
+    },
+    {
+      "ticketId": 277441,
+      "from": "solved",
+      "to": "open",
+      "when": "2025-10-01T16:02:36Z",
+      "by": 41059877791508
+    },
+    {
+      "ticketId": 288351,
+      "from": "pending",
+      "to": "open",
+      "when": "2025-10-01T16:00:47Z",
+      "by": 21690836331540
+    },
+    {
+      "ticketId": 277441,
+      "from": "open",
+      "to": "solved",
+      "when": "2025-10-01T15:59:42Z",
+      "by": 20702398846868
+    },
+    {
+      "ticketId": 286655,
+      "from": "pending",
+      "to": "open",
+      "when": "2025-10-01T15:55:05Z",
+      "by": 41561809486868
+    },
+    {
+      "ticketId": 288097,
+      "from": "solved",
+      "to": "open",
+      "when": "2025-10-01T15:53:22Z",
+      "by": 41677620464532
+    },
+    {
+      "ticketId": 288097,
+      "from": "open",
+      "to": "solved",
+      "when": "2025-10-01T15:51:04Z",
+      "by": 20702398846868
+    },
+    {
+      "ticketId": 285810,
+      "from": "solved",
+      "to": "open",
+      "when": "2025-10-01T15:47:24Z",
+      "by": 41569822419604
+    },
+    {
+      "ticketId": 289449,
+      "from": "hold",
+      "to": "open",
+      "when": "2025-10-01T15:47:17Z",
+      "by": 41749791416340
+    },
+    {
+      "ticketId": 285198,
+      "from": "open",
+      "to": "pending",
+      "when": "2025-10-01T15:44:18Z",
+      "by": 39097856345748
+    },
+    {
+      "ticketId": 289456,
+      "from": "hold",
+      "to": "open",
+      "when": "2025-10-01T15:43:40Z",
+      "by": 23385344083988
+    },
+    {
+      "ticketId": 288466,
+      "from": "new",
+      "to": "pending",
+      "when": "2025-10-01T15:43:07Z",
+      "by": 20837541429524
+    },
+    {
+      "ticketId": 289456,
+      "from": "open",
+      "to": "hold",
+      "when": "2025-10-01T15:42:15Z",
+      "by": 20702390811796
+    },
+    {
+      "ticketId": 289480,
+      "from": "new",
+      "to": "open",
+      "when": "2025-10-01T15:41:17Z",
+      "by": 20702390811796
+    },
+    {
+      "ticketId": 289484,
+      "from": "new",
+      "to": "open",
+      "when": "2025-10-01T15:40:06Z",
+      "by": -1
+    },
+    {
+      "ticketId": 287898,
+      "from": "open",
+      "to": "pending",
+      "when": "2025-10-01T15:38:41Z",
+      "by": 20702398846868
+    },
+    {
+      "ticketId": 287898,
+      "from": "pending",
+      "to": "open",
+      "when": "2025-10-01T15:38:20Z",
+      "by": 41657961963540
+    },
+    {
+      "ticketId": 287898,
+      "from": "open",
+      "to": "pending",
+      "when": "2025-10-01T15:37:04Z",
+      "by": 20702398846868
+    },
+    {
+      "ticketId": 288097,
+      "from": "pending",
+      "to": "open",
+      "when": "2025-10-01T15:35:14Z",
+      "by": 41677620464532
+    },
+    {
+      "ticketId": 289456,
+      "from": "hold",
+      "to": "open",
+      "when": "2025-10-01T15:32:17Z",
+      "by": 23385344083988
+    },
+    {
+      "ticketId": 288351,
+      "from": "new",
+      "to": "pending",
+      "when": "2025-10-01T15:30:19Z",
+      "by": 20837541429524
+    },
+    {
+      "ticketId": 289456,
+      "from": "open",
+      "to": "hold",
+      "when": "2025-10-01T15:29:50Z",
+      "by": 20702390811796
+    },
+    {
+      "ticketId": 289456,
+      "from": "new",
+      "to": "open",
+      "when": "2025-10-01T15:28:22Z",
+      "by": 20702390811796
+    },
+    {
+      "ticketId": 289486,
+      "from": "new",
+      "to": "solved",
+      "when": "2025-10-01T15:28:21Z",
+      "by": 20888538485524
+    },
+    {
+      "ticketId": 289449,
+      "from": "new",
+      "to": "hold",
+      "when": "2025-10-01T15:26:23Z",
+      "by": 20702390811796
+    },
+    {
+      "ticketId": 288097,
+      "from": "open",
+      "to": "pending",
+      "when": "2025-10-01T15:25:05Z",
+      "by": 20702398846868
+    },
+    {
+      "ticketId": 288097,
+      "from": "new",
+      "to": "open",
+      "when": "2025-10-01T15:24:31Z",
+      "by": 20702398846868
+    },
+    {
+      "ticketId": 281068,
+      "from": "open",
+      "to": "solved",
+      "when": "2025-10-01T15:18:37Z",
+      "by": 20700138351892
+    },
+    {
+      "ticketId": 289357,
+      "from": "open",
+      "to": "solved",
+      "when": "2025-10-01T15:17:09Z",
+      "by": 20702456045716
+    },
+    {
+      "ticketId": 289477,
+      "from": "new",
+      "to": "solved",
+      "when": "2025-10-01T15:15:13Z",
+      "by": 20747218735252
+    },
+    {
+      "ticketId": 289357,
+      "from": "solved",
+      "to": "open",
+      "when": "2025-10-01T15:13:57Z",
+      "by": 41741288122644
+    },
+    {
+      "ticketId": 289091,
+      "from": "solved",
+      "to": "open",
+      "when": "2025-10-01T15:13:27Z",
+      "by": 21325666469652
+    },
+    {
+      "ticketId": 289431,
+      "from": "new",
+      "to": "hold",
+      "when": "2025-10-01T15:13:08Z",
+      "by": 20702390811796
+    },
+    {
+      "ticketId": 289357,
+      "from": "open",
+      "to": "solved",
+      "when": "2025-10-01T15:11:57Z",
+      "by": 20702456045716
+    },
+    {
+      "ticketId": 289091,
+      "from": "open",
+      "to": "solved",
+      "when": "2025-10-01T15:01:57Z",
+      "by": 20702390811796
+    },
+    {
+      "ticketId": 289469,
+      "from": "new",
+      "to": "solved",
+      "when": "2025-10-01T15:00:33Z",
+      "by": 20747218735252
+    },
+    {
+      "ticketId": 285810,
+      "from": "open",
+      "to": "solved",
+      "when": "2025-10-01T14:53:48Z",
+      "by": 20700188817812
+    },
+    {
+      "ticketId": 288740,
+      "from": "hold",
+      "to": "open",
+      "when": "2025-10-01T14:50:29Z",
+      "by": 40903163664020
+    },
+    {
+      "ticketId": 289357,
+      "from": "solved",
+      "to": "open",
+      "when": "2025-10-01T14:47:48Z",
+      "by": 24001691390228
+    },
+    {
+      "ticketId": 289091,
+      "from": "new",
+      "to": "open",
+      "when": "2025-10-01T14:42:11Z",
+      "by": 20702390811796
+    },
+    {
+      "ticketId": 289454,
+      "from": "new",
+      "to": "solved",
+      "when": "2025-10-01T14:35:02Z",
+      "by": 20747218735252
+    },
+    {
+      "ticketId": 274864,
+      "from": "solved",
+      "to": "open",
+      "when": "2025-10-01T14:18:28Z",
+      "by": 40909479084436
+    },
+    {
+      "ticketId": 289441,
+      "from": "new",
+      "to": "solved",
+      "when": "2025-10-01T14:10:27Z",
+      "by": 20747218735252
+    },
+    {
+      "ticketId": 289435,
+      "from": "new",
+      "to": "solved",
+      "when": "2025-10-01T14:09:37Z",
+      "by": 20747218735252
+    },
+    {
+      "ticketId": 288740,
+      "from": "open",
+      "to": "hold",
+      "when": "2025-10-01T14:05:02Z",
+      "by": 20837541429524
+    },
+    {
+      "ticketId": 288723,
+      "from": "open",
+      "to": "pending",
+      "when": "2025-10-01T14:02:57Z",
+      "by": 20702398846868
+    },
+    {
+      "ticketId": 287904,
+      "from": "new",
+      "to": "open",
+      "when": "2025-10-01T13:56:53Z",
+      "by": 20700188817812
+    },
+    {
+      "ticketId": 287737,
+      "from": "new",
+      "to": "open",
+      "when": "2025-10-01T13:54:27Z",
+      "by": 20700188817812
+    },
+    {
+      "ticketId": 289422,
+      "from": "new",
+      "to": "solved",
+      "when": "2025-10-01T13:47:15Z",
+      "by": 20888538485524
+    },
+    {
+      "ticketId": 289219,
+      "from": "new",
+      "to": "open",
+      "when": "2025-10-01T13:32:47Z",
+      "by": 20700188817812
+    },
+    {
+      "ticketId": 288723,
+      "from": "solved",
+      "to": "open",
+      "when": "2025-10-01T13:32:01Z",
+      "by": 41708425284372
+    },
+    {
+      "ticketId": 270955,
+      "from": "pending",
+      "to": "open",
+      "when": "2025-10-01T13:21:47Z",
+      "by": 40661867905428
+    },
+    {
+      "ticketId": 287898,
+      "from": "pending",
+      "to": "open",
+      "when": "2025-10-01T13:21:39Z",
+      "by": 41657961963540
+    },
+    {
+      "ticketId": 287898,
+      "from": "open",
+      "to": "pending",
+      "when": "2025-10-01T13:14:18Z",
+      "by": 20702398846868
+    },
+    {
+      "ticketId": 287899,
+      "from": "new",
+      "to": "open",
+      "when": "2025-10-01T13:14:18Z",
+      "by": -1
+    },
+    {
+      "ticketId": 287898,
+      "from": "new",
+      "to": "open",
+      "when": "2025-10-01T13:12:42Z",
+      "by": -1
+    },
+    {
+      "ticketId": 274864,
+      "from": "open",
+      "to": "solved",
+      "when": "2025-10-01T13:11:49Z",
+      "by": 26806117506452
+    },
+    {
+      "ticketId": 287618,
+      "from": "open",
+      "to": "pending",
+      "when": "2025-10-01T13:06:27Z",
+      "by": 20837541429524
+    },
+    {
+      "ticketId": 287299,
+      "from": "open",
+      "to": "pending",
+      "when": "2025-10-01T12:49:01Z",
+      "by": 20702398846868
+    },
+    {
+      "ticketId": 269870,
+      "from": "open",
+      "to": "solved",
+      "when": "2025-10-01T12:37:50Z",
+      "by": 20700081012756
+    },
+    {
+      "ticketId": 287299,
+      "from": "new",
+      "to": "open",
+      "when": "2025-10-01T12:33:41Z",
+      "by": -1
+    },
+    {
+      "ticketId": 289388,
+      "from": "new",
+      "to": "solved",
+      "when": "2025-10-01T12:20:30Z",
+      "by": 20888538485524
+    },
+    {
+      "ticketId": 289357,
+      "from": "new",
+      "to": "solved",
+      "when": "2025-10-01T12:19:34Z",
+      "by": 20702456045716
+    },
+    {
+      "ticketId": 286655,
+      "from": "new",
+      "to": "pending",
+      "when": "2025-10-01T11:29:00Z",
+      "by": 20702398846868
+    },
+    {
+      "ticketId": 289373,
+      "from": "new",
+      "to": "solved",
+      "when": "2025-10-01T11:19:47Z",
+      "by": 20702398846868
+    },
+    {
+      "ticketId": 289370,
+      "from": "new",
+      "to": "solved",
+      "when": "2025-10-01T11:19:30Z",
+      "by": 20702398846868
+    },
+    {
+      "ticketId": 289368,
+      "from": "new",
+      "to": "solved",
+      "when": "2025-10-01T11:18:38Z",
+      "by": 20702398846868
+    },
+    {
+      "ticketId": 289367,
+      "from": "new",
+      "to": "solved",
+      "when": "2025-10-01T11:17:19Z",
+      "by": 20702398846868
+    },
+    {
+      "ticketId": 289364,
+      "from": "new",
+      "to": "solved",
+      "when": "2025-10-01T11:15:57Z",
+      "by": 20702398846868
+    },
+    {
+      "ticketId": 286160,
+      "from": "open",
+      "to": "pending",
+      "when": "2025-10-01T11:15:23Z",
+      "by": 20700188817812
+    },
+    {
+      "ticketId": 289361,
+      "from": "new",
+      "to": "solved",
+      "when": "2025-10-01T11:15:07Z",
+      "by": 20702398846868
+    },
+    {
+      "ticketId": 289360,
+      "from": "new",
+      "to": "solved",
+      "when": "2025-10-01T11:14:15Z",
+      "by": 20702398846868
+    },
+    {
+      "ticketId": 289035,
+      "from": "new",
+      "to": "solved",
+      "when": "2025-10-01T11:13:02Z",
+      "by": 20702398846868
+    },
+    {
+      "ticketId": 288982,
+      "from": "new",
+      "to": "solved",
+      "when": "2025-10-01T11:12:05Z",
+      "by": 20702398846868
+    },
+    {
+      "ticketId": 288740,
+      "from": "pending",
+      "to": "open",
+      "when": "2025-10-01T10:50:45Z",
+      "by": 40903163664020
+    },
+    {
+      "ticketId": 289358,
+      "from": "new",
+      "to": "solved",
+      "when": "2025-10-01T09:39:11Z",
+      "by": 20747218735252
+    },
+    {
+      "ticketId": 289356,
+      "from": "new",
+      "to": "solved",
+      "when": "2025-10-01T07:14:56Z",
+      "by": 20888538485524
+    },
+    {
+      "ticketId": 289351,
+      "from": "new",
+      "to": "solved",
+      "when": "2025-10-01T04:55:46Z",
+      "by": 20747218735252
+    },
+    {
+      "ticketId": 289348,
+      "from": "new",
+      "to": "solved",
+      "when": "2025-10-01T03:24:14Z",
+      "by": 20888538485524
+    },
+    {
+      "ticketId": 289346,
+      "from": "new",
+      "to": "solved",
+      "when": "2025-10-01T02:59:15Z",
+      "by": 20888538485524
+    },
+    {
+      "ticketId": 289345,
+      "from": "new",
+      "to": "solved",
+      "when": "2025-10-01T02:50:37Z",
+      "by": 20888538485524
+    },
+    {
+      "ticketId": 289343,
+      "from": "new",
+      "to": "solved",
+      "when": "2025-10-01T02:13:21Z",
+      "by": 20747218735252
+    },
+    {
+      "ticketId": 289335,
+      "from": "new",
+      "to": "solved",
+      "when": "2025-10-01T01:21:15Z",
+      "by": 20888538485524
+    },
+    {
+      "ticketId": 289334,
+      "from": "new",
+      "to": "solved",
+      "when": "2025-10-01T01:20:16Z",
+      "by": 20888538485524
+    },
+    {
+      "ticketId": 289333,
+      "from": "new",
+      "to": "solved",
+      "when": "2025-10-01T01:18:15Z",
+      "by": 20888538485524
+    },
+    {
+      "ticketId": 289332,
+      "from": "new",
+      "to": "solved",
+      "when": "2025-10-01T01:17:14Z",
+      "by": 20888538485524
+    },
+    {
+      "ticketId": 289328,
+      "from": "new",
+      "to": "solved",
+      "when": "2025-10-01T00:39:18Z",
+      "by": 20888538485524
+    },
+    {
+      "ticketId": 274864,
+      "from": "pending",
+      "to": "open",
+      "when": "2025-10-01T00:24:13Z",
+      "by": 40909479084436
+    },
+    {
+      "ticketId": 289324,
+      "from": "new",
+      "to": "solved",
+      "when": "2025-10-01T00:09:48Z",
+      "by": 20749761586324
+    },
+    {
+      "ticketId": 289323,
+      "from": "new",
+      "to": "solved",
+      "when": "2025-10-01T00:09:22Z",
+      "by": 20888538485524
+    },
+    {
+      "ticketId": 289322,
+      "from": "new",
+      "to": "solved",
+      "when": "2025-10-01T00:06:13Z",
+      "by": 20749761586324
+    },
+    {
+      "ticketId": 289315,
+      "from": "new",
+      "to": "solved",
+      "when": "2025-09-30T23:16:17Z",
+      "by": 20888538485524
+    },
+    {
+      "ticketId": 289309,
+      "from": "new",
+      "to": "solved",
+      "when": "2025-09-30T22:43:19Z",
+      "by": 20888538485524
+    },
+    {
+      "ticketId": 289308,
+      "from": "new",
+      "to": "solved",
+      "when": "2025-09-30T22:43:03Z",
+      "by": 20747218735252
+    },
+    {
+      "ticketId": 289305,
+      "from": "new",
+      "to": "solved",
+      "when": "2025-09-30T22:42:33Z",
+      "by": 20747218735252
+    },
+    {
+      "ticketId": 289303,
+      "from": "new",
+      "to": "solved",
+      "when": "2025-09-30T22:42:30Z",
+      "by": 20747218735252
+    },
+    {
+      "ticketId": 289302,
+      "from": "new",
+      "to": "solved",
+      "when": "2025-09-30T22:42:20Z",
+      "by": 20747218735252
+    },
+    {
+      "ticketId": 289300,
+      "from": "new",
+      "to": "solved",
+      "when": "2025-09-30T22:42:20Z",
+      "by": 20747218735252
+    },
+    {
+      "ticketId": 289274,
+      "from": "new",
+      "to": "solved",
+      "when": "2025-09-30T21:59:41Z",
+      "by": 20747218735252
+    },
+    {
+      "ticketId": 289261,
+      "from": "new",
+      "to": "solved",
+      "when": "2025-09-30T21:55:40Z",
+      "by": 20747218735252
+    },
+    {
+      "ticketId": 289258,
+      "from": "new",
+      "to": "solved",
+      "when": "2025-09-30T21:55:31Z",
+      "by": 20747218735252
+    },
+    {
+      "ticketId": 289257,
+      "from": "new",
+      "to": "solved",
+      "when": "2025-09-30T21:55:30Z",
+      "by": 20747218735252
+    },
+    {
+      "ticketId": 289252,
+      "from": "new",
+      "to": "solved",
+      "when": "2025-09-30T21:50:15Z",
+      "by": 20888538485524
+    },
+    {
+      "ticketId": 289250,
+      "from": "new",
+      "to": "solved",
+      "when": "2025-09-30T21:49:11Z",
+      "by": 20888538485524
+    },
+    {
+      "ticketId": 289248,
+      "from": "new",
+      "to": "solved",
+      "when": "2025-09-30T21:47:08Z",
+      "by": 20888538485524
+    },
+    {
+      "ticketId": 289247,
+      "from": "new",
+      "to": "solved",
+      "when": "2025-09-30T21:46:15Z",
+      "by": 20747218735252
+    },
+    {
+      "ticketId": 289241,
+      "from": "new",
+      "to": "solved",
+      "when": "2025-09-30T21:42:34Z",
+      "by": 20888538485524
+    },
+    {
+      "ticketId": 289236,
+      "from": "new",
+      "to": "solved",
+      "when": "2025-09-30T21:35:09Z",
+      "by": 20888538485524
+    },
+    {
+      "ticketId": 289234,
+      "from": "new",
+      "to": "solved",
+      "when": "2025-09-30T21:32:21Z",
+      "by": 20888538485524
+    },
+    {
+      "ticketId": 289230,
+      "from": "new",
+      "to": "solved",
+      "when": "2025-09-30T21:30:25Z",
+      "by": 20888538485524
+    },
+    {
+      "ticketId": 289229,
+      "from": "new",
+      "to": "solved",
+      "when": "2025-09-30T21:29:05Z",
+      "by": 20747218735252
+    },
+    {
+      "ticketId": 289223,
+      "from": "new",
+      "to": "solved",
+      "when": "2025-09-30T21:27:15Z",
+      "by": 20888538485524
+    },
+    {
+      "ticketId": 289222,
+      "from": "new",
+      "to": "solved",
+      "when": "2025-09-30T21:25:39Z",
+      "by": 20888538485524
+    },
+    {
+      "ticketId": 289217,
+      "from": "new",
+      "to": "solved",
+      "when": "2025-09-30T21:21:19Z",
+      "by": 20888538485524
+    },
+    {
+      "ticketId": 289211,
+      "from": "new",
+      "to": "solved",
+      "when": "2025-09-30T21:10:17Z",
+      "by": 20888538485524
+    },
+    {
+      "ticketId": 289210,
+      "from": "new",
+      "to": "solved",
+      "when": "2025-09-30T21:06:55Z",
+      "by": 20888538485524
+    },
+    {
+      "ticketId": 288740,
+      "from": "new",
+      "to": "pending",
+      "when": "2025-09-30T21:06:37Z",
+      "by": 20837541429524
+    },
+    {
+      "ticketId": 287618,
+      "from": "pending",
+      "to": "open",
+      "when": "2025-09-30T20:57:42Z",
+      "by": 20956160611732
+    },
+    {
+      "ticketId": 289200,
+      "from": "new",
+      "to": "solved",
+      "when": "2025-09-30T20:52:23Z",
+      "by": 20747218735252
+    },
+    {
+      "ticketId": 289196,
+      "from": "new",
+      "to": "solved",
+      "when": "2025-09-30T20:51:23Z",
+      "by": 20747218735252
+    },
+    {
+      "ticketId": 289189,
+      "from": "new",
+      "to": "solved",
+      "when": "2025-09-30T20:48:13Z",
+      "by": 20888538485524
+    },
+    {
+      "ticketId": 289188,
+      "from": "new",
+      "to": "solved",
+      "when": "2025-09-30T20:47:14Z",
+      "by": 20888538485524
+    },
+    {
+      "ticketId": 289186,
+      "from": "new",
+      "to": "solved",
+      "when": "2025-09-30T20:45:12Z",
+      "by": 20888538485524
+    },
+    {
+      "ticketId": 287618,
+      "from": "new",
+      "to": "pending",
+      "when": "2025-09-30T20:31:50Z",
+      "by": 20837541429524
+    },
+    {
+      "ticketId": 289178,
+      "from": "new",
+      "to": "solved",
+      "when": "2025-09-30T20:30:41Z",
+      "by": 20747218735252
+    },
+    {
+      "ticketId": 289170,
+      "from": "new",
+      "to": "solved",
+      "when": "2025-09-30T20:28:11Z",
+      "by": 20888538485524
+    },
+    {
+      "ticketId": 289166,
+      "from": "new",
+      "to": "solved",
+      "when": "2025-09-30T20:25:19Z",
+      "by": 20888538485524
+    },
+    {
+      "ticketId": 289161,
+      "from": "new",
+      "to": "solved",
+      "when": "2025-09-30T20:15:13Z",
+      "by": 20888538485524
+    },
+    {
+      "ticketId": 289160,
+      "from": "new",
+      "to": "solved",
+      "when": "2025-09-30T20:15:11Z",
+      "by": 20888538485524
+    },
+    {
+      "ticketId": 289155,
+      "from": "new",
+      "to": "solved",
+      "when": "2025-09-30T20:11:08Z",
+      "by": 20747218735252
+    },
+    {
+      "ticketId": 282975,
+      "from": "open",
+      "to": "pending",
+      "when": "2025-09-30T20:06:39Z",
+      "by": 39097856345748
+    },
+    {
+      "ticketId": 289063,
+      "from": "open",
+      "to": "pending",
+      "when": "2025-09-30T20:04:16Z",
+      "by": 26806117506452
+    },
+    {
+      "ticketId": 289143,
+      "from": "new",
+      "to": "solved",
+      "when": "2025-09-30T20:01:14Z",
+      "by": 20888538485524
+    },
+    {
+      "ticketId": 289126,
+      "from": "new",
+      "to": "solved",
+      "when": "2025-09-30T19:40:38Z",
+      "by": 20888538485524
+    },
+    {
+      "ticketId": 289124,
+      "from": "new",
+      "to": "solved",
+      "when": "2025-09-30T19:39:08Z",
+      "by": 20888538485524
+    },
+    {
+      "ticketId": 289063,
+      "from": "new",
+      "to": "open",
+      "when": "2025-09-30T19:35:23Z",
+      "by": -1
+    },
+    {
+      "ticketId": 289119,
+      "from": "new",
+      "to": "solved",
+      "when": "2025-09-30T19:29:27Z",
+      "by": 20888538485524
+    },
+    {
+      "ticketId": 284132,
+      "from": "hold",
+      "to": "solved",
+      "when": "2025-09-30T19:22:58Z",
+      "by": 20702390811796
+    },
+    {
+      "ticketId": 289103,
+      "from": "new",
+      "to": "solved",
+      "when": "2025-09-30T19:14:13Z",
+      "by": 20888538485524
+    },
+    {
+      "ticketId": 289102,
+      "from": "new",
+      "to": "solved",
+      "when": "2025-09-30T19:13:11Z",
+      "by": 20749761586324
+    },
+    {
+      "ticketId": 286559,
+      "from": "new",
+      "to": "open",
+      "when": "2025-09-30T19:09:17Z",
+      "by": -1
+    },
+    {
+      "ticketId": 285198,
+      "from": "pending",
+      "to": "open",
+      "when": "2025-09-30T19:01:37Z",
+      "by": 41357786250772
+    },
+    {
+      "ticketId": 289074,
+      "from": "new",
+      "to": "solved",
+      "when": "2025-09-30T18:51:50Z",
+      "by": 20747218735252
+    },
+    {
+      "ticketId": 289057,
+      "from": "new",
+      "to": "solved",
+      "when": "2025-09-30T18:41:21Z",
+      "by": 20888538485524
+    },
+    {
+      "ticketId": 285198,
+      "from": "open",
+      "to": "pending",
+      "when": "2025-09-30T18:36:47Z",
+      "by": 39097856345748
+    },
+    {
+      "ticketId": 288723,
+      "from": "open",
+      "to": "solved",
+      "when": "2025-09-30T18:19:10Z",
+      "by": 20702398846868
+    },
+    {
+      "ticketId": 289032,
+      "from": "new",
+      "to": "solved",
+      "when": "2025-09-30T18:18:56Z",
+      "by": 20749761586324
+    },
+    {
+      "ticketId": 289031,
+      "from": "new",
+      "to": "solved",
+      "when": "2025-09-30T18:18:40Z",
+      "by": 20749761586324
+    },
+    {
+      "ticketId": 289028,
+      "from": "new",
+      "to": "solved",
+      "when": "2025-09-30T18:18:33Z",
+      "by": 20749761586324
+    },
+    {
+      "ticketId": 289020,
+      "from": "new",
+      "to": "solved",
+      "when": "2025-09-30T18:15:59Z",
+      "by": 20749761586324
+    }
+  ],
+  "timeframe": "Last 24 hours",
+  "analysisDate": "2025-10-01T18:13:16.526Z",
+  "rawTransitions": [
+    {
+      "ticketId": 288869,
+      "fromStatus": "new",
+      "toStatus": "open",
+      "changedAt": "2025-10-01T18:10:50Z",
+      "changedBy": 20705690271636,
+      "auditId": 41759073502740
+    },
+    {
+      "ticketId": 275261,
+      "fromStatus": "hold",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T18:10:23Z",
+      "changedBy": 20837541429524,
+      "auditId": 41759097913748
+    },
+    {
+      "ticketId": 289602,
+      "fromStatus": "new",
+      "toStatus": "open",
+      "changedAt": "2025-10-01T18:10:21Z",
+      "changedBy": -1,
+      "auditId": 41759057632148
+    },
+    {
+      "ticketId": 289316,
+      "fromStatus": "new",
+      "toStatus": "open",
+      "changedAt": "2025-10-01T17:08:43Z",
+      "changedBy": 20702390811796,
+      "auditId": 41756381764372
+    },
+    {
+      "ticketId": 289316,
+      "fromStatus": "open",
+      "toStatus": "hold",
+      "changedAt": "2025-10-01T18:10:18Z",
+      "changedBy": 20702390811796,
+      "auditId": 41759064216084
+    },
+    {
+      "ticketId": 286163,
+      "fromStatus": "hold",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T18:09:13Z",
+      "changedBy": 20837541429524,
+      "auditId": 41759005741076
+    },
+    {
+      "ticketId": 289611,
+      "fromStatus": "new",
+      "toStatus": "closed",
+      "changedAt": "2025-10-01T18:08:54Z",
+      "changedBy": -1,
+      "auditId": 41759003616276
+    },
+    {
+      "ticketId": 289592,
+      "fromStatus": "new",
+      "toStatus": "open",
+      "changedAt": "2025-10-01T17:49:03Z",
+      "changedBy": -1,
+      "auditId": 41758018892052
+    },
+    {
+      "ticketId": 289592,
+      "fromStatus": "open",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T18:08:53Z",
+      "changedBy": 20700138351892,
+      "auditId": 41759011797396
+    },
+    {
+      "ticketId": 289630,
+      "fromStatus": "new",
+      "toStatus": "closed",
+      "changedAt": "2025-10-01T18:08:36Z",
+      "changedBy": -1,
+      "auditId": 41758983553044
+    },
+    {
+      "ticketId": 285851,
+      "fromStatus": "hold",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T18:07:39Z",
+      "changedBy": 20837541429524,
+      "auditId": 41758930448660
+    },
+    {
+      "ticketId": 288816,
+      "fromStatus": "new",
+      "toStatus": "hold",
+      "changedAt": "2025-10-01T18:07:34Z",
+      "changedBy": 20705690271636,
+      "auditId": 41758925868436
+    },
+    {
+      "ticketId": 287920,
+      "fromStatus": "solved",
+      "toStatus": "open",
+      "changedAt": "2025-10-01T18:07:09Z",
+      "changedBy": 24099144674196,
+      "auditId": 41758922594068
+    },
+    {
+      "ticketId": 285353,
+      "fromStatus": "hold",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T17:59:10Z",
+      "changedBy": 20837541429524,
+      "auditId": 41758437798676
+    },
+    {
+      "ticketId": 285353,
+      "fromStatus": "solved",
+      "toStatus": "open",
+      "changedAt": "2025-10-01T18:05:04Z",
+      "changedBy": 41501087705236,
+      "auditId": 41758835173396
+    },
+    {
+      "ticketId": 289629,
+      "fromStatus": "new",
+      "toStatus": "open",
+      "changedAt": "2025-10-01T18:04:48Z",
+      "changedBy": 20709103407252,
+      "auditId": 41758787603988
+    },
+    {
+      "ticketId": 289620,
+      "fromStatus": "new",
+      "toStatus": "closed",
+      "changedAt": "2025-10-01T18:04:42Z",
+      "changedBy": -1,
+      "auditId": 41758802669588
+    },
+    {
+      "ticketId": 283005,
+      "fromStatus": "solved",
+      "toStatus": "open",
+      "changedAt": "2025-10-01T18:03:10Z",
+      "changedBy": 24099144674196,
+      "auditId": 41758702910100
+    },
+    {
+      "ticketId": 283978,
+      "fromStatus": "solved",
+      "toStatus": "open",
+      "changedAt": "2025-10-01T18:03:09Z",
+      "changedBy": 24099144674196,
+      "auditId": 41758702689172
+    },
+    {
+      "ticketId": 289628,
+      "fromStatus": "new",
+      "toStatus": "closed",
+      "changedAt": "2025-10-01T18:03:06Z",
+      "changedBy": -1,
+      "auditId": 41758717624852
+    },
+    {
+      "ticketId": 273828,
+      "fromStatus": "solved",
+      "toStatus": "open",
+      "changedAt": "2025-10-01T18:02:24Z",
+      "changedBy": 26999329713300,
+      "auditId": 41758607333268
+    },
+    {
+      "ticketId": 288334,
+      "fromStatus": "new",
+      "toStatus": "open",
+      "changedAt": "2025-10-01T17:22:15Z",
+      "changedBy": -1,
+      "auditId": 41756905236500
+    },
+    {
+      "ticketId": 287803,
+      "fromStatus": "solved",
+      "toStatus": "open",
+      "changedAt": "2025-10-01T18:02:08Z",
+      "changedBy": 24099144674196,
+      "auditId": 41758611696404
+    },
+    {
+      "ticketId": 287314,
+      "fromStatus": "solved",
+      "toStatus": "open",
+      "changedAt": "2025-10-01T18:02:06Z",
+      "changedBy": 24099144674196,
+      "auditId": 41758634449940
+    },
+    {
+      "ticketId": 289518,
+      "fromStatus": "new",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T18:01:51Z",
+      "changedBy": -1,
+      "auditId": 41758587226772
+    },
+    {
+      "ticketId": 285586,
+      "fromStatus": "hold",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T18:01:40Z",
+      "changedBy": 20837541429524,
+      "auditId": 41758584471828
+    },
+    {
+      "ticketId": 286674,
+      "fromStatus": "pending",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T18:01:38Z",
+      "changedBy": -1,
+      "auditId": 41758566923028
+    },
+    {
+      "ticketId": 282211,
+      "fromStatus": "pending",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T18:01:38Z",
+      "changedBy": -1,
+      "auditId": 41758583860244
+    },
+    {
+      "ticketId": 289473,
+      "fromStatus": "new",
+      "toStatus": "closed",
+      "changedAt": "2025-10-01T18:01:37Z",
+      "changedBy": -1,
+      "auditId": 41758583497364
+    },
+    {
+      "ticketId": 289474,
+      "fromStatus": "new",
+      "toStatus": "closed",
+      "changedAt": "2025-10-01T18:01:36Z",
+      "changedBy": -1,
+      "auditId": 41758583238548
+    },
+    {
+      "ticketId": 289494,
+      "fromStatus": "new",
+      "toStatus": "closed",
+      "changedAt": "2025-10-01T18:01:35Z",
+      "changedBy": -1,
+      "auditId": 41758549330708
+    },
+    {
+      "ticketId": 289493,
+      "fromStatus": "new",
+      "toStatus": "closed",
+      "changedAt": "2025-10-01T18:01:35Z",
+      "changedBy": -1,
+      "auditId": 41758583082004
+    },
+    {
+      "ticketId": 289509,
+      "fromStatus": "new",
+      "toStatus": "closed",
+      "changedAt": "2025-10-01T18:01:34Z",
+      "changedBy": -1,
+      "auditId": 41758549154068
+    },
+    {
+      "ticketId": 288782,
+      "fromStatus": "new",
+      "toStatus": "pending",
+      "changedAt": "2025-10-01T17:59:38Z",
+      "changedBy": 20705690271636,
+      "auditId": 41758452053908
+    },
+    {
+      "ticketId": 282975,
+      "fromStatus": "open",
+      "toStatus": "pending",
+      "changedAt": "2025-09-30T20:06:39Z",
+      "changedBy": 39097856345748,
+      "auditId": 41724882389524
+    },
+    {
+      "ticketId": 282975,
+      "fromStatus": "pending",
+      "toStatus": "open",
+      "changedAt": "2025-10-01T16:11:28Z",
+      "changedBy": 41359366037012,
+      "auditId": 41754139898004
+    },
+    {
+      "ticketId": 282975,
+      "fromStatus": "open",
+      "toStatus": "pending",
+      "changedAt": "2025-10-01T17:59:28Z",
+      "changedBy": 39097856345748,
+      "auditId": 41758439964564
+    },
+    {
+      "ticketId": 289604,
+      "fromStatus": "new",
+      "toStatus": "closed",
+      "changedAt": "2025-10-01T17:58:43Z",
+      "changedBy": -1,
+      "auditId": 41758368614804
+    },
+    {
+      "ticketId": 288351,
+      "fromStatus": "new",
+      "toStatus": "pending",
+      "changedAt": "2025-10-01T15:30:19Z",
+      "changedBy": 20837541429524,
+      "auditId": 41752398967444
+    },
+    {
+      "ticketId": 288351,
+      "fromStatus": "pending",
+      "toStatus": "open",
+      "changedAt": "2025-10-01T16:00:47Z",
+      "changedBy": 21690836331540,
+      "auditId": 41753609939092
+    },
+    {
+      "ticketId": 288351,
+      "fromStatus": "open",
+      "toStatus": "pending",
+      "changedAt": "2025-10-01T17:58:26Z",
+      "changedBy": 20837541429524,
+      "auditId": 41758397918100
+    },
+    {
+      "ticketId": 288776,
+      "fromStatus": "new",
+      "toStatus": "closed",
+      "changedAt": "2025-10-01T17:58:04Z",
+      "changedBy": 20705690271636,
+      "auditId": 41758328955668
+    },
+    {
+      "ticketId": 287618,
+      "fromStatus": "new",
+      "toStatus": "pending",
+      "changedAt": "2025-09-30T20:31:50Z",
+      "changedBy": 20837541429524,
+      "auditId": 41725857967508
+    },
+    {
+      "ticketId": 287618,
+      "fromStatus": "pending",
+      "toStatus": "open",
+      "changedAt": "2025-09-30T20:57:42Z",
+      "changedBy": 20956160611732,
+      "auditId": 41726916402452
+    },
+    {
+      "ticketId": 287618,
+      "fromStatus": "open",
+      "toStatus": "pending",
+      "changedAt": "2025-10-01T13:06:27Z",
+      "changedBy": 20837541429524,
+      "auditId": 41746936731156
+    },
+    {
+      "ticketId": 287618,
+      "fromStatus": "pending",
+      "toStatus": "open",
+      "changedAt": "2025-10-01T17:02:24Z",
+      "changedBy": 20956160611732,
+      "auditId": 41756084771092
+    },
+    {
+      "ticketId": 287618,
+      "fromStatus": "open",
+      "toStatus": "pending",
+      "changedAt": "2025-10-01T17:57:28Z",
+      "changedBy": 20837541429524,
+      "auditId": 41758349225364
+    },
+    {
+      "ticketId": 286526,
+      "fromStatus": "pending",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T17:12:46Z",
+      "changedBy": 20837541429524,
+      "auditId": 41756508475668
+    },
+    {
+      "ticketId": 286526,
+      "fromStatus": "solved",
+      "toStatus": "open",
+      "changedAt": "2025-10-01T17:13:08Z",
+      "changedBy": 30115496168212,
+      "auditId": 41756561295380
+    },
+    {
+      "ticketId": 286526,
+      "fromStatus": "open",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T17:57:09Z",
+      "changedBy": 20837541429524,
+      "auditId": 41758287798420
+    },
+    {
+      "ticketId": 289449,
+      "fromStatus": "new",
+      "toStatus": "hold",
+      "changedAt": "2025-10-01T15:26:23Z",
+      "changedBy": 20702390811796,
+      "auditId": 41752279820948
+    },
+    {
+      "ticketId": 289449,
+      "fromStatus": "hold",
+      "toStatus": "open",
+      "changedAt": "2025-10-01T15:47:17Z",
+      "changedBy": 41749791416340,
+      "auditId": 41753065726484
+    },
+    {
+      "ticketId": 289449,
+      "fromStatus": "open",
+      "toStatus": "hold",
+      "changedAt": "2025-10-01T16:03:51Z",
+      "changedBy": 20702390811796,
+      "auditId": 41753826737300
+    },
+    {
+      "ticketId": 289449,
+      "fromStatus": "hold",
+      "toStatus": "open",
+      "changedAt": "2025-10-01T17:51:43Z",
+      "changedBy": 41749791416340,
+      "auditId": 41758087838356
+    },
+    {
+      "ticketId": 289449,
+      "fromStatus": "open",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T17:56:36Z",
+      "changedBy": 20702390811796,
+      "auditId": 41758309502996
+    },
+    {
+      "ticketId": 289357,
+      "fromStatus": "new",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T12:19:34Z",
+      "changedBy": 20702456045716,
+      "auditId": 41745611562004
+    },
+    {
+      "ticketId": 289357,
+      "fromStatus": "solved",
+      "toStatus": "open",
+      "changedAt": "2025-10-01T14:47:48Z",
+      "changedBy": 24001691390228,
+      "auditId": 41750689949332
+    },
+    {
+      "ticketId": 289357,
+      "fromStatus": "open",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T15:11:57Z",
+      "changedBy": 20702456045716,
+      "auditId": 41751667251732
+    },
+    {
+      "ticketId": 289357,
+      "fromStatus": "solved",
+      "toStatus": "open",
+      "changedAt": "2025-10-01T15:13:57Z",
+      "changedBy": 41741288122644,
+      "auditId": 41751798902676
+    },
+    {
+      "ticketId": 289357,
+      "fromStatus": "open",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T15:17:09Z",
+      "changedBy": 20702456045716,
+      "auditId": 41751920356884
+    },
+    {
+      "ticketId": 289357,
+      "fromStatus": "solved",
+      "toStatus": "open",
+      "changedAt": "2025-10-01T17:47:09Z",
+      "changedBy": 24001691390228,
+      "auditId": 41757972673172
+    },
+    {
+      "ticketId": 278660,
+      "fromStatus": "hold",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T17:54:16Z",
+      "changedBy": 20705690271636,
+      "auditId": 41758217985300
+    },
+    {
+      "ticketId": 287898,
+      "fromStatus": "new",
+      "toStatus": "open",
+      "changedAt": "2025-10-01T13:12:42Z",
+      "changedBy": -1,
+      "auditId": 41747112319380
+    },
+    {
+      "ticketId": 287898,
+      "fromStatus": "open",
+      "toStatus": "pending",
+      "changedAt": "2025-10-01T13:14:18Z",
+      "changedBy": 20702398846868,
+      "auditId": 41747156707476
+    },
+    {
+      "ticketId": 287898,
+      "fromStatus": "pending",
+      "toStatus": "open",
+      "changedAt": "2025-10-01T13:21:39Z",
+      "changedBy": 41657961963540,
+      "auditId": 41747422802452
+    },
+    {
+      "ticketId": 287898,
+      "fromStatus": "open",
+      "toStatus": "pending",
+      "changedAt": "2025-10-01T15:37:04Z",
+      "changedBy": 20702398846868,
+      "auditId": 41752673852436
+    },
+    {
+      "ticketId": 287898,
+      "fromStatus": "pending",
+      "toStatus": "open",
+      "changedAt": "2025-10-01T15:38:20Z",
+      "changedBy": 41657961963540,
+      "auditId": 41752710061844
+    },
+    {
+      "ticketId": 287898,
+      "fromStatus": "open",
+      "toStatus": "pending",
+      "changedAt": "2025-10-01T15:38:41Z",
+      "changedBy": 20702398846868,
+      "auditId": 41752762501908
+    },
+    {
+      "ticketId": 287898,
+      "fromStatus": "pending",
+      "toStatus": "open",
+      "changedAt": "2025-10-01T17:53:47Z",
+      "changedBy": 41657961963540,
+      "auditId": 41758198719764
+    },
+    {
+      "ticketId": 288550,
+      "fromStatus": "open",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T17:52:57Z",
+      "changedBy": 32309607652116,
+      "auditId": 41758129607700
+    },
+    {
+      "ticketId": 288648,
+      "fromStatus": "new",
+      "toStatus": "hold",
+      "changedAt": "2025-10-01T17:52:12Z",
+      "changedBy": 20705690271636,
+      "auditId": 41758104743060
+    },
+    {
+      "ticketId": 284132,
+      "fromStatus": "hold",
+      "toStatus": "solved",
+      "changedAt": "2025-09-30T19:22:58Z",
+      "changedBy": 20702390811796,
+      "auditId": 41722989936148
+    },
+    {
+      "ticketId": 289613,
+      "fromStatus": "new",
+      "toStatus": "closed",
+      "changedAt": "2025-10-01T17:50:12Z",
+      "changedBy": -1,
+      "auditId": 41758064403732
+    },
+    {
+      "ticketId": 274864,
+      "fromStatus": "pending",
+      "toStatus": "open",
+      "changedAt": "2025-10-01T00:24:13Z",
+      "changedBy": 40909479084436,
+      "auditId": 41733749451028
+    },
+    {
+      "ticketId": 274864,
+      "fromStatus": "open",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T13:11:49Z",
+      "changedBy": 26806117506452,
+      "auditId": 41747106026004
+    },
+    {
+      "ticketId": 274864,
+      "fromStatus": "solved",
+      "toStatus": "open",
+      "changedAt": "2025-10-01T14:18:28Z",
+      "changedBy": 40909479084436,
+      "auditId": 41749480981140
+    },
+    {
+      "ticketId": 274864,
+      "fromStatus": "open",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T17:49:40Z",
+      "changedBy": 26806117506452,
+      "auditId": 41758055477652
+    },
+    {
+      "ticketId": 289600,
+      "fromStatus": "new",
+      "toStatus": "closed",
+      "changedAt": "2025-10-01T17:49:12Z",
+      "changedBy": -1,
+      "auditId": 41758040353940
+    },
+    {
+      "ticketId": 289570,
+      "fromStatus": "new",
+      "toStatus": "open",
+      "changedAt": "2025-10-01T17:26:55Z",
+      "changedBy": -1,
+      "auditId": 41757134250132
+    },
+    {
+      "ticketId": 289570,
+      "fromStatus": "open",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T17:48:50Z",
+      "changedBy": 20700138351892,
+      "auditId": 41758000161684
+    },
+    {
+      "ticketId": 289219,
+      "fromStatus": "new",
+      "toStatus": "open",
+      "changedAt": "2025-10-01T13:32:47Z",
+      "changedBy": 20700188817812,
+      "auditId": 41747822342420
+    },
+    {
+      "ticketId": 289219,
+      "fromStatus": "open",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T17:48:46Z",
+      "changedBy": 20700188817812,
+      "auditId": 41758033048468
+    },
+    {
+      "ticketId": 289445,
+      "fromStatus": "new",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T17:48:31Z",
+      "changedBy": 20702390811796,
+      "auditId": 41757986346132
+    },
+    {
+      "ticketId": 289540,
+      "fromStatus": "new",
+      "toStatus": "open",
+      "changedAt": "2025-10-01T17:10:55Z",
+      "changedBy": -1,
+      "auditId": 41756471300372
+    },
+    {
+      "ticketId": 289540,
+      "fromStatus": "open",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T17:48:23Z",
+      "changedBy": 26806117506452,
+      "auditId": 41758014752916
+    },
+    {
+      "ticketId": 289608,
+      "fromStatus": "new",
+      "toStatus": "closed",
+      "changedAt": "2025-10-01T17:47:44Z",
+      "changedBy": -1,
+      "auditId": 41757960314260
+    },
+    {
+      "ticketId": 289597,
+      "fromStatus": "new",
+      "toStatus": "closed",
+      "changedAt": "2025-10-01T17:46:46Z",
+      "changedBy": -1,
+      "auditId": 41757942311700
+    },
+    {
+      "ticketId": 289606,
+      "fromStatus": "new",
+      "toStatus": "closed",
+      "changedAt": "2025-10-01T17:44:45Z",
+      "changedBy": -1,
+      "auditId": 41757850259092
+    },
+    {
+      "ticketId": 289382,
+      "fromStatus": "new",
+      "toStatus": "open",
+      "changedAt": "2025-10-01T17:43:02Z",
+      "changedBy": 32309607652116,
+      "auditId": 41757792349844
+    },
+    {
+      "ticketId": 289603,
+      "fromStatus": "new",
+      "toStatus": "closed",
+      "changedAt": "2025-10-01T17:42:34Z",
+      "changedBy": -1,
+      "auditId": 41757781106964
+    },
+    {
+      "ticketId": 289599,
+      "fromStatus": "new",
+      "toStatus": "open",
+      "changedAt": "2025-10-01T17:42:02Z",
+      "changedBy": 32309607652116,
+      "auditId": 41757761229972
+    },
+    {
+      "ticketId": 288080,
+      "fromStatus": "hold",
+      "toStatus": "open",
+      "changedAt": "2025-10-01T16:50:29Z",
+      "changedBy": 38199745993108,
+      "auditId": 41755616671124
+    },
+    {
+      "ticketId": 288080,
+      "fromStatus": "open",
+      "toStatus": "hold",
+      "changedAt": "2025-10-01T17:03:30Z",
+      "changedBy": 20702456045716,
+      "auditId": 41756115291924
+    },
+    {
+      "ticketId": 288080,
+      "fromStatus": "hold",
+      "toStatus": "open",
+      "changedAt": "2025-10-01T17:21:59Z",
+      "changedBy": 38293641376404,
+      "auditId": 41756900352148
+    },
+    {
+      "ticketId": 288080,
+      "fromStatus": "open",
+      "toStatus": "hold",
+      "changedAt": "2025-10-01T17:41:44Z",
+      "changedBy": 20702456045716,
+      "auditId": 41757741101204
+    },
+    {
+      "ticketId": 289601,
+      "fromStatus": "new",
+      "toStatus": "closed",
+      "changedAt": "2025-10-01T17:41:13Z",
+      "changedBy": 41293515843988,
+      "auditId": 41757713067028
+    },
+    {
+      "ticketId": 289585,
+      "fromStatus": "new",
+      "toStatus": "closed",
+      "changedAt": "2025-10-01T17:40:08Z",
+      "changedBy": -1,
+      "auditId": 41757648309652
+    },
+    {
+      "ticketId": 278045,
+      "fromStatus": "hold",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T17:39:04Z",
+      "changedBy": 20702390811796,
+      "auditId": 41757635970964
+    },
+    {
+      "ticketId": 286160,
+      "fromStatus": "open",
+      "toStatus": "pending",
+      "changedAt": "2025-10-01T11:15:23Z",
+      "changedBy": 20700188817812,
+      "auditId": 41744266239252
+    },
+    {
+      "ticketId": 286160,
+      "fromStatus": "pending",
+      "toStatus": "open",
+      "changedAt": "2025-10-01T17:37:41Z",
+      "changedBy": 41535837074708,
+      "auditId": 41757560138772
+    },
+    {
+      "ticketId": 288426,
+      "fromStatus": "new",
+      "toStatus": "open",
+      "changedAt": "2025-10-01T17:36:18Z",
+      "changedBy": -1,
+      "auditId": 41757466671124
+    },
+    {
+      "ticketId": 289596,
+      "fromStatus": "new",
+      "toStatus": "closed",
+      "changedAt": "2025-10-01T17:35:32Z",
+      "changedBy": -1,
+      "auditId": 41757468438292
+    },
+    {
+      "ticketId": 289063,
+      "fromStatus": "new",
+      "toStatus": "open",
+      "changedAt": "2025-09-30T19:35:23Z",
+      "changedBy": -1,
+      "auditId": 41723521245716
+    },
+    {
+      "ticketId": 289063,
+      "fromStatus": "open",
+      "toStatus": "pending",
+      "changedAt": "2025-09-30T20:04:16Z",
+      "changedBy": 26806117506452,
+      "auditId": 41724781100820
+    },
+    {
+      "ticketId": 289063,
+      "fromStatus": "pending",
+      "toStatus": "open",
+      "changedAt": "2025-10-01T17:34:08Z",
+      "changedBy": 41574282127508,
+      "auditId": 41757382552340
+    },
+    {
+      "ticketId": 289431,
+      "fromStatus": "new",
+      "toStatus": "hold",
+      "changedAt": "2025-10-01T15:13:08Z",
+      "changedBy": 20702390811796,
+      "auditId": 41751726560404
+    },
+    {
+      "ticketId": 289534,
+      "fromStatus": "new",
+      "toStatus": "open",
+      "changedAt": "2025-10-01T16:51:18Z",
+      "changedBy": -1,
+      "auditId": 41755655495188
+    },
+    {
+      "ticketId": 289534,
+      "fromStatus": "open",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T17:29:05Z",
+      "changedBy": 20700081012756,
+      "auditId": 41757200170516
+    },
+    {
+      "ticketId": 285421,
+      "fromStatus": "hold",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T17:28:17Z",
+      "changedBy": 20837541429524,
+      "auditId": 41757176498068
+    },
+    {
+      "ticketId": 289580,
+      "fromStatus": "new",
+      "toStatus": "closed",
+      "changedAt": "2025-10-01T17:27:55Z",
+      "changedBy": -1,
+      "auditId": 41757157813780
+    },
+    {
+      "ticketId": 288318,
+      "fromStatus": "new",
+      "toStatus": "open",
+      "changedAt": "2025-10-01T17:16:38Z",
+      "changedBy": -1,
+      "auditId": 41756652575124
+    },
+    {
+      "ticketId": 288318,
+      "fromStatus": "open",
+      "toStatus": "pending",
+      "changedAt": "2025-10-01T17:22:15Z",
+      "changedBy": 20702398846868,
+      "auditId": 41756891165844
+    },
+    {
+      "ticketId": 285352,
+      "fromStatus": "hold",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T17:27:16Z",
+      "changedBy": 20837541429524,
+      "auditId": 41757087995156
+    },
+    {
+      "ticketId": 289557,
+      "fromStatus": "new",
+      "toStatus": "open",
+      "changedAt": "2025-10-01T17:23:52Z",
+      "changedBy": -1,
+      "auditId": 41756998488980
+    },
+    {
+      "ticketId": 289557,
+      "fromStatus": "open",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T17:26:26Z",
+      "changedBy": 20700138351892,
+      "auditId": 41757114904596
+    },
+    {
+      "ticketId": 289546,
+      "fromStatus": "new",
+      "toStatus": "open",
+      "changedAt": "2025-10-01T17:11:22Z",
+      "changedBy": -1,
+      "auditId": 41756481327508
+    },
+    {
+      "ticketId": 289546,
+      "fromStatus": "open",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T17:25:43Z",
+      "changedBy": 20700138351892,
+      "auditId": 41757044653204
+    },
+    {
+      "ticketId": 289456,
+      "fromStatus": "new",
+      "toStatus": "open",
+      "changedAt": "2025-10-01T15:28:22Z",
+      "changedBy": 20702390811796,
+      "auditId": 41752344997012
+    },
+    {
+      "ticketId": 289456,
+      "fromStatus": "open",
+      "toStatus": "hold",
+      "changedAt": "2025-10-01T15:29:50Z",
+      "changedBy": 20702390811796,
+      "auditId": 41752389102868
+    },
+    {
+      "ticketId": 289456,
+      "fromStatus": "hold",
+      "toStatus": "open",
+      "changedAt": "2025-10-01T15:32:17Z",
+      "changedBy": 23385344083988,
+      "auditId": 41752521336980
+    },
+    {
+      "ticketId": 289456,
+      "fromStatus": "open",
+      "toStatus": "hold",
+      "changedAt": "2025-10-01T15:42:15Z",
+      "changedBy": 20702390811796,
+      "auditId": 41752868012564
+    },
+    {
+      "ticketId": 289456,
+      "fromStatus": "hold",
+      "toStatus": "open",
+      "changedAt": "2025-10-01T15:43:40Z",
+      "changedBy": 23385344083988,
+      "auditId": 41752940281364
+    },
+    {
+      "ticketId": 289456,
+      "fromStatus": "open",
+      "toStatus": "hold",
+      "changedAt": "2025-10-01T16:04:40Z",
+      "changedBy": 20702390811796,
+      "auditId": 41753856261268
+    },
+    {
+      "ticketId": 289456,
+      "fromStatus": "hold",
+      "toStatus": "open",
+      "changedAt": "2025-10-01T16:06:13Z",
+      "changedBy": 23385344083988,
+      "auditId": 41753884885268
+    },
+    {
+      "ticketId": 289456,
+      "fromStatus": "open",
+      "toStatus": "hold",
+      "changedAt": "2025-10-01T16:22:54Z",
+      "changedBy": 20702390811796,
+      "auditId": 41754600889876
+    },
+    {
+      "ticketId": 289091,
+      "fromStatus": "new",
+      "toStatus": "open",
+      "changedAt": "2025-10-01T14:42:11Z",
+      "changedBy": 20702390811796,
+      "auditId": 41750473419412
+    },
+    {
+      "ticketId": 289091,
+      "fromStatus": "open",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T15:01:57Z",
+      "changedBy": 20702390811796,
+      "auditId": 41751183984916
+    },
+    {
+      "ticketId": 289091,
+      "fromStatus": "solved",
+      "toStatus": "open",
+      "changedAt": "2025-10-01T15:13:27Z",
+      "changedBy": 21325666469652,
+      "auditId": 41751750351764
+    },
+    {
+      "ticketId": 289091,
+      "fromStatus": "open",
+      "toStatus": "hold",
+      "changedAt": "2025-10-01T17:21:48Z",
+      "changedBy": 20702390811796,
+      "auditId": 41756867854612
+    },
+    {
+      "ticketId": 277479,
+      "fromStatus": "hold",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T17:20:31Z",
+      "changedBy": 20837541429524,
+      "auditId": 41756874102292
+    },
+    {
+      "ticketId": 289572,
+      "fromStatus": "new",
+      "toStatus": "closed",
+      "changedAt": "2025-10-01T17:20:00Z",
+      "changedBy": -1,
+      "auditId": 41756805418900
+    },
+    {
+      "ticketId": 278531,
+      "fromStatus": "hold",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T17:19:20Z",
+      "changedBy": 20837541429524,
+      "auditId": 41756831962388
+    },
+    {
+      "ticketId": 289584,
+      "fromStatus": "new",
+      "toStatus": "closed",
+      "changedAt": "2025-10-01T17:19:14Z",
+      "changedBy": -1,
+      "auditId": 41756798553492
+    },
+    {
+      "ticketId": 289523,
+      "fromStatus": "new",
+      "toStatus": "closed",
+      "changedAt": "2025-10-01T17:19:00Z",
+      "changedBy": 20702398846868,
+      "auditId": 41756781387924
+    },
+    {
+      "ticketId": 287742,
+      "fromStatus": "hold",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T17:18:08Z",
+      "changedBy": 20837541429524,
+      "auditId": 41756742174228
+    },
+    {
+      "ticketId": 289581,
+      "fromStatus": "new",
+      "toStatus": "closed",
+      "changedAt": "2025-10-01T17:17:03Z",
+      "changedBy": -1,
+      "auditId": 41756669453716
+    },
+    {
+      "ticketId": 282403,
+      "fromStatus": "hold",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T17:16:48Z",
+      "changedBy": 20837541429524,
+      "auditId": 41756730582804
+    },
+    {
+      "ticketId": 288313,
+      "fromStatus": "new",
+      "toStatus": "open",
+      "changedAt": "2025-10-01T17:08:39Z",
+      "changedBy": -1,
+      "auditId": 41756349596436
+    },
+    {
+      "ticketId": 288313,
+      "fromStatus": "open",
+      "toStatus": "pending",
+      "changedAt": "2025-10-01T17:16:37Z",
+      "changedBy": 20702398846868,
+      "auditId": 41756652497684
+    },
+    {
+      "ticketId": 282166,
+      "fromStatus": "hold",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T17:15:51Z",
+      "changedBy": 20837541429524,
+      "auditId": 41756673609620
+    },
+    {
+      "ticketId": 282231,
+      "fromStatus": "hold",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T17:13:47Z",
+      "changedBy": 20837541429524,
+      "auditId": 41756548459156
+    },
+    {
+      "ticketId": 289579,
+      "fromStatus": "new",
+      "toStatus": "open",
+      "changedAt": "2025-10-01T17:13:02Z",
+      "changedBy": 20709103407252,
+      "auditId": 41756524506260
+    },
+    {
+      "ticketId": 289578,
+      "fromStatus": "new",
+      "toStatus": "closed",
+      "changedAt": "2025-10-01T17:12:06Z",
+      "changedBy": -1,
+      "auditId": 41756498228756
+    },
+    {
+      "ticketId": 289574,
+      "fromStatus": "new",
+      "toStatus": "closed",
+      "changedAt": "2025-10-01T17:12:02Z",
+      "changedBy": -1,
+      "auditId": 41756503841428
+    },
+    {
+      "ticketId": 283830,
+      "fromStatus": "hold",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T17:11:41Z",
+      "changedBy": 20837541429524,
+      "auditId": 41756483019924
+    },
+    {
+      "ticketId": 289535,
+      "fromStatus": "new",
+      "toStatus": "open",
+      "changedAt": "2025-10-01T17:09:37Z",
+      "changedBy": -1,
+      "auditId": 41756428521748
+    },
+    {
+      "ticketId": 289535,
+      "fromStatus": "open",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T17:10:35Z",
+      "changedBy": 26806117506452,
+      "auditId": 41756460895508
+    },
+    {
+      "ticketId": 283865,
+      "fromStatus": "hold",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T17:09:49Z",
+      "changedBy": 20837541429524,
+      "auditId": 41756429948820
+    },
+    {
+      "ticketId": 270955,
+      "fromStatus": "pending",
+      "toStatus": "open",
+      "changedAt": "2025-10-01T13:21:47Z",
+      "changedBy": 40661867905428,
+      "auditId": 41747445916308
+    },
+    {
+      "ticketId": 289437,
+      "fromStatus": "new",
+      "toStatus": "open",
+      "changedAt": "2025-10-01T16:33:34Z",
+      "changedBy": 20702398846868,
+      "auditId": 41754991792404
+    },
+    {
+      "ticketId": 289437,
+      "fromStatus": "open",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T17:09:28Z",
+      "changedBy": 20709096709524,
+      "auditId": 41756412812692
+    },
+    {
+      "ticketId": 289576,
+      "fromStatus": "new",
+      "toStatus": "closed",
+      "changedAt": "2025-10-01T17:09:17Z",
+      "changedBy": -1,
+      "auditId": 41756411567380
+    },
+    {
+      "ticketId": 289290,
+      "fromStatus": "new",
+      "toStatus": "open",
+      "changedAt": "2025-10-01T16:59:49Z",
+      "changedBy": 20702398846868,
+      "auditId": 41755960404884
+    },
+    {
+      "ticketId": 289290,
+      "fromStatus": "open",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T17:09:02Z",
+      "changedBy": 20978102907156,
+      "auditId": 41756366700308
+    },
+    {
+      "ticketId": 285359,
+      "fromStatus": "open",
+      "toStatus": "closed",
+      "changedAt": "2025-10-01T17:08:37Z",
+      "changedBy": 20702398846868,
+      "auditId": 41756364081172
+    },
+    {
+      "ticketId": 288639,
+      "fromStatus": "new",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T17:08:31Z",
+      "changedBy": 20705690271636,
+      "auditId": 41756348827540
+    },
+    {
+      "ticketId": 289525,
+      "fromStatus": "new",
+      "toStatus": "open",
+      "changedAt": "2025-10-01T16:40:53Z",
+      "changedBy": 20702398846868,
+      "auditId": 41755287804820
+    },
+    {
+      "ticketId": 289560,
+      "fromStatus": "new",
+      "toStatus": "closed",
+      "changedAt": "2025-10-01T17:07:02Z",
+      "changedBy": -1,
+      "auditId": 41756297464084
+    },
+    {
+      "ticketId": 289575,
+      "fromStatus": "new",
+      "toStatus": "closed",
+      "changedAt": "2025-10-01T17:06:53Z",
+      "changedBy": -1,
+      "auditId": 41756310725780
+    },
+    {
+      "ticketId": 285198,
+      "fromStatus": "open",
+      "toStatus": "pending",
+      "changedAt": "2025-09-30T18:36:47Z",
+      "changedBy": 39097856345748,
+      "auditId": 41720951283476
+    },
+    {
+      "ticketId": 285198,
+      "fromStatus": "pending",
+      "toStatus": "open",
+      "changedAt": "2025-09-30T19:01:37Z",
+      "changedBy": 41357786250772,
+      "auditId": 41722037416980
+    },
+    {
+      "ticketId": 285198,
+      "fromStatus": "open",
+      "toStatus": "pending",
+      "changedAt": "2025-10-01T15:44:18Z",
+      "changedBy": 39097856345748,
+      "auditId": 41752927584276
+    },
+    {
+      "ticketId": 288624,
+      "fromStatus": "new",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T17:06:03Z",
+      "changedBy": 20837541429524,
+      "auditId": 41756268635028
+    },
+    {
+      "ticketId": 289555,
+      "fromStatus": "new",
+      "toStatus": "closed",
+      "changedAt": "2025-10-01T17:05:47Z",
+      "changedBy": -1,
+      "auditId": 41756277789332
+    },
+    {
+      "ticketId": 289573,
+      "fromStatus": "new",
+      "toStatus": "closed",
+      "changedAt": "2025-10-01T17:05:25Z",
+      "changedBy": -1,
+      "auditId": 41756259655700
+    },
+    {
+      "ticketId": 288615,
+      "fromStatus": "new",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T17:05:03Z",
+      "changedBy": 20705690271636,
+      "auditId": 41756206607124
+    },
+    {
+      "ticketId": 288564,
+      "fromStatus": "open",
+      "toStatus": "hold",
+      "changedAt": "2025-10-01T17:04:50Z",
+      "changedBy": 20702456045716,
+      "auditId": 41756205029268
+    },
+    {
+      "ticketId": 287904,
+      "fromStatus": "new",
+      "toStatus": "open",
+      "changedAt": "2025-10-01T13:56:53Z",
+      "changedBy": 20700188817812,
+      "auditId": 41748592377364
+    },
+    {
+      "ticketId": 281757,
+      "fromStatus": "hold",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T17:03:09Z",
+      "changedBy": 20837541429524,
+      "auditId": 41756128095252
+    },
+    {
+      "ticketId": 289571,
+      "fromStatus": "new",
+      "toStatus": "open",
+      "changedAt": "2025-10-01T17:02:58Z",
+      "changedBy": 20709103407252,
+      "auditId": 41756106904852
+    },
+    {
+      "ticketId": 289567,
+      "fromStatus": "new",
+      "toStatus": "closed",
+      "changedAt": "2025-10-01T17:02:22Z",
+      "changedBy": -1,
+      "auditId": 41756081528852
+    },
+    {
+      "ticketId": 278212,
+      "fromStatus": "pending",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T17:02:21Z",
+      "changedBy": -1,
+      "auditId": 41756083969300
+    },
+    {
+      "ticketId": 282107,
+      "fromStatus": "pending",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T17:02:20Z",
+      "changedBy": -1,
+      "auditId": 41756083865748
+    },
+    {
+      "ticketId": 289464,
+      "fromStatus": "new",
+      "toStatus": "closed",
+      "changedAt": "2025-10-01T17:02:19Z",
+      "changedBy": -1,
+      "auditId": 41756052569236
+    },
+    {
+      "ticketId": 289447,
+      "fromStatus": "new",
+      "toStatus": "closed",
+      "changedAt": "2025-10-01T17:02:19Z",
+      "changedBy": -1,
+      "auditId": 41756083720084
+    },
+    {
+      "ticketId": 289561,
+      "fromStatus": "new",
+      "toStatus": "closed",
+      "changedAt": "2025-10-01T17:02:03Z",
+      "changedBy": -1,
+      "auditId": 41756032088340
+    },
+    {
+      "ticketId": 282351,
+      "fromStatus": "hold",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T17:01:41Z",
+      "changedBy": 20837541429524,
+      "auditId": 41756043138580
+    },
+    {
+      "ticketId": 288502,
+      "fromStatus": "new",
+      "toStatus": "pending",
+      "changedAt": "2025-10-01T17:01:28Z",
+      "changedBy": 20705690271636,
+      "auditId": 41756025147796
+    },
+    {
+      "ticketId": 278663,
+      "fromStatus": "hold",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T16:59:44Z",
+      "changedBy": 20837541429524,
+      "auditId": 41755975681812
+    },
+    {
+      "ticketId": 289566,
+      "fromStatus": "new",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T16:58:54Z",
+      "changedBy": 20702398846868,
+      "auditId": 41755904314004
+    },
+    {
+      "ticketId": 282473,
+      "fromStatus": "hold",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T16:58:29Z",
+      "changedBy": 20837541429524,
+      "auditId": 41755870363668
+    },
+    {
+      "ticketId": 289519,
+      "fromStatus": "new",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T16:57:59Z",
+      "changedBy": 32309607652116,
+      "auditId": 41755864776084
+    },
+    {
+      "ticketId": 289569,
+      "fromStatus": "new",
+      "toStatus": "closed",
+      "changedAt": "2025-10-01T16:57:28Z",
+      "changedBy": -1,
+      "auditId": 41755849084052
+    },
+    {
+      "ticketId": 289568,
+      "fromStatus": "new",
+      "toStatus": "closed",
+      "changedAt": "2025-10-01T16:56:42Z",
+      "changedBy": -1,
+      "auditId": 41755811172244
+    },
+    {
+      "ticketId": 289528,
+      "fromStatus": "new",
+      "toStatus": "open",
+      "changedAt": "2025-10-01T16:36:01Z",
+      "changedBy": -1,
+      "auditId": 41755073058708
+    },
+    {
+      "ticketId": 289528,
+      "fromStatus": "open",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T16:55:42Z",
+      "changedBy": 20700138351892,
+      "auditId": 41755816330132
+    },
+    {
+      "ticketId": 289550,
+      "fromStatus": "new",
+      "toStatus": "closed",
+      "changedAt": "2025-10-01T16:55:15Z",
+      "changedBy": -1,
+      "auditId": 41755752508948
+    },
+    {
+      "ticketId": 273128,
+      "fromStatus": "hold",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T16:54:37Z",
+      "changedBy": 20837541429524,
+      "auditId": 41755760199956
+    },
+    {
+      "ticketId": 289532,
+      "fromStatus": "new",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T16:27:30Z",
+      "changedBy": 20702398846868,
+      "auditId": 41754768025108
+    },
+    {
+      "ticketId": 289532,
+      "fromStatus": "solved",
+      "toStatus": "open",
+      "changedAt": "2025-10-01T16:54:13Z",
+      "changedBy": 20888538485524,
+      "auditId": 41755773728148
+    },
+    {
+      "ticketId": 289532,
+      "fromStatus": "open",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T16:54:13Z",
+      "changedBy": 20888538485524,
+      "auditId": 41755773728148
+    },
+    {
+      "ticketId": 271487,
+      "fromStatus": "open",
+      "toStatus": "pending",
+      "changedAt": "2025-10-01T16:53:47Z",
+      "changedBy": 20702398846868,
+      "auditId": 41755740359956
+    },
+    {
+      "ticketId": 275778,
+      "fromStatus": "hold",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T16:52:55Z",
+      "changedBy": 20837541429524,
+      "auditId": 41755698507668
+    },
+    {
+      "ticketId": 287737,
+      "fromStatus": "new",
+      "toStatus": "open",
+      "changedAt": "2025-10-01T13:54:27Z",
+      "changedBy": 20700188817812,
+      "auditId": 41748542667412
+    },
+    {
+      "ticketId": 287737,
+      "fromStatus": "open",
+      "toStatus": "hold",
+      "changedAt": "2025-10-01T16:43:39Z",
+      "changedBy": 20700188817812,
+      "auditId": 41755368407572
+    },
+    {
+      "ticketId": 287737,
+      "fromStatus": "hold",
+      "toStatus": "open",
+      "changedAt": "2025-10-01T16:45:22Z",
+      "changedBy": 41629227521428,
+      "auditId": 41755417047188
+    },
+    {
+      "ticketId": 287737,
+      "fromStatus": "open",
+      "toStatus": "hold",
+      "changedAt": "2025-10-01T16:52:11Z",
+      "changedBy": 20700188817812,
+      "auditId": 41755638305044
+    },
+    {
+      "ticketId": 269870,
+      "fromStatus": "open",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T12:37:50Z",
+      "changedBy": 20700081012756,
+      "auditId": 41746057166484
+    },
+    {
+      "ticketId": 269870,
+      "fromStatus": "solved",
+      "toStatus": "open",
+      "changedAt": "2025-10-01T16:31:07Z",
+      "changedBy": 40600590925844,
+      "auditId": 41754925656852
+    },
+    {
+      "ticketId": 269870,
+      "fromStatus": "open",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T16:50:35Z",
+      "changedBy": 20700081012756,
+      "auditId": 41755624257812
+    },
+    {
+      "ticketId": 274148,
+      "fromStatus": "hold",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T16:50:13Z",
+      "changedBy": 20837541429524,
+      "auditId": 41755598804628
+    },
+    {
+      "ticketId": 289512,
+      "fromStatus": "new",
+      "toStatus": "hold",
+      "changedAt": "2025-10-01T16:27:13Z",
+      "changedBy": 20702456045716,
+      "auditId": 41754732202900
+    },
+    {
+      "ticketId": 289512,
+      "fromStatus": "hold",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T16:49:45Z",
+      "changedBy": 20702456045716,
+      "auditId": 41755580411796
+    },
+    {
+      "ticketId": 287738,
+      "fromStatus": "solved",
+      "toStatus": "closed",
+      "changedAt": "2025-10-01T16:48:58Z",
+      "changedBy": -1,
+      "auditId": 41755573717652
+    },
+    {
+      "ticketId": 287735,
+      "fromStatus": "solved",
+      "toStatus": "closed",
+      "changedAt": "2025-10-01T16:48:58Z",
+      "changedBy": -1,
+      "auditId": 41755573702420
+    },
+    {
+      "ticketId": 287734,
+      "fromStatus": "solved",
+      "toStatus": "closed",
+      "changedAt": "2025-10-01T16:48:58Z",
+      "changedBy": -1,
+      "auditId": 41755573612820
+    },
+    {
+      "ticketId": 287730,
+      "fromStatus": "solved",
+      "toStatus": "closed",
+      "changedAt": "2025-10-01T16:48:58Z",
+      "changedBy": -1,
+      "auditId": 41755542255636
+    },
+    {
+      "ticketId": 287726,
+      "fromStatus": "solved",
+      "toStatus": "closed",
+      "changedAt": "2025-10-01T16:48:58Z",
+      "changedBy": -1,
+      "auditId": 41755573635732
+    },
+    {
+      "ticketId": 287718,
+      "fromStatus": "solved",
+      "toStatus": "closed",
+      "changedAt": "2025-10-01T16:48:58Z",
+      "changedBy": -1,
+      "auditId": 41755542231188
+    },
+    {
+      "ticketId": 287723,
+      "fromStatus": "solved",
+      "toStatus": "closed",
+      "changedAt": "2025-10-01T16:48:57Z",
+      "changedBy": -1,
+      "auditId": 41755542126100
+    },
+    {
+      "ticketId": 287721,
+      "fromStatus": "solved",
+      "toStatus": "closed",
+      "changedAt": "2025-10-01T16:48:57Z",
+      "changedBy": -1,
+      "auditId": 41755542173460
+    },
+    {
+      "ticketId": 287720,
+      "fromStatus": "solved",
+      "toStatus": "closed",
+      "changedAt": "2025-10-01T16:48:57Z",
+      "changedBy": -1,
+      "auditId": 41755542089236
+    },
+    {
+      "ticketId": 287719,
+      "fromStatus": "solved",
+      "toStatus": "closed",
+      "changedAt": "2025-10-01T16:48:57Z",
+      "changedBy": -1,
+      "auditId": 41755542100116
+    },
+    {
+      "ticketId": 287717,
+      "fromStatus": "solved",
+      "toStatus": "closed",
+      "changedAt": "2025-10-01T16:48:57Z",
+      "changedBy": -1,
+      "auditId": 41755573581204
+    },
+    {
+      "ticketId": 287716,
+      "fromStatus": "solved",
+      "toStatus": "closed",
+      "changedAt": "2025-10-01T16:48:57Z",
+      "changedBy": -1,
+      "auditId": 41755542146580
+    },
+    {
+      "ticketId": 287229,
+      "fromStatus": "solved",
+      "toStatus": "closed",
+      "changedAt": "2025-10-01T16:48:56Z",
+      "changedBy": -1,
+      "auditId": 41755542028308
+    },
+    {
+      "ticketId": 284083,
+      "fromStatus": "solved",
+      "toStatus": "closed",
+      "changedAt": "2025-10-01T16:48:56Z",
+      "changedBy": -1,
+      "auditId": 41755573501972
+    },
+    {
+      "ticketId": 275181,
+      "fromStatus": "hold",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T16:48:56Z",
+      "changedBy": 20837541429524,
+      "auditId": 41755551692948
+    },
+    {
+      "ticketId": 286099,
+      "fromStatus": "solved",
+      "toStatus": "closed",
+      "changedAt": "2025-10-01T16:48:55Z",
+      "changedBy": -1,
+      "auditId": 41755541921812
+    },
+    {
+      "ticketId": 278535,
+      "fromStatus": "solved",
+      "toStatus": "closed",
+      "changedAt": "2025-10-01T16:48:55Z",
+      "changedBy": -1,
+      "auditId": 41755573417364
+    },
+    {
+      "ticketId": 276201,
+      "fromStatus": "solved",
+      "toStatus": "closed",
+      "changedAt": "2025-10-01T16:48:55Z",
+      "changedBy": -1,
+      "auditId": 41755573447700
+    },
+    {
+      "ticketId": 287733,
+      "fromStatus": "solved",
+      "toStatus": "closed",
+      "changedAt": "2025-10-01T16:48:54Z",
+      "changedBy": -1,
+      "auditId": 41755573363220
+    },
+    {
+      "ticketId": 287731,
+      "fromStatus": "solved",
+      "toStatus": "closed",
+      "changedAt": "2025-10-01T16:48:54Z",
+      "changedBy": -1,
+      "auditId": 41755541861780
+    },
+    {
+      "ticketId": 287732,
+      "fromStatus": "solved",
+      "toStatus": "closed",
+      "changedAt": "2025-10-01T16:48:54Z",
+      "changedBy": -1,
+      "auditId": 41755573352724
+    },
+    {
+      "ticketId": 287724,
+      "fromStatus": "solved",
+      "toStatus": "closed",
+      "changedAt": "2025-10-01T16:48:54Z",
+      "changedBy": -1,
+      "auditId": 41755541845268
+    },
+    {
+      "ticketId": 289556,
+      "fromStatus": "new",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T16:48:48Z",
+      "changedBy": 20702398846868,
+      "auditId": 41755533253268
+    },
+    {
+      "ticketId": 289558,
+      "fromStatus": "new",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T16:48:33Z",
+      "changedBy": 20702398846868,
+      "auditId": 41755549246356
+    },
+    {
+      "ticketId": 289317,
+      "fromStatus": "new",
+      "toStatus": "closed",
+      "changedAt": "2025-10-01T16:47:17Z",
+      "changedBy": 20702398846868,
+      "auditId": 41755496773012
+    },
+    {
+      "ticketId": 288723,
+      "fromStatus": "open",
+      "toStatus": "solved",
+      "changedAt": "2025-09-30T18:19:10Z",
+      "changedBy": 20702398846868,
+      "auditId": 41720184751124
+    },
+    {
+      "ticketId": 288723,
+      "fromStatus": "solved",
+      "toStatus": "open",
+      "changedAt": "2025-10-01T13:32:01Z",
+      "changedBy": 41708425284372,
+      "auditId": 41747769462548
+    },
+    {
+      "ticketId": 288723,
+      "fromStatus": "open",
+      "toStatus": "pending",
+      "changedAt": "2025-10-01T14:02:57Z",
+      "changedBy": 20702398846868,
+      "auditId": 41748873714580
+    },
+    {
+      "ticketId": 288723,
+      "fromStatus": "pending",
+      "toStatus": "open",
+      "changedAt": "2025-10-01T16:47:03Z",
+      "changedBy": 41708425284372,
+      "auditId": 41755478009236
+    },
+    {
+      "ticketId": 289559,
+      "fromStatus": "new",
+      "toStatus": "closed",
+      "changedAt": "2025-10-01T16:46:13Z",
+      "changedBy": -1,
+      "auditId": 41755435108628
+    },
+    {
+      "ticketId": 288305,
+      "fromStatus": "new",
+      "toStatus": "closed",
+      "changedAt": "2025-10-01T16:45:07Z",
+      "changedBy": 20700188817812,
+      "auditId": 41755409839636
+    },
+    {
+      "ticketId": 289554,
+      "fromStatus": "new",
+      "toStatus": "closed",
+      "changedAt": "2025-10-01T16:44:18Z",
+      "changedBy": -1,
+      "auditId": 41755376852500
+    },
+    {
+      "ticketId": 289552,
+      "fromStatus": "new",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T16:42:59Z",
+      "changedBy": 20702398846868,
+      "auditId": 41755364438676
+    },
+    {
+      "ticketId": 289553,
+      "fromStatus": "new",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T16:42:44Z",
+      "changedBy": 20702398846868,
+      "auditId": 41755362911124
+    },
+    {
+      "ticketId": 289551,
+      "fromStatus": "new",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T16:41:58Z",
+      "changedBy": 20702398846868,
+      "auditId": 41755294426132
+    },
+    {
+      "ticketId": 288644,
+      "fromStatus": "new",
+      "toStatus": "pending",
+      "changedAt": "2025-10-01T16:41:58Z",
+      "changedBy": 20837541429524,
+      "auditId": 41755280593428
+    },
+    {
+      "ticketId": 289531,
+      "fromStatus": "new",
+      "toStatus": "closed",
+      "changedAt": "2025-10-01T16:41:40Z",
+      "changedBy": 20702398846868,
+      "auditId": 41755323760916
+    },
+    {
+      "ticketId": 287299,
+      "fromStatus": "new",
+      "toStatus": "open",
+      "changedAt": "2025-10-01T12:33:41Z",
+      "changedBy": -1,
+      "auditId": 41745984788372
+    },
+    {
+      "ticketId": 287299,
+      "fromStatus": "open",
+      "toStatus": "pending",
+      "changedAt": "2025-10-01T12:49:01Z",
+      "changedBy": 20702398846868,
+      "auditId": 41746387239828
+    },
+    {
+      "ticketId": 287299,
+      "fromStatus": "pending",
+      "toStatus": "open",
+      "changedAt": "2025-10-01T16:23:06Z",
+      "changedBy": 40015898380052,
+      "auditId": 41754602248084
+    },
+    {
+      "ticketId": 288619,
+      "fromStatus": "open",
+      "toStatus": "pending",
+      "changedAt": "2025-10-01T16:39:40Z",
+      "changedBy": 39097856345748,
+      "auditId": 41755193792276
+    },
+    {
+      "ticketId": 289549,
+      "fromStatus": "new",
+      "toStatus": "closed",
+      "changedAt": "2025-10-01T16:39:08Z",
+      "changedBy": 41735913350420,
+      "auditId": 41755190750356
+    },
+    {
+      "ticketId": 289544,
+      "fromStatus": "new",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T16:38:31Z",
+      "changedBy": 20702398846868,
+      "auditId": 41755142628116
+    },
+    {
+      "ticketId": 289533,
+      "fromStatus": "new",
+      "toStatus": "closed",
+      "changedAt": "2025-10-01T16:37:53Z",
+      "changedBy": -1,
+      "auditId": 41755154728596
+    },
+    {
+      "ticketId": 289543,
+      "fromStatus": "new",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T16:36:23Z",
+      "changedBy": 20783189468308,
+      "auditId": 41755075108628
+    },
+    {
+      "ticketId": 288487,
+      "fromStatus": "new",
+      "toStatus": "pending",
+      "changedAt": "2025-10-01T16:19:16Z",
+      "changedBy": 20837541429524,
+      "auditId": 41754441768212
+    },
+    {
+      "ticketId": 289541,
+      "fromStatus": "new",
+      "toStatus": "closed",
+      "changedAt": "2025-10-01T16:36:08Z",
+      "changedBy": -1,
+      "auditId": 41755059472660
+    },
+    {
+      "ticketId": 289508,
+      "fromStatus": "new",
+      "toStatus": "open",
+      "changedAt": "2025-10-01T16:28:37Z",
+      "changedBy": -1,
+      "auditId": 41754822067732
+    },
+    {
+      "ticketId": 289508,
+      "fromStatus": "open",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T16:35:53Z",
+      "changedBy": 20700138351892,
+      "auditId": 41755105872532
+    },
+    {
+      "ticketId": 285810,
+      "fromStatus": "open",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T14:53:48Z",
+      "changedBy": 20700188817812,
+      "auditId": 41750902538132
+    },
+    {
+      "ticketId": 285810,
+      "fromStatus": "solved",
+      "toStatus": "open",
+      "changedAt": "2025-10-01T15:47:24Z",
+      "changedBy": 41569822419604,
+      "auditId": 41753036655124
+    },
+    {
+      "ticketId": 285810,
+      "fromStatus": "open",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T16:34:30Z",
+      "changedBy": 20700188817812,
+      "auditId": 41755061124500
+    },
+    {
+      "ticketId": 289539,
+      "fromStatus": "new",
+      "toStatus": "closed",
+      "changedAt": "2025-10-01T16:34:18Z",
+      "changedBy": -1,
+      "auditId": 41755059879188
+    },
+    {
+      "ticketId": 288611,
+      "fromStatus": "new",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T16:34:14Z",
+      "changedBy": 20837541429524,
+      "auditId": 41755029398548
+    },
+    {
+      "ticketId": 289538,
+      "fromStatus": "new",
+      "toStatus": "closed",
+      "changedAt": "2025-10-01T16:32:01Z",
+      "changedBy": -1,
+      "auditId": 41754938796948
+    },
+    {
+      "ticketId": 289537,
+      "fromStatus": "new",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T16:31:23Z",
+      "changedBy": 20702398846868,
+      "auditId": 41754944501268
+    },
+    {
+      "ticketId": 289536,
+      "fromStatus": "new",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T16:31:03Z",
+      "changedBy": 20702398846868,
+      "auditId": 41754881196692
+    },
+    {
+      "ticketId": 281068,
+      "fromStatus": "open",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T15:18:37Z",
+      "changedBy": 20700138351892,
+      "auditId": 41751990361492
+    },
+    {
+      "ticketId": 281068,
+      "fromStatus": "solved",
+      "toStatus": "open",
+      "changedAt": "2025-10-01T16:30:52Z",
+      "changedBy": 41270513955732,
+      "auditId": 41754907273364
+    },
+    {
+      "ticketId": 287899,
+      "fromStatus": "new",
+      "toStatus": "open",
+      "changedAt": "2025-10-01T13:14:18Z",
+      "changedBy": -1,
+      "auditId": 41747202911124
+    },
+    {
+      "ticketId": 287899,
+      "fromStatus": "open",
+      "toStatus": "hold",
+      "changedAt": "2025-10-01T16:30:17Z",
+      "changedBy": 20702390811796,
+      "auditId": 41754876286100
+    },
+    {
+      "ticketId": 288740,
+      "fromStatus": "new",
+      "toStatus": "pending",
+      "changedAt": "2025-09-30T21:06:37Z",
+      "changedBy": 20837541429524,
+      "auditId": 41727379936660
+    },
+    {
+      "ticketId": 288740,
+      "fromStatus": "pending",
+      "toStatus": "open",
+      "changedAt": "2025-10-01T10:50:45Z",
+      "changedBy": 40903163664020,
+      "auditId": 41743837651348
+    },
+    {
+      "ticketId": 288740,
+      "fromStatus": "open",
+      "toStatus": "hold",
+      "changedAt": "2025-10-01T14:05:02Z",
+      "changedBy": 20837541429524,
+      "auditId": 41748977589524
+    },
+    {
+      "ticketId": 288740,
+      "fromStatus": "hold",
+      "toStatus": "open",
+      "changedAt": "2025-10-01T14:50:29Z",
+      "changedBy": 40903163664020,
+      "auditId": 41750745976596
+    },
+    {
+      "ticketId": 288740,
+      "fromStatus": "open",
+      "toStatus": "pending",
+      "changedAt": "2025-10-01T16:30:18Z",
+      "changedBy": 20837541429524,
+      "auditId": 41754876426388
+    },
+    {
+      "ticketId": 288568,
+      "fromStatus": "new",
+      "toStatus": "pending",
+      "changedAt": "2025-10-01T16:19:39Z",
+      "changedBy": 20837541429524,
+      "auditId": 41754475368852
+    },
+    {
+      "ticketId": 288568,
+      "fromStatus": "pending",
+      "toStatus": "hold",
+      "changedAt": "2025-10-01T16:29:53Z",
+      "changedBy": 20837541429524,
+      "auditId": 41754839939732
+    },
+    {
+      "ticketId": 288176,
+      "fromStatus": "new",
+      "toStatus": "open",
+      "changedAt": "2025-10-01T16:29:52Z",
+      "changedBy": -1,
+      "auditId": 41754864077716
+    },
+    {
+      "ticketId": 286655,
+      "fromStatus": "new",
+      "toStatus": "pending",
+      "changedAt": "2025-10-01T11:29:00Z",
+      "changedBy": 20702398846868,
+      "auditId": 41744517676564
+    },
+    {
+      "ticketId": 286655,
+      "fromStatus": "pending",
+      "toStatus": "open",
+      "changedAt": "2025-10-01T15:55:05Z",
+      "changedBy": 41561809486868,
+      "auditId": 41753377612436
+    },
+    {
+      "ticketId": 289505,
+      "fromStatus": "new",
+      "toStatus": "closed",
+      "changedAt": "2025-10-01T16:29:50Z",
+      "changedBy": 20702398846868,
+      "auditId": 41754863824404
+    },
+    {
+      "ticketId": 286559,
+      "fromStatus": "new",
+      "toStatus": "open",
+      "changedAt": "2025-09-30T19:09:17Z",
+      "changedBy": -1,
+      "auditId": 41722447356180
+    },
+    {
+      "ticketId": 286559,
+      "fromStatus": "open",
+      "toStatus": "closed",
+      "changedAt": "2025-10-01T16:29:49Z",
+      "changedBy": 20702398846868,
+      "auditId": 41754816249748
+    },
+    {
+      "ticketId": 289530,
+      "fromStatus": "new",
+      "toStatus": "open",
+      "changedAt": "2025-10-01T16:28:06Z",
+      "changedBy": 20702398846868,
+      "auditId": 41754778703764
+    },
+    {
+      "ticketId": 289507,
+      "fromStatus": "new",
+      "toStatus": "open",
+      "changedAt": "2025-10-01T16:09:19Z",
+      "changedBy": -1,
+      "auditId": 41754045041300
+    },
+    {
+      "ticketId": 289507,
+      "fromStatus": "open",
+      "toStatus": "pending",
+      "changedAt": "2025-10-01T16:27:41Z",
+      "changedBy": 20700138351892,
+      "auditId": 41754753731860
+    },
+    {
+      "ticketId": 288140,
+      "fromStatus": "new",
+      "toStatus": "open",
+      "changedAt": "2025-10-01T16:19:05Z",
+      "changedBy": -1,
+      "auditId": 41754425468308
+    },
+    {
+      "ticketId": 288140,
+      "fromStatus": "open",
+      "toStatus": "pending",
+      "changedAt": "2025-10-01T16:24:55Z",
+      "changedBy": 20702398846868,
+      "auditId": 41754667771412
+    },
+    {
+      "ticketId": 289513,
+      "fromStatus": "new",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T16:23:44Z",
+      "changedBy": 20702456045716,
+      "auditId": 41754634807572
+    },
+    {
+      "ticketId": 289514,
+      "fromStatus": "new",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T16:23:37Z",
+      "changedBy": 20702456045716,
+      "auditId": 41754622048660
+    },
+    {
+      "ticketId": 289515,
+      "fromStatus": "new",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T16:23:27Z",
+      "changedBy": 20702456045716,
+      "auditId": 41754589303188
+    },
+    {
+      "ticketId": 289521,
+      "fromStatus": "new",
+      "toStatus": "closed",
+      "changedAt": "2025-10-01T16:22:20Z",
+      "changedBy": -1,
+      "auditId": 41754566560148
+    },
+    {
+      "ticketId": 289510,
+      "fromStatus": "new",
+      "toStatus": "closed",
+      "changedAt": "2025-10-01T16:20:16Z",
+      "changedBy": -1,
+      "auditId": 41754467923348
+    },
+    {
+      "ticketId": 289522,
+      "fromStatus": "new",
+      "toStatus": "closed",
+      "changedAt": "2025-10-01T16:19:35Z",
+      "changedBy": -1,
+      "auditId": 41754460213396
+    },
+    {
+      "ticketId": 285346,
+      "fromStatus": "open",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T16:19:02Z",
+      "changedBy": 20702398846868,
+      "auditId": 41754440286612
+    },
+    {
+      "ticketId": 288493,
+      "fromStatus": "new",
+      "toStatus": "closed",
+      "changedAt": "2025-10-01T16:18:31Z",
+      "changedBy": 20837541429524,
+      "auditId": 41754436888340
+    },
+    {
+      "ticketId": 289480,
+      "fromStatus": "new",
+      "toStatus": "open",
+      "changedAt": "2025-10-01T15:41:17Z",
+      "changedBy": 20702390811796,
+      "auditId": 41752855553556
+    },
+    {
+      "ticketId": 289480,
+      "fromStatus": "open",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T16:17:58Z",
+      "changedBy": 20702390811796,
+      "auditId": 41754399538836
+    },
+    {
+      "ticketId": 288466,
+      "fromStatus": "new",
+      "toStatus": "pending",
+      "changedAt": "2025-10-01T15:43:07Z",
+      "changedBy": 20837541429524,
+      "auditId": 41752876336788
+    },
+    {
+      "ticketId": 288466,
+      "fromStatus": "pending",
+      "toStatus": "hold",
+      "changedAt": "2025-10-01T16:16:45Z",
+      "changedBy": 20837541429524,
+      "auditId": 41754341734932
+    },
+    {
+      "ticketId": 289529,
+      "fromStatus": "new",
+      "toStatus": "open",
+      "changedAt": "2025-10-01T16:16:17Z",
+      "changedBy": 20709103407252,
+      "auditId": 41754321697940
+    },
+    {
+      "ticketId": 289484,
+      "fromStatus": "new",
+      "toStatus": "open",
+      "changedAt": "2025-10-01T15:40:06Z",
+      "changedBy": -1,
+      "auditId": 41752775092244
+    },
+    {
+      "ticketId": 289484,
+      "fromStatus": "open",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T16:15:36Z",
+      "changedBy": 20700081012756,
+      "auditId": 41754300900372
+    },
+    {
+      "ticketId": 289527,
+      "fromStatus": "new",
+      "toStatus": "closed",
+      "changedAt": "2025-10-01T16:14:27Z",
+      "changedBy": -1,
+      "auditId": 41754258766100
+    },
+    {
+      "ticketId": 289524,
+      "fromStatus": "new",
+      "toStatus": "closed",
+      "changedAt": "2025-10-01T16:13:22Z",
+      "changedBy": -1,
+      "auditId": 41754205665428
+    },
+    {
+      "ticketId": 289503,
+      "fromStatus": "new",
+      "toStatus": "open",
+      "changedAt": "2025-10-01T16:08:00Z",
+      "changedBy": -1,
+      "auditId": 41753996376852
+    },
+    {
+      "ticketId": 289503,
+      "fromStatus": "open",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T16:08:24Z",
+      "changedBy": 20700138351892,
+      "auditId": 41753984761108
+    },
+    {
+      "ticketId": 277441,
+      "fromStatus": "open",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T15:59:42Z",
+      "changedBy": 20702398846868,
+      "auditId": 41753586647828
+    },
+    {
+      "ticketId": 277441,
+      "fromStatus": "solved",
+      "toStatus": "open",
+      "changedAt": "2025-10-01T16:02:36Z",
+      "changedBy": 41059877791508,
+      "auditId": 41753723419412
+    },
+    {
+      "ticketId": 277441,
+      "fromStatus": "open",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T16:07:15Z",
+      "changedBy": 20702398846868,
+      "auditId": 41753971414548
+    },
+    {
+      "ticketId": 288097,
+      "fromStatus": "new",
+      "toStatus": "open",
+      "changedAt": "2025-10-01T15:24:31Z",
+      "changedBy": 20702398846868,
+      "auditId": 41752192363924
+    },
+    {
+      "ticketId": 288097,
+      "fromStatus": "open",
+      "toStatus": "pending",
+      "changedAt": "2025-10-01T15:25:05Z",
+      "changedBy": 20702398846868,
+      "auditId": 41752195843604
+    },
+    {
+      "ticketId": 288097,
+      "fromStatus": "pending",
+      "toStatus": "open",
+      "changedAt": "2025-10-01T15:35:14Z",
+      "changedBy": 41677620464532,
+      "auditId": 41752629558804
+    },
+    {
+      "ticketId": 288097,
+      "fromStatus": "open",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T15:51:04Z",
+      "changedBy": 20702398846868,
+      "auditId": 41753223859604
+    },
+    {
+      "ticketId": 288097,
+      "fromStatus": "solved",
+      "toStatus": "open",
+      "changedAt": "2025-10-01T15:53:22Z",
+      "changedBy": 41677620464532,
+      "auditId": 41753310308884
+    },
+    {
+      "ticketId": 288097,
+      "fromStatus": "open",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T16:06:53Z",
+      "changedBy": 20702398846868,
+      "auditId": 41753946093716
+    },
+    {
+      "ticketId": 289441,
+      "fromStatus": "new",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T14:10:27Z",
+      "changedBy": 20747218735252,
+      "auditId": 41749239299988
+    },
+    {
+      "ticketId": 289373,
+      "fromStatus": "new",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T11:19:47Z",
+      "changedBy": 20702398846868,
+      "auditId": 41744312199572
+    },
+    {
+      "ticketId": 289358,
+      "fromStatus": "new",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T09:39:11Z",
+      "changedBy": 20747218735252,
+      "auditId": 41742829939860
+    },
+    {
+      "ticketId": 289258,
+      "fromStatus": "new",
+      "toStatus": "solved",
+      "changedAt": "2025-09-30T21:55:31Z",
+      "changedBy": 20747218735252,
+      "auditId": 41728974959380
+    },
+    {
+      "ticketId": 289469,
+      "fromStatus": "new",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T15:00:33Z",
+      "changedBy": 20747218735252,
+      "auditId": 41751142326676
+    },
+    {
+      "ticketId": 289361,
+      "fromStatus": "new",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T11:15:07Z",
+      "changedBy": 20702398846868,
+      "auditId": 41744277815188
+    },
+    {
+      "ticketId": 289343,
+      "fromStatus": "new",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T02:13:21Z",
+      "changedBy": 20747218735252,
+      "auditId": 41736379181716
+    },
+    {
+      "ticketId": 289035,
+      "fromStatus": "new",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T11:13:02Z",
+      "changedBy": 20702398846868,
+      "auditId": 41744250481044
+    },
+    {
+      "ticketId": 289454,
+      "fromStatus": "new",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T14:35:02Z",
+      "changedBy": 20747218735252,
+      "auditId": 41750190552852
+    },
+    {
+      "ticketId": 289351,
+      "fromStatus": "new",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T04:55:46Z",
+      "changedBy": 20747218735252,
+      "auditId": 41738887551124
+    },
+    {
+      "ticketId": 289305,
+      "fromStatus": "new",
+      "toStatus": "solved",
+      "changedAt": "2025-09-30T22:42:33Z",
+      "changedBy": 20747218735252,
+      "auditId": 41730436840212
+    },
+    {
+      "ticketId": 289303,
+      "fromStatus": "new",
+      "toStatus": "solved",
+      "changedAt": "2025-09-30T22:42:30Z",
+      "changedBy": 20747218735252,
+      "auditId": 41730421478292
+    },
+    {
+      "ticketId": 289196,
+      "fromStatus": "new",
+      "toStatus": "solved",
+      "changedAt": "2025-09-30T20:51:23Z",
+      "changedBy": 20747218735252,
+      "auditId": 41726650946580
+    },
+    {
+      "ticketId": 289308,
+      "fromStatus": "new",
+      "toStatus": "solved",
+      "changedAt": "2025-09-30T22:43:03Z",
+      "changedBy": 20747218735252,
+      "auditId": 41730473851028
+    },
+    {
+      "ticketId": 289302,
+      "fromStatus": "new",
+      "toStatus": "solved",
+      "changedAt": "2025-09-30T22:42:20Z",
+      "changedBy": 20747218735252,
+      "auditId": 41730460707476
+    },
+    {
+      "ticketId": 289274,
+      "fromStatus": "new",
+      "toStatus": "solved",
+      "changedAt": "2025-09-30T21:59:41Z",
+      "changedBy": 20747218735252,
+      "auditId": 41729104684948
+    },
+    {
+      "ticketId": 289257,
+      "fromStatus": "new",
+      "toStatus": "solved",
+      "changedAt": "2025-09-30T21:55:30Z",
+      "changedBy": 20747218735252,
+      "auditId": 41728987219860
+    },
+    {
+      "ticketId": 289261,
+      "fromStatus": "new",
+      "toStatus": "solved",
+      "changedAt": "2025-09-30T21:55:40Z",
+      "changedBy": 20747218735252,
+      "auditId": 41729000109588
+    },
+    {
+      "ticketId": 289477,
+      "fromStatus": "new",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T15:15:13Z",
+      "changedBy": 20747218735252,
+      "auditId": 41751873886484
+    },
+    {
+      "ticketId": 289364,
+      "fromStatus": "new",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T11:15:57Z",
+      "changedBy": 20702398846868,
+      "auditId": 41744299474964
+    },
+    {
+      "ticketId": 289200,
+      "fromStatus": "new",
+      "toStatus": "solved",
+      "changedAt": "2025-09-30T20:52:23Z",
+      "changedBy": 20747218735252,
+      "auditId": 41726716719252
+    },
+    {
+      "ticketId": 289178,
+      "fromStatus": "new",
+      "toStatus": "solved",
+      "changedAt": "2025-09-30T20:30:41Z",
+      "changedBy": 20747218735252,
+      "auditId": 41725818732436
+    },
+    {
+      "ticketId": 289368,
+      "fromStatus": "new",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T11:18:38Z",
+      "changedBy": 20702398846868,
+      "auditId": 41744309151380
+    },
+    {
+      "ticketId": 289367,
+      "fromStatus": "new",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T11:17:19Z",
+      "changedBy": 20702398846868,
+      "auditId": 41744305740308
+    },
+    {
+      "ticketId": 289300,
+      "fromStatus": "new",
+      "toStatus": "solved",
+      "changedAt": "2025-09-30T22:42:20Z",
+      "changedBy": 20747218735252,
+      "auditId": 41730452576276
+    },
+    {
+      "ticketId": 289155,
+      "fromStatus": "new",
+      "toStatus": "solved",
+      "changedAt": "2025-09-30T20:11:08Z",
+      "changedBy": 20747218735252,
+      "auditId": 41725079337876
+    },
+    {
+      "ticketId": 289335,
+      "fromStatus": "new",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T01:21:15Z",
+      "changedBy": 20888538485524,
+      "auditId": 41735259185428
+    },
+    {
+      "ticketId": 289247,
+      "fromStatus": "new",
+      "toStatus": "solved",
+      "changedAt": "2025-09-30T21:46:15Z",
+      "changedBy": 20747218735252,
+      "auditId": 41728714055060
+    },
+    {
+      "ticketId": 289229,
+      "fromStatus": "new",
+      "toStatus": "solved",
+      "changedAt": "2025-09-30T21:29:05Z",
+      "changedBy": 20747218735252,
+      "auditId": 41728121194132
+    },
+    {
+      "ticketId": 289143,
+      "fromStatus": "new",
+      "toStatus": "solved",
+      "changedAt": "2025-09-30T20:01:14Z",
+      "changedBy": 20888538485524,
+      "auditId": 41724622444948
+    },
+    {
+      "ticketId": 289126,
+      "fromStatus": "new",
+      "toStatus": "solved",
+      "changedAt": "2025-09-30T19:40:38Z",
+      "changedBy": 20888538485524,
+      "auditId": 41723709513108
+    },
+    {
+      "ticketId": 289074,
+      "fromStatus": "new",
+      "toStatus": "solved",
+      "changedAt": "2025-09-30T18:51:50Z",
+      "changedBy": 20747218735252,
+      "auditId": 41721575300244
+    },
+    {
+      "ticketId": 288982,
+      "fromStatus": "new",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T11:12:05Z",
+      "changedBy": 20702398846868,
+      "auditId": 41744225083540
+    },
+    {
+      "ticketId": 289435,
+      "fromStatus": "new",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T14:09:37Z",
+      "changedBy": 20747218735252,
+      "auditId": 41749196668308
+    },
+    {
+      "ticketId": 289370,
+      "fromStatus": "new",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T11:19:30Z",
+      "changedBy": 20702398846868,
+      "auditId": 41744322200212
+    },
+    {
+      "ticketId": 289360,
+      "fromStatus": "new",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T11:14:15Z",
+      "changedBy": 20702398846868,
+      "auditId": 41744244493332
+    },
+    {
+      "ticketId": 289332,
+      "fromStatus": "new",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T01:17:14Z",
+      "changedBy": 20888538485524,
+      "auditId": 41735176611092
+    },
+    {
+      "ticketId": 289309,
+      "fromStatus": "new",
+      "toStatus": "solved",
+      "changedAt": "2025-09-30T22:43:19Z",
+      "changedBy": 20888538485524,
+      "auditId": 41730490711572
+    },
+    {
+      "ticketId": 289230,
+      "fromStatus": "new",
+      "toStatus": "solved",
+      "changedAt": "2025-09-30T21:30:25Z",
+      "changedBy": 20888538485524,
+      "auditId": 41728179558036
+    },
+    {
+      "ticketId": 289388,
+      "fromStatus": "new",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T12:20:30Z",
+      "changedBy": 20888538485524,
+      "auditId": 41745665169044
+    },
+    {
+      "ticketId": 289250,
+      "fromStatus": "new",
+      "toStatus": "solved",
+      "changedAt": "2025-09-30T21:49:11Z",
+      "changedBy": 20888538485524,
+      "auditId": 41728761088020
+    },
+    {
+      "ticketId": 289223,
+      "fromStatus": "new",
+      "toStatus": "solved",
+      "changedAt": "2025-09-30T21:27:15Z",
+      "changedBy": 20888538485524,
+      "auditId": 41728084805140
+    },
+    {
+      "ticketId": 289170,
+      "fromStatus": "new",
+      "toStatus": "solved",
+      "changedAt": "2025-09-30T20:28:11Z",
+      "changedBy": 20888538485524,
+      "auditId": 41725729696532
+    },
+    {
+      "ticketId": 289166,
+      "fromStatus": "new",
+      "toStatus": "solved",
+      "changedAt": "2025-09-30T20:25:19Z",
+      "changedBy": 20888538485524,
+      "auditId": 41725643491092
+    },
+    {
+      "ticketId": 289356,
+      "fromStatus": "new",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T07:14:56Z",
+      "changedBy": 20888538485524,
+      "auditId": 41740888608276
+    },
+    {
+      "ticketId": 289345,
+      "fromStatus": "new",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T02:50:37Z",
+      "changedBy": 20888538485524,
+      "auditId": 41736948829844
+    },
+    {
+      "ticketId": 289334,
+      "fromStatus": "new",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T01:20:16Z",
+      "changedBy": 20888538485524,
+      "auditId": 41735242155412
+    },
+    {
+      "ticketId": 289241,
+      "fromStatus": "new",
+      "toStatus": "solved",
+      "changedAt": "2025-09-30T21:42:34Z",
+      "changedBy": 20888538485524,
+      "auditId": 41728596932500
+    },
+    {
+      "ticketId": 289189,
+      "fromStatus": "new",
+      "toStatus": "solved",
+      "changedAt": "2025-09-30T20:48:13Z",
+      "changedBy": 20888538485524,
+      "auditId": 41726549573908
+    },
+    {
+      "ticketId": 289486,
+      "fromStatus": "new",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T15:28:21Z",
+      "changedBy": 20888538485524,
+      "auditId": 41752359983124
+    },
+    {
+      "ticketId": 289252,
+      "fromStatus": "new",
+      "toStatus": "solved",
+      "changedAt": "2025-09-30T21:50:15Z",
+      "changedBy": 20888538485524,
+      "auditId": 41728828904596
+    },
+    {
+      "ticketId": 289236,
+      "fromStatus": "new",
+      "toStatus": "solved",
+      "changedAt": "2025-09-30T21:35:09Z",
+      "changedBy": 20888538485524,
+      "auditId": 41728375690132
+    },
+    {
+      "ticketId": 289222,
+      "fromStatus": "new",
+      "toStatus": "solved",
+      "changedAt": "2025-09-30T21:25:39Z",
+      "changedBy": 20888538485524,
+      "auditId": 41728050709780
+    },
+    {
+      "ticketId": 289328,
+      "fromStatus": "new",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T00:39:18Z",
+      "changedBy": 20888538485524,
+      "auditId": 41734134427540
+    },
+    {
+      "ticketId": 289315,
+      "fromStatus": "new",
+      "toStatus": "solved",
+      "changedAt": "2025-09-30T23:16:17Z",
+      "changedBy": 20888538485524,
+      "auditId": 41731571077268
+    },
+    {
+      "ticketId": 289248,
+      "fromStatus": "new",
+      "toStatus": "solved",
+      "changedAt": "2025-09-30T21:47:08Z",
+      "changedBy": 20888538485524,
+      "auditId": 41728708641556
+    },
+    {
+      "ticketId": 289188,
+      "fromStatus": "new",
+      "toStatus": "solved",
+      "changedAt": "2025-09-30T20:47:14Z",
+      "changedBy": 20888538485524,
+      "auditId": 41726477327892
+    },
+    {
+      "ticketId": 289057,
+      "fromStatus": "new",
+      "toStatus": "solved",
+      "changedAt": "2025-09-30T18:41:21Z",
+      "changedBy": 20888538485524,
+      "auditId": 41721155358356
+    },
+    {
+      "ticketId": 289422,
+      "fromStatus": "new",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T13:47:15Z",
+      "changedBy": 20888538485524,
+      "auditId": 41748285985684
+    },
+    {
+      "ticketId": 289348,
+      "fromStatus": "new",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T03:24:14Z",
+      "changedBy": 20888538485524,
+      "auditId": 41737451807380
+    },
+    {
+      "ticketId": 289323,
+      "fromStatus": "new",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T00:09:22Z",
+      "changedBy": 20888538485524,
+      "auditId": 41733351594260
+    },
+    {
+      "ticketId": 289211,
+      "fromStatus": "new",
+      "toStatus": "solved",
+      "changedAt": "2025-09-30T21:10:17Z",
+      "changedBy": 20888538485524,
+      "auditId": 41727505608724
+    },
+    {
+      "ticketId": 289186,
+      "fromStatus": "new",
+      "toStatus": "solved",
+      "changedAt": "2025-09-30T20:45:12Z",
+      "changedBy": 20888538485524,
+      "auditId": 41726430316820
+    },
+    {
+      "ticketId": 289119,
+      "fromStatus": "new",
+      "toStatus": "solved",
+      "changedAt": "2025-09-30T19:29:27Z",
+      "changedBy": 20888538485524,
+      "auditId": 41723295029396
+    },
+    {
+      "ticketId": 289103,
+      "fromStatus": "new",
+      "toStatus": "solved",
+      "changedAt": "2025-09-30T19:14:13Z",
+      "changedBy": 20888538485524,
+      "auditId": 41722642418580
+    },
+    {
+      "ticketId": 289346,
+      "fromStatus": "new",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T02:59:15Z",
+      "changedBy": 20888538485524,
+      "auditId": 41737074986772
+    },
+    {
+      "ticketId": 289234,
+      "fromStatus": "new",
+      "toStatus": "solved",
+      "changedAt": "2025-09-30T21:32:21Z",
+      "changedBy": 20888538485524,
+      "auditId": 41728275898900
+    },
+    {
+      "ticketId": 289217,
+      "fromStatus": "new",
+      "toStatus": "solved",
+      "changedAt": "2025-09-30T21:21:19Z",
+      "changedBy": 20888538485524,
+      "auditId": 41727893071508
+    },
+    {
+      "ticketId": 289333,
+      "fromStatus": "new",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T01:18:15Z",
+      "changedBy": 20888538485524,
+      "auditId": 41735213555476
+    },
+    {
+      "ticketId": 289210,
+      "fromStatus": "new",
+      "toStatus": "solved",
+      "changedAt": "2025-09-30T21:06:55Z",
+      "changedBy": 20888538485524,
+      "auditId": 41727348771988
+    },
+    {
+      "ticketId": 289124,
+      "fromStatus": "new",
+      "toStatus": "solved",
+      "changedAt": "2025-09-30T19:39:08Z",
+      "changedBy": 20888538485524,
+      "auditId": 41723731248020
+    },
+    {
+      "ticketId": 289161,
+      "fromStatus": "new",
+      "toStatus": "solved",
+      "changedAt": "2025-09-30T20:15:13Z",
+      "changedBy": 20888538485524,
+      "auditId": 41725228485652
+    },
+    {
+      "ticketId": 289160,
+      "fromStatus": "new",
+      "toStatus": "solved",
+      "changedAt": "2025-09-30T20:15:11Z",
+      "changedBy": 20888538485524,
+      "auditId": 41725215797140
+    },
+    {
+      "ticketId": 289322,
+      "fromStatus": "new",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T00:06:13Z",
+      "changedBy": 20749761586324,
+      "auditId": 41733203624980
+    },
+    {
+      "ticketId": 289028,
+      "fromStatus": "new",
+      "toStatus": "solved",
+      "changedAt": "2025-09-30T18:18:33Z",
+      "changedBy": 20749761586324,
+      "auditId": 41720166184980
+    },
+    {
+      "ticketId": 289324,
+      "fromStatus": "new",
+      "toStatus": "solved",
+      "changedAt": "2025-10-01T00:09:48Z",
+      "changedBy": 20749761586324,
+      "auditId": 41733337073812
+    },
+    {
+      "ticketId": 289102,
+      "fromStatus": "new",
+      "toStatus": "solved",
+      "changedAt": "2025-09-30T19:13:11Z",
+      "changedBy": 20749761586324,
+      "auditId": 41722593761812
+    },
+    {
+      "ticketId": 289032,
+      "fromStatus": "new",
+      "toStatus": "solved",
+      "changedAt": "2025-09-30T18:18:56Z",
+      "changedBy": 20749761586324,
+      "auditId": 41720183065236
+    },
+    {
+      "ticketId": 289031,
+      "fromStatus": "new",
+      "toStatus": "solved",
+      "changedAt": "2025-09-30T18:18:40Z",
+      "changedBy": 20749761586324,
+      "auditId": 41720149242772
+    },
+    {
+      "ticketId": 289020,
+      "fromStatus": "new",
+      "toStatus": "solved",
+      "changedAt": "2025-09-30T18:15:59Z",
+      "changedBy": 20749761586324,
+      "auditId": 41720055441940
+    }
+  ]
+}
