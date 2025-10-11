@@ -1,0 +1,303 @@
+<!doctype html>
+<!--
+* Tabler - Premium and Open Source dashboard template with responsive and high quality UI.
+* @version 1.3.0
+* @link https://tabler.io
+* Copyright 2018-2025 The Tabler Authors
+* Copyright 2018-2025 codecalm.net Paweł Kuna
+* Licensed under MIT (https://github.com/tabler/tabler/blob/master/LICENSE)
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Total Inbound Calls Dashboard - Zendesk</title>
+    <!-- BEGIN PAGE LEVEL STYLES -->
+    <!-- END PAGE LEVEL STYLES -->
+    <!-- BEGIN GLOBAL MANDATORY STYLES -->
+    <link href="./original/dist/css/tabler.css?1747674014" rel="stylesheet" />
+    <!-- END GLOBAL MANDATORY STYLES -->
+    <!-- BEGIN PLUGINS STYLES -->
+    <link href="./original/dist/css/tabler-flags.css?1747674014" rel="stylesheet" />
+    <link href="./original/dist/css/tabler-socials.css?1747674014" rel="stylesheet" />
+    <link href="./original/dist/css/tabler-payments.css?1747674014" rel="stylesheet" />
+    <link href="./original/dist/css/tabler-vendors.css?1747674014" rel="stylesheet" />
+    <link href="./original/dist/css/tabler-marketing.css?1747674014" rel="stylesheet" />
+    <link href="./original/dist/css/tabler-themes.css?1747674014" rel="stylesheet" />
+    <!-- END PLUGINS STYLES -->
+    <!-- BEGIN DEMO STYLES -->
+    <link href="./original/preview/css/demo.css?1747674014" rel="stylesheet" />
+    <!-- END DEMO STYLES -->
+    <!-- BEGIN CUSTOM FONT -->
+    <style>
+      @import url("https://rsms.me/inter/inter.css");
+    </style>
+    <!-- END CUSTOM FONT -->
+  </head>
+  <body>
+    <!-- BEGIN GLOBAL THEME SCRIPT -->
+    <script src="./original/dist/js/tabler-theme.min.js?1747674014"></script>
+    <!-- END GLOBAL THEME SCRIPT -->
+    <div class="page">
+      <!-- BEGIN NAVBAR  -->
+      <header class="navbar navbar-expand-md d-print-none">
+        <div class="container-xl">
+          <!-- BEGIN NAVBAR TOGGLER -->
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbar-menu"
+            aria-controls="navbar-menu"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <!-- END NAVBAR TOGGLER -->
+          <!-- BEGIN NAVBAR LOGO -->
+          <div class="navbar-brand navbar-brand-autodark d-none-navbar-horizontal pe-0 pe-md-3">
+            <a href="." aria-label="Zendesk Dashboard">
+              <h2 class="m-0">Zendesk Dashboard</h2>
+            </a>
+          </div>
+          <!-- END NAVBAR LOGO -->
+          <div class="navbar-nav flex-row order-md-last">
+            <div class="d-none d-md-flex">
+              <div class="nav-item">
+                <a href="?theme=dark" class="nav-link px-0 hide-theme-dark" title="Enable dark mode" data-bs-toggle="tooltip" data-bs-placement="bottom">
+                  <!-- Download SVG icon from http://tabler.io/icons/icon/moon -->
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="icon icon-1"
+                  >
+                    <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+                  </svg>
+                </a>
+                <a href="?theme=light" class="nav-link px-0 hide-theme-light" title="Enable light mode" data-bs-toggle="tooltip" data-bs-placement="bottom">
+                  <!-- Download SVG icon from http://tabler.io/icons/icon/sun -->
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="icon icon-1"
+                  >
+                    <path d="M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" />
+                    <path d="M3 12h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7" />
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+      <!-- END NAVBAR  -->
+      <div class="page-wrapper">
+        <!-- BEGIN PAGE HEADER -->
+        <div class="page-header d-print-none" aria-label="Page header">
+          <div class="container-xl">
+            <div class="row g-2 align-items-center">
+              <div class="col">
+                <h2 class="page-title">Total Inbound Calls</h2>
+                <div class="text-secondary mt-1">October 1-8, 2024 (Weekdays)</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- END PAGE HEADER -->
+        <!-- BEGIN PAGE BODY -->
+        <div class="page-body">
+          <div class="container-xl">
+            <div class="row row-cards">
+              <div class="col-12">
+                <div class="card">
+                  <div class="card-body">
+                    <div id="chart-inbound-calls" class="position-relative"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- END PAGE BODY -->
+        <!--  BEGIN FOOTER  -->
+        <footer class="footer footer-transparent d-print-none">
+          <div class="container-xl">
+            <div class="row text-center align-items-center flex-row-reverse">
+              <div class="col-12 col-lg-auto mt-3 mt-lg-0">
+                <ul class="list-inline list-inline-dots mb-0">
+                  <li class="list-inline-item">
+                    &copy; 2025 Zendesk Dashboard
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </footer>
+        <!--  END FOOTER  -->
+      </div>
+    </div>
+    <!-- BEGIN PAGE LIBRARIES -->
+    <script src="./original/dist/libs/apexcharts/dist/apexcharts.min.js?1747674014" defer></script>
+    <!-- END PAGE LIBRARIES -->
+    <!-- BEGIN GLOBAL MANDATORY SCRIPTS -->
+    <script src="./original/dist/js/tabler.min.js?1747674014" defer></script>
+    <!-- END GLOBAL MANDATORY SCRIPTS -->
+    <!-- BEGIN DEMO SCRIPTS -->
+    <script src="./original/preview/js/demo.min.js?1747674014" defer></script>
+    <!-- END DEMO SCRIPTS -->
+    <!-- BEGIN PAGE SCRIPTS -->
+    <script>
+      document.addEventListener("DOMContentLoaded", async function () {
+        try {
+          // Load data from execView.json
+          const response = await fetch('../data/execView.json');
+          const data = await response.json();
+          
+          // Extract trend data for both totalInboundCalls and notAnsweredCalls
+          const totalInboundData = data.trends.voice.totalInboundCalls;
+          const notAnsweredData = data.trends.voice.notAnsweredCalls;
+          
+          // Prepare categories (dates)
+          const categories = totalInboundData.map(item => {
+            const date = new Date(item.date);
+            return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+          });
+          
+          // Calculate answered calls (total - not answered) and not answered calls
+          const answeredCalls = totalInboundData.map((item, index) => {
+            const total = item.value;
+            const notAnswered = notAnsweredData[index].value;
+            return total - notAnswered;
+          });
+          
+          const notAnsweredCalls = notAnsweredData.map(item => item.value);
+          
+          // Create the stacked bar chart
+          window.ApexCharts &&
+            new ApexCharts(document.getElementById("chart-inbound-calls"), {
+              chart: {
+                type: "bar",
+                fontFamily: "inherit",
+                height: 480,
+                parentHeightOffset: 0,
+                toolbar: {
+                  show: false,
+                },
+                animations: {
+                  enabled: true,
+                },
+                stacked: true,
+              },
+              plotOptions: {
+                bar: {
+                  columnWidth: "50%",
+                },
+              },
+              dataLabels: {
+                enabled: true,
+                style: {
+                  fontSize: '12px',
+                  fontWeight: 'bold',
+                  colors: ['#fff']
+                },
+              },
+              series: [
+                {
+                  name: "Answered Calls",
+                  data: answeredCalls,
+                },
+                {
+                  name: "Not Answered Calls",
+                  data: notAnsweredCalls,
+                },
+              ],
+              tooltip: {
+                theme: "dark",
+                y: {
+                  formatter: function(value) {
+                    return value + " calls";
+                  }
+                }
+              },
+              grid: {
+                padding: {
+                  top: -20,
+                  right: 0,
+                  left: -4,
+                  bottom: -4,
+                },
+                strokeDashArray: 4,
+              },
+              xaxis: {
+                labels: {
+                  padding: 0,
+                  style: {
+                    fontSize: '14px',
+                  },
+                },
+                tooltip: {
+                  enabled: false,
+                },
+                axisBorder: {
+                  show: false,
+                },
+                categories: categories,
+              },
+              yaxis: {
+                labels: {
+                  padding: 4,
+                  style: {
+                    fontSize: '14px',
+                  },
+                },
+                title: {
+                  text: 'Number of Calls',
+                  style: {
+                    fontSize: '14px',
+                    fontWeight: 600,
+                  },
+                },
+              },
+              colors: ["#2fb344", "#d63939"],
+              legend: {
+                show: true,
+                position: "top",
+                horizontalAlign: "right",
+                offsetY: 0,
+                markers: {
+                  width: 10,
+                  height: 10,
+                  radius: 100,
+                },
+                itemMargin: {
+                  horizontal: 8,
+                  vertical: 8,
+                },
+              },
+            }).render();
+        } catch (error) {
+          console.error('Error loading chart data:', error);
+          document.getElementById("chart-inbound-calls").innerHTML = 
+            '<div class="alert alert-danger">Error loading chart data. Please ensure execView.json exists in the data folder.</div>';
+        }
+      });
+    </script>
+    <!-- END PAGE SCRIPTS -->
+  </body>
+</html>

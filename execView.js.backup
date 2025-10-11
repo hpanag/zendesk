@@ -1,0 +1,458 @@
+const ZendeskClient = require('./src/ZendeskClient');
+const fs = require('fs');
+const path = require('path');
+
+class ExecViewGenerator {
+  constructor() {
+    this.zendesk = new ZendeskClient();
+    this.execViewData = {};
+    this.dataFilePath = path.join(__dirname, 'data', 'execView.json');
+  }
+
+  async generateDailyKPIs() {
+    console.log('📊 Generating daily KPIs...');
+    
+    try {
+      // Verify Zendesk client is properly initialized
+      if (!this.zendesk) {
+        throw new Error('ZendeskClient not initialized');
+      }
+
+      // Test API connection
+      try {
+        await this.zendesk.makeRequest('GET', '/users/me.json');
+        console.log('✅ Successfully connected to Zendesk API');
+      } catch (apiError) {
+        console.error('❌ Failed to connect to Zendesk API:', apiError.message);
+        throw new Error('Zendesk API connection failed');
+      }
+
+      const today = new Date();
+      const todayISO = today.toISOString();
+      
+      // Get today's voice metrics using Voice/Talk API
+      console.log('📞 Fetching voice metrics...');
+      const voiceMetrics = await this.getTodaysVoiceMetrics();
+      console.log('✅ Successfully fetched voice metrics');
+      
+      return {
+        date: today.toISOString().split('T')[0],
+        timestamp: todayISO,
+        voice: voiceMetrics
+      };
+    } catch (error) {
+      console.error('❌ Error generating daily KPIs:', error.message);
+      if (error.response) {
+        console.error('API Response:', error.response.data);
+      }
+      throw error;
+    }
+  }
+
+  async getTodaysVoiceMetrics() {
+    console.log('📞 Fetching today\'s voice metrics...');
+    
+    try {
+      // Get real call metrics from Voice Agent Activity API
+      const agentResponse = await this.zendesk.makeRequest('GET', '/channels/voice/stats/agents_activity.json');
+      const agentActivityData = agentResponse.agents_activity || [];
+      
+      // Get current queue stats
+      const queueResponse = await this.zendesk.makeRequest('GET', '/channels/voice/stats/current_queue_activity.json');
+      const currentQueueStats = queueResponse.current_queue_activity;
+      
+      // Calculate metrics from agent activity data
+      let totalInboundCalls = 0;
+      let totalAbandonedCalls = 0;
+      let totalExceededQueueWait = 0;
+      let exceededQueueWaitTime = 0;
+      let notAnsweredCalls = 0;
+      let callbackRequested = 0;
+      let droppedCalls = 0;
+      let outboundCalls = 0;
+      let totalDurationSeconds = 0;
+      let longestCallSeconds = 0;
+      
+      agentActivityData.forEach(agent => {
+        totalInboundCalls += agent.calls_accepted || 0;
+        totalAbandonedCalls += agent.calls_missed || 0;
+        notAnsweredCalls += agent.calls_missed || 0;
+        droppedCalls += agent.calls_abandoned || 0;
+        outboundCalls += agent.outbound_calls || 0;
+        
+        // Update longest call duration
+        if (agent.longest_call_duration > longestCallSeconds) {
+          longestCallSeconds = agent.longest_call_duration;
+        }
+        
+        // Add to total duration
+        totalDurationSeconds += agent.total_talk_time || 0;
+      });
+      
+      // Calculate average call duration
+      const averageCallDurationSeconds = totalInboundCalls > 0 ? 
+        Math.round(totalDurationSeconds / totalInboundCalls) : 0;
+      
+      // Get additional metrics from current queue stats
+      if (currentQueueStats) {
+        if (currentQueueStats.average_wait_time > 300) { // 5 minutes threshold
+          totalExceededQueueWait = currentQueueStats.calls_waiting || 0;
+          exceededQueueWaitTime = currentQueueStats.longest_wait_time || 0;
+        }
+        callbackRequested = currentQueueStats.callbacks_waiting || 0;
+      }
+      
+      return {
+        totalInboundCalls: {
+          value: totalInboundCalls,
+          displayName: "Total Inbound Calls",
+          description: "Total number of inbound calls received today"
+        },
+        totalAbandonedCalls: {
+          value: totalAbandonedCalls,
+          displayName: "Total Abandoned Calls in Queue",
+          description: "Number of calls that were abandoned while in queue today"
+        },
+        totalExceededQueueWait: {
+          value: totalExceededQueueWait,
+          displayName: "Total Exceeded Queue Wait",
+          description: "Number of calls that exceeded maximum queue wait time today"
+        },
+        exceededQueueWaitTime: {
+          value: exceededQueueWaitTime,
+          displayName: "Total Wait Time",
+          description: "Total wait time for calls that exceeded maximum queue wait time today"
+        },
+        notAnsweredCalls: {
+          value: notAnsweredCalls,
+          displayName: "Not Answered Calls",
+          description: "Number of calls that were not answered by any agent today"
+        },
+        callbackRequested: {
+          value: callbackRequested,
+          displayName: "Callback Requested",
+          description: "Number of callers who requested a callback today"
+        },
+        droppedCalls: {
+          value: droppedCalls,
+          displayName: "Dropped Calls",
+          description: "Number of calls that dropped before resolution today"
+        },
+        outboundCalls: {
+          value: outboundCalls,
+          displayName: "Outbound Calls",
+          description: "Total outbound calls placed today"
+        },
+        averageCallDurationSeconds: {
+          value: averageCallDurationSeconds,
+          displayName: "Average Call Duration (s)",
+          description: "Average call duration for today in seconds"
+        },
+        longestCallSeconds: {
+          value: longestCallSeconds,
+          displayName: "Longest Call (s)",
+          description: "Duration of the longest call today in seconds"
+        }
+      };
+    } catch (error) {
+      console.error('Error fetching voice metrics:', error.message);
+      throw error;
+    }
+  }
+
+  async generateVoiceTrends() {
+    console.log('📈 Generating voice trends...');
+    
+    try {
+      // Get the date range for the last 30 weekdays
+      const dates = this.getLastThirtyWeekdays();
+      
+      // Initialize trend data structure
+      const trendMetrics = {
+        totalInboundCalls: [],
+        totalAbandonedCalls: [],
+        totalExceededQueueWait: [],
+        exceededQueueWaitTime: [],
+        notAnsweredCalls: [],
+        callbackRequested: [],
+        droppedCalls: [],
+        outboundCalls: [],
+        averageCallDurationSeconds: [],
+        longestCallSeconds: []
+      };
+      
+      // Fetch historical data for each date
+      for (const date of dates) {
+        const dateStr = date.toISOString().split('T')[0];
+        console.log(`📅 Fetching data for ${dateStr}...`);
+        
+        try {
+          // Search for tickets on this date
+          const searchQuery = `type:ticket channel:voice created:${dateStr}`;
+          const tickets = await this.zendesk.search(searchQuery);
+          
+          // Initialize metrics for this date
+          let metrics = {
+            inbound: 0,
+            abandoned: 0,
+            exceededWait: 0,
+            waitTime: 0,
+            notAnswered: 0,
+            callback: 0,
+            dropped: 0,
+            outbound: 0,
+            totalDuration: 0,
+            longestDuration: 0,
+            callCount: 0
+          };
+          
+          // Analyze each ticket
+          for (const ticket of tickets.results || []) {
+            // Determine call type and outcome
+            const subject = (ticket.subject || '').toLowerCase();
+            const description = (ticket.description || '').toLowerCase();
+            const via = ticket.via || {};
+            
+            // Count inbound vs outbound
+            if (via.source?.rel === 'outbound' || subject.includes('outbound')) {
+              metrics.outbound++;
+            } else {
+              metrics.inbound++;
+            }
+            
+            // Check for abandoned/missed calls
+            if (subject.includes('abandoned') || subject.includes('missed') || 
+                description.includes('abandoned') || description.includes('caller hung up')) {
+              metrics.abandoned++;
+              metrics.notAnswered++;
+            }
+            
+            // Check for callbacks
+            if (subject.includes('callback') || description.includes('callback')) {
+              metrics.callback++;
+            }
+            
+            // Check for dropped calls
+            if (subject.includes('dropped') || description.includes('dropped')) {
+              metrics.dropped++;
+            }
+            
+            // Extract call duration if available
+            const durationMatch = description.match(/duration:?\\s*(\\d+(?:\\.\\d+)?)\\s*(min|sec)/i);
+            if (durationMatch) {
+              const duration = parseFloat(durationMatch[1]);
+              const unit = durationMatch[2].toLowerCase();
+              const durationSeconds = unit === 'min' ? duration * 60 : duration;
+              
+              metrics.totalDuration += durationSeconds;
+              metrics.callCount++;
+              
+              if (durationSeconds > metrics.longestDuration) {
+                metrics.longestDuration = durationSeconds;
+              }
+            }
+            
+            // Check for exceeded wait time
+            const waitMatch = description.match(/wait(?:ed|ing)?:?\\s*(\\d+(?:\\.\\d+)?)\\s*(min|sec)/i);
+            if (waitMatch) {
+              const waitTime = parseFloat(waitMatch[1]);
+              const unit = waitMatch[2].toLowerCase();
+              const waitSeconds = unit === 'min' ? waitTime * 60 : waitTime;
+              
+              if (waitSeconds > 300) { // 5 minutes threshold
+                metrics.exceededWait++;
+                metrics.waitTime += waitSeconds;
+              }
+            }
+          }
+          
+          // Calculate average duration
+          const avgDuration = metrics.callCount > 0 ? Math.round(metrics.totalDuration / metrics.callCount) : 0;
+          
+          // Add metrics to trends
+          for (const [key, data] of Object.entries(trendMetrics)) {
+            let value = 0;
+            switch (key) {
+              case 'totalInboundCalls':
+                value = metrics.inbound;
+                break;
+              case 'totalAbandonedCalls':
+                value = metrics.abandoned;
+                break;
+              case 'totalExceededQueueWait':
+                value = metrics.exceededWait;
+                break;
+              case 'exceededQueueWaitTime':
+                value = metrics.waitTime;
+                break;
+              case 'notAnsweredCalls':
+                value = metrics.notAnswered;
+                break;
+              case 'callbackRequested':
+                value = metrics.callback;
+                break;
+              case 'droppedCalls':
+                value = metrics.dropped;
+                break;
+              case 'outboundCalls':
+                value = metrics.outbound;
+                break;
+              case 'averageCallDurationSeconds':
+                value = avgDuration;
+                break;
+              case 'longestCallSeconds':
+                value = metrics.longestDuration;
+                break;
+            }
+            
+            data.push({
+              date: dateStr,
+              value: value
+            });
+          }
+          
+        } catch (error) {
+          console.error(`Error fetching data for ${dateStr}:`, error.message);
+          // Add zero values for this date
+          for (const data of Object.values(trendMetrics)) {
+            data.push({
+              date: dateStr,
+              value: 0
+            });
+          }
+        }
+      }
+      
+      return trendMetrics;
+    } catch (error) {
+      console.error('Error generating voice trends:', error.message);
+      throw error;
+    }
+  }
+
+  getLastThirtyWeekdays() {
+    const dates = [];
+    let currentDate = new Date();
+    
+    while (dates.length < 30) {
+      // Skip weekends (0 = Sunday, 6 = Saturday)
+      if (currentDate.getDay() !== 0 && currentDate.getDay() !== 6) {
+        dates.push(new Date(currentDate));
+      }
+      currentDate.setDate(currentDate.getDate() - 1);
+    }
+    
+    return dates.reverse(); // Return in chronological order
+  }
+
+  async generateExecView() {
+    console.log('🏢 Generating Executive View data...');
+    
+    try {
+      // Ensure data directory exists
+      if (!fs.existsSync(path.dirname(this.dataFilePath))) {
+        console.log('📁 Creating data directory...');
+        fs.mkdirSync(path.dirname(this.dataFilePath), { recursive: true });
+      }
+
+      console.log('📊 Fetching daily KPIs...');
+      const dailyKPIs = await this.generateDailyKPIs();
+      console.log('✅ Daily KPIs fetched successfully');
+
+      const today = new Date().toISOString().split('T')[0];
+      
+      console.log('📈 Generating historical trends...');
+      const voiceTrends = await this.generateVoiceTrends();
+      console.log('✅ Historical trends generated successfully');
+      
+      // Construct the complete data structure
+      console.log('🔄 Building data structure...');
+      this.execViewData = {
+        metadata: {
+          version: "1.0.0",
+          lastUpdated: new Date().toISOString(),
+          description: "Executive View - Daily KPI Dashboard with Historical Trends",
+          dataRetentionDays: 90,
+          kpiCategories: ["voice"]
+        },
+        dailyKPIs: {
+          [today]: dailyKPIs
+        },
+        trends: {
+          voice: voiceTrends
+        }
+      };
+      
+      // Validate data structure
+      console.log('🔍 Validating data structure...');
+      if (!this.execViewData.dailyKPIs || !this.execViewData.trends) {
+        throw new Error('Invalid data structure - missing required sections');
+      }
+      
+      // Save to file
+      console.log('💾 Saving data to file...');
+      await this.saveExecViewData();
+      
+      console.log(`✅ Executive View data generated successfully and saved to ${this.dataFilePath}`);
+      return this.execViewData;
+      
+    } catch (error) {
+      console.error('❌ Error generating Executive View:', error.message);
+      if (error.stack) {
+        console.error('Stack trace:', error.stack);
+      }
+      throw error;
+    }
+  }
+
+  async saveExecViewData() {
+    try {
+      console.log(`📝 Attempting to save data to ${this.dataFilePath}...`);
+      
+      // Ensure we have data to save
+      if (!this.execViewData) {
+        throw new Error('No data to save - execViewData is empty');
+      }
+
+      // Validate JSON before saving
+      try {
+        JSON.parse(JSON.stringify(this.execViewData));
+      } catch (jsonError) {
+        throw new Error(`Invalid JSON data: ${jsonError.message}`);
+      }
+
+      // Ensure directory exists
+      const dir = path.dirname(this.dataFilePath);
+      if (!fs.existsSync(dir)) {
+        console.log(`📁 Creating directory: ${dir}`);
+        fs.mkdirSync(dir, { recursive: true });
+      }
+
+      // Write file
+      fs.writeFileSync(this.dataFilePath, JSON.stringify(this.execViewData, null, 2));
+      
+      // Verify file was written
+      if (!fs.existsSync(this.dataFilePath)) {
+        throw new Error('File was not created successfully');
+      }
+
+      const stats = fs.statSync(this.dataFilePath);
+      console.log(`✅ Data saved successfully (${Math.round(stats.size / 1024)} KB)`);
+    } catch (error) {
+      console.error('❌ Error saving data:', error.message);
+      if (error.code) {
+        console.error('File system error code:', error.code);
+      }
+      throw error;
+    }
+  }
+}
+
+// Export the class
+module.exports = ExecViewGenerator;
+
+// If running directly (not imported as a module), generate the exec view
+if (require.main === module) {
+  const generator = new ExecViewGenerator();
+  generator.generateExecView().catch(console.error);
+}

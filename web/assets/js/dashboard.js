@@ -107,6 +107,9 @@ class CallCenterDashboard {
             `${this.data.dailyMetrics.totalInboundCalls} inbound, ${this.data.dailyMetrics.totalOutboundCalls} outbound`;
         document.getElementById('avgWaitTime').textContent = `${this.data.dailyMetrics.averageWaitTime}`;
         
+        // Update additional metrics
+        this.updateAdditionalMetrics();
+        
         // Update detailed metrics
         this.updateDetailedMetrics();
         
@@ -114,6 +117,35 @@ class CallCenterDashboard {
         this.updateCharts();
     }
     
+    updateAdditionalMetrics() {
+        const metrics = this.data.dailyMetrics;
+        
+        // Calculate derived metrics
+        const totalInbound = metrics.totalInboundCalls || 0;
+        const totalAbandoned = metrics.abandonedInQueue || 0;
+        const totalExceeded = metrics.exceededQueueWaitTime || 0;
+        
+        // Total answered calls = Total calls - Abandoned calls
+        const totalAnswered = Math.max(0, metrics.totalCalls - totalAbandoned);
+        
+        // Total unanswered calls = Abandoned + Exceeded wait time (includes drops, timeouts, etc.)
+        const totalUnanswered = totalAbandoned + totalExceeded;
+        
+        // Calculate rates
+        const answerRate = totalInbound > 0 ? ((totalAnswered / totalInbound) * 100).toFixed(1) : 0;
+        const abandonedRate = totalInbound > 0 ? ((totalAbandoned / totalInbound) * 100).toFixed(1) : 0;
+        
+        // Update new metric cards
+        document.getElementById('totalInboundCalls').textContent = totalInbound;
+        document.getElementById('totalAnsweredCalls').textContent = totalAnswered;
+        document.getElementById('totalUnansweredCalls').textContent = totalUnanswered;
+        document.getElementById('abandonedRate').textContent = `${abandonedRate}%`;
+        
+        // Update subtitle information
+        document.getElementById('answerRate').textContent = `Success rate: ${answerRate}%`;
+        document.getElementById('unansweredBreakdown').textContent = `${totalAbandoned} abandoned, ${totalExceeded} timeout`;
+    }
+
     updateDetailedMetrics() {
         const metrics = this.data.dailyMetrics;
         

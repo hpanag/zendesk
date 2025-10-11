@@ -1,0 +1,116 @@
+{
+  "metadata": {
+    "version": "1.0.0",
+    "lastUpdated": "2025-10-10T12:34:39.627Z",
+    "description": "Executive View - Daily KPI Dashboard with Historical Trends",
+    "dataRetentionDays": 90,
+    "kpiCategories": [
+      "voice"
+    ]
+  },
+  "dailyKPIs": {
+    "2025-10-10": {
+      "date": "2025-10-10",
+      "timestamp": "2025-10-10T12:34:15.017Z",
+      "voice": {
+        "totalInboundCalls": {
+          "value": 1,
+          "displayName": "Total Inbound Calls",
+          "description": "Total number of inbound calls received today"
+        },
+        "notAnsweredCalls": {
+          "value": 0,
+          "displayName": "Not Answered Calls",
+          "description": "Number of calls that were not answered by any agent today"
+        },
+        "outboundCalls": {
+          "value": 0,
+          "displayName": "Outbound Calls",
+          "description": "Total outbound calls placed today"
+        }
+      }
+    }
+  },
+  "trends": {
+    "voice": {
+      "totalInboundCalls": [
+        {
+          "date": "2025-10-01",
+          "value": 214
+        },
+        {
+          "date": "2025-10-02",
+          "value": 182
+        },
+        {
+          "date": "2025-10-03",
+          "value": 112
+        },
+        {
+          "date": "2025-10-04",
+          "value": 74
+        },
+        {
+          "date": "2025-10-07",
+          "value": 268
+        },
+        {
+          "date": "2025-10-08",
+          "value": 204
+        }
+      ],
+      "notAnsweredCalls": [
+        {
+          "date": "2025-10-01",
+          "value": 179
+        },
+        {
+          "date": "2025-10-02",
+          "value": 142
+        },
+        {
+          "date": "2025-10-03",
+          "value": 112
+        },
+        {
+          "date": "2025-10-04",
+          "value": 74
+        },
+        {
+          "date": "2025-10-07",
+          "value": 159
+        },
+        {
+          "date": "2025-10-08",
+          "value": 129
+        }
+      ],
+      "outboundCalls": [
+        {
+          "date": "2025-10-01",
+          "value": 13
+        },
+        {
+          "date": "2025-10-02",
+          "value": 1
+        },
+        {
+          "date": "2025-10-03",
+          "value": 0
+        },
+        {
+          "date": "2025-10-04",
+          "value": 0
+        },
+        {
+          "date": "2025-10-07",
+          "value": 0
+        },
+        {
+          "date": "2025-10-08",
+          "value": 2
+        }
+      ]
+    }
+  }
+}

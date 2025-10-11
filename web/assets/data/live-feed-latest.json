@@ -1,38 +1,38 @@
 {
-  "timestamp": "2025-10-01T20:30:20.531Z",
-  "lastUpdated": "2025-10-01, 4:30:20 p.m.",
-  "callsInQueue": 7,
+  "timestamp": "2025-10-09T14:32:43.150Z",
+  "lastUpdated": "2025-10-09, 10:32:43 a.m.",
+  "callsInQueue": 0,
   "agents": {
-    "totalAgents": 57,
-    "agentsOnline": 3,
-    "agentsOnCall": 0,
-    "agentsAway": 19,
-    "agentsOffline": 32,
+    "totalAgents": 59,
+    "agentsOnline": 5,
+    "agentsOnCall": 1,
+    "agentsAway": 13,
+    "agentsOffline": 37,
     "agentsTransfersOnly": 0,
     "agentsOutboundCall": 0,
-    "currentlyWorking": 12,
-    "activeToday": 22
+    "currentlyWorking": 8,
+    "activeToday": 19
   },
   "dailyMetrics": {
-    "totalCalls": 27,
-    "totalInboundCalls": 26,
-    "totalOutboundCalls": 1,
+    "totalCalls": 0,
+    "totalInboundCalls": 0,
+    "totalOutboundCalls": 0,
     "totalCallbackCalls": 0,
-    "abandonedInQueue": 32,
-    "exceededQueueWaitTime": 21,
-    "maxCallsWaitingToday": 7,
-    "averageDuration": 10.79,
-    "averageWaitTime": 36.1,
-    "averageTimeToAnswer": 265,
-    "averageHoldTime": 7.42,
+    "abandonedInQueue": 19,
+    "exceededQueueWaitTime": 0,
+    "maxCallsWaitingToday": 0,
+    "averageDuration": 0,
+    "averageWaitTime": 0,
+    "averageTimeToAnswer": 0,
+    "averageHoldTime": 0,
     "averageCallbackWaitTime": 0,
-    "currentAverageWaitTime": 36.1,
-    "currentLongestWaitTime": 60.15
+    "currentAverageWaitTime": null,
+    "currentLongestWaitTime": null
   },
   "status": "live",
   "webSync": {
-    "syncTime": "2025-10-01T21:10:05.495Z",
-    "sourceFile": "live-feed-2025-10-01T20-30-22.json",
+    "syncTime": "2025-10-09T14:33:31.130Z",
+    "sourceFile": "live-feed-2025-10-09T14-32-45.json",
     "dashboardVersion": "1.0.0"
   }
 }

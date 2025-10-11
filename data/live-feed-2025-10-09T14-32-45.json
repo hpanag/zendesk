@@ -1,0 +1,33 @@
+{
+  "timestamp": "2025-10-09T14:32:43.150Z",
+  "lastUpdated": "2025-10-09, 10:32:43 a.m.",
+  "callsInQueue": 0,
+  "agents": {
+    "totalAgents": 59,
+    "agentsOnline": 5,
+    "agentsOnCall": 1,
+    "agentsAway": 13,
+    "agentsOffline": 37,
+    "agentsTransfersOnly": 0,
+    "agentsOutboundCall": 0,
+    "currentlyWorking": 8,
+    "activeToday": 19
+  },
+  "dailyMetrics": {
+    "totalCalls": 0,
+    "totalInboundCalls": 0,
+    "totalOutboundCalls": 0,
+    "totalCallbackCalls": 0,
+    "abandonedInQueue": 19,
+    "exceededQueueWaitTime": 0,
+    "maxCallsWaitingToday": 0,
+    "averageDuration": 0,
+    "averageWaitTime": 0,
+    "averageTimeToAnswer": 0,
+    "averageHoldTime": 0,
+    "averageCallbackWaitTime": 0,
+    "currentAverageWaitTime": null,
+    "currentLongestWaitTime": null
+  },
+  "status": "live"
+}

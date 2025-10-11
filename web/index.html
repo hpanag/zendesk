@@ -77,6 +77,53 @@
             </div>
         </section>
 
+        <!-- Additional Call Metrics -->
+        <section class="stats-grid">
+            <div class="stat-card info">
+                <div class="stat-icon">
+                    <i class="fas fa-phone-alt"></i>
+                </div>
+                <div class="stat-content">
+                    <h3>Total Inbound Calls</h3>
+                    <div class="stat-value" id="totalInboundCalls">0</div>
+                    <div class="stat-subtitle">Calls received today</div>
+                </div>
+            </div>
+
+            <div class="stat-card success">
+                <div class="stat-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <div class="stat-content">
+                    <h3>Total Answered Calls</h3>
+                    <div class="stat-value" id="totalAnsweredCalls">0</div>
+                    <div class="stat-subtitle" id="answerRate">Success rate: 0%</div>
+                </div>
+            </div>
+
+            <div class="stat-card urgent">
+                <div class="stat-icon">
+                    <i class="fas fa-phone-slash"></i>
+                </div>
+                <div class="stat-content">
+                    <h3>Total Unanswered Calls</h3>
+                    <div class="stat-value" id="totalUnansweredCalls">0</div>
+                    <div class="stat-subtitle" id="unansweredBreakdown">0 abandoned, 0 timeout</div>
+                </div>
+            </div>
+
+            <div class="stat-card warning">
+                <div class="stat-icon">
+                    <i class="fas fa-exclamation-triangle"></i>
+                </div>
+                <div class="stat-content">
+                    <h3>Abandoned Rate</h3>
+                    <div class="stat-value" id="abandonedRate">0%</div>
+                    <div class="stat-subtitle">Calls lost in queue</div>
+                </div>
+            </div>
+        </section>
+
         <!-- Charts Section -->
         <section class="charts-grid">
             <!-- Agent Status Pie Chart -->
