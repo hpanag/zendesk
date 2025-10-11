@@ -12,7 +12,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Zendesk Dashboard - Voice & Tickets</title>
+    <title>Ticket Status Dashboard - Zendesk</title>
     <!-- BEGIN PAGE LEVEL STYLES -->
     <!-- END PAGE LEVEL STYLES -->
     <!-- BEGIN GLOBAL MANDATORY STYLES -->
@@ -113,8 +113,8 @@
           <div class="container-xl">
             <div class="row g-2 align-items-center">
               <div class="col">
-                <h2 class="page-title">Executive Dashboard</h2>
-                <div class="text-secondary mt-1">Voice Calls & Ticket Status Trends</div>
+                <h2 class="page-title">Ticket Status Trends</h2>
+                <div class="text-secondary mt-1">Open vs Closed Tickets - Last 7 Days</div>
               </div>
             </div>
           </div>
@@ -124,16 +124,7 @@
         <div class="page-body">
           <div class="container-xl">
             <div class="row row-cards">
-              <!-- Voice Calls Chart -->
-              <div class="col-12">
-                <div class="card">
-                  <div class="card-body">
-                    <div id="chart-inbound-calls" class="position-relative"></div>
-                  </div>
-                </div>
-              </div>
-              
-              <!-- Ticket Activity Chart -->
+              <!-- Chart Card -->
               <div class="col-12">
                 <div class="card">
                   <div class="card-header">
@@ -146,7 +137,7 @@
                 </div>
               </div>
               
-              <!-- Ticket Status Table -->
+              <!-- Table Card -->
               <div class="col-12">
                 <div class="card">
                   <div class="card-header">
@@ -224,35 +215,40 @@
             return weekdayData.slice(-n);
           }
           
-          // Extract trend data and filter to last 10 weekdays
-          const allTotalInboundData = data.trends.voice.totalInboundCalls;
-          const allNotAnsweredData = data.trends.voice.notAnsweredCalls;
+          // Extract ticket trend data and filter to last 10 weekdays
+          const allTicketData = data.trends.tickets.byStatus;
           
-          const totalInboundData = getLastNWeekdays(allTotalInboundData, 10);
-          const notAnsweredData = getLastNWeekdays(allNotAnsweredData, 10);
+          if (!allTicketData || allTicketData.length === 0) {
+            throw new Error('No ticket status data available');
+          }
           
-          // Prepare categories (dates)
-          const categories = totalInboundData.map(item => {
-            const date = new Date(item.date);
+          const ticketData = getLastNWeekdays(allTicketData, 10);
+          
+          // Sort by date (oldest first for charts)
+          const sortedData = [...ticketData].sort((a, b) => new Date(a.date) - new Date(b.date));
+          
+          // Prepare data for chart
+          const categories = sortedData.map(day => {
+            const date = new Date(day.date);
             return date.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
           });
           
-          // Calculate answered calls (total - not answered) and not answered calls
-          const answeredCalls = totalInboundData.map((item, index) => {
-            const total = item.value;
-            const notAnswered = notAnsweredData[index].value;
-            return total - notAnswered;
-          });
+          // Calculate total active tickets (new + open + pending + solved)
+          const totalActiveTickets = sortedData.map(day => 
+            day.new + day.open + day.pending + day.solved
+          );
           
-          const notAnsweredCalls = notAnsweredData.map(item => item.value);
+          // New and Closed for bar chart
+          const newTickets = sortedData.map(day => day.new);
+          const closedTickets = sortedData.map(day => day.closed);
           
-          // Create the stacked bar chart
+          // Create mixed chart
           window.ApexCharts &&
-            new ApexCharts(document.getElementById("chart-inbound-calls"), {
+            new ApexCharts(document.getElementById("chart-ticket-overview"), {
               chart: {
-                type: "bar",
+                type: "line",
                 fontFamily: "inherit",
-                height: 480,
+                height: 400,
                 parentHeightOffset: 0,
                 toolbar: {
                   show: false,
@@ -260,7 +256,11 @@
                 animations: {
                   enabled: true,
                 },
-                stacked: true,
+              },
+              stroke: {
+                width: [3, 0, 0],
+                curve: 'smooth',
+                dashArray: [0, 0, 0]
               },
               plotOptions: {
                 bar: {
@@ -268,28 +268,32 @@
                 },
               },
               dataLabels: {
-                enabled: true,
-                style: {
-                  fontSize: '12px',
-                  fontWeight: 'bold',
-                  colors: ['#fff']
-                },
+                enabled: false,
               },
               series: [
                 {
-                  name: "Answered Calls",
-                  data: answeredCalls,
+                  name: "Total Active Tickets",
+                  type: "line",
+                  data: totalActiveTickets,
                 },
                 {
-                  name: "Not Answered Calls",
-                  data: notAnsweredCalls,
+                  name: "New Tickets",
+                  type: "bar",
+                  data: newTickets,
+                },
+                {
+                  name: "Closed Tickets",
+                  type: "bar",
+                  data: closedTickets,
                 },
               ],
               tooltip: {
                 theme: "dark",
+                shared: true,
+                intersect: false,
                 y: {
                   formatter: function(value) {
-                    return value + " calls";
+                    return value + " tickets";
                   }
                 }
               },
@@ -306,7 +310,7 @@
                 labels: {
                   padding: 0,
                   style: {
-                    fontSize: '14px',
+                    fontSize: '12px',
                   },
                 },
                 tooltip: {
@@ -321,22 +325,22 @@
                 labels: {
                   padding: 4,
                   style: {
-                    fontSize: '14px',
+                    fontSize: '12px',
                   },
                 },
                 title: {
-                  text: 'Number of Calls',
+                  text: 'Number of Tickets',
                   style: {
-                    fontSize: '14px',
-                    fontWeight: 600,
+                    fontSize: '13px',
+                    fontWeight: 500,
                   },
                 },
               },
-              colors: ["#2fb344", "#d63939"],
+              colors: ["#206bc4", "#d63939", "#2fb344"],
               legend: {
                 show: true,
                 position: "top",
-                horizontalAlign: "right",
+                horizontalAlign: "left",
                 offsetY: 0,
                 markers: {
                   width: 10,
@@ -344,186 +348,48 @@
                   radius: 100,
                 },
                 itemMargin: {
-                  horizontal: 8,
+                  horizontal: 12,
                   vertical: 8,
                 },
               },
             }).render();
-            
-          // Create ticket overview mixed chart
-          const allTicketData = data.trends.tickets.byStatus;
           
-          if (allTicketData && allTicketData.length > 0) {
-            // Filter to last 10 weekdays
-            const ticketData = getLastNWeekdays(allTicketData, 10);
-            
-            // Sort by date (oldest first for charts)
-            const sortedTicketData = [...ticketData].sort((a, b) => new Date(a.date) - new Date(b.date));
-            
-            // Prepare data for ticket chart
-            const ticketCategories = sortedTicketData.map(day => {
-              const date = new Date(day.date);
-              return date.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+          // Populate table
+          const tableBody = document.getElementById('ticket-table-body');
+          
+          // Sort by date (newest first for table)
+          const tableSortedData = [...ticketData].sort((a, b) => new Date(b.date) - new Date(a.date));
+          
+          tableSortedData.forEach(day => {
+            const date = new Date(day.date);
+            const formattedDate = date.toLocaleDateString('en-US', { 
+              weekday: 'short',
+              month: 'short', 
+              day: 'numeric',
+              year: 'numeric'
             });
             
-            // Calculate total active tickets (new + open + pending + solved)
-            const totalActiveTickets = sortedTicketData.map(day => 
-              day.new + day.open + day.pending + day.solved
-            );
+            const total = day.new + day.open + day.pending + day.hold + day.solved + day.closed;
             
-            // New and Closed for bar chart
-            const newTickets = sortedTicketData.map(day => day.new);
-            const closedTickets = sortedTicketData.map(day => day.closed);
+            const row = document.createElement('tr');
+            row.innerHTML = `
+              <td><strong>${formattedDate}</strong></td>
+              <td class="text-end">${day.new.toLocaleString()}</td>
+              <td class="text-end">${day.open.toLocaleString()}</td>
+              <td class="text-end">${day.pending.toLocaleString()}</td>
+              <td class="text-end">${day.hold.toLocaleString()}</td>
+              <td class="text-end">${day.solved.toLocaleString()}</td>
+              <td class="text-end">${day.closed.toLocaleString()}</td>
+              <td class="text-end"><strong>${total.toLocaleString()}</strong></td>
+            `;
             
-            // Create mixed chart for tickets
-            window.ApexCharts &&
-              new ApexCharts(document.getElementById("chart-ticket-overview"), {
-                chart: {
-                  type: "line",
-                  fontFamily: "inherit",
-                  height: 400,
-                  parentHeightOffset: 0,
-                  toolbar: {
-                    show: false,
-                  },
-                  animations: {
-                    enabled: true,
-                  },
-                },
-                stroke: {
-                  width: [3, 0, 0],
-                  curve: 'smooth',
-                  dashArray: [0, 0, 0]
-                },
-                plotOptions: {
-                  bar: {
-                    columnWidth: "50%",
-                  },
-                },
-                dataLabels: {
-                  enabled: false,
-                },
-                series: [
-                  {
-                    name: "Total Active Tickets",
-                    type: "line",
-                    data: totalActiveTickets,
-                  },
-                  {
-                    name: "New Tickets",
-                    type: "bar",
-                    data: newTickets,
-                  },
-                  {
-                    name: "Closed Tickets",
-                    type: "bar",
-                    data: closedTickets,
-                  },
-                ],
-                tooltip: {
-                  theme: "dark",
-                  shared: true,
-                  intersect: false,
-                  y: {
-                    formatter: function(value) {
-                      return value + " tickets";
-                    }
-                  }
-                },
-                grid: {
-                  padding: {
-                    top: -20,
-                    right: 0,
-                    left: -4,
-                    bottom: -4,
-                  },
-                  strokeDashArray: 4,
-                },
-                xaxis: {
-                  labels: {
-                    padding: 0,
-                    style: {
-                      fontSize: '12px',
-                    },
-                  },
-                  tooltip: {
-                    enabled: false,
-                  },
-                  axisBorder: {
-                    show: false,
-                  },
-                  categories: ticketCategories,
-                },
-                yaxis: {
-                  labels: {
-                    padding: 4,
-                    style: {
-                      fontSize: '12px',
-                    },
-                  },
-                  title: {
-                    text: 'Number of Tickets',
-                    style: {
-                      fontSize: '13px',
-                      fontWeight: 500,
-                    },
-                  },
-                },
-                colors: ["#206bc4", "#d63939", "#2fb344"],
-                legend: {
-                  show: true,
-                  position: "top",
-                  horizontalAlign: "left",
-                  offsetY: 0,
-                  markers: {
-                    width: 10,
-                    height: 10,
-                    radius: 100,
-                  },
-                  itemMargin: {
-                    horizontal: 12,
-                    vertical: 8,
-                  },
-                },
-              }).render();
-            
-            // Populate ticket status table
-            const tableBody = document.getElementById('ticket-table-body');
-            
-            // Sort by date (newest first for table)
-            const tableSortedData = [...ticketData].sort((a, b) => new Date(b.date) - new Date(a.date));
-            
-            tableSortedData.forEach(day => {
-              const date = new Date(day.date);
-              const formattedDate = date.toLocaleDateString('en-US', { 
-                weekday: 'short',
-                month: 'short', 
-                day: 'numeric',
-                year: 'numeric'
-              });
-              
-              const total = day.new + day.open + day.pending + day.hold + day.solved + day.closed;
-              
-              const row = document.createElement('tr');
-              row.innerHTML = `
-                <td><strong>${formattedDate}</strong></td>
-                <td class="text-end">${day.new.toLocaleString()}</td>
-                <td class="text-end">${day.open.toLocaleString()}</td>
-                <td class="text-end">${day.pending.toLocaleString()}</td>
-                <td class="text-end">${day.hold.toLocaleString()}</td>
-                <td class="text-end">${day.solved.toLocaleString()}</td>
-                <td class="text-end">${day.closed.toLocaleString()}</td>
-                <td class="text-end"><strong>${total.toLocaleString()}</strong></td>
-              `;
-              
-              tableBody.appendChild(row);
-            });
-          }
+            tableBody.appendChild(row);
+          });
           
         } catch (error) {
-          console.error('Error loading chart data:', error);
-          document.getElementById("chart-inbound-calls").innerHTML = 
-            '<div class="alert alert-danger">Error loading chart data. Please ensure execView.json exists in the data folder.</div>';
+          console.error('Error loading ticket data:', error);
+          document.getElementById('ticket-table-body').innerHTML = 
+            '<tr><td colspan="8" class="text-center"><div class="alert alert-danger">Error loading ticket data. Please ensure execView.json exists and has been generated with the latest script.</div></td></tr>';
         }
       });
     </script>

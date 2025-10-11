@@ -1,20 +1,21 @@
 {
   "metadata": {
     "version": "1.0.0",
-    "lastUpdated": "2025-10-10T12:34:39.627Z",
+    "lastUpdated": "2025-10-11T15:32:30.993Z",
     "description": "Executive View - Daily KPI Dashboard with Historical Trends",
     "dataRetentionDays": 90,
     "kpiCategories": [
-      "voice"
+      "voice",
+      "tickets"
     ]
   },
   "dailyKPIs": {
-    "2025-10-10": {
-      "date": "2025-10-10",
-      "timestamp": "2025-10-10T12:34:15.017Z",
+    "2025-10-11": {
+      "date": "2025-10-11",
+      "timestamp": "2025-10-11T14:10:34.988Z",
       "voice": {
         "totalInboundCalls": {
-          "value": 1,
+          "value": 3,
           "displayName": "Total Inbound Calls",
           "description": "Total number of inbound calls received today"
         },
@@ -35,6 +36,22 @@
     "voice": {
       "totalInboundCalls": [
         {
+          "date": "2025-09-25",
+          "value": 231
+        },
+        {
+          "date": "2025-09-26",
+          "value": 184
+        },
+        {
+          "date": "2025-09-27",
+          "value": 190
+        },
+        {
+          "date": "2025-09-30",
+          "value": 358
+        },
+        {
           "date": "2025-10-01",
           "value": 214
         },
@@ -47,19 +64,43 @@
           "value": 112
         },
         {
-          "date": "2025-10-04",
-          "value": 74
+          "date": "2025-10-06",
+          "value": 302
         },
         {
           "date": "2025-10-07",
-          "value": 268
+          "value": 224
         },
         {
           "date": "2025-10-08",
-          "value": 204
+          "value": 246
+        },
+        {
+          "date": "2025-10-09",
+          "value": 92
+        },
+        {
+          "date": "2025-10-10",
+          "value": 80
         }
       ],
       "notAnsweredCalls": [
+        {
+          "date": "2025-09-25",
+          "value": 204
+        },
+        {
+          "date": "2025-09-26",
+          "value": 158
+        },
+        {
+          "date": "2025-09-27",
+          "value": 164
+        },
+        {
+          "date": "2025-09-30",
+          "value": 299
+        },
         {
           "date": "2025-10-01",
           "value": 179
@@ -73,19 +114,43 @@
           "value": 112
         },
         {
-          "date": "2025-10-04",
-          "value": 74
+          "date": "2025-10-06",
+          "value": 210
         },
         {
           "date": "2025-10-07",
-          "value": 159
+          "value": 134
         },
         {
           "date": "2025-10-08",
-          "value": 129
+          "value": 141
+        },
+        {
+          "date": "2025-10-09",
+          "value": 92
+        },
+        {
+          "date": "2025-10-10",
+          "value": 80
         }
       ],
       "outboundCalls": [
+        {
+          "date": "2025-09-25",
+          "value": 20
+        },
+        {
+          "date": "2025-09-26",
+          "value": 23
+        },
+        {
+          "date": "2025-09-27",
+          "value": 6
+        },
+        {
+          "date": "2025-09-30",
+          "value": 7
+        },
         {
           "date": "2025-10-01",
           "value": 13
@@ -99,16 +164,136 @@
           "value": 0
         },
         {
-          "date": "2025-10-04",
-          "value": 0
+          "date": "2025-10-06",
+          "value": 6
         },
         {
           "date": "2025-10-07",
-          "value": 0
+          "value": 2
         },
         {
           "date": "2025-10-08",
+          "value": 7
+        },
+        {
+          "date": "2025-10-09",
           "value": 2
+        },
+        {
+          "date": "2025-10-10",
+          "value": 8
+        }
+      ]
+    },
+    "tickets": {
+      "byStatus": [
+        {
+          "date": "2025-09-25",
+          "new": 0,
+          "open": 0,
+          "pending": 0,
+          "hold": 0,
+          "solved": 0,
+          "closed": 310
+        },
+        {
+          "date": "2025-09-26",
+          "new": 0,
+          "open": 0,
+          "pending": 0,
+          "hold": 1,
+          "solved": 0,
+          "closed": 683
+        },
+        {
+          "date": "2025-09-27",
+          "new": 0,
+          "open": 0,
+          "pending": 0,
+          "hold": 0,
+          "solved": 0,
+          "closed": 541
+        },
+        {
+          "date": "2025-09-30",
+          "new": 0,
+          "open": 0,
+          "pending": 0,
+          "hold": 2,
+          "solved": 0,
+          "closed": 707
+        },
+        {
+          "date": "2025-10-01",
+          "new": 0,
+          "open": 1,
+          "pending": 0,
+          "hold": 0,
+          "solved": 0,
+          "closed": 314
+        },
+        {
+          "date": "2025-10-02",
+          "new": 0,
+          "open": 6,
+          "pending": 0,
+          "hold": 3,
+          "solved": 0,
+          "closed": 271
+        },
+        {
+          "date": "2025-10-03",
+          "new": 0,
+          "open": 1,
+          "pending": 0,
+          "hold": 0,
+          "solved": 0,
+          "closed": 472
+        },
+        {
+          "date": "2025-10-06",
+          "new": 0,
+          "open": 2,
+          "pending": 6,
+          "hold": 4,
+          "solved": 21,
+          "closed": 745
+        },
+        {
+          "date": "2025-10-07",
+          "new": 0,
+          "open": 12,
+          "pending": 7,
+          "hold": 4,
+          "solved": 498,
+          "closed": 518
+        },
+        {
+          "date": "2025-10-08",
+          "new": 7,
+          "open": 19,
+          "pending": 16,
+          "hold": 15,
+          "solved": 425,
+          "closed": 268
+        },
+        {
+          "date": "2025-10-09",
+          "new": 0,
+          "open": 21,
+          "pending": 19,
+          "hold": 22,
+          "solved": 356,
+          "closed": 275
+        },
+        {
+          "date": "2025-10-10",
+          "new": 62,
+          "open": 67,
+          "pending": 24,
+          "hold": 8,
+          "solved": 129,
+          "closed": 587
         }
       ]
     }

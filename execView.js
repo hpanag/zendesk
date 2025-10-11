@@ -96,11 +96,98 @@ class ExecViewGenerator {
     }
   }
 
-  async generateVoiceTrends() {
-    console.log('📈 Generating voice trends for Oct 1-8 weekdays using historical ticket analysis...');
+  async generateTicketTrends() {
+    console.log('📈 Generating ticket status trends for last 5 weekdays...');
     
     try {
-      const dates = this.getLastThirtyWeekdays();
+      const dates = this.getLastFiveWeekdays();
+      const trendMetrics = {
+        byStatus: [] // Array of { date, new, open, pending, hold, solved, closed }
+      };
+      
+      for (const date of dates) {
+        const dateStr = date.toISOString().split('T')[0];
+        const nextDay = new Date(date);
+        nextDay.setDate(nextDay.getDate() + 1);
+        const nextDayStr = nextDay.toISOString().split('T')[0];
+        
+        console.log(`  Processing ${dateStr} (${date.toLocaleDateString('en-US', { weekday: 'short' })})...`);
+        
+        try {
+          const statusCounts = {
+            date: dateStr,
+            new: 0,
+            open: 0,
+            pending: 0,
+            hold: 0,
+            solved: 0,
+            closed: 0
+          };
+          
+          // Query tickets created/updated on this date
+          const startTime = new Date(dateStr + 'T00:00:00Z').getTime() / 1000;
+          const endTime = new Date(nextDayStr + 'T00:00:00Z').getTime() / 1000;
+          
+          let url = `/incremental/tickets.json?start_time=${startTime}`;
+          let hasMore = true;
+          
+          while (hasMore && url) {
+            const response = await this.zendesk.makeRequest('GET', url);
+            
+            for (const ticket of response.tickets) {
+              const ticketDate = new Date(ticket.updated_at);
+              
+              // Only count if updated on this specific date
+              if (ticketDate >= date && ticketDate < nextDay) {
+                const status = ticket.status;
+                if (statusCounts.hasOwnProperty(status)) {
+                  statusCounts[status]++;
+                }
+              }
+            }
+            
+            // Check if we've passed our end time
+            if (response.end_time >= endTime) {
+              hasMore = false;
+            } else {
+              url = response.next_page;
+            }
+            
+            // Rate limiting
+            await new Promise(resolve => setTimeout(resolve, 1000));
+          }
+          
+          console.log(`    ${dateStr}: new:${statusCounts.new} open:${statusCounts.open} pending:${statusCounts.pending} hold:${statusCounts.hold} solved:${statusCounts.solved} closed:${statusCounts.closed}`);
+          
+          trendMetrics.byStatus.push(statusCounts);
+          
+        } catch (error) {
+          console.error(`  Error for ${dateStr}:`, error.message);
+          trendMetrics.byStatus.push({
+            date: dateStr,
+            new: 0,
+            open: 0,
+            pending: 0,
+            hold: 0,
+            solved: 0,
+            closed: 0
+          });
+        }
+      }
+      
+      console.log('✅ Ticket trends generated successfully');
+      return trendMetrics;
+    } catch (error) {
+      console.error('Error generating ticket trends:', error.message);
+      throw error;
+    }
+  }
+
+  async generateVoiceTrends() {
+    console.log('📈 Generating voice trends for last 5 weekdays using historical ticket analysis...');
+    
+    try {
+      const dates = this.getLastFiveWeekdays();
       
       // Initialize trend data structure
       const trendMetrics = {
@@ -113,7 +200,7 @@ class ExecViewGenerator {
       // Note: Voice API doesn't support per-day historical data, so we analyze tickets
       for (const date of dates) {
         const dateStr = date.toISOString().split('T')[0];
-        console.log(`📅 Analyzing tickets for ${dateStr}...`);
+        console.log(`📅 Analyzing tickets for ${dateStr} (${date.toLocaleDateString('en-US', { weekday: 'short' })})...`);
         
         try {
           const startOfDay = new Date(date);
@@ -257,6 +344,45 @@ class ExecViewGenerator {
     }
   }
 
+  getLastSevenDays() {
+    // Return last 7 days from today
+    const dates = [];
+    const today = new Date();
+    
+    for (let i = 6; i >= 0; i--) {
+      const date = new Date(today);
+      date.setDate(today.getDate() - i);
+      dates.push(date);
+    }
+    
+    return dates;
+  }
+
+  getLastFiveWeekdays() {
+    // Return last 5 weekdays (Mon-Fri only, excluding weekends)
+    const dates = [];
+    const today = new Date();
+    let daysAdded = 0;
+    let daysBack = 1; // Start from yesterday
+    
+    while (daysAdded < 5) {
+      const date = new Date(today);
+      date.setDate(today.getDate() - daysBack);
+      
+      const dayOfWeek = date.getDay(); // 0=Sunday, 6=Saturday
+      
+      // Only add weekdays (Mon-Fri)
+      if (dayOfWeek >= 1 && dayOfWeek <= 5) {
+        dates.unshift(date); // Add to beginning to keep chronological order
+        daysAdded++;
+      }
+      
+      daysBack++;
+    }
+    
+    return dates;
+  }
+
   getLastThirtyWeekdays() {
     // Return weekdays from Oct 1-8, 2025 (excluding weekends)
     const dates = [
@@ -281,56 +407,49 @@ class ExecViewGenerator {
         fs.mkdirSync(path.dirname(this.dataFilePath), { recursive: true });
       }
 
-      console.log('📊 Fetching daily KPIs...');
-      const dailyKPIs = await this.generateDailyKPIs();
-      console.log('✅ Daily KPIs fetched successfully');
-
       const today = new Date().toISOString().split('T')[0];
       
-      console.log('📈 Generating historical trends...');
-      const voiceTrends = await this.generateVoiceTrends();
-      console.log('✅ Historical trends generated successfully');
-      
-      // Replace today's trend data with accurate Voice API data
-      console.log('🔄 Updating today\'s trends with Voice API data...');
-      const todayVoiceData = dailyKPIs.voice;
-      Object.keys(voiceTrends).forEach(metric => {
-        const todayIndex = voiceTrends[metric].findIndex(d => d.date === today);
-        if (todayIndex >= 0 && todayVoiceData[metric]) {
-          voiceTrends[metric][todayIndex].value = todayVoiceData[metric].value;
-        }
-      });
-      console.log('✅ Today\'s trends updated with Voice API data');
-      
-      // Construct the complete data structure
-      console.log('🔄 Building data structure...');
-      this.execViewData = {
-        metadata: {
-          version: "1.0.0",
-          lastUpdated: new Date().toISOString(),
-          description: "Executive View - Daily KPI Dashboard with Historical Trends",
-          dataRetentionDays: 90,
-          kpiCategories: ["voice"]
-        },
-        dailyKPIs: {
-          [today]: dailyKPIs
-        },
-        trends: {
-          voice: voiceTrends
-        }
-      };
-      
-      // Validate data structure
-      console.log('🔍 Validating data structure...');
-      if (!this.execViewData.dailyKPIs || !this.execViewData.trends) {
-        throw new Error('Invalid data structure - missing required sections');
+      // Load existing data if available
+      let existingData = null;
+      if (fs.existsSync(this.dataFilePath)) {
+        console.log('📂 Loading existing data...');
+        const fileContent = fs.readFileSync(this.dataFilePath, 'utf8');
+        existingData = JSON.parse(fileContent);
+        console.log(`✅ Found existing data (last updated: ${existingData.metadata?.lastUpdated || 'unknown'})`);
       }
+
+      // Check if we need to fetch new data
+      const needsFetch = this.shouldFetchData(existingData, today);
+      
+      if (!needsFetch) {
+        console.log('✅ Data is already up-to-date for today. Using cached data.');
+        console.log('💡 Tip: To force refresh, delete data/execView.json and run again.');
+        this.execViewData = existingData;
+        return existingData;
+      }
+
+      console.log('📊 Fetching today\'s data from Zendesk...');
+      const dailyKPIs = await this.generateDailyKPIs();
+      console.log('✅ Today\'s data fetched successfully');
+
+      // Check if today is a weekday (skip data collection on weekends unless forced)
+      const todayDate = new Date();
+      const dayOfWeek = todayDate.getDay();
+      const isWeekday = dayOfWeek >= 1 && dayOfWeek <= 5;
+      
+      if (!isWeekday) {
+        console.log('� Today is a weekend - only updating today\'s KPIs, not historical trends');
+      }
+
+      // Merge with existing data
+      console.log('🔄 Merging with historical data...');
+      this.execViewData = await this.mergeData(existingData, dailyKPIs, today, isWeekday);
       
       // Save to file
-      console.log('💾 Saving data to file...');
+      console.log('💾 Saving updated data to file...');
       await this.saveExecViewData();
       
-      console.log(`✅ Executive View data generated successfully and saved to ${this.dataFilePath}`);
+      console.log(`✅ Executive View data updated successfully and saved to ${this.dataFilePath}`);
       return this.execViewData;
       
     } catch (error) {
@@ -340,6 +459,162 @@ class ExecViewGenerator {
       }
       throw error;
     }
+  }
+
+  shouldFetchData(existingData, today) {
+    if (!existingData) {
+      console.log('🆕 No existing data found - will fetch all data');
+      return true;
+    }
+
+    const lastUpdated = existingData.metadata?.lastUpdated;
+    if (!lastUpdated) {
+      console.log('⚠️ No lastUpdated timestamp - will fetch data');
+      return true;
+    }
+
+    const lastUpdateDate = new Date(lastUpdated).toISOString().split('T')[0];
+    
+    if (lastUpdateDate === today) {
+      console.log(`✓ Data already fetched today (${today})`);
+      
+      // Check if today's KPI exists
+      if (!existingData.dailyKPIs?.[today]) {
+        console.log('⚠️ Today\'s KPI missing - will fetch');
+        return true;
+      }
+      
+      return false;
+    }
+
+    console.log(`📅 Last update was ${lastUpdateDate}, today is ${today} - will fetch new data`);
+    return true;
+  }
+
+  async mergeData(existingData, todayKPIs, today, isWeekday) {
+    const merged = existingData ? JSON.parse(JSON.stringify(existingData)) : {
+      metadata: {
+        version: "1.0.0",
+        description: "Executive View - Daily KPI Dashboard with Historical Trends",
+        dataRetentionDays: 90,
+        kpiCategories: ["voice", "tickets"]
+      },
+      dailyKPIs: {},
+      trends: {
+        voice: {
+          totalInboundCalls: [],
+          notAnsweredCalls: [],
+          outboundCalls: []
+        },
+        tickets: {
+          byStatus: []
+        }
+      }
+    };
+
+    // Update metadata
+    merged.metadata.lastUpdated = new Date().toISOString();
+    merged.metadata.lastFetchDate = today;
+
+    // Update today's KPIs
+    merged.dailyKPIs[today] = todayKPIs;
+
+    // If it's a weekday, add to trends (only if not already present)
+    if (isWeekday) {
+      const todayVoiceData = todayKPIs.voice;
+      
+      // Add to voice trends if not already present
+      Object.keys(merged.trends.voice).forEach(metric => {
+        const existingIndex = merged.trends.voice[metric].findIndex(d => d.date === today);
+        
+        if (existingIndex === -1 && todayVoiceData[metric]) {
+          // Add new entry
+          merged.trends.voice[metric].push({
+            date: today,
+            value: todayVoiceData[metric].value
+          });
+          console.log(`  ➕ Added ${metric} for ${today}: ${todayVoiceData[metric].value}`);
+        } else if (existingIndex >= 0 && todayVoiceData[metric]) {
+          // Update existing entry
+          merged.trends.voice[metric][existingIndex].value = todayVoiceData[metric].value;
+          console.log(`  🔄 Updated ${metric} for ${today}: ${todayVoiceData[metric].value}`);
+        }
+      });
+
+      // Sort voice trends by date
+      Object.keys(merged.trends.voice).forEach(metric => {
+        merged.trends.voice[metric].sort((a, b) => new Date(a.date) - new Date(b.date));
+      });
+
+      // Fetch today's ticket data if not present
+      const ticketIndex = merged.trends.tickets.byStatus.findIndex(d => d.date === today);
+      if (ticketIndex === -1) {
+        console.log('� Fetching today\'s ticket status...');
+        const todayTicketData = await this.fetchSingleDayTickets(today);
+        merged.trends.tickets.byStatus.push(todayTicketData);
+        console.log(`  ➕ Added ticket status for ${today}`);
+      } else {
+        console.log(`  ✓ Ticket status for ${today} already exists`);
+      }
+
+      // Sort ticket trends by date
+      merged.trends.tickets.byStatus.sort((a, b) => new Date(a.date) - new Date(b.date));
+    }
+
+    return merged;
+  }
+
+  async fetchSingleDayTickets(dateStr) {
+    const date = new Date(dateStr);
+    const nextDay = new Date(date);
+    nextDay.setDate(nextDay.getDate() + 1);
+    
+    const statusCounts = {
+      date: dateStr,
+      new: 0,
+      open: 0,
+      pending: 0,
+      hold: 0,
+      solved: 0,
+      closed: 0
+    };
+
+    try {
+      const startTime = new Date(dateStr + 'T00:00:00Z').getTime() / 1000;
+      const endTime = new Date(nextDay.toISOString().split('T')[0] + 'T00:00:00Z').getTime() / 1000;
+      
+      let url = `/incremental/tickets.json?start_time=${startTime}`;
+      let hasMore = true;
+      
+      while (hasMore && url) {
+        const response = await this.zendesk.makeRequest('GET', url);
+        
+        for (const ticket of response.tickets) {
+          const ticketDate = new Date(ticket.updated_at);
+          
+          if (ticketDate >= date && ticketDate < nextDay) {
+            const status = ticket.status;
+            if (statusCounts.hasOwnProperty(status)) {
+              statusCounts[status]++;
+            }
+          }
+        }
+        
+        if (response.end_time >= endTime) {
+          hasMore = false;
+        } else {
+          url = response.next_page;
+        }
+        
+        await new Promise(resolve => setTimeout(resolve, 1000));
+      }
+      
+      console.log(`    ${dateStr}: new:${statusCounts.new} open:${statusCounts.open} pending:${statusCounts.pending} hold:${statusCounts.hold} solved:${statusCounts.solved} closed:${statusCounts.closed}`);
+    } catch (error) {
+      console.error(`  Error fetching tickets for ${dateStr}:`, error.message);
+    }
+
+    return statusCounts;
   }
 
   async saveExecViewData() {
