@@ -1,0 +1,173 @@
+{
+  "period": "2025-10-08 to 2025-10-15",
+  "generatedAt": "2025-10-15T19:42:00.682Z",
+  "summary": {
+    "totalRatings": 11,
+    "goodRatings": 5,
+    "badRatings": 2,
+    "satisfactionScore": 71.4,
+    "ratingsWithComments": 2,
+    "ratingsWithoutComments": 9
+  },
+  "ratingsByDay": {
+    "Wed, Oct 8": {
+      "good": 3,
+      "bad": 0,
+      "total": 3
+    },
+    "Fri, Oct 10": {
+      "good": 1,
+      "bad": 1,
+      "total": 2
+    },
+    "Sat, Oct 11": {
+      "good": 1,
+      "bad": 0,
+      "total": 1
+    },
+    "Sun, Oct 12": {
+      "good": 0,
+      "bad": 1,
+      "total": 1
+    },
+    "Tue, Oct 14": {
+      "good": 0,
+      "bad": 0,
+      "total": 0
+    }
+  },
+  "allRatings": [
+    {
+      "id": 41987639654164,
+      "ticketId": 283184,
+      "score": "good",
+      "comment": null,
+      "createdAt": "2025-10-08T17:19:34Z",
+      "updatedAt": "2025-10-08T17:19:34Z",
+      "assigneeId": 20705690271636,
+      "groupId": 17772014163476,
+      "requesterId": 40943239888020,
+      "url": "https://esolutionsfurniture.zendesk.com/api/v2/satisfaction_ratings/41987639654164.json"
+    },
+    {
+      "id": 41991887504788,
+      "ticketId": 292907,
+      "score": "offered",
+      "comment": null,
+      "createdAt": "2025-10-08T19:01:39Z",
+      "updatedAt": "2025-10-08T19:01:39Z",
+      "assigneeId": null,
+      "groupId": 17772014163476,
+      "requesterId": 29150646844436,
+      "url": "https://esolutionsfurniture.zendesk.com/api/v2/satisfaction_ratings/41991887504788.json"
+    },
+    {
+      "id": 41992650170516,
+      "ticketId": 293123,
+      "score": "offered",
+      "comment": null,
+      "createdAt": "2025-10-08T19:20:21Z",
+      "updatedAt": "2025-10-08T19:20:21Z",
+      "assigneeId": null,
+      "groupId": 17772014163476,
+      "requesterId": 25413687989140,
+      "url": "https://esolutionsfurniture.zendesk.com/api/v2/satisfaction_ratings/41992650170516.json"
+    },
+    {
+      "id": 42004260794772,
+      "ticketId": 281783,
+      "score": "good",
+      "comment": null,
+      "createdAt": "2025-10-09T01:33:30Z",
+      "updatedAt": "2025-10-09T01:33:30Z",
+      "assigneeId": 20700188817812,
+      "groupId": 17772009571092,
+      "requesterId": 41296036214292,
+      "url": "https://esolutionsfurniture.zendesk.com/api/v2/satisfaction_ratings/42004260794772.json"
+    },
+    {
+      "id": 42005904287892,
+      "ticketId": 283788,
+      "score": "good",
+      "comment": null,
+      "createdAt": "2025-10-09T03:13:59Z",
+      "updatedAt": "2025-10-09T03:13:59Z",
+      "assigneeId": 20702390811796,
+      "groupId": 17781453524116,
+      "requesterId": 41393697624724,
+      "url": "https://esolutionsfurniture.zendesk.com/api/v2/satisfaction_ratings/42005904287892.json"
+    },
+    {
+      "id": 42054459985812,
+      "ticketId": 284586,
+      "score": "good",
+      "comment": null,
+      "createdAt": "2025-10-10T12:47:22Z",
+      "updatedAt": "2025-10-10T12:47:22Z",
+      "assigneeId": 20702390811796,
+      "groupId": 17781453524116,
+      "requesterId": 41469327262996,
+      "url": "https://esolutionsfurniture.zendesk.com/api/v2/satisfaction_ratings/42054459985812.json"
+    },
+    {
+      "id": 42066973889428,
+      "ticketId": 278663,
+      "score": "bad",
+      "comment": "I received a package. After opening it, I'm still not able to put this desk together.\n\nIt's missing 3 of the 4 screws needed to screw the desk foot into the wood part!!  MISSING.  Nothing is opened.  This is totally on your side.  Your QC on this is lacking!",
+      "createdAt": "2025-10-10T17:44:24Z",
+      "updatedAt": "2025-10-10T17:44:24Z",
+      "assigneeId": 20837541429524,
+      "groupId": 17772014163476,
+      "requesterId": 41120623460884,
+      "url": "https://esolutionsfurniture.zendesk.com/api/v2/satisfaction_ratings/42066973889428.json"
+    },
+    {
+      "id": 42095446968596,
+      "ticketId": 288568,
+      "score": "good",
+      "comment": null,
+      "createdAt": "2025-10-11T17:04:40Z",
+      "updatedAt": "2025-10-11T17:04:40Z",
+      "assigneeId": 20837541429524,
+      "groupId": 17772014163476,
+      "requesterId": 41691835621268,
+      "url": "https://esolutionsfurniture.zendesk.com/api/v2/satisfaction_ratings/42095446968596.json"
+    },
+    {
+      "id": 42112014464916,
+      "ticketId": 280493,
+      "score": "bad",
+      "comment": "Had to have Costco resolve issues because CS never answered their phone after days of trying. Bed came with extremely damaged parts. ",
+      "createdAt": "2025-10-12T14:35:46Z",
+      "updatedAt": "2025-10-12T14:35:46Z",
+      "assigneeId": 26806117506452,
+      "groupId": 17772014163476,
+      "requesterId": 41243013313428,
+      "url": "https://esolutionsfurniture.zendesk.com/api/v2/satisfaction_ratings/42112014464916.json"
+    },
+    {
+      "id": 42183024042260,
+      "ticketId": 295014,
+      "score": "offered",
+      "comment": null,
+      "createdAt": "2025-10-14T16:02:17Z",
+      "updatedAt": "2025-10-14T16:02:17Z",
+      "assigneeId": null,
+      "groupId": 17772014163476,
+      "requesterId": 36314929682068,
+      "url": "https://esolutionsfurniture.zendesk.com/api/v2/satisfaction_ratings/42183024042260.json"
+    },
+    {
+      "id": 42199030850708,
+      "ticketId": 295508,
+      "score": "offered",
+      "comment": null,
+      "createdAt": "2025-10-14T21:45:59Z",
+      "updatedAt": "2025-10-14T21:45:59Z",
+      "assigneeId": 20700138351892,
+      "groupId": 17772014163476,
+      "requesterId": 39002082315540,
+      "url": "https://esolutionsfurniture.zendesk.com/api/v2/satisfaction_ratings/42199030850708.json"
+    }
+  ]
+}

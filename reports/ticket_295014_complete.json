@@ -1,0 +1,774 @@
+{
+  "ticket": {
+    "url": "https://esolutionsfurniture.zendesk.com/api/v2/tickets/295014.json",
+    "id": 295014,
+    "external_id": null,
+    "via": {
+      "channel": "voice",
+      "source": {
+        "rel": "inbound"
+      }
+    },
+    "created_at": "2025-10-14T13:54:19Z",
+    "updated_at": "2025-10-14T16:02:17Z",
+    "generated_timestamp": 1760457737,
+    "type": null,
+    "subject": "Call with Diane Lewis",
+    "raw_subject": "Call with Diane Lewis",
+    "description": "Call from: +1 (416) 272-1539\nCall to: +1 (888) 823-7827\nTime of call: October 14, 2025 at 1:53:15 p.m. UTC",
+    "priority": "normal",
+    "status": "closed",
+    "recipient": null,
+    "requester_id": 36314929682068,
+    "submitter_id": 36314929682068,
+    "assignee_id": null,
+    "organization_id": null,
+    "group_id": 17772014163476,
+    "collaborator_ids": [],
+    "follower_ids": [],
+    "email_cc_ids": [],
+    "forum_topic_id": null,
+    "problem_id": null,
+    "has_incidents": false,
+    "is_public": false,
+    "due_at": null,
+    "tags": [
+      "consumer",
+      "dead_air/no_caller",
+      "en",
+      "misc",
+      "other",
+      "ticket_routing"
+    ],
+    "custom_fields": [
+      {
+        "id": 15954349297044,
+        "value": null
+      },
+      {
+        "id": 15954530092692,
+        "value": null
+      },
+      {
+        "id": 15954586633748,
+        "value": null
+      },
+      {
+        "id": 19885225321620,
+        "value": null
+      },
+      {
+        "id": 19885854346772,
+        "value": null
+      },
+      {
+        "id": 19885862279700,
+        "value": null
+      },
+      {
+        "id": 19938421449236,
+        "value": null
+      },
+      {
+        "id": 19938442589972,
+        "value": null
+      },
+      {
+        "id": 19938608457364,
+        "value": null
+      },
+      {
+        "id": 19938851920276,
+        "value": null
+      },
+      {
+        "id": 19939313614100,
+        "value": null
+      },
+      {
+        "id": 19939435498644,
+        "value": null
+      },
+      {
+        "id": 19940114057236,
+        "value": null
+      },
+      {
+        "id": 19940207244180,
+        "value": null
+      },
+      {
+        "id": 19940362070164,
+        "value": null
+      },
+      {
+        "id": 19940437490068,
+        "value": null
+      },
+      {
+        "id": 20497204157076,
+        "value": null
+      },
+      {
+        "id": 20497987081236,
+        "value": null
+      },
+      {
+        "id": 20498362621972,
+        "value": null
+      },
+      {
+        "id": 20499224472596,
+        "value": null
+      },
+      {
+        "id": 20499666734612,
+        "value": null
+      },
+      {
+        "id": 20573836327188,
+        "value": null
+      },
+      {
+        "id": 20574524059668,
+        "value": null
+      },
+      {
+        "id": 20575786544276,
+        "value": false
+      },
+      {
+        "id": 20941067509140,
+        "value": null
+      },
+      {
+        "id": 20946200648468,
+        "value": "other"
+      },
+      {
+        "id": 21187697884308,
+        "value": null
+      },
+      {
+        "id": 21187700995860,
+        "value": null
+      },
+      {
+        "id": 21187877306516,
+        "value": null
+      },
+      {
+        "id": 21807166795924,
+        "value": null
+      },
+      {
+        "id": 21873371776148,
+        "value": null
+      },
+      {
+        "id": 23124149656980,
+        "value": null
+      },
+      {
+        "id": 23124233101460,
+        "value": null
+      },
+      {
+        "id": 23124286862996,
+        "value": null
+      },
+      {
+        "id": 23327991296404,
+        "value": null
+      },
+      {
+        "id": 23329385693332,
+        "value": null
+      },
+      {
+        "id": 23496306596500,
+        "value": null
+      },
+      {
+        "id": 23496353882772,
+        "value": null
+      },
+      {
+        "id": 23496359723412,
+        "value": null
+      },
+      {
+        "id": 24164978257044,
+        "value": "dead_air/no_caller"
+      },
+      {
+        "id": 25494722973844,
+        "value": null
+      },
+      {
+        "id": 25494739763092,
+        "value": null
+      },
+      {
+        "id": 25659936490260,
+        "value": null
+      },
+      {
+        "id": 25805896864276,
+        "value": null
+      },
+      {
+        "id": 25907910941204,
+        "value": null
+      },
+      {
+        "id": 26343586577684,
+        "value": null
+      },
+      {
+        "id": 26347763773588,
+        "value": null
+      },
+      {
+        "id": 26350872876436,
+        "value": null
+      },
+      {
+        "id": 26351034710804,
+        "value": null
+      },
+      {
+        "id": 26351040534932,
+        "value": null
+      },
+      {
+        "id": 29117612744468,
+        "value": null
+      },
+      {
+        "id": 29117660052628,
+        "value": null
+      },
+      {
+        "id": 29117822499860,
+        "value": null
+      },
+      {
+        "id": 29117923635476,
+        "value": null
+      },
+      {
+        "id": 29158578445588,
+        "value": null
+      },
+      {
+        "id": 29158678953748,
+        "value": null
+      },
+      {
+        "id": 29158819146644,
+        "value": null
+      },
+      {
+        "id": 29159284053524,
+        "value": null
+      },
+      {
+        "id": 29837863770900,
+        "value": null
+      },
+      {
+        "id": 29837898649364,
+        "value": null
+      },
+      {
+        "id": 29838066316692,
+        "value": null
+      },
+      {
+        "id": 29838427184276,
+        "value": null
+      },
+      {
+        "id": 29838839088532,
+        "value": null
+      },
+      {
+        "id": 29840111481492,
+        "value": null
+      },
+      {
+        "id": 30969868491028,
+        "value": null
+      },
+      {
+        "id": 30973133259924,
+        "value": null
+      },
+      {
+        "id": 31455295988628,
+        "value": null
+      },
+      {
+        "id": 31455322930068,
+        "value": null
+      },
+      {
+        "id": 32132703949460,
+        "value": null
+      },
+      {
+        "id": 33687420756244,
+        "value": null
+      },
+      {
+        "id": 33957376302484,
+        "value": null
+      },
+      {
+        "id": 37261164736660,
+        "value": null
+      },
+      {
+        "id": 37297486792084,
+        "value": null
+      },
+      {
+        "id": 37421060220436,
+        "value": null
+      },
+      {
+        "id": 39404458528276,
+        "value": null
+      },
+      {
+        "id": 41713375917076,
+        "value": null
+      },
+      {
+        "id": 41717726977300,
+        "value": null
+      },
+      {
+        "id": 41908303430036,
+        "value": null
+      },
+      {
+        "id": 42019989772308,
+        "value": null
+      },
+      {
+        "id": 42019989774612,
+        "value": null
+      }
+    ],
+    "satisfaction_rating": {
+      "score": "offered"
+    },
+    "sharing_agreement_ids": [],
+    "custom_status_id": 15952030566932,
+    "encoded_id": "N1E3JK-WNY25",
+    "fields": [
+      {
+        "id": 15954349297044,
+        "value": null
+      },
+      {
+        "id": 15954530092692,
+        "value": null
+      },
+      {
+        "id": 15954586633748,
+        "value": null
+      },
+      {
+        "id": 19885225321620,
+        "value": null
+      },
+      {
+        "id": 19885854346772,
+        "value": null
+      },
+      {
+        "id": 19885862279700,
+        "value": null
+      },
+      {
+        "id": 19938421449236,
+        "value": null
+      },
+      {
+        "id": 19938442589972,
+        "value": null
+      },
+      {
+        "id": 19938608457364,
+        "value": null
+      },
+      {
+        "id": 19938851920276,
+        "value": null
+      },
+      {
+        "id": 19939313614100,
+        "value": null
+      },
+      {
+        "id": 19939435498644,
+        "value": null
+      },
+      {
+        "id": 19940114057236,
+        "value": null
+      },
+      {
+        "id": 19940207244180,
+        "value": null
+      },
+      {
+        "id": 19940362070164,
+        "value": null
+      },
+      {
+        "id": 19940437490068,
+        "value": null
+      },
+      {
+        "id": 20497204157076,
+        "value": null
+      },
+      {
+        "id": 20497987081236,
+        "value": null
+      },
+      {
+        "id": 20498362621972,
+        "value": null
+      },
+      {
+        "id": 20499224472596,
+        "value": null
+      },
+      {
+        "id": 20499666734612,
+        "value": null
+      },
+      {
+        "id": 20573836327188,
+        "value": null
+      },
+      {
+        "id": 20574524059668,
+        "value": null
+      },
+      {
+        "id": 20575786544276,
+        "value": false
+      },
+      {
+        "id": 20941067509140,
+        "value": null
+      },
+      {
+        "id": 20946200648468,
+        "value": "other"
+      },
+      {
+        "id": 21187697884308,
+        "value": null
+      },
+      {
+        "id": 21187700995860,
+        "value": null
+      },
+      {
+        "id": 21187877306516,
+        "value": null
+      },
+      {
+        "id": 21807166795924,
+        "value": null
+      },
+      {
+        "id": 21873371776148,
+        "value": null
+      },
+      {
+        "id": 23124149656980,
+        "value": null
+      },
+      {
+        "id": 23124233101460,
+        "value": null
+      },
+      {
+        "id": 23124286862996,
+        "value": null
+      },
+      {
+        "id": 23327991296404,
+        "value": null
+      },
+      {
+        "id": 23329385693332,
+        "value": null
+      },
+      {
+        "id": 23496306596500,
+        "value": null
+      },
+      {
+        "id": 23496353882772,
+        "value": null
+      },
+      {
+        "id": 23496359723412,
+        "value": null
+      },
+      {
+        "id": 24164978257044,
+        "value": "dead_air/no_caller"
+      },
+      {
+        "id": 25494722973844,
+        "value": null
+      },
+      {
+        "id": 25494739763092,
+        "value": null
+      },
+      {
+        "id": 25659936490260,
+        "value": null
+      },
+      {
+        "id": 25805896864276,
+        "value": null
+      },
+      {
+        "id": 25907910941204,
+        "value": null
+      },
+      {
+        "id": 26343586577684,
+        "value": null
+      },
+      {
+        "id": 26347763773588,
+        "value": null
+      },
+      {
+        "id": 26350872876436,
+        "value": null
+      },
+      {
+        "id": 26351034710804,
+        "value": null
+      },
+      {
+        "id": 26351040534932,
+        "value": null
+      },
+      {
+        "id": 29117612744468,
+        "value": null
+      },
+      {
+        "id": 29117660052628,
+        "value": null
+      },
+      {
+        "id": 29117822499860,
+        "value": null
+      },
+      {
+        "id": 29117923635476,
+        "value": null
+      },
+      {
+        "id": 29158578445588,
+        "value": null
+      },
+      {
+        "id": 29158678953748,
+        "value": null
+      },
+      {
+        "id": 29158819146644,
+        "value": null
+      },
+      {
+        "id": 29159284053524,
+        "value": null
+      },
+      {
+        "id": 29837863770900,
+        "value": null
+      },
+      {
+        "id": 29837898649364,
+        "value": null
+      },
+      {
+        "id": 29838066316692,
+        "value": null
+      },
+      {
+        "id": 29838427184276,
+        "value": null
+      },
+      {
+        "id": 29838839088532,
+        "value": null
+      },
+      {
+        "id": 29840111481492,
+        "value": null
+      },
+      {
+        "id": 30969868491028,
+        "value": null
+      },
+      {
+        "id": 30973133259924,
+        "value": null
+      },
+      {
+        "id": 31455295988628,
+        "value": null
+      },
+      {
+        "id": 31455322930068,
+        "value": null
+      },
+      {
+        "id": 32132703949460,
+        "value": null
+      },
+      {
+        "id": 33687420756244,
+        "value": null
+      },
+      {
+        "id": 33957376302484,
+        "value": null
+      },
+      {
+        "id": 37261164736660,
+        "value": null
+      },
+      {
+        "id": 37297486792084,
+        "value": null
+      },
+      {
+        "id": 37421060220436,
+        "value": null
+      },
+      {
+        "id": 39404458528276,
+        "value": null
+      },
+      {
+        "id": 41713375917076,
+        "value": null
+      },
+      {
+        "id": 41717726977300,
+        "value": null
+      },
+      {
+        "id": 41908303430036,
+        "value": null
+      },
+      {
+        "id": 42019989772308,
+        "value": null
+      },
+      {
+        "id": 42019989774612,
+        "value": null
+      }
+    ],
+    "followup_ids": [],
+    "ticket_form_id": 24165014498836,
+    "brand_id": 17772936072340,
+    "allow_channelback": false,
+    "allow_attachments": true,
+    "from_messaging_channel": false
+  },
+  "requester": {
+    "id": 36314929682068,
+    "url": "https://esolutionsfurniture.zendesk.com/api/v2/users/36314929682068.json",
+    "name": "Diane Lewis",
+    "email": "soarhigh@hotmail.com",
+    "created_at": "2025-04-04T19:45:39Z",
+    "updated_at": "2025-04-04T20:13:58Z",
+    "time_zone": "Eastern Time (US & Canada)",
+    "iana_time_zone": "America/New_York",
+    "phone": "+14162721539",
+    "shared_phone_number": false,
+    "photo": null,
+    "locale_id": 1181,
+    "locale": "en-ca",
+    "organization_id": null,
+    "role": "end-user",
+    "verified": true,
+    "external_id": null,
+    "tags": [
+      "consumer"
+    ],
+    "alias": "",
+    "active": true,
+    "shared": false,
+    "shared_agent": false,
+    "last_login_at": null,
+    "two_factor_auth_enabled": null,
+    "signature": null,
+    "details": "",
+    "notes": "",
+    "role_type": null,
+    "custom_role_id": null,
+    "is_billing_admin": null,
+    "moderator": false,
+    "ticket_restriction": "requested",
+    "only_private_comments": false,
+    "restricted_agent": true,
+    "suspended": false,
+    "default_group_id": null,
+    "report_csv": false,
+    "user_fields": {
+      "is_manager_": false,
+      "user_type": "consumer"
+    }
+  },
+  "comments": [
+    {
+      "id": 42176679570324,
+      "type": "Comment",
+      "author_id": 36314929682068,
+      "body": "Call from: +1 (416) 272-1539\nCall to: +1 (888) 823-7827\nTime of call: October 14, 2025 at 1:53:15 p.m. UTC",
+      "html_body": "<div class=\"zd-comment\" dir=\"auto\"><p dir=\"auto\">Call from: +1 (416) 272-1539\n<br>Call to: +1 (888) 823-7827\n<br>Time of call: October 14, 2025 at 1:53:15 p.m. UTC</p></div>",
+      "plain_body": "Call from: +1 (416) 272-1539\n\nCall to: +1 (888) 823-7827\n\nTime of call: October 14, 2025 at 1:53:15 p.m. UTC",
+      "public": false,
+      "attachments": [],
+      "audit_id": 42176679570196,
+      "via": {
+        "channel": "voice",
+        "source": {
+          "rel": "inbound"
+        }
+      },
+      "created_at": "2025-10-14T13:54:19Z",
+      "metadata": {
+        "system": {
+          "client": "",
+          "ip_address": ""
+        },
+        "custom": {}
+      }
+    }
+  ],
+  "satisfactionRating": null,
+  "generatedAt": "2025-10-15T19:52:22.265Z"
+}

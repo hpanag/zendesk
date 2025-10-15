@@ -70,6 +70,34 @@ class LiveFeedAnalyzer {
       const today = new Date();
       today.setHours(0, 0, 0, 0);
       const todayISO = today.toISOString().split('T')[0];
+      const startTime = Math.floor(today.getTime() / 1000);
+      
+      // PRIMARY SOURCE: Get Voice API Incremental Calls (most accurate for abandoned calls)
+      let voiceApiCalls = null;
+      let voiceApiAbandoned = 0;
+      try {
+        console.log('📞 Fetching Voice API incremental calls...');
+        const voiceCallsResponse = await this.zendesk.makeRequest(
+          'GET',
+          `/channels/voice/stats/incremental/calls.json?start_time=${startTime}`
+        );
+        
+        const allCalls = voiceCallsResponse.calls || [];
+        voiceApiCalls = allCalls.filter(call => {
+          const callTime = new Date(call.created_at);
+          return callTime >= today && callTime <= new Date();
+        });
+        
+        // Count abandoned calls using completion_status (most accurate)
+        voiceApiAbandoned = voiceApiCalls.filter(call => 
+          call.completion_status === 'abandoned' || 
+          call.completion_status === 'abandoned_in_voicemail'
+        ).length;
+        
+        console.log(`✅ Voice API: ${voiceApiCalls.length} calls today, ${voiceApiAbandoned} abandoned`);
+      } catch (error) {
+        console.log('Voice API incremental calls not available:', error.message);
+      }
       
       // Get real call metrics from Voice Agent Activity API (most accurate source)
       let agentActivityData = null;
@@ -106,7 +134,7 @@ class LiveFeedAnalyzer {
         console.log('Current queue stats not available');
       }
       
-      // Calculate metrics using both Agent Activity API and tickets
+      // Calculate metrics using Voice API as primary source
       let totalCalls = 0;
       let totalInbound = 0;
       let totalOutbound = 0;
@@ -127,14 +155,25 @@ class LiveFeedAnalyzer {
       let callsWithHoldTime = 0;
       let callbacksWithWaitTime = 0;
 
-      // If we have agent activity data, use it for accurate metrics
-      if (agentActivityData && agentActivityData.length > 0) {
-        console.log('📊 Using Agent Activity API for accurate call metrics');
+      // Use Voice API abandoned count as PRIMARY source (most accurate)
+      if (voiceApiCalls && voiceApiCalls.length > 0) {
+        console.log('📊 Using Voice API for call counts and abandoned metrics');
+        totalCalls = voiceApiCalls.length;
+        abandonedCalls = voiceApiAbandoned; // Use accurate Voice API count
+        
+        // Count inbound/outbound from Voice API
+        voiceApiCalls.forEach(call => {
+          if (call.direction === 'inbound') totalInbound++;
+          if (call.direction === 'outbound') totalOutbound++;
+        });
+      } else if (agentActivityData && agentActivityData.length > 0) {
+        console.log('📊 Using Agent Activity API for call metrics (Voice API unavailable)');
         
         agentActivityData.forEach(agent => {
           // Aggregate call counts
           totalCalls += (agent.calls_accepted || 0) + (agent.calls_denied || 0) + (agent.calls_missed || 0);
           totalInbound += agent.calls_accepted || 0; // Most accepted calls are inbound
+          // Only use agent missed calls if Voice API not available
           abandonedCalls += agent.calls_missed || 0;
           
           // Aggregate timing data (convert to seconds if needed)
@@ -164,8 +203,8 @@ class LiveFeedAnalyzer {
         
         console.log(`📊 Agent Activity Summary: ${totalCalls} total calls, ${abandonedCalls} abandoned`);
       } else {
-        // Fallback to ticket analysis
-        console.log('📊 Using ticket analysis for call metrics');
+        // Fallback to ticket analysis only if both Voice API and Agent Activity unavailable
+        console.log('📊 Using ticket analysis for call metrics (Voice API and Agent Activity unavailable)');
         totalCalls = tickets.length;
       }
       
@@ -206,33 +245,32 @@ class LiveFeedAnalyzer {
           totalCalls++;
         }
         
-        // Always analyze tickets for abandoned calls (more accurate than agent API for this metric)
-        const createdAt = new Date(ticket.created_at);
-        const updatedAt = new Date(ticket.updated_at);
-        const ticketDuration = updatedAt - createdAt;
-        
-        const isAbandoned = (
-          // Explicit abandonment indicators in subject/description
-          subject.includes('abandoned') ||
-          subject.includes('missed') ||
-          subject.includes('no answer') ||
-          subject.includes('unanswered') ||
-          description.includes('abandoned') ||
-          description.includes('missed') ||
-          description.includes('no answer') ||
-          description.includes('caller hung up') ||
-          description.includes('disconnected')
-        ) || (
-          // Very short tickets that were never assigned (likely abandoned)
-          ticketDuration < 30000 && !ticket.assignee_id // Less than 30 seconds and unassigned
-        ) || (
-          // Quick closed/solved tickets (potential abandonment)
-          (ticket.status === 'closed' || ticket.status === 'solved') && 
-          ticketDuration < 60000 && !ticket.assignee_id // Less than 1 minute, unassigned
-        );
-        
-        if (isAbandoned) {
-          abandonedCalls++;
+        // ONLY analyze tickets for abandoned calls if Voice API is NOT available
+        if (!voiceApiCalls || voiceApiCalls.length === 0) {
+          // Fallback: use ticket analysis for abandoned detection
+          const createdAt = new Date(ticket.created_at);
+          const updatedAt = new Date(ticket.updated_at);
+          const ticketDuration = updatedAt - createdAt;
+          
+          const isAbandoned = (
+            // Explicit abandonment indicators in subject/description
+            subject.includes('abandoned') ||
+            subject.includes('missed') ||
+            subject.includes('no answer') ||
+            subject.includes('unanswered') ||
+            description.includes('abandoned') ||
+            description.includes('missed') ||
+            description.includes('no answer') ||
+            description.includes('caller hung up') ||
+            description.includes('disconnected')
+          ) && (
+            // MUST be closed/solved to count as abandoned (exclude new/pending tickets in progress)
+            ticket.status === 'closed' || ticket.status === 'solved'
+          );
+          
+          if (isAbandoned) {
+            abandonedCalls++;
+          }
         }
         
         // If we don't have agent timing data, extract from ticket descriptions
@@ -362,18 +400,23 @@ class LiveFeedAnalyzer {
       // Adjust callback count to be subset of total calls, not additional
       totalCallbacks = Math.min(totalCallbacks, totalCalls);
       
-      // Calculate inbound as total minus outbound (when we have agent activity data)
-      if (agentActivityData && agentActivityData.length > 0) {
-        totalInbound = totalCalls - totalOutbound;
+      // Calculate inbound as total minus outbound (when we have call data)
+      if ((voiceApiCalls && voiceApiCalls.length > 0) || (agentActivityData && agentActivityData.length > 0)) {
+        if (totalInbound === 0 && totalCalls > 0) {
+          totalInbound = totalCalls - totalOutbound;
+        }
         console.log(`📊 Calculated inbound calls: ${totalCalls} total - ${totalOutbound} outbound = ${totalInbound} inbound`);
       }
       
-      const dataSource = agentActivityData && agentActivityData.length > 0 ? 'Agent Activity API + Ticket Analysis' : 'Ticket Analysis';
+      const dataSource = voiceApiCalls && voiceApiCalls.length > 0 ? 
+        'Voice API (Primary)' : 
+        (agentActivityData && agentActivityData.length > 0 ? 'Agent Activity API + Ticket Analysis' : 'Ticket Analysis');
       
       console.log(`✅ Today's call metrics analysis complete (${dataSource}):`);
       console.log(`   📞 Total Calls: ${totalCalls}`);
       console.log(`   📞 Inbound: ${totalInbound}, Outbound: ${totalOutbound}, Callbacks: ${totalCallbacks}`);
-      console.log(`   ❌ Abandoned: ${abandonedCalls}, ⏰ Exceeded Wait: ${exceededWaitTime}`);
+      console.log(`   ❌ Abandoned: ${abandonedCalls} (from ${voiceApiCalls ? 'Voice API completion_status' : 'fallback analysis'})`);
+      console.log(`   ⏰ Exceeded Wait: ${exceededWaitTime}`);
       console.log(`   ⏱️  Avg Duration: ${avgDuration} min, Avg Wait: ${avgWaitTime} min`);
       console.log(`   📊 Data Source: ${dataSource}`);
       
@@ -401,10 +444,13 @@ class LiveFeedAnalyzer {
         currentLongestWaitTime: currentQueueStats?.longest_wait_time ? Math.round(currentQueueStats.longest_wait_time / 60 * 100) / 100 : null,
         
         // Data quality indicators
-        dataSource: agentActivityData && agentActivityData.length > 0 ? 'agent_activity_api' : 'voice_tickets_analysis',
+        dataSource: voiceApiCalls && voiceApiCalls.length > 0 ? 'voice_api_primary' : 
+                   (agentActivityData && agentActivityData.length > 0 ? 'agent_activity_api' : 'voice_tickets_analysis'),
         ticketsAnalyzed: tickets.length,
         agentsAnalyzed: agentActivityData ? agentActivityData.length : 0,
+        voiceApiCallsAnalyzed: voiceApiCalls ? voiceApiCalls.length : 0,
         hasCurrentQueueData: !!currentQueueStats,
+        hasVoiceApiData: !!(voiceApiCalls && voiceApiCalls.length > 0),
         hasAgentActivityData: !!(agentActivityData && agentActivityData.length > 0)
       };
       

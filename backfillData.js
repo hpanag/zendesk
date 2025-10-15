@@ -106,10 +106,11 @@ class BackfillDataGenerator {
 
   async fetchTicketDataForDate(date) {
     const dateStr = date.toISOString().split('T')[0];
-    console.log(`📊 Fetching ticket data for ${dateStr}...`);
+    console.log(`📊 Fetching ticket activity for ${dateStr}...`);
     
     const nextDay = new Date(date);
     nextDay.setDate(nextDay.getDate() + 1);
+    const nextDayStr = nextDay.toISOString().split('T')[0];
     
     const statusCounts = {
       date: dateStr,
@@ -122,33 +123,24 @@ class BackfillDataGenerator {
     };
 
     try {
-      const startTime = new Date(dateStr + 'T00:00:00Z').getTime() / 1000;
-      const endTime = new Date(nextDay.toISOString().split('T')[0] + 'T00:00:00Z').getTime() / 1000;
+      // Use Search API to count tickets created or updated on this date by status
+      const statuses = ['new', 'open', 'pending', 'hold', 'solved', 'closed'];
       
-      let url = `/incremental/tickets.json?start_time=${startTime}`;
-      let hasMore = true;
-      
-      while (hasMore && url) {
-        const response = await this.zendesk.makeRequest('GET', url);
-        
-        for (const ticket of response.tickets) {
-          const ticketDate = new Date(ticket.updated_at);
+      for (const status of statuses) {
+        try {
+          // Search for tickets updated on this date with this status
+          const query = `type:ticket status:${status} updated>=${dateStr} updated<${nextDayStr}`;
+          const response = await this.zendesk.makeRequest('GET', `/search/count.json?query=${encodeURIComponent(query)}`);
           
-          if (ticketDate >= date && ticketDate < nextDay) {
-            const status = ticket.status;
-            if (statusCounts.hasOwnProperty(status)) {
-              statusCounts[status]++;
-            }
+          if (response && response.count !== undefined) {
+            statusCounts[status] = response.count;
           }
+          
+          // Rate limiting - be respectful
+          await new Promise(resolve => setTimeout(resolve, 500));
+        } catch (error) {
+          console.error(`    Error counting ${status} tickets:`, error.message);
         }
-        
-        if (response.end_time >= endTime) {
-          hasMore = false;
-        } else {
-          url = response.next_page;
-        }
-        
-        await new Promise(resolve => setTimeout(resolve, 1000));
       }
       
       console.log(`  ${dateStr}: new:${statusCounts.new} open:${statusCounts.open} pending:${statusCounts.pending} hold:${statusCounts.hold} solved:${statusCounts.solved} closed:${statusCounts.closed}`);

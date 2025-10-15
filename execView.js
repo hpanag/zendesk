@@ -432,13 +432,14 @@ class ExecViewGenerator {
       const dailyKPIs = await this.generateDailyKPIs();
       console.log('✅ Today\'s data fetched successfully');
 
-      // Check if today is a weekday (skip data collection on weekends unless forced)
+      // Determine if today is a weekday (for voice trends)
+      // We still capture ticket snapshots on weekends
       const todayDate = new Date();
       const dayOfWeek = todayDate.getDay();
       const isWeekday = dayOfWeek >= 1 && dayOfWeek <= 5;
       
       if (!isWeekday) {
-        console.log('� Today is a weekend - only updating today\'s KPIs, not historical trends');
+        console.log('📅 Today is a weekend - will capture ticket snapshot, voice trends only on weekdays');
       }
 
       // Merge with existing data
@@ -519,7 +520,7 @@ class ExecViewGenerator {
     // Update today's KPIs
     merged.dailyKPIs[today] = todayKPIs;
 
-    // If it's a weekday, add to trends (only if not already present)
+    // Add voice trends only on weekdays (when call center is open)
     if (isWeekday) {
       const todayVoiceData = todayKPIs.voice;
       
@@ -545,30 +546,27 @@ class ExecViewGenerator {
       Object.keys(merged.trends.voice).forEach(metric => {
         merged.trends.voice[metric].sort((a, b) => new Date(a.date) - new Date(b.date));
       });
-
-      // Fetch today's ticket data if not present
-      const ticketIndex = merged.trends.tickets.byStatus.findIndex(d => d.date === today);
-      if (ticketIndex === -1) {
-        console.log('� Fetching today\'s ticket status...');
-        const todayTicketData = await this.fetchSingleDayTickets(today);
-        merged.trends.tickets.byStatus.push(todayTicketData);
-        console.log(`  ➕ Added ticket status for ${today}`);
-      } else {
-        console.log(`  ✓ Ticket status for ${today} already exists`);
-      }
-
-      // Sort ticket trends by date
-      merged.trends.tickets.byStatus.sort((a, b) => new Date(a.date) - new Date(b.date));
     }
+
+    // Always fetch ticket snapshots (even on weekends)
+    // This gives us a daily view of ticket status regardless of call center hours
+    const ticketIndex = merged.trends.tickets.byStatus.findIndex(d => d.date === today);
+    if (ticketIndex === -1) {
+      console.log('📊 Fetching today\'s ticket status snapshot...');
+      const todayTicketData = await this.fetchSingleDayTickets(today);
+      merged.trends.tickets.byStatus.push(todayTicketData);
+      console.log(`  ➕ Added ticket status for ${today}`);
+    } else {
+      console.log(`  ✓ Ticket status for ${today} already exists`);
+    }
+
+    // Sort ticket trends by date
+    merged.trends.tickets.byStatus.sort((a, b) => new Date(a.date) - new Date(b.date));
 
     return merged;
   }
 
   async fetchSingleDayTickets(dateStr) {
-    const date = new Date(dateStr);
-    const nextDay = new Date(date);
-    nextDay.setDate(nextDay.getDate() + 1);
-    
     const statusCounts = {
       date: dateStr,
       new: 0,
@@ -580,33 +578,28 @@ class ExecViewGenerator {
     };
 
     try {
-      const startTime = new Date(dateStr + 'T00:00:00Z').getTime() / 1000;
-      const endTime = new Date(nextDay.toISOString().split('T')[0] + 'T00:00:00Z').getTime() / 1000;
+      // Get current count of tickets in each status (point-in-time snapshot)
+      // This gives us "how many tickets are in this status right now"
+      const statuses = ['new', 'open', 'pending', 'hold', 'solved', 'closed'];
       
-      let url = `/incremental/tickets.json?start_time=${startTime}`;
-      let hasMore = true;
+      console.log(`  📊 Taking ticket status snapshot for ${dateStr}...`);
       
-      while (hasMore && url) {
-        const response = await this.zendesk.makeRequest('GET', url);
-        
-        for (const ticket of response.tickets) {
-          const ticketDate = new Date(ticket.updated_at);
+      for (const status of statuses) {
+        try {
+          // Query all tickets currently in this status
+          // This gets the CURRENT state, not historical data
+          const query = `type:ticket status:${status}`;
+          const response = await this.zendesk.makeRequest('GET', `/search/count.json?query=${encodeURIComponent(query)}`);
           
-          if (ticketDate >= date && ticketDate < nextDay) {
-            const status = ticket.status;
-            if (statusCounts.hasOwnProperty(status)) {
-              statusCounts[status]++;
-            }
+          if (response && response.count !== undefined) {
+            statusCounts[status] = response.count;
           }
+          
+          // Rate limiting to avoid API throttling
+          await new Promise(resolve => setTimeout(resolve, 500));
+        } catch (error) {
+          console.error(`    Error counting ${status} tickets:`, error.message);
         }
-        
-        if (response.end_time >= endTime) {
-          hasMore = false;
-        } else {
-          url = response.next_page;
-        }
-        
-        await new Promise(resolve => setTimeout(resolve, 1000));
       }
       
       console.log(`    ${dateStr}: new:${statusCounts.new} open:${statusCounts.open} pending:${statusCounts.pending} hold:${statusCounts.hold} solved:${statusCounts.solved} closed:${statusCounts.closed}`);

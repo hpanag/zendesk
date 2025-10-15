@@ -213,14 +213,18 @@
           
           // Helper function to filter last N weekdays
           function getLastNWeekdays(dataArray, n) {
-            // Filter only weekdays
+            // Filter only weekdays (comment out to show all days including weekends)
             const weekdayData = dataArray.filter(item => {
               const date = new Date(item.date);
               const dayOfWeek = date.getDay();
               return dayOfWeek >= 1 && dayOfWeek <= 5; // Monday-Friday
             });
             
-            // Return last N entries
+            // Return last N entries from weekdays
+            // For now, if weekday data is empty, return all data
+            if (weekdayData.length === 0) {
+              return dataArray.slice(-n);
+            }
             return weekdayData.slice(-n);
           }
           

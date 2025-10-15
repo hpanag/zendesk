@@ -1,21 +1,85 @@
 {
   "metadata": {
     "version": "1.0.0",
-    "lastUpdated": "2025-10-11T15:32:30.993Z",
     "description": "Executive View - Daily KPI Dashboard with Historical Trends",
     "dataRetentionDays": 90,
     "kpiCategories": [
       "voice",
       "tickets"
-    ]
+    ],
+    "lastUpdated": "2025-10-15T08:23:01.929Z",
+    "lastFetchDate": "2025-10-15"
   },
   "dailyKPIs": {
-    "2025-10-11": {
-      "date": "2025-10-11",
-      "timestamp": "2025-10-11T14:10:34.988Z",
+    "2025-10-12": {
+      "date": "2025-10-12",
+      "timestamp": "2025-10-12T16:19:27.945Z",
       "voice": {
         "totalInboundCalls": {
-          "value": 3,
+          "value": 6,
+          "displayName": "Total Inbound Calls",
+          "description": "Total number of inbound calls received today"
+        },
+        "notAnsweredCalls": {
+          "value": 0,
+          "displayName": "Not Answered Calls",
+          "description": "Number of calls that were not answered by any agent today"
+        },
+        "outboundCalls": {
+          "value": 0,
+          "displayName": "Outbound Calls",
+          "description": "Total outbound calls placed today"
+        }
+      }
+    },
+    "2025-10-13": {
+      "date": "2025-10-13",
+      "timestamp": "2025-10-13T14:41:01.949Z",
+      "voice": {
+        "totalInboundCalls": {
+          "value": 51,
+          "displayName": "Total Inbound Calls",
+          "description": "Total number of inbound calls received today"
+        },
+        "notAnsweredCalls": {
+          "value": 24,
+          "displayName": "Not Answered Calls",
+          "description": "Number of calls that were not answered by any agent today"
+        },
+        "outboundCalls": {
+          "value": 0,
+          "displayName": "Outbound Calls",
+          "description": "Total outbound calls placed today"
+        }
+      }
+    },
+    "2025-10-14": {
+      "date": "2025-10-14",
+      "timestamp": "2025-10-14T12:48:38.035Z",
+      "voice": {
+        "totalInboundCalls": {
+          "value": 1,
+          "displayName": "Total Inbound Calls",
+          "description": "Total number of inbound calls received today"
+        },
+        "notAnsweredCalls": {
+          "value": 0,
+          "displayName": "Not Answered Calls",
+          "description": "Number of calls that were not answered by any agent today"
+        },
+        "outboundCalls": {
+          "value": 0,
+          "displayName": "Outbound Calls",
+          "description": "Total outbound calls placed today"
+        }
+      }
+    },
+    "2025-10-15": {
+      "date": "2025-10-15",
+      "timestamp": "2025-10-15T08:23:01.021Z",
+      "voice": {
+        "totalInboundCalls": {
+          "value": 0,
           "displayName": "Total Inbound Calls",
           "description": "Total number of inbound calls received today"
         },
@@ -36,264 +100,168 @@
     "voice": {
       "totalInboundCalls": [
         {
-          "date": "2025-09-25",
-          "value": 231
-        },
-        {
-          "date": "2025-09-26",
-          "value": 184
-        },
-        {
-          "date": "2025-09-27",
-          "value": 190
-        },
-        {
-          "date": "2025-09-30",
-          "value": 358
-        },
-        {
-          "date": "2025-10-01",
-          "value": 214
-        },
-        {
-          "date": "2025-10-02",
-          "value": 182
-        },
-        {
-          "date": "2025-10-03",
-          "value": 112
-        },
-        {
-          "date": "2025-10-06",
+          "date": "2025-10-07",
           "value": 302
         },
         {
-          "date": "2025-10-07",
-          "value": 224
-        },
-        {
           "date": "2025-10-08",
-          "value": 246
+          "value": 187
         },
         {
           "date": "2025-10-09",
-          "value": 92
+          "value": 227
         },
         {
           "date": "2025-10-10",
-          "value": 80
+          "value": 92
+        },
+        {
+          "date": "2025-10-13",
+          "value": 51
+        },
+        {
+          "date": "2025-10-14",
+          "value": 1
+        },
+        {
+          "date": "2025-10-15",
+          "value": 0
         }
       ],
       "notAnsweredCalls": [
         {
-          "date": "2025-09-25",
-          "value": 204
-        },
-        {
-          "date": "2025-09-26",
-          "value": 158
-        },
-        {
-          "date": "2025-09-27",
-          "value": 164
-        },
-        {
-          "date": "2025-09-30",
-          "value": 299
-        },
-        {
-          "date": "2025-10-01",
-          "value": 179
-        },
-        {
-          "date": "2025-10-02",
-          "value": 142
-        },
-        {
-          "date": "2025-10-03",
-          "value": 112
-        },
-        {
-          "date": "2025-10-06",
+          "date": "2025-10-07",
           "value": 210
         },
         {
-          "date": "2025-10-07",
-          "value": 134
-        },
-        {
           "date": "2025-10-08",
-          "value": 141
+          "value": 137
         },
         {
           "date": "2025-10-09",
-          "value": 92
+          "value": 141
         },
         {
           "date": "2025-10-10",
-          "value": 80
+          "value": 92
+        },
+        {
+          "date": "2025-10-13",
+          "value": 24
+        },
+        {
+          "date": "2025-10-14",
+          "value": 0
+        },
+        {
+          "date": "2025-10-15",
+          "value": 0
         }
       ],
       "outboundCalls": [
         {
-          "date": "2025-09-25",
-          "value": 20
-        },
-        {
-          "date": "2025-09-26",
-          "value": 23
-        },
-        {
-          "date": "2025-09-27",
-          "value": 6
-        },
-        {
-          "date": "2025-09-30",
-          "value": 7
-        },
-        {
-          "date": "2025-10-01",
-          "value": 13
-        },
-        {
-          "date": "2025-10-02",
-          "value": 1
-        },
-        {
-          "date": "2025-10-03",
-          "value": 0
-        },
-        {
-          "date": "2025-10-06",
-          "value": 6
-        },
-        {
           "date": "2025-10-07",
-          "value": 2
+          "value": 6
         },
         {
           "date": "2025-10-08",
-          "value": 7
+          "value": 8
         },
         {
           "date": "2025-10-09",
-          "value": 2
+          "value": 6
         },
         {
           "date": "2025-10-10",
-          "value": 8
+          "value": 2
+        },
+        {
+          "date": "2025-10-13",
+          "value": 0
+        },
+        {
+          "date": "2025-10-14",
+          "value": 0
+        },
+        {
+          "date": "2025-10-15",
+          "value": 0
         }
       ]
     },
     "tickets": {
       "byStatus": [
         {
-          "date": "2025-09-25",
-          "new": 0,
-          "open": 0,
-          "pending": 0,
-          "hold": 0,
-          "solved": 0,
-          "closed": 310
-        },
-        {
-          "date": "2025-09-26",
-          "new": 0,
-          "open": 0,
-          "pending": 0,
-          "hold": 1,
-          "solved": 0,
-          "closed": 683
-        },
-        {
-          "date": "2025-09-27",
-          "new": 0,
-          "open": 0,
-          "pending": 0,
-          "hold": 0,
-          "solved": 0,
-          "closed": 541
-        },
-        {
-          "date": "2025-09-30",
-          "new": 0,
-          "open": 0,
-          "pending": 0,
-          "hold": 2,
-          "solved": 0,
-          "closed": 707
-        },
-        {
-          "date": "2025-10-01",
-          "new": 0,
-          "open": 1,
-          "pending": 0,
-          "hold": 0,
-          "solved": 0,
-          "closed": 314
-        },
-        {
-          "date": "2025-10-02",
-          "new": 0,
-          "open": 6,
-          "pending": 0,
-          "hold": 3,
-          "solved": 0,
-          "closed": 271
-        },
-        {
-          "date": "2025-10-03",
-          "new": 0,
-          "open": 1,
-          "pending": 0,
-          "hold": 0,
-          "solved": 0,
-          "closed": 472
-        },
-        {
-          "date": "2025-10-06",
-          "new": 0,
-          "open": 2,
-          "pending": 6,
-          "hold": 4,
-          "solved": 21,
-          "closed": 745
-        },
-        {
           "date": "2025-10-07",
           "new": 0,
-          "open": 12,
-          "pending": 7,
-          "hold": 4,
-          "solved": 498,
-          "closed": 518
+          "open": 9,
+          "pending": 4,
+          "hold": 3,
+          "solved": 0,
+          "closed": 624
         },
         {
           "date": "2025-10-08",
           "new": 7,
-          "open": 19,
-          "pending": 16,
-          "hold": 15,
-          "solved": 425,
-          "closed": 268
+          "open": 14,
+          "pending": 5,
+          "hold": 10,
+          "solved": 205,
+          "closed": 271
         },
         {
           "date": "2025-10-09",
           "new": 0,
-          "open": 21,
-          "pending": 19,
-          "hold": 22,
-          "solved": 356,
-          "closed": 275
+          "open": 27,
+          "pending": 10,
+          "hold": 23,
+          "solved": 341,
+          "closed": 155
         },
         {
           "date": "2025-10-10",
-          "new": 62,
-          "open": 67,
-          "pending": 24,
-          "hold": 8,
-          "solved": 129,
-          "closed": 587
+          "new": 50,
+          "open": 69,
+          "pending": 28,
+          "hold": 17,
+          "solved": 223,
+          "closed": 644
+        },
+        {
+          "date": "2025-10-12",
+          "new": 113,
+          "open": 145,
+          "pending": 67,
+          "hold": 65,
+          "solved": 848,
+          "closed": 281551
+        },
+        {
+          "date": "2025-10-13",
+          "new": 113,
+          "open": 150,
+          "pending": 63,
+          "hold": 70,
+          "solved": 677,
+          "closed": 281944
+        },
+        {
+          "date": "2025-10-14",
+          "new": 73,
+          "open": 179,
+          "pending": 65,
+          "hold": 67,
+          "solved": 593,
+          "closed": 282500
+        },
+        {
+          "date": "2025-10-15",
+          "new": 83,
+          "open": 180,
+          "pending": 68,
+          "hold": 92,
+          "solved": 768,
+          "closed": 282943
         }
       ]
     }
