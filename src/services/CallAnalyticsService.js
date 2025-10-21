@@ -2,7 +2,7 @@ const ZendeskReportingService = require('./ZendeskReportingService');
 
 /**
  * Call Analytics Service for Dashboard
- * Provides 5-day call data with answered/unanswered breakdown
+ * Provides 30-day call data with answered/unanswered breakdown
  */
 class CallAnalyticsService {
   constructor() {
@@ -10,14 +10,14 @@ class CallAnalyticsService {
   }
 
   /**
-   * Get formatted 5-day call analytics for dashboard
+   * Get formatted 30-day call analytics for dashboard
    */
-  async get5DayCallAnalytics(phoneNumberIds = null) {
+  async get30DayCallAnalytics(phoneNumberIds = null) {
     try {
-      console.log('📞 Fetching 5-day call analytics...');
+      console.log('📞 Fetching 30-day call analytics...');
       
       // Get raw data from Zendesk
-      const rawData = await this.reportingService.getLast5DaysCallData(phoneNumberIds);
+      const rawData = await this.reportingService.getLast30DaysCallData(phoneNumberIds);
       
       // Process the data to get answered/unanswered counts
       const processedData = this.reportingService.processCallData(rawData);
@@ -35,7 +35,7 @@ class CallAnalyticsService {
   }
 
   /**
-   * Format data specifically for dashboard display
+   * Format data specifically for dashboard display with enhanced call categories
    */
   formatForDashboard(processedData) {
     const summary = this.calculateSummary(processedData);
@@ -49,8 +49,15 @@ class CallAnalyticsService {
           total_calls: day.total_calls,
           answered_calls: day.answered_calls,
           unanswered_calls: day.unanswered_calls,
+          callbacks: day.callbacks || 0,
+          voicemails: day.voicemails || 0,
+          exceeded_wait_time: day.exceeded_wait_time || 0,
+          outbound_calls: day.outbound_calls || 0,
+          inbound_calls: day.inbound_calls || 0,
           answer_rate: day.total_calls > 0 ? 
             Math.round((day.answered_calls / day.total_calls) * 100) : 0,
+          callback_rate: day.total_calls > 0 ?
+            Math.round((day.callbacks / day.total_calls) * 100) : 0,
           error: day.error || null
         })),
         summary: summary,
@@ -61,30 +68,48 @@ class CallAnalyticsService {
   }
 
   /**
-   * Calculate summary statistics
+   * Calculate summary statistics with enhanced categories
    */
   calculateSummary(data) {
     const totals = data.reduce((acc, day) => ({
       total_calls: acc.total_calls + day.total_calls,
       answered_calls: acc.answered_calls + day.answered_calls,
-      unanswered_calls: acc.unanswered_calls + day.unanswered_calls
-    }), { total_calls: 0, answered_calls: 0, unanswered_calls: 0 });
+      unanswered_calls: acc.unanswered_calls + day.unanswered_calls,
+      callbacks: acc.callbacks + (day.callbacks || 0),
+      voicemails: acc.voicemails + (day.voicemails || 0),
+      exceeded_wait_time: acc.exceeded_wait_time + (day.exceeded_wait_time || 0),
+      outbound_calls: acc.outbound_calls + (day.outbound_calls || 0),
+      inbound_calls: acc.inbound_calls + (day.inbound_calls || 0)
+    }), { 
+      total_calls: 0, 
+      answered_calls: 0, 
+      unanswered_calls: 0,
+      callbacks: 0,
+      voicemails: 0,
+      exceeded_wait_time: 0,
+      outbound_calls: 0,
+      inbound_calls: 0
+    });
 
     const overallAnswerRate = totals.total_calls > 0 ? 
       Math.round((totals.answered_calls / totals.total_calls) * 100) : 0;
+    
+    const callbackRate = totals.total_calls > 0 ?
+      Math.round((totals.callbacks / totals.total_calls) * 100) : 0;
 
     return {
       ...totals,
       overall_answer_rate: overallAnswerRate,
+      callback_rate: callbackRate,
       average_daily_calls: Math.round(totals.total_calls / data.length),
-      period: '5 days',
+      period: '30 days',
       start_date: data[0]?.date,
       end_date: data[data.length - 1]?.date
     };
   }
 
   /**
-   * Prepare data for charts (ApexCharts format)
+   * Prepare data for charts with enhanced categories (ApexCharts format)
    */
   prepareChartData(data) {
     const dates = data.map(d => d.date);
@@ -96,17 +121,32 @@ class CallAnalyticsService {
         {
           name: 'Answered Calls',
           data: data.map(d => d.answered_calls),
-          color: '#00d4aa'
+          color: '#28a745'
         },
         {
-          name: 'Unanswered Calls', 
+          name: 'Abandoned in Queue', 
           data: data.map(d => d.unanswered_calls),
-          color: '#ff6b6b'
+          color: '#dc3545'
         },
         {
-          name: 'Total Calls',
-          data: data.map(d => d.total_calls),
-          color: '#4f46e5'
+          name: 'Callback Requests',
+          data: data.map(d => d.callbacks || 0),
+          color: '#fd7e14'
+        },
+        {
+          name: 'Voicemails',
+          data: data.map(d => d.voicemails || 0),
+          color: '#6f42c1'
+        },
+        {
+          name: 'Exceeded Wait Time',
+          data: data.map(d => d.exceeded_wait_time || 0),
+          color: '#ffc107'
+        },
+        {
+          name: 'Outbound Calls',
+          data: data.map(d => d.outbound_calls || 0),
+          color: '#20c997'
         }
       ],
       dates: dates
@@ -128,6 +168,34 @@ class CallAnalyticsService {
       return 'Yesterday';
     } else {
       return date.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+    }
+  }
+
+  /**
+   * Get formatted 5-day call analytics for dashboard (backward compatibility)
+   */
+  async get5DayCallAnalytics(phoneNumberIds = null) {
+    try {
+      console.log('📞 Fetching 5-day call analytics...');
+      
+      // Get raw data from Zendesk
+      const rawData = await this.reportingService.getLast5DaysCallData(phoneNumberIds);
+      
+      // Format for dashboard
+      const formatted = this.formatForDashboard(rawData);
+      
+      return {
+        success: true,
+        data: formatted,
+        last_updated: new Date().toISOString()
+      };
+    } catch (error) {
+      console.error('❌ Error in get5DayCallAnalytics:', error.message);
+      return {
+        success: false,
+        error: error.message,
+        last_updated: new Date().toISOString()
+      };
     }
   }
 

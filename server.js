@@ -90,10 +90,17 @@ async function handleChatRequest(req, res) {
 }
 
 // Handle call analytics requests
-async function handleCallAnalyticsRequest(req, res) {
+async function handleCallAnalyticsRequest(req, res, period = '5-day') {
   try {
-    console.log('📊 Fetching 5-day call analytics...');
-    const analytics = await callAnalytics.get5DayCallAnalytics();
+    console.log(`📊 Fetching ${period} call analytics...`);
+    
+    let analytics;
+    if (period === '30-day') {
+      analytics = await callAnalytics.get30DayCallAnalytics();
+    } else {
+      analytics = await callAnalytics.get5DayCallAnalytics();
+    }
+    
     console.log('📈 Analytics data received, preparing response...');
     console.log('📋 Analytics success:', analytics?.success);
     console.log('📋 Analytics data keys:', analytics?.data ? Object.keys(analytics.data) : 'No data');
@@ -102,10 +109,10 @@ async function handleCallAnalyticsRequest(req, res) {
     sendJson(res, 200, analytics);
     console.log('✅ Response sent successfully');
   } catch (error) {
-    console.error('❌ Error fetching call analytics:', error);
+    console.error(`❌ Error fetching ${period} call analytics:`, error);
     sendJson(res, 500, {
       success: false,
-      error: 'Failed to fetch call analytics',
+      error: `Failed to fetch ${period} call analytics`,
       details: error.message
     });
   }
@@ -146,7 +153,7 @@ const server = http.createServer((req, res) => {
 
   // Call Analytics endpoints
   if (req.url === '/api/call-analytics' || req.url === '/api/call-analytics/5-day') {
-    console.log('📞 Call analytics request');
+    console.log('📞 Call analytics request (5-day)');
     if (req.method === 'OPTIONS') {
       res.writeHead(200, {
         'Access-Control-Allow-Origin': '*',
@@ -158,7 +165,26 @@ const server = http.createServer((req, res) => {
     }
     
     if (req.method === 'GET') {
-      handleCallAnalyticsRequest(req, res);
+      handleCallAnalyticsRequest(req, res, '5-day');
+      return;
+    }
+  }
+
+  // 30-day Call Analytics endpoint
+  if (req.url === '/api/call-analytics/30-day') {
+    console.log('📞 Call analytics request (30-day)');
+    if (req.method === 'OPTIONS') {
+      res.writeHead(200, {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+        'Access-Control-Allow-Methods': 'GET, OPTIONS'
+      });
+      res.end();
+      return;
+    }
+    
+    if (req.method === 'GET') {
+      handleCallAnalyticsRequest(req, res, '30-day');
       return;
     }
   }

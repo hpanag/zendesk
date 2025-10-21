@@ -26,7 +26,7 @@ class ZendeskReportingService extends ZendeskClient {
         const overview = result.account_overview;
         console.log(`✅ Account overview retrieved: ${overview.total_calls} total calls`);
         
-        // Transform to match expected format for dashboard
+        // Transform to match expected format for dashboard with enhanced categories
         return {
           total_calls: overview.total_calls || 0,
           answered_calls: (overview.total_calls || 0) - (overview.total_calls_abandoned_in_queue || 0),
@@ -36,8 +36,14 @@ class ZendeskReportingService extends ZendeskClient {
           outbound_calls: overview.total_outbound_calls || 0,
           voicemails: overview.total_voicemails || 0,
           callbacks: overview.total_callback_calls || 0,
+          exceeded_wait_time: overview.total_calls_with_exceeded_queue_wait_time || 0,
+          outside_business_hours: overview.total_calls_outside_business_hours || 0,
+          requested_voicemail: overview.total_calls_with_requested_voicemail || 0,
+          textback_requests: overview.total_textback_requests || 0,
           average_call_duration: overview.average_call_duration || 0,
           average_wait_time: overview.average_queue_wait_time || 0,
+          average_hold_time: overview.average_hold_time || 0,
+          average_time_to_answer: overview.average_time_to_answer || 0,
           total_call_duration: overview.total_call_duration || 0
         };
       }
@@ -137,6 +143,14 @@ class ZendeskReportingService extends ZendeskClient {
         const actualAnswerRate = overview.total_calls > 0 ? 
           (overview.answered_calls / overview.total_calls) : 0.75;
         
+        // Calculate callback rate from account data  
+        const actualCallbackRate = overview.total_calls > 0 ?
+          (overview.callbacks / overview.total_calls) : 0.22; // 61/273 ≈ 0.22
+          
+        // Calculate exceeded wait time rate
+        const actualExceededWaitRate = overview.total_calls > 0 ?
+          (overview.exceeded_wait_time / overview.total_calls) : 0.25; // 69/273 ≈ 0.25
+        
         // Add realistic day-of-week variation based on typical call center patterns
         const dayOfWeek = new Date(date).getDay(); // 0 = Sunday, 1 = Monday, etc.
         let multiplier = 1.0;
@@ -170,6 +184,10 @@ class ZendeskReportingService extends ZendeskClient {
         const estimatedTotalCalls = Math.round(baselineDailyCalls * finalMultiplier);
         const estimatedAnsweredCalls = Math.round(estimatedTotalCalls * actualAnswerRate);
         const estimatedMissedCalls = estimatedTotalCalls - estimatedAnsweredCalls;
+        const estimatedCallbacks = Math.round(estimatedTotalCalls * actualCallbackRate);
+        const estimatedExceededWaitTime = Math.round(estimatedTotalCalls * actualExceededWaitRate);
+        const estimatedVoicemails = Math.round(estimatedTotalCalls * 0.02); // Small percentage for voicemails
+        const estimatedOutbound = Math.round(estimatedTotalCalls * 0.04); // ~4% outbound based on account data
         
 
         
@@ -180,7 +198,15 @@ class ZendeskReportingService extends ZendeskClient {
             total_calls: estimatedTotalCalls,
             answered_calls: estimatedAnsweredCalls,
             missed_calls: estimatedMissedCalls,
-            abandoned_calls: estimatedMissedCalls
+            abandoned_calls: estimatedMissedCalls,
+            callbacks: estimatedCallbacks,
+            exceeded_wait_time: estimatedExceededWaitTime,
+            voicemails: estimatedVoicemails,
+            outbound_calls: estimatedOutbound,
+            inbound_calls: estimatedTotalCalls - estimatedOutbound,
+            outside_business_hours: 0,
+            requested_voicemail: estimatedVoicemails,
+            textback_requests: 0
           },
           incremental: null,
           date,
@@ -326,9 +352,35 @@ class ZendeskReportingService extends ZendeskClient {
     }
   }
 
+  async getLast30DaysCallData(phoneNumberIds = null) {
+    try {
+      const today = new Date();
+      const promises = [];
+      
+      // Generate last 30 days including today
+      for (let i = 29; i >= 0; i--) {
+        const date = new Date(today);
+        date.setDate(today.getDate() - i);
+        const dateStr = date.toISOString().split('T')[0];
+        
+        promises.push(this.getDailyCallStats(dateStr, phoneNumberIds));
+      }
+      
+      const results = await Promise.allSettled(promises);
+      
+      return results.map(result => 
+        result.status === 'fulfilled' ? result.value : null
+      ).filter(Boolean);
+      
+    } catch (error) {
+      console.error('Error fetching 30-day call data:', error.message);
+      throw error;
+    }
+  }
+
   /**
-   * Process call data to get answered/unanswered counts
-   * Updated to handle the new data format from enhanced API endpoints
+   * Process call data to get detailed breakdown including callbacks, voicemails, etc.
+   * Updated to handle the enhanced data format from account overview
    */
   processCallData(dailyData) {
     return dailyData.map(dayData => {
@@ -338,6 +390,11 @@ class ZendeskReportingService extends ZendeskClient {
           total_calls: 0,
           answered_calls: 0,
           unanswered_calls: 0,
+          callbacks: 0,
+          voicemails: 0,
+          exceeded_wait_time: 0,
+          outbound_calls: 0,
+          inbound_calls: 0,
           error: dayData?.error || 'No data available',
           source: dayData?.source || 'unknown'
         };
@@ -346,53 +403,21 @@ class ZendeskReportingService extends ZendeskClient {
       const overview = dayData.overview;
       const totalCalls = overview.total_calls || 0;
       
-      // Check if we have direct answered_calls and missed_calls from our enhanced logic
-      if (typeof overview.answered_calls === 'number' && typeof overview.missed_calls === 'number') {
-        console.log(`📊 Using direct data for ${dayData.date}: ${overview.answered_calls} answered, ${overview.missed_calls} missed`);
-        
-        return {
-          date: dayData.date,
-          total_calls: totalCalls,
-          answered_calls: overview.answered_calls,
-          unanswered_calls: overview.missed_calls,
-          source: dayData.source || 'direct_calculation'
-        };
-      }
-      
-      // Fallback: Calculate unanswered calls using the metrics from account_overview
-      const unansweredCalls = (
-        (overview.total_calls_abandoned_in_queue || 0) +
-        (overview.total_calls_with_exceeded_queue_wait_time || 0) +
-        (overview.total_calls_with_requested_voicemail || 0)
-      );
-      
-      // If we have incremental data, use more precise logic
-      let answeredCalls = totalCalls - unansweredCalls;
-      let refinedUnanswered = unansweredCalls;
-      
-      if (dayData.incremental && dayData.incremental.calls) {
-        const calls = dayData.incremental.calls;
-        console.log(`🔍 Processing ${calls.length} incremental calls for ${dayData.date}`);
-        
-        // Count answered calls: calls with agent and pick_up_time
-        answeredCalls = calls.filter(call => 
-          call.agent && 
-          call.agent.id && 
-          call.pick_up_time &&
-          call.direction === 'inbound'
-        ).length;
-        
-        refinedUnanswered = totalCalls - answeredCalls;
-        
-        console.log(`📊 Incremental analysis for ${dayData.date}: ${answeredCalls} answered, ${refinedUnanswered} unanswered`);
-      }
-      
+      // Use the enhanced data structure with detailed categories
       return {
         date: dayData.date,
         total_calls: totalCalls,
-        answered_calls: Math.max(0, answeredCalls),
-        unanswered_calls: Math.max(0, refinedUnanswered),
-        source: dayData.source || 'calculated'
+        answered_calls: overview.answered_calls || 0,
+        unanswered_calls: overview.missed_calls || overview.abandoned_calls || 0,
+        callbacks: overview.callbacks || 0,
+        voicemails: overview.voicemails || 0,
+        exceeded_wait_time: overview.exceeded_wait_time || 0,
+        outbound_calls: overview.outbound_calls || 0,
+        inbound_calls: overview.inbound_calls || (totalCalls - (overview.outbound_calls || 0)),
+        outside_business_hours: overview.outside_business_hours || 0,
+        requested_voicemail: overview.requested_voicemail || 0,
+        textback_requests: overview.textback_requests || 0,
+        source: dayData.source || 'enhanced_calculation'
       };
     });
   }
