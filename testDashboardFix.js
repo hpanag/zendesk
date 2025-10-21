@@ -55,4 +55,11 @@ async function testDashboardFix() {
   }
 }
 
-testDashboardFix();
+module.exports = testDashboardFix;
+
+if (require.main === module) {
+  testDashboardFix().catch(error => {
+    console.error('❌ Script failed:', error.message);
+    process.exitCode = 1;
+  });
+}

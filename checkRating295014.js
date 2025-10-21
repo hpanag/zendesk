@@ -124,4 +124,11 @@ async function checkRating295014() {
   }
 }
 
-checkRating295014();
+module.exports = checkRating295014;
+
+if (require.main === module) {
+  checkRating295014().catch(error => {
+    console.error('❌ Script failed:', error.message);
+    process.exitCode = 1;
+  });
+}

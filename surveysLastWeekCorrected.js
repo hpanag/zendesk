@@ -311,4 +311,11 @@ async function main() {
   await reporter.getLastWeekSurveys();
 }
 
-main();
+module.exports = SurveyReportCorrected;
+
+if (require.main === module) {
+  main().catch(error => {
+    console.error('❌ Script failed:', error.message);
+    process.exitCode = 1;
+  });
+}

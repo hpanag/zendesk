@@ -36,4 +36,11 @@ async function checkVoiceTickets() {
   }
 }
 
-checkVoiceTickets().catch(console.error);
+module.exports = checkVoiceTickets;
+
+if (require.main === module) {
+  checkVoiceTickets().catch(error => {
+    console.error('❌ Script failed:', error.message);
+    process.exitCode = 1;
+  });
+}

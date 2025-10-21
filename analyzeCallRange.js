@@ -291,4 +291,11 @@ async function main() {
   await analyzer.analyzeCallRange(startDate, endDate);
 }
 
-main();
+module.exports = CallRangeAnalyzer;
+
+if (require.main === module) {
+  main().catch(error => {
+    console.error('❌ Script failed:', error.message);
+    process.exitCode = 1;
+  });
+}

@@ -328,4 +328,11 @@ async function main() {
   await categorizer.categorizeAllCalls();
 }
 
-main();
+module.exports = CallCategorizer;
+
+if (require.main === module) {
+  main().catch(error => {
+    console.error('❌ Script failed:', error.message);
+    process.exitCode = 1;
+  });
+}

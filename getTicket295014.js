@@ -241,4 +241,12 @@ async function getTicketWithRating(ticketId) {
   }
 }
 
-getTicketWithRating('295014');
+module.exports = getTicketWithRating;
+
+if (require.main === module) {
+  const ticketId = process.argv[2] || '295014';
+  getTicketWithRating(ticketId).catch(error => {
+    console.error('❌ Script failed:', error.message);
+    process.exitCode = 1;
+  });
+}

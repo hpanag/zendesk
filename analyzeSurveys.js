@@ -294,4 +294,11 @@ async function main() {
   await analyzer.getLastWeekSurveys();
 }
 
-main();
+module.exports = SurveyAnalyzer;
+
+if (require.main === module) {
+  main().catch(error => {
+    console.error('❌ Script failed:', error.message);
+    process.exitCode = 1;
+  });
+}

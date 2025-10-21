@@ -171,4 +171,11 @@ async function verifyAPI() {
   console.log();
 }
 
-verifyAPI().catch(console.error);
+module.exports = verifyAPI;
+
+if (require.main === module) {
+  verifyAPI().catch(error => {
+    console.error('❌ Script failed:', error.message);
+    process.exitCode = 1;
+  });
+}

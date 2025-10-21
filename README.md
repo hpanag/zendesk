@@ -20,6 +20,14 @@ A comprehensive Node.js solution for Zendesk API integration with real-time call
    2. Click the Settings tab
    3. Enable token access and add a new API token
 
+  **Optional – GPT-5 Copilot**
+  - `OPENAI_API_KEY`: Required for live GPT-5 responses (fallback analytics are used when absent)
+  - `OPENAI_BASE_URL`: Override the OpenAI endpoint (for Azure/OpenAI-compatible gateways)
+  - `OPENAI_GPT5_MODEL`: Set a specific model identifier (defaults to `gpt-4.1-mini` as a lightweight GPT-5 stand-in)
+  - `GPT5_SYSTEM_PROMPT`: Optional custom system instructions for the chatbot
+
+  When the key is missing the chat interface will still respond, using summarized data from the cached reports.
+
 ## Usage
 
 ### Basic Usage
@@ -117,6 +125,15 @@ npm run web-serve   # Start web server (http://localhost:8080)
 - **Mobile Responsive**: Works on desktop, tablet, and mobile
 - **Auto-refresh**: Updates every 30 seconds automatically
 - **Export Data**: Download metrics as JSON
+- **GPT-5 KPI Copilot**: Navigate to `web/zendeskchat.html` for a conversational assistant that can answer KPI questions using GPT-5 (or a local fallback summary when credentials are missing)
+
+### GPT-5 Chat Server
+```bash
+# Serve dashboards and enable the GPT-5 endpoint (http://localhost:3000)
+node server.js
+```
+
+The `/api/gpt5-chat` endpoint is consumed by `zendeskchat.html`. When `OPENAI_API_KEY` is present it proxies questions to OpenAI; otherwise it returns curated summaries from the cached KPI exports so the experience remains responsive during setup.
 
 ### Dashboard Components
 - Agent status breakdown (online/away/offline/on call)

@@ -226,4 +226,11 @@ async function main() {
   await comparer.compare();
 }
 
-main();
+module.exports = CompareAbandonedSources;
+
+if (require.main === module) {
+  main().catch(error => {
+    console.error('❌ Script failed:', error.message);
+    process.exitCode = 1;
+  });
+}

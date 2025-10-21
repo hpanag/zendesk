@@ -223,4 +223,11 @@ async function main() {
   await reporter.generateReport();
 }
 
-main();
+module.exports = Oct6to10CallReport;
+
+if (require.main === module) {
+  main().catch(error => {
+    console.error('❌ Script failed:', error.message);
+    process.exitCode = 1;
+  });
+}

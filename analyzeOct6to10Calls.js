@@ -160,4 +160,11 @@ async function main() {
   await analyzer.analyzeCallRange();
 }
 
-main();
+module.exports = VoiceCallAnalyzer;
+
+if (require.main === module) {
+  main().catch(error => {
+    console.error('❌ Script failed:', error.message);
+    process.exitCode = 1;
+  });
+}

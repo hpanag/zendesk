@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Zendesk GPT-5 Chat</title>
-    <link href="/web/original/dist/css/tabler.css?1747674014" rel="stylesheet" />
-    <link href="/web/original/dist/css/tabler-themes.css?1747674014" rel="stylesheet" />
+    <link href="./original/dist/css/tabler.css?1747674014" rel="stylesheet" />
+    <link href="./original/dist/css/tabler-themes.css?1747674014" rel="stylesheet" />
     <style>
       @import url("https://rsms.me/inter/inter.css");
       body {
@@ -150,7 +150,7 @@
     </style>
   </head>
   <body>
-    <script src="/web/original/dist/js/tabler-theme.min.js?1747674014"></script>
+    <script src="./original/dist/js/tabler-theme.min.js?1747674014"></script>
     <div class="page">
       <header class="navbar navbar-expand-md d-print-none">
         <div class="container-xl">
@@ -166,7 +166,7 @@
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="navbar-brand navbar-brand-autodark d-none-navbar-horizontal pe-0 pe-md-3">
-            <a href="/web/dash.html" class="text-reset text-decoration-none" aria-label="Zendesk Voice Dashboard">
+            <a href="dash.html" class="text-reset text-decoration-none" aria-label="Zendesk Voice Dashboard">
               <span class="navbar-brand-title">Zendesk KPI Copilot</span>
             </a>
           </div>
@@ -272,35 +272,15 @@
                   <div class="card-body border-top">
                     <h4 class="card-title mb-2">How it works</h4>
                     <p class="text-secondary mb-3">
-                      Your questions trigger real-time API calls to Zendesk to fetch the most current data. GPT-5 analyzes this live data to provide accurate, up-to-date insights.
+                      Your questions and the full chat history are securely sent to GPT-5, which responds with insights grounded in Zendesk ticket and call data. Responses are scoped to the metrics and ranges curated for this dashboard.
                     </p>
-                    <div class="d-inline-flex align-items-center px-3 py-2 rounded bg-success-lt text-success">
-                      <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-refresh me-2" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M20 11a8.1 8.1 0 0 0 -15.5 -2m-.5 -4v4h4" />
-                        <path d="M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4" />
+                    <div class="d-inline-flex align-items-center px-3 py-2 rounded bg-primary-lt text-primary">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-info-circle me-2" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 9h.01" />
+                        <path d="M11 12h1v4h1" />
+                        <path d="M12 5m-7 7a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
                       </svg>
-                      Real-time data fetched on every request
-                    </div>
-                  </div>
-                  <div class="card-body border-top">
-                    <h4 class="card-title mb-2">
-                      API Usage Mode
-                      <span class="badge bg-success ms-2">Real-time</span>
-                    </h4>
-                    <p class="text-secondary mb-3">
-                      Each question makes targeted API calls to Zendesk for the most relevant and current data. No background fetching or caching.
-                    </p>
-                    <div class="d-flex gap-2 mb-3">
-                      <div class="d-inline-flex align-items-center px-3 py-2 rounded bg-info-lt text-info">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon me-1" width="16" height="16" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                          <path d="M12 2v20m8-18l-16 16" />
-                        </svg>
-                        On-demand API calls only
-                      </div>
-                    </div>
-                    <div class="small text-muted">
-                      <div>Mode: Real-time Zendesk API integration</div>
-                      <div>Caching: Disabled (API cost optimization)</div>
+                      GPT-5 will cite data sources whenever possible.
                     </div>
                   </div>
                 </div>
@@ -314,7 +294,7 @@
               <div class="col-12 col-lg-auto mt-3 mt-lg-0">
                 <ul class="list-inline list-inline-dots mb-0">
                   <li class="list-inline-item">&copy; 2025 Zendesk Dashboard</li>
-                  <li class="list-inline-item"><a href="/web/dash.html">Voice Dashboard</a></li>
+                  <li class="list-inline-item"><a href="dash.html">Voice Dashboard</a></li>
                 </ul>
               </div>
             </div>
@@ -322,83 +302,10 @@
         </footer>
       </div>
     </div>
-    <script src="/web/original/dist/js/tabler.min.js?1747674014" defer></script>
+    <script src="./original/dist/js/tabler.min.js?1747674014" defer></script>
     <script>
       document.addEventListener('DOMContentLoaded', () => {
-        // Smart API endpoint detection
-        // If we're on Live Server (port 5501), connect to Node.js server on port 3000
-        // If we're already on the Node.js server (port 3000), use relative path
-        const currentPort = window.location.port;
-        const isLiveServer = currentPort === '5501';
-        const isNodeServer = currentPort === '3000' || currentPort === '';
-        
-        let API_ENDPOINT;
-        if (isLiveServer) {
-          // VS Code Live Server - connect to Node.js server
-          API_ENDPOINT = 'http://localhost:3000/api/gpt5-chat';
-        } else if (isNodeServer) {
-          // Node.js server - use relative path
-          API_ENDPOINT = '/api/gpt5-chat';
-        } else {
-          // Fallback - try Node.js server
-          API_ENDPOINT = 'http://localhost:3000/api/gpt5-chat';
-        }
-        
-        console.log('🚀 Page loaded');
-        console.log('🔗 API_ENDPOINT:', API_ENDPOINT);
-        console.log('🌐 Current environment:', isLiveServer ? 'VS Code Live Server' : isNodeServer ? 'Node.js Server' : 'Unknown');
-        console.log('🌐 window.location:', {
-          href: window.location.href,
-          origin: window.location.origin,
-          hostname: window.location.hostname,
-          port: window.location.port,
-          protocol: window.location.protocol
-        });
-
-        // Add connection test functionality
-        const testConnection = async () => {
-          try {
-            console.log('🔄 Testing connection to:', API_ENDPOINT);
-            const response = await fetch(API_ENDPOINT.replace('/api/gpt5-chat', '/health'), {
-              method: 'GET',
-              timeout: 5000
-            });
-            console.log('✅ Connection test result:', response.status);
-            return response.ok;
-          } catch (error) {
-            console.log('❌ Connection test failed:', error.message);
-            return false;
-          }
-        };
-
-        // Test connection on page load and show status
-        testConnection().then(connected => {
-          const statusIndicator = document.createElement('div');
-          statusIndicator.id = 'connection-status';
-          statusIndicator.style.cssText = `
-            position: fixed; top: 10px; right: 10px; z-index: 9999;
-            padding: 8px 12px; border-radius: 4px; font-size: 12px;
-            color: white; font-weight: bold;
-          `;
-          
-          if (connected) {
-            statusIndicator.textContent = '✅ Connected to GPT-5 Server';
-            statusIndicator.style.backgroundColor = '#10b981';
-            setTimeout(() => statusIndicator.remove(), 3000);
-          } else {
-            statusIndicator.textContent = isLiveServer ? 
-              '⚠️ Start Node.js server: node server.js' : 
-              '❌ Server Offline';
-            statusIndicator.style.backgroundColor = '#ef4444';
-          }
-          
-          document.body.appendChild(statusIndicator);
-          
-          if (!connected && isLiveServer) {
-            console.log('⚠️ Node.js server not responding. Make sure to run: node server.js');
-          }
-        });
-
+        const API_ENDPOINT = '/api/gpt5-chat';
         const chatLog = document.getElementById('chat-log');
         const chatForm = document.getElementById('chat-form');
         const chatInput = document.getElementById('chat-input');
@@ -486,9 +393,6 @@
             chatInput.disabled = true;
             chatSubmit.disabled = true;
 
-            console.log('🔄 Sending request to:', API_ENDPOINT);
-            console.log('📤 Request body:', JSON.stringify({ messages: conversation }));
-
             const response = await fetch(API_ENDPOINT, {
               method: 'POST',
               headers: {
@@ -497,15 +401,11 @@
               body: JSON.stringify({ messages: conversation })
             });
 
-            console.log('📥 Response status:', response.status);
-            console.log('📥 Response ok:', response.ok);
-
             if (!response.ok) {
-              throw new Error(`GPT-5 API returned ${response.status}: ${response.statusText}`);
+              throw new Error(`GPT-5 API returned ${response.status}`);
             }
 
             const result = await response.json();
-            console.log('✅ Response data:', result);
             const assistantReply = (result && (result.reply || result.answer || result.message))?.trim();
 
             if (assistantReply) {
@@ -519,24 +419,8 @@
               });
             }
           } catch (error) {
-            console.error('❌ Error chatting with GPT-5:', error);
-            console.error('❌ Error details:', {
-              message: error.message,
-              stack: error.stack,
-              name: error.name
-            });
-            
-            let errorMessage = 'I wasn\'t able to reach the GPT-5 service. ';
-            
-            if (isLiveServer && error.message.includes('fetch')) {
-              errorMessage += 'Make sure the Node.js server is running with: node server.js';
-            } else if (error.message.includes('ERR_CONNECTION_REFUSED')) {
-              errorMessage += 'The server appears to be offline. Please start it with: node server.js';
-            } else {
-              errorMessage += 'Please check the connection and try again.';
-            }
-            
-            setAssistantReply(errorMessage);
+            console.error('Error chatting with GPT-5:', error);
+            setAssistantReply('I wasn\'t able to reach the GPT-5 service. Please check the connection and try again.');
           } finally {
             chatInput.disabled = false;
             chatSubmit.disabled = false;
@@ -569,38 +453,6 @@
         const welcomeMessage = "Hi! I'm your Zendesk KPI copilot powered by GPT-5. Ask me anything about volume trends, SLA breaches, backlog, CSAT, or staffing and I'll synthesize the latest insights.";
         createMessageElement('assistant', welcomeMessage);
         conversation.push({ role: 'assistant', content: welcomeMessage });
-
-        // Add test button
-        const testBtn = document.createElement('button');
-        testBtn.textContent = 'Test Connection';
-        testBtn.className = 'btn btn-sm btn-secondary me-2';
-        testBtn.onclick = async function() {
-          try {
-            console.log('🧪 Testing connection to:', API_ENDPOINT);
-            const testResponse = await fetch(API_ENDPOINT, {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ messages: [{ role: 'user', content: 'test' }] })
-            });
-            console.log('📊 Test response:', testResponse.status, testResponse.ok);
-            if (testResponse.ok) {
-              const data = await testResponse.json();
-              console.log('✅ Test successful:', data);
-              alert('Connection test successful!');
-            } else {
-              console.log('❌ Test failed:', testResponse.status, testResponse.statusText);
-              alert(`Connection test failed: ${testResponse.status}`);
-            }
-          } catch (err) {
-            console.error('💥 Test error:', err);
-            alert(`Test error: ${err.message}`);
-          }
-        };
-
-        const navbar = document.querySelector('.navbar-brand');
-        if (navbar && navbar.parentNode) {
-          navbar.parentNode.appendChild(testBtn);
-        }
       });
     </script>
   </body>

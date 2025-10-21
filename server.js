@@ -1,8 +1,12 @@
+require('dotenv').config();
 const http = require('http');
 const fs = require('fs');
 const path = require('path');
+const { generateChatReply } = require('./src/services/gptResponder');
+const CallAnalyticsService = require('./src/services/CallAnalyticsService');
 
 const PORT = 3000;
+const callAnalytics = new CallAnalyticsService();
 
 // MIME types for different file extensions
 const mimeTypes = {
@@ -17,11 +21,175 @@ const mimeTypes = {
   '.ico': 'image/x-icon'
 };
 
+function sendJson(res, status, payload, extraHeaders = {}) {
+  res.writeHead(status, {
+    'Content-Type': 'application/json',
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+    'Access-Control-Allow-Methods': 'POST, OPTIONS',
+    ...extraHeaders
+  });
+  res.end(JSON.stringify(payload));
+}
+
+async function handleChatRequest(req, res) {
+  console.log(`📝 Handling chat request: ${req.method} ${req.url}`);
+  
+  if (req.method === 'OPTIONS') {
+    res.writeHead(204, {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+      'Access-Control-Allow-Methods': 'POST, OPTIONS'
+    });
+    res.end();
+    return;
+  }
+
+  if (req.method !== 'POST') {
+    console.log('❌ Method not allowed:', req.method);
+    sendJson(res, 405, { error: 'Method not allowed' });
+    return;
+  }
+
+  let body = '';
+  req.on('data', (chunk) => {
+    body += chunk.toString();
+    if (body.length > 1e6) {
+      console.log('❌ Request too large');
+      req.socket.destroy();
+    }
+  });
+
+  req.on('end', async () => {
+    try {
+      console.log('📄 Request body received, length:', body.length);
+      const payload = body ? JSON.parse(body) : {};
+      const messages = Array.isArray(payload.messages) ? payload.messages : [];
+      
+      console.log('🤖 Generating chat reply...');
+      const result = await generateChatReply(messages);
+      
+      console.log('✅ Chat reply generated, source:', result.source);
+      sendJson(res, 200, {
+        reply: result.reply,
+        source: result.source
+      });
+    } catch (error) {
+      console.error('❌ Error handling GPT-5 chat request:', error);
+      sendJson(res, 500, {
+        error: 'Failed to process GPT-5 request',
+        details: error.message
+      });
+    }
+  });
+
+  req.on('error', (error) => {
+    console.error('❌ Request error:', error);
+    sendJson(res, 400, { error: 'Bad request' });
+  });
+}
+
+// Handle call analytics requests
+async function handleCallAnalyticsRequest(req, res) {
+  try {
+    console.log('📊 Fetching 5-day call analytics...');
+    const analytics = await callAnalytics.get5DayCallAnalytics();
+    console.log('📈 Analytics data received, preparing response...');
+    console.log('📋 Analytics success:', analytics?.success);
+    console.log('📋 Analytics data keys:', analytics?.data ? Object.keys(analytics.data) : 'No data');
+    
+    console.log('📤 Sending JSON response...');
+    sendJson(res, 200, analytics);
+    console.log('✅ Response sent successfully');
+  } catch (error) {
+    console.error('❌ Error fetching call analytics:', error);
+    sendJson(res, 500, {
+      success: false,
+      error: 'Failed to fetch call analytics',
+      details: error.message
+    });
+  }
+}
+
+// Handle real-time call analytics requests
+async function handleRealTimeCallAnalyticsRequest(req, res) {
+  try {
+    console.log('🔴 Fetching real-time call analytics...');
+    const analytics = await callAnalytics.getRealTimeCallAnalytics();
+    sendJson(res, 200, analytics);
+  } catch (error) {
+    console.error('❌ Error fetching real-time analytics:', error);
+    sendJson(res, 500, {
+      success: false,
+      error: 'Failed to fetch real-time analytics',
+      details: error.message
+    });
+  }
+}
+
 const server = http.createServer((req, res) => {
   console.log(`${req.method} ${req.url}`);
+  console.log('🔍 Debug - Full URL:', req.url);
+  console.log('🔍 Debug - Starts with /api/gpt5-chat:', req.url.startsWith('/api/gpt5-chat'));
+
+  // Health check endpoint
+  if (req.url === '/health' || req.url === '/api/health') {
+    console.log('❤️ Health check request');
+    sendJson(res, 200, { 
+      status: 'healthy', 
+      timestamp: new Date().toISOString(),
+      uptime: process.uptime(),
+      mode: 'real-time'
+    });
+    return;
+  }
+
+  // Call Analytics endpoints
+  if (req.url === '/api/call-analytics' || req.url === '/api/call-analytics/5-day') {
+    console.log('📞 Call analytics request');
+    if (req.method === 'OPTIONS') {
+      res.writeHead(200, {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+        'Access-Control-Allow-Methods': 'GET, OPTIONS'
+      });
+      res.end();
+      return;
+    }
+    
+    if (req.method === 'GET') {
+      handleCallAnalyticsRequest(req, res);
+      return;
+    }
+  }
+
+  // Real-time call analytics endpoint
+  if (req.url === '/api/call-analytics/realtime') {
+    console.log('🔴 Real-time call analytics request');
+    if (req.method === 'OPTIONS') {
+      res.writeHead(200, {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers': 'Content-Type, Authorization', 
+        'Access-Control-Allow-Methods': 'GET, OPTIONS'
+      });
+      res.end();
+      return;
+    }
+    
+    if (req.method === 'GET') {
+      handleRealTimeCallAnalyticsRequest(req, res);
+      return;
+    }
+  }
+
+  if (req.url.startsWith('/api/gpt5-chat')) {
+    console.log('🎯 Routing to chat handler');
+    handleChatRequest(req, res);
+    return;
+  }
 
   // Default to index.html if requesting root
-  let filePath = req.url === '/' ? '/web/dash.html' : req.url;
+  let filePath = req.url === '/' ? '/web/index.html' : req.url;
   
   // Remove query string if present
   filePath = filePath.split('?')[0];
@@ -85,4 +253,17 @@ process.on('SIGINT', () => {
     console.log('✅ Server stopped');
     process.exit(0);
   });
+});
+
+// Handle uncaught exceptions and rejections
+process.on('uncaughtException', (error) => {
+  console.error('💥 Uncaught Exception:', error);
+  console.error('Stack:', error.stack);
+  // Don't exit, just log the error
+});
+
+process.on('unhandledRejection', (reason, promise) => {
+  console.error('💥 Unhandled Rejection at:', promise);
+  console.error('Reason:', reason);
+  // Don't exit, just log the error
 });

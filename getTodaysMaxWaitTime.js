@@ -239,4 +239,11 @@ async function main() {
   await analyzer.getMaxWaitTime();
 }
 
-main();
+module.exports = TodayMaxWaitTime;
+
+if (require.main === module) {
+  main().catch(error => {
+    console.error('❌ Script failed:', error.message);
+    process.exitCode = 1;
+  });
+}

@@ -124,6 +124,161 @@
         <div class="page-body">
           <div class="container-xl">
             <div class="row row-cards">
+              <!-- 5-Day Call Analytics Section -->
+              <div class="col-12">
+                <div class="card">
+                  <div class="card-header">
+                    <h3 class="card-title">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-phone" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4a2 2 0 0 1 -2 2a16 16 0 0 1 -15 -15a2 2 0 0 1 2 -2"/>
+                      </svg>
+                      Call Analytics - Last 5 Days
+                    </h3>
+                    <div class="card-actions">
+                      <button class="btn btn-outline-primary btn-sm" id="refresh-call-analytics">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                          <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                          <path d="M20 11a8.1 8.1 0 0 0 -15.5 -2m-.5 -4v4h4"/>
+                          <path d="M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4"/>
+                        </svg>
+                        Refresh
+                      </button>
+                    </div>
+                  </div>
+                  <div class="card-body">
+                    <!-- Call Analytics Summary Cards -->
+                    <div class="row mb-4" id="call-summary-cards">
+                      <div class="col-sm-6 col-lg-3">
+                        <div class="card card-sm">
+                          <div class="card-body">
+                            <div class="row align-items-center">
+                              <div class="col-auto">
+                                <span class="bg-blue text-white avatar">
+                                  <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                    <path d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4a2 2 0 0 1 -2 2a16 16 0 0 1 -15 -15a2 2 0 0 1 2 -2"/>
+                                  </svg>
+                                </span>
+                              </div>
+                              <div class="col">
+                                <div class="font-weight-medium" id="total-calls-5day">
+                                  Loading...
+                                </div>
+                                <div class="text-secondary">
+                                  Total Calls (5 days)
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-sm-6 col-lg-3">
+                        <div class="card card-sm">
+                          <div class="card-body">
+                            <div class="row align-items-center">
+                              <div class="col-auto">
+                                <span class="bg-green text-white avatar">
+                                  <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                    <path d="M5 12l5 5l10 -10"/>
+                                  </svg>
+                                </span>
+                              </div>
+                              <div class="col">
+                                <div class="font-weight-medium" id="answered-calls-5day">
+                                  Loading...
+                                </div>
+                                <div class="text-secondary">
+                                  Answered Calls
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-sm-6 col-lg-3">
+                        <div class="card card-sm">
+                          <div class="card-body">
+                            <div class="row align-items-center">
+                              <div class="col-auto">
+                                <span class="bg-red text-white avatar">
+                                  <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                    <path d="M18 6l-12 12"/>
+                                    <path d="M6 6l12 12"/>
+                                  </svg>
+                                </span>
+                              </div>
+                              <div class="col">
+                                <div class="font-weight-medium" id="unanswered-calls-5day">
+                                  Loading...
+                                </div>
+                                <div class="text-secondary">
+                                  Unanswered Calls
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-sm-6 col-lg-3">
+                        <div class="card card-sm">
+                          <div class="card-body">
+                            <div class="row align-items-center">
+                              <div class="col-auto">
+                                <span class="bg-purple text-white avatar">
+                                  <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                    <path d="M7 10l5 -6l5 6"/>
+                                    <path d="M21 10l-2 8a2 2.1 0 0 1 -2 2h-10a2 2.1 0 0 1 -2 -2l-2 -8z"/>
+                                    <path d="M12 15m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/>
+                                  </svg>
+                                </span>
+                              </div>
+                              <div class="col">
+                                <div class="font-weight-medium" id="answer-rate-5day">
+                                  Loading...
+                                </div>
+                                <div class="text-secondary">
+                                  Answer Rate
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <!-- Call Analytics Chart -->
+                    <div id="chart-call-analytics-5day" class="position-relative" style="height: 400px;"></div>
+                    
+                    <!-- Call Analytics Table -->
+                    <div class="mt-4">
+                      <div class="table-responsive">
+                        <table class="table table-vcenter">
+                          <thead>
+                            <tr>
+                              <th>Date</th>
+                              <th>Day</th>
+                              <th>Total Calls</th>
+                              <th>Answered</th>
+                              <th>Unanswered</th>
+                              <th>Answer Rate</th>
+                            </tr>
+                          </thead>
+                          <tbody id="call-analytics-table">
+                            <tr>
+                              <td colspan="6" class="text-center text-secondary">Loading call analytics...</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
               <!-- Voice Calls Chart -->
               <div class="col-12">
                 <div class="card">
@@ -530,6 +685,205 @@
             '<div class="alert alert-danger">Error loading chart data. Please ensure execView.json exists in the data folder.</div>';
         }
       });
+
+      // Call Analytics Functions
+      let callAnalyticsChart = null;
+
+      async function loadCallAnalytics() {
+        try {
+          console.log('Loading call analytics...');
+          
+          // Show loading state
+          document.getElementById('total-calls-5day').textContent = 'Loading...';
+          document.getElementById('answered-calls-5day').textContent = 'Loading...';
+          document.getElementById('unanswered-calls-5day').textContent = 'Loading...';
+          document.getElementById('answer-rate-5day').textContent = 'Loading...';
+          
+          const tableBody = document.getElementById('call-analytics-table');
+          tableBody.innerHTML = '<tr><td colspan="6" class="text-center text-secondary">Loading call analytics...</td></tr>';
+          
+          // Fetch call analytics data
+          const response = await fetch('http://localhost:3000/api/call-analytics/5-day');
+          const result = await response.json();
+          
+          if (!result.success) {
+            throw new Error(result.error || 'Failed to load call analytics');
+          }
+          
+          const data = result.data;
+          
+          // Update summary cards
+          document.getElementById('total-calls-5day').textContent = data.summary.total_calls.toLocaleString();
+          document.getElementById('answered-calls-5day').textContent = data.summary.answered_calls.toLocaleString();
+          document.getElementById('unanswered-calls-5day').textContent = data.summary.unanswered_calls.toLocaleString();
+          document.getElementById('answer-rate-5day').textContent = data.summary.overall_answer_rate + '%';
+          
+          // Update table
+          updateCallAnalyticsTable(data.daily_breakdown);
+          
+          // Update chart
+          updateCallAnalyticsChart(data.chart_data);
+          
+          console.log('Call analytics loaded successfully');
+          
+        } catch (error) {
+          console.error('Error loading call analytics:', error);
+          
+          // Show error state
+          document.getElementById('total-calls-5day').textContent = 'Error';
+          document.getElementById('answered-calls-5day').textContent = 'Error';
+          document.getElementById('unanswered-calls-5day').textContent = 'Error';
+          document.getElementById('answer-rate-5day').textContent = 'Error';
+          
+          const tableBody = document.getElementById('call-analytics-table');
+          tableBody.innerHTML = `<tr><td colspan="6" class="text-center text-danger">Error loading data: ${error.message}</td></tr>`;
+          
+          // Show error in chart
+          document.getElementById('chart-call-analytics-5day').innerHTML = 
+            `<div class="alert alert-danger">Error loading call analytics: ${error.message}</div>`;
+        }
+      }
+
+      function updateCallAnalyticsTable(dailyData) {
+        const tableBody = document.getElementById('call-analytics-table');
+        tableBody.innerHTML = '';
+        
+        dailyData.forEach(day => {
+          const row = document.createElement('tr');
+          row.innerHTML = `
+            <td><strong>${day.date}</strong></td>
+            <td><span class="badge bg-blue-lt">${day.day_name}</span></td>
+            <td class="text-end">${day.total_calls.toLocaleString()}</td>
+            <td class="text-end text-green">${day.answered_calls.toLocaleString()}</td>
+            <td class="text-end text-red">${day.unanswered_calls.toLocaleString()}</td>
+            <td class="text-end">
+              <span class="badge ${day.answer_rate >= 80 ? 'bg-green' : day.answer_rate >= 60 ? 'bg-yellow' : 'bg-red'}-lt">
+                ${day.answer_rate}%
+              </span>
+            </td>
+          `;
+          tableBody.appendChild(row);
+        });
+      }
+
+      function updateCallAnalyticsChart(chartData) {
+        // Destroy existing chart if it exists
+        if (callAnalyticsChart) {
+          callAnalyticsChart.destroy();
+        }
+        
+        const chartElement = document.getElementById('chart-call-analytics-5day');
+        
+        callAnalyticsChart = new ApexCharts(chartElement, {
+          chart: {
+            type: 'bar',
+            height: 400,
+            toolbar: {
+              show: true,
+              tools: {
+                download: true,
+                selection: false,
+                zoom: false,
+                zoomin: false,
+                zoomout: false,
+                pan: false,
+                reset: false
+              }
+            },
+            animations: {
+              enabled: true,
+              easing: 'easeinout',
+              speed: 800
+            }
+          },
+          series: chartData.series,
+          xaxis: {
+            categories: chartData.categories,
+            title: {
+              text: 'Days'
+            },
+            labels: {
+              style: {
+                fontSize: '12px'
+              }
+            }
+          },
+          yaxis: {
+            title: {
+              text: 'Number of Calls'
+            },
+            labels: {
+              style: {
+                fontSize: '12px'
+              }
+            }
+          },
+          plotOptions: {
+            bar: {
+              horizontal: false,
+              columnWidth: '55%',
+              endingShape: 'rounded'
+            }
+          },
+          dataLabels: {
+            enabled: false
+          },
+          stroke: {
+            show: true,
+            width: 2,
+            colors: ['transparent']
+          },
+          colors: ['#00d4aa', '#ff6b6b', '#4f46e5'],
+          fill: {
+            opacity: 0.8
+          },
+          tooltip: {
+            y: {
+              formatter: function (val) {
+                return val + " calls"
+              }
+            }
+          },
+          legend: {
+            position: 'top',
+            horizontalAlign: 'left',
+            offsetY: 0
+          },
+          grid: {
+            borderColor: '#e7e7e7',
+            row: {
+              colors: ['#f3f3f3', 'transparent'],
+              opacity: 0.5
+            }
+          }
+        });
+        
+        callAnalyticsChart.render();
+      }
+
+      // Load call analytics on page load
+      loadCallAnalytics();
+
+      // Add refresh button functionality
+      document.getElementById('refresh-call-analytics').addEventListener('click', function() {
+        this.disabled = true;
+        this.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status"></span>Refreshing...';
+        
+        loadCallAnalytics().finally(() => {
+          this.disabled = false;
+          this.innerHTML = `
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+              <path d="M20 11a8.1 8.1 0 0 0 -15.5 -2m-.5 -4v4h4"/>
+              <path d="M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4"/>
+            </svg>
+            Refresh
+          `;
+        });
+      });
+
+      // Auto-refresh every 5 minutes
+      setInterval(loadCallAnalytics, 5 * 60 * 1000);
     </script>
     <!-- END PAGE SCRIPTS -->
   </body>

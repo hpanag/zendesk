@@ -250,6 +250,12 @@ async function getTicketDetails(ticketId) {
   }
 }
 
-// Get ticket ID from command line or use default
-const ticketId = process.argv[2] || '295014';
-getTicketDetails(ticketId);
+module.exports = getTicketDetails;
+
+if (require.main === module) {
+  const ticketId = process.argv[2] || '295014';
+  getTicketDetails(ticketId).catch(error => {
+    console.error('❌ Script failed:', error.message);
+    process.exitCode = 1;
+  });
+}
