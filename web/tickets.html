@@ -113,8 +113,8 @@
           <div class="container-xl">
             <div class="row g-2 align-items-center">
               <div class="col">
-                <h2 class="page-title">Ticket Status Trends</h2>
-                <div class="text-secondary mt-1">Open vs Closed Tickets - Last 7 Days</div>
+                <h2 class="page-title">Ticket Analytics Dashboard</h2>
+                <div class="text-secondary mt-1">Ticket Status Breakdown - Last 5 Days</div>
               </div>
             </div>
           </div>
@@ -124,43 +124,215 @@
         <div class="page-body">
           <div class="container-xl">
             <div class="row row-cards">
-              <!-- Chart Card -->
+              <!-- 5-Day Ticket Analytics Section -->
               <div class="col-12">
                 <div class="card">
                   <div class="card-header">
-                    <h3 class="card-title">Ticket Activity Overview</h3>
-                    <div class="card-subtitle">Total active tickets (line) vs New/Closed tickets (bars)</div>
+                    <h3 class="card-title">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-ticket" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M15 5l0 2"/>
+                        <path d="M15 11l0 2"/>
+                        <path d="M15 17l0 2"/>
+                        <path d="M5 5h14a2 2 0 0 1 2 2v3a2 2 0 0 0 0 4v3a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-3a2 2 0 0 0 0 -4v-3a2 2 0 0 1 2 -2"/>
+                      </svg>
+                      Ticket Analytics - Last 5 Days
+                    </h3>
+                    <div class="card-actions">
+                      <button class="btn btn-outline-primary btn-sm" id="refresh-ticket-analytics">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                          <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                          <path d="M20 11a8.1 8.1 0 0 0 -15.5 -2m-.5 -4v4h4"/>
+                          <path d="M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4"/>
+                        </svg>
+                        Refresh
+                      </button>
+                    </div>
                   </div>
                   <div class="card-body">
-                    <div id="chart-ticket-overview" class="position-relative"></div>
-                  </div>
-                </div>
-              </div>
-              
-              <!-- Table Card -->
-              <div class="col-12">
-                <div class="card">
-                  <div class="card-header">
-                    <h3 class="card-title">Daily Ticket Status Summary</h3>
-                  </div>
-                  <div class="table-responsive">
-                    <table class="table table-vcenter card-table table-striped" id="ticket-status-table">
-                      <thead>
-                        <tr>
-                          <th>Date</th>
-                          <th class="text-end">New</th>
-                          <th class="text-end">Open</th>
-                          <th class="text-end">Pending</th>
-                          <th class="text-end">Hold</th>
-                          <th class="text-end">Solved</th>
-                          <th class="text-end">Closed</th>
-                          <th class="text-end">Total</th>
-                        </tr>
-                      </thead>
-                      <tbody id="ticket-table-body">
-                        <!-- Table rows will be populated by JavaScript -->
-                      </tbody>
-                    </table>
+                    <!-- Ticket Analytics Summary Cards -->
+                    <div class="row mb-4" id="ticket-summary-cards">
+                      <div class="col-sm-6 col-lg-2">
+                        <div class="card card-sm">
+                          <div class="card-body">
+                            <div class="row align-items-center">
+                              <div class="col-auto">
+                                <span class="bg-blue text-white avatar">
+                                  <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                    <path d="M15 5l0 2"/>
+                                    <path d="M15 11l0 2"/>
+                                    <path d="M15 17l0 2"/>
+                                    <path d="M5 5h14a2 2 0 0 1 2 2v3a2 2 0 0 0 0 4v3a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-3a2 2 0 0 0 0 -4v-3a2 2 0 0 1 2 -2"/>
+                                  </svg>
+                                </span>
+                              </div>
+                              <div class="col">
+                                <div class="font-weight-medium" id="total-tickets-5day">
+                                  Loading...
+                                </div>
+                                <div class="text-secondary">
+                                  Total Tickets
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-sm-6 col-lg-2">
+                        <div class="card card-sm">
+                          <div class="card-body">
+                            <div class="row align-items-center">
+                              <div class="col-auto">
+                                <span class="bg-cyan text-white avatar">
+                                  <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                    <path d="M12 5l0 14"/>
+                                    <path d="M5 12l14 0"/>
+                                  </svg>
+                                </span>
+                              </div>
+                              <div class="col">
+                                <div class="font-weight-medium" id="new-tickets-5day">
+                                  Loading...
+                                </div>
+                                <div class="text-secondary">
+                                  Created
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-sm-6 col-lg-2">
+                        <div class="card card-sm">
+                          <div class="card-body">
+                            <div class="row align-items-center">
+                              <div class="col-auto">
+                                <span class="bg-blue text-white avatar">
+                                  <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                    <path d="M9 12l2 2l4 -4"/>
+                                    <path d="M21 12c0 4.97 -4.03 9 -9 9s-9 -4.03 -9 -9s4.03 -9 9 -9s9 4.03 9 9z"/>
+                                  </svg>
+                                </span>
+                              </div>
+                              <div class="col">
+                                <div class="font-weight-medium" id="open-tickets-5day">
+                                  Loading...
+                                </div>
+                                <div class="text-secondary">
+                                  Reopened
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-sm-6 col-lg-2">
+                        <div class="card card-sm">
+                          <div class="card-body">
+                            <div class="row align-items-center">
+                              <div class="col-auto">
+                                <span class="bg-yellow text-white avatar">
+                                  <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                    <path d="M12 8v4l3 3"/>
+                                    <path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0"/>
+                                  </svg>
+                                </span>
+                              </div>
+                              <div class="col">
+                                <div class="font-weight-medium" id="pending-tickets-5day">
+                                  Loading...
+                                </div>
+                                <div class="text-secondary">
+                                  Pending
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-sm-6 col-lg-2">
+                        <div class="card card-sm">
+                          <div class="card-body">
+                            <div class="row align-items-center">
+                              <div class="col-auto">
+                                <span class="bg-green text-white avatar">
+                                  <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                    <path d="M5 12l5 5l10 -10"/>
+                                  </svg>
+                                </span>
+                              </div>
+                              <div class="col">
+                                <div class="font-weight-medium" id="solved-tickets-5day">
+                                  Loading...
+                                </div>
+                                <div class="text-secondary">
+                                  Solved
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-sm-6 col-lg-2">
+                        <div class="card card-sm">
+                          <div class="card-body">
+                            <div class="row align-items-center">
+                              <div class="col-auto">
+                                <span class="bg-gray text-white avatar">
+                                  <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                    <path d="M18 6l-12 12"/>
+                                    <path d="M6 6l12 12"/>
+                                  </svg>
+                                </span>
+                              </div>
+                              <div class="col">
+                                <div class="font-weight-medium" id="closed-tickets-5day">
+                                  Loading...
+                                </div>
+                                <div class="text-secondary">
+                                  Closed
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <!-- Ticket Analytics Chart -->
+                    <div id="chart-ticket-analytics-5day" class="position-relative" style="height: 400px;"></div>
+                    
+                    <!-- Ticket Analytics Table -->
+                    <div class="mt-4">
+                      <div class="table-responsive">
+                        <table class="table table-vcenter">
+                          <thead>
+                            <tr>
+                              <th>Date</th>
+                              <th>Day</th>
+                              <th class="text-end">Created</th>
+                              <th class="text-end">Reopened</th>
+                              <th class="text-end">→ Pending</th>
+                              <th class="text-end">→ Hold</th>
+                              <th class="text-end">Solved</th>
+                              <th class="text-end">Closed</th>
+                              <th class="text-end">Activity</th>
+                            </tr>
+                          </thead>
+                          <tbody id="ticket-analytics-table">
+                            <tr>
+                              <td colspan="9" class="text-center text-secondary">Loading ticket analytics...</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -196,201 +368,306 @@
     <!-- END DEMO SCRIPTS -->
     <!-- BEGIN PAGE SCRIPTS -->
     <script>
-      document.addEventListener("DOMContentLoaded", async function () {
-        try {
-          // Load data from execView.json
-          const response = await fetch('../data/execView.json');
-          const data = await response.json();
-          
-          // Helper function to filter last N weekdays
-          function getLastNWeekdays(dataArray, n) {
-            // Filter only weekdays
-            const weekdayData = dataArray.filter(item => {
-              const date = new Date(item.date);
-              const dayOfWeek = date.getDay();
-              return dayOfWeek >= 1 && dayOfWeek <= 5; // Monday-Friday
-            });
-            
-            // Return last N entries
-            return weekdayData.slice(-n);
+      // Ticket Dashboard State Management
+      const TicketDashboard = {
+        ticketAnalyticsChart: null,
+        isLoading: false,
+
+        // Initialize dashboard when DOM is ready
+        async init() {
+          try {
+            await this.loadTicketAnalytics();
+            this.setupEventListeners();
+            console.log('✅ Ticket Dashboard initialized successfully');
+          } catch (error) {
+            console.error('❌ Ticket Dashboard initialization failed:', error);
+            this.showError('Failed to initialize ticket dashboard');
           }
-          
-          // Extract ticket trend data and filter to last 10 weekdays
-          const allTicketData = data.trends.tickets.byStatus;
-          
-          if (!allTicketData || allTicketData.length === 0) {
-            throw new Error('No ticket status data available');
+        },
+
+        // Setup event listeners (only called once)
+        setupEventListeners() {
+          // Refresh button
+          const refreshBtn = document.getElementById('refresh-ticket-analytics');
+          if (refreshBtn) {
+            refreshBtn.addEventListener('click', () => this.handleRefresh());
           }
+        },
+
+        // Handle refresh button click
+        async handleRefresh() {
+          if (this.isLoading) return;
           
-          const ticketData = getLastNWeekdays(allTicketData, 10);
+          const refreshBtn = document.getElementById('refresh-ticket-analytics');
+          const originalHTML = refreshBtn.innerHTML;
           
-          // Sort by date (oldest first for charts)
-          const sortedData = [...ticketData].sort((a, b) => new Date(a.date) - new Date(b.date));
-          
-          // Prepare data for chart
-          const categories = sortedData.map(day => {
-            const date = new Date(day.date);
-            return date.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
-          });
-          
-          // Calculate total active tickets (new + open + pending + solved)
-          const totalActiveTickets = sortedData.map(day => 
-            day.new + day.open + day.pending + day.solved
-          );
-          
-          // New and Closed for bar chart
-          const newTickets = sortedData.map(day => day.new);
-          const closedTickets = sortedData.map(day => day.closed);
-          
-          // Create mixed chart
-          window.ApexCharts &&
-            new ApexCharts(document.getElementById("chart-ticket-overview"), {
-              chart: {
-                type: "line",
-                fontFamily: "inherit",
-                height: 400,
-                parentHeightOffset: 0,
-                toolbar: {
-                  show: false,
-                },
-                animations: {
-                  enabled: true,
-                },
-              },
-              stroke: {
-                width: [3, 0, 0],
-                curve: 'smooth',
-                dashArray: [0, 0, 0]
-              },
-              plotOptions: {
-                bar: {
-                  columnWidth: "50%",
-                },
-              },
-              dataLabels: {
-                enabled: false,
-              },
-              series: [
-                {
-                  name: "Total Active Tickets",
-                  type: "line",
-                  data: totalActiveTickets,
-                },
-                {
-                  name: "New Tickets",
-                  type: "bar",
-                  data: newTickets,
-                },
-                {
-                  name: "Closed Tickets",
-                  type: "bar",
-                  data: closedTickets,
-                },
-              ],
-              tooltip: {
-                theme: "dark",
-                shared: true,
-                intersect: false,
-                y: {
-                  formatter: function(value) {
-                    return value + " tickets";
-                  }
-                }
-              },
-              grid: {
-                padding: {
-                  top: -20,
-                  right: 0,
-                  left: -4,
-                  bottom: -4,
-                },
-                strokeDashArray: 4,
-              },
-              xaxis: {
-                labels: {
-                  padding: 0,
-                  style: {
-                    fontSize: '12px',
-                  },
-                },
-                tooltip: {
-                  enabled: false,
-                },
-                axisBorder: {
-                  show: false,
-                },
-                categories: categories,
-              },
-              yaxis: {
-                labels: {
-                  padding: 4,
-                  style: {
-                    fontSize: '12px',
-                  },
-                },
-                title: {
-                  text: 'Number of Tickets',
-                  style: {
-                    fontSize: '13px',
-                    fontWeight: 500,
-                  },
-                },
-              },
-              colors: ["#206bc4", "#d63939", "#2fb344"],
-              legend: {
-                show: true,
-                position: "top",
-                horizontalAlign: "left",
-                offsetY: 0,
-                markers: {
-                  width: 10,
-                  height: 10,
-                  radius: 100,
-                },
-                itemMargin: {
-                  horizontal: 12,
-                  vertical: 8,
-                },
-              },
-            }).render();
-          
-          // Populate table
-          const tableBody = document.getElementById('ticket-table-body');
-          
-          // Sort by date (newest first for table)
-          const tableSortedData = [...ticketData].sort((a, b) => new Date(b.date) - new Date(a.date));
-          
-          tableSortedData.forEach(day => {
-            const date = new Date(day.date);
-            const formattedDate = date.toLocaleDateString('en-US', { 
-              weekday: 'short',
-              month: 'short', 
-              day: 'numeric',
-              year: 'numeric'
-            });
+          try {
+            refreshBtn.disabled = true;
+            refreshBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status"></span>Refreshing...';
             
-            const total = day.new + day.open + day.pending + day.hold + day.solved + day.closed;
+            await this.loadTicketAnalytics();
             
+          } finally {
+            refreshBtn.disabled = false;
+            refreshBtn.innerHTML = originalHTML;
+          }
+        },
+
+        // Load ticket analytics data (main API call)
+        async loadTicketAnalytics() {
+          if (this.isLoading) return;
+          this.isLoading = true;
+
+          try {
+            console.log('🎫 Loading ticket analytics...');
+            
+            // Show loading state
+            this.showLoadingState();
+            
+            // Single API call to get all data
+            const response = await fetch('/api/ticket-analytics/5-day');
+            
+            if (!response.ok) {
+              throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+            }
+            
+            const result = await response.json();
+            
+            if (!result.success) {
+              throw new Error(result.error || 'Failed to load ticket analytics');
+            }
+            
+            // Update all UI components with the data
+            this.updateSummaryCards(result.data.summary);
+            this.updateTable(result.data.daily_breakdown);
+            this.updateChart(result.data.chart_data);
+            
+            console.log('✅ Ticket analytics loaded successfully');
+            
+          } catch (error) {
+            console.error('❌ Error loading ticket analytics:', error);
+            this.showErrorState(error.message);
+          } finally {
+            this.isLoading = false;
+          }
+        },
+
+        // Show loading state in all UI components
+        showLoadingState() {
+          const loadingText = 'Loading...';
+          
+          // Update summary cards
+          document.getElementById('total-tickets-5day').textContent = loadingText;
+          document.getElementById('new-tickets-5day').textContent = loadingText;
+          document.getElementById('open-tickets-5day').textContent = loadingText;
+          document.getElementById('pending-tickets-5day').textContent = loadingText;
+          document.getElementById('solved-tickets-5day').textContent = loadingText;
+          document.getElementById('closed-tickets-5day').textContent = loadingText;
+          
+          // Update table
+          const tableBody = document.getElementById('ticket-analytics-table');
+          tableBody.innerHTML = '<tr><td colspan="9" class="text-center text-secondary">Loading ticket analytics...</td></tr>';
+        },
+
+        // Show error state in all UI components
+        showErrorState(errorMessage) {
+          const errorText = 'Error';
+          
+          // Update summary cards
+          document.getElementById('total-tickets-5day').textContent = errorText;
+          document.getElementById('new-tickets-5day').textContent = errorText;
+          document.getElementById('open-tickets-5day').textContent = errorText;
+          document.getElementById('pending-tickets-5day').textContent = errorText;
+          document.getElementById('solved-tickets-5day').textContent = errorText;
+          document.getElementById('closed-tickets-5day').textContent = errorText;
+          
+          // Update table
+          const tableBody = document.getElementById('ticket-analytics-table');
+          tableBody.innerHTML = `<tr><td colspan="9" class="text-center text-danger">Error: ${errorMessage}</td></tr>`;
+          
+          // Update chart
+          document.getElementById('chart-ticket-analytics-5day').innerHTML = 
+            `<div class="alert alert-danger">Error loading ticket analytics: ${errorMessage}</div>`;
+        },
+
+        // Update summary cards with data
+        updateSummaryCards(summary) {
+          document.getElementById('total-tickets-5day').textContent = summary.total_tickets.toLocaleString();
+          document.getElementById('new-tickets-5day').textContent = (summary.new || 0).toLocaleString();
+          document.getElementById('open-tickets-5day').textContent = (summary.open || 0).toLocaleString();
+          document.getElementById('pending-tickets-5day').textContent = (summary.pending || 0).toLocaleString();
+          document.getElementById('solved-tickets-5day').textContent = (summary.solved || 0).toLocaleString();
+          document.getElementById('closed-tickets-5day').textContent = (summary.closed || 0).toLocaleString();
+        },
+
+        // Update analytics table with daily breakdown
+        updateTable(dailyData) {
+          const tableBody = document.getElementById('ticket-analytics-table');
+          tableBody.innerHTML = '';
+          
+          // Show newest data first
+          const reversedData = [...dailyData].reverse();
+          
+          reversedData.forEach(day => {
             const row = document.createElement('tr');
             row.innerHTML = `
-              <td><strong>${formattedDate}</strong></td>
-              <td class="text-end">${day.new.toLocaleString()}</td>
-              <td class="text-end">${day.open.toLocaleString()}</td>
-              <td class="text-end">${day.pending.toLocaleString()}</td>
-              <td class="text-end">${day.hold.toLocaleString()}</td>
-              <td class="text-end">${day.solved.toLocaleString()}</td>
-              <td class="text-end">${day.closed.toLocaleString()}</td>
-              <td class="text-end"><strong>${total.toLocaleString()}</strong></td>
+              <td><strong>${day.date}</strong></td>
+              <td><span class="badge bg-blue-lt">${day.day_name}</span></td>
+              <td class="text-end text-cyan" title="New tickets created this day">${(day.new || 0).toLocaleString()}</td>
+              <td class="text-end text-blue" title="Tickets reopened this day">${(day.open || 0).toLocaleString()}</td>
+              <td class="text-end text-yellow" title="Tickets moved to pending this day">${(day.pending || 0).toLocaleString()}</td>
+              <td class="text-end text-orange" title="Tickets put on hold this day">${(day.hold || 0).toLocaleString()}</td>
+              <td class="text-end text-green" title="Tickets solved this day">${(day.solved || 0).toLocaleString()}</td>
+              <td class="text-end text-gray" title="Tickets closed this day">${(day.closed || 0).toLocaleString()}</td>
+              <td class="text-end"><strong title="Total daily activity">${day.total_tickets.toLocaleString()}</strong></td>
             `;
-            
             tableBody.appendChild(row);
           });
+        },
+
+        // Update ticket analytics chart
+        updateChart(chartData) {
+          // Destroy existing chart if it exists
+          if (this.ticketAnalyticsChart) {
+            this.ticketAnalyticsChart.destroy();
+            this.ticketAnalyticsChart = null;
+          }
           
-        } catch (error) {
-          console.error('Error loading ticket data:', error);
-          document.getElementById('ticket-table-body').innerHTML = 
-            '<tr><td colspan="8" class="text-center"><div class="alert alert-danger">Error loading ticket data. Please ensure execView.json exists and has been generated with the latest script.</div></td></tr>';
+          const chartElement = document.getElementById('chart-ticket-analytics-5day');
+          
+          this.ticketAnalyticsChart = new ApexCharts(chartElement, {
+            chart: {
+              type: 'bar',
+              height: 400,
+              stacked: true,
+              fontFamily: 'inherit',
+              toolbar: {
+                show: true,
+                tools: {
+                  download: true,
+                  selection: false,
+                  zoom: false,
+                  zoomin: false,
+                  zoomout: false,
+                  pan: false,
+                  reset: false
+                }
+              },
+              animations: {
+                enabled: true,
+                easing: 'easeinout',
+                speed: 800
+              }
+            },
+            series: [
+              {
+                name: 'Created',
+                data: chartData.series.find(s => s.name === 'New')?.data || []
+              },
+              {
+                name: 'Reopened',
+                data: chartData.series.find(s => s.name === 'Open')?.data || []
+              },
+              {
+                name: '→ Pending',
+                data: chartData.series.find(s => s.name === 'Pending')?.data || []
+              },
+              {
+                name: '→ Hold',
+                data: chartData.series.find(s => s.name === 'Hold')?.data || []
+              },
+              {
+                name: 'Solved',
+                data: chartData.series.find(s => s.name === 'Solved')?.data || []
+              },
+              {
+                name: 'Closed',
+                data: chartData.series.find(s => s.name === 'Closed')?.data || []
+              }
+            ],
+            xaxis: {
+              categories: chartData.categories,
+              title: {
+                text: 'Days',
+                style: {
+                  fontSize: '14px',
+                  fontWeight: 500
+                }
+              },
+              labels: {
+                style: {
+                  fontSize: '12px'
+                }
+              }
+            },
+            yaxis: {
+              title: {
+                text: 'Number of Tickets',
+                style: {
+                  fontSize: '14px',
+                  fontWeight: 500
+                }
+              },
+              labels: {
+                style: {
+                  fontSize: '12px'
+                }
+              }
+            },
+            plotOptions: {
+              bar: {
+                horizontal: false,
+                columnWidth: '55%',
+                endingShape: 'rounded'
+              }
+            },
+            dataLabels: {
+              enabled: false
+            },
+            stroke: {
+              show: true,
+              width: 2,
+              colors: ['transparent']
+            },
+            colors: ['#17a2b8', '#007bff', '#ffc107', '#fd7e14', '#28a745', '#6c757d'],
+            fill: {
+              opacity: 0.8
+            },
+            tooltip: {
+              y: {
+                formatter: function (val) {
+                  return val + " tickets"
+                }
+              }
+            },
+            legend: {
+              position: 'top',
+              horizontalAlign: 'left',
+              offsetY: 0,
+              fontSize: '13px'
+            },
+            grid: {
+              borderColor: '#e7e7e7',
+              row: {
+                colors: ['#f3f3f3', 'transparent'],
+                opacity: 0.5
+              }
+            }
+          });
+          
+          this.ticketAnalyticsChart.render();
+        },
+
+        // Generic error display
+        showError(message) {
+          console.error('Ticket Dashboard Error:', message);
+          // Could show a toast notification here in the future
         }
+      };
+
+      // Initialize dashboard when DOM is ready
+      document.addEventListener("DOMContentLoaded", () => {
+        TicketDashboard.init();
       });
     </script>
     <!-- END PAGE SCRIPTS -->

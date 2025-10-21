@@ -1,0 +1,398 @@
+<!doctype html>
+<!--
+* Tabler - Premium and Open Source dashboard template with responsive and high quality UI.
+* @version 1.3.0
+* @link https://tabler.io
+* Copyright 2018-2025 The Tabler Authors
+* Copyright 2018-2025 codecalm.net Paweł Kuna
+* Licensed under MIT (https://github.com/tabler/tabler/blob/master/LICENSE)
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Ticket Status Dashboard - Zendesk</title>
+    <!-- BEGIN PAGE LEVEL STYLES -->
+    <!-- END PAGE LEVEL STYLES -->
+    <!-- BEGIN GLOBAL MANDATORY STYLES -->
+    <link href="./original/dist/css/tabler.css?1747674014" rel="stylesheet" />
+    <!-- END GLOBAL MANDATORY STYLES -->
+    <!-- BEGIN PLUGINS STYLES -->
+    <link href="./original/dist/css/tabler-flags.css?1747674014" rel="stylesheet" />
+    <link href="./original/dist/css/tabler-socials.css?1747674014" rel="stylesheet" />
+    <link href="./original/dist/css/tabler-payments.css?1747674014" rel="stylesheet" />
+    <link href="./original/dist/css/tabler-vendors.css?1747674014" rel="stylesheet" />
+    <link href="./original/dist/css/tabler-marketing.css?1747674014" rel="stylesheet" />
+    <link href="./original/dist/css/tabler-themes.css?1747674014" rel="stylesheet" />
+    <!-- END PLUGINS STYLES -->
+    <!-- BEGIN DEMO STYLES -->
+    <link href="./original/preview/css/demo.css?1747674014" rel="stylesheet" />
+    <!-- END DEMO STYLES -->
+    <!-- BEGIN CUSTOM FONT -->
+    <style>
+      @import url("https://rsms.me/inter/inter.css");
+    </style>
+    <!-- END CUSTOM FONT -->
+  </head>
+  <body>
+    <!-- BEGIN GLOBAL THEME SCRIPT -->
+    <script src="./original/dist/js/tabler-theme.min.js?1747674014"></script>
+    <!-- END GLOBAL THEME SCRIPT -->
+    <div class="page">
+      <!-- BEGIN NAVBAR  -->
+      <header class="navbar navbar-expand-md d-print-none">
+        <div class="container-xl">
+          <!-- BEGIN NAVBAR TOGGLER -->
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbar-menu"
+            aria-controls="navbar-menu"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <!-- END NAVBAR TOGGLER -->
+          <!-- BEGIN NAVBAR LOGO -->
+          <div class="navbar-brand navbar-brand-autodark d-none-navbar-horizontal pe-0 pe-md-3">
+            <a href="." aria-label="Zendesk Dashboard">
+              <h2 class="m-0">Zendesk Dashboard</h2>
+            </a>
+          </div>
+          <!-- END NAVBAR LOGO -->
+          <div class="navbar-nav flex-row order-md-last">
+            <div class="d-none d-md-flex">
+              <div class="nav-item">
+                <a href="?theme=dark" class="nav-link px-0 hide-theme-dark" title="Enable dark mode" data-bs-toggle="tooltip" data-bs-placement="bottom">
+                  <!-- Download SVG icon from http://tabler.io/icons/icon/moon -->
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="icon icon-1"
+                  >
+                    <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+                  </svg>
+                </a>
+                <a href="?theme=light" class="nav-link px-0 hide-theme-light" title="Enable light mode" data-bs-toggle="tooltip" data-bs-placement="bottom">
+                  <!-- Download SVG icon from http://tabler.io/icons/icon/sun -->
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="icon icon-1"
+                  >
+                    <path d="M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" />
+                    <path d="M3 12h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7" />
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+      <!-- END NAVBAR  -->
+      <div class="page-wrapper">
+        <!-- BEGIN PAGE HEADER -->
+        <div class="page-header d-print-none" aria-label="Page header">
+          <div class="container-xl">
+            <div class="row g-2 align-items-center">
+              <div class="col">
+                <h2 class="page-title">Ticket Analytics Dashboard</h2>
+                <div class="text-secondary mt-1">Ticket Status Breakdown - Last 5 Days</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- END PAGE HEADER -->
+        <!-- BEGIN PAGE BODY -->
+        <div class="page-body">
+          <div class="container-xl">
+            <div class="row row-cards">
+              <!-- Chart Card -->
+              <div class="col-12">
+                <div class="card">
+                  <div class="card-header">
+                    <h3 class="card-title">Ticket Activity Overview</h3>
+                    <div class="card-subtitle">Total active tickets (line) vs New/Closed tickets (bars)</div>
+                  </div>
+                  <div class="card-body">
+                    <div id="chart-ticket-overview" class="position-relative"></div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Table Card -->
+              <div class="col-12">
+                <div class="card">
+                  <div class="card-header">
+                    <h3 class="card-title">Daily Ticket Status Summary</h3>
+                  </div>
+                  <div class="table-responsive">
+                    <table class="table table-vcenter card-table table-striped" id="ticket-status-table">
+                      <thead>
+                        <tr>
+                          <th>Date</th>
+                          <th class="text-end">New</th>
+                          <th class="text-end">Open</th>
+                          <th class="text-end">Pending</th>
+                          <th class="text-end">Hold</th>
+                          <th class="text-end">Solved</th>
+                          <th class="text-end">Closed</th>
+                          <th class="text-end">Total</th>
+                        </tr>
+                      </thead>
+                      <tbody id="ticket-table-body">
+                        <!-- Table rows will be populated by JavaScript -->
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- END PAGE BODY -->
+        <!--  BEGIN FOOTER  -->
+        <footer class="footer footer-transparent d-print-none">
+          <div class="container-xl">
+            <div class="row text-center align-items-center flex-row-reverse">
+              <div class="col-12 col-lg-auto mt-3 mt-lg-0">
+                <ul class="list-inline list-inline-dots mb-0">
+                  <li class="list-inline-item">
+                    &copy; 2025 Zendesk Dashboard
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </footer>
+        <!--  END FOOTER  -->
+      </div>
+    </div>
+    <!-- BEGIN PAGE LIBRARIES -->
+    <script src="./original/dist/libs/apexcharts/dist/apexcharts.min.js?1747674014" defer></script>
+    <!-- END PAGE LIBRARIES -->
+    <!-- BEGIN GLOBAL MANDATORY SCRIPTS -->
+    <script src="./original/dist/js/tabler.min.js?1747674014" defer></script>
+    <!-- END GLOBAL MANDATORY SCRIPTS -->
+    <!-- BEGIN DEMO SCRIPTS -->
+    <script src="./original/preview/js/demo.min.js?1747674014" defer></script>
+    <!-- END DEMO SCRIPTS -->
+    <!-- BEGIN PAGE SCRIPTS -->
+    <script>
+      document.addEventListener("DOMContentLoaded", async function () {
+        try {
+          // Load data from execView.json
+          const response = await fetch('../data/execView.json');
+          const data = await response.json();
+          
+          // Helper function to filter last N weekdays
+          function getLastNWeekdays(dataArray, n) {
+            // Filter only weekdays
+            const weekdayData = dataArray.filter(item => {
+              const date = new Date(item.date);
+              const dayOfWeek = date.getDay();
+              return dayOfWeek >= 1 && dayOfWeek <= 5; // Monday-Friday
+            });
+            
+            // Return last N entries
+            return weekdayData.slice(-n);
+          }
+          
+          // Extract ticket trend data and filter to last 10 weekdays
+          const allTicketData = data.trends.tickets.byStatus;
+          
+          if (!allTicketData || allTicketData.length === 0) {
+            throw new Error('No ticket status data available');
+          }
+          
+          const ticketData = getLastNWeekdays(allTicketData, 10);
+          
+          // Sort by date (oldest first for charts)
+          const sortedData = [...ticketData].sort((a, b) => new Date(a.date) - new Date(b.date));
+          
+          // Prepare data for chart
+          const categories = sortedData.map(day => {
+            const date = new Date(day.date);
+            return date.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+          });
+          
+          // Calculate total active tickets (new + open + pending + solved)
+          const totalActiveTickets = sortedData.map(day => 
+            day.new + day.open + day.pending + day.solved
+          );
+          
+          // New and Closed for bar chart
+          const newTickets = sortedData.map(day => day.new);
+          const closedTickets = sortedData.map(day => day.closed);
+          
+          // Create mixed chart
+          window.ApexCharts &&
+            new ApexCharts(document.getElementById("chart-ticket-overview"), {
+              chart: {
+                type: "line",
+                fontFamily: "inherit",
+                height: 400,
+                parentHeightOffset: 0,
+                toolbar: {
+                  show: false,
+                },
+                animations: {
+                  enabled: true,
+                },
+              },
+              stroke: {
+                width: [3, 0, 0],
+                curve: 'smooth',
+                dashArray: [0, 0, 0]
+              },
+              plotOptions: {
+                bar: {
+                  columnWidth: "50%",
+                },
+              },
+              dataLabels: {
+                enabled: false,
+              },
+              series: [
+                {
+                  name: "Total Active Tickets",
+                  type: "line",
+                  data: totalActiveTickets,
+                },
+                {
+                  name: "New Tickets",
+                  type: "bar",
+                  data: newTickets,
+                },
+                {
+                  name: "Closed Tickets",
+                  type: "bar",
+                  data: closedTickets,
+                },
+              ],
+              tooltip: {
+                theme: "dark",
+                shared: true,
+                intersect: false,
+                y: {
+                  formatter: function(value) {
+                    return value + " tickets";
+                  }
+                }
+              },
+              grid: {
+                padding: {
+                  top: -20,
+                  right: 0,
+                  left: -4,
+                  bottom: -4,
+                },
+                strokeDashArray: 4,
+              },
+              xaxis: {
+                labels: {
+                  padding: 0,
+                  style: {
+                    fontSize: '12px',
+                  },
+                },
+                tooltip: {
+                  enabled: false,
+                },
+                axisBorder: {
+                  show: false,
+                },
+                categories: categories,
+              },
+              yaxis: {
+                labels: {
+                  padding: 4,
+                  style: {
+                    fontSize: '12px',
+                  },
+                },
+                title: {
+                  text: 'Number of Tickets',
+                  style: {
+                    fontSize: '13px',
+                    fontWeight: 500,
+                  },
+                },
+              },
+              colors: ["#206bc4", "#d63939", "#2fb344"],
+              legend: {
+                show: true,
+                position: "top",
+                horizontalAlign: "left",
+                offsetY: 0,
+                markers: {
+                  width: 10,
+                  height: 10,
+                  radius: 100,
+                },
+                itemMargin: {
+                  horizontal: 12,
+                  vertical: 8,
+                },
+              },
+            }).render();
+          
+          // Populate table
+          const tableBody = document.getElementById('ticket-table-body');
+          
+          // Sort by date (newest first for table)
+          const tableSortedData = [...ticketData].sort((a, b) => new Date(b.date) - new Date(a.date));
+          
+          tableSortedData.forEach(day => {
+            const date = new Date(day.date);
+            const formattedDate = date.toLocaleDateString('en-US', { 
+              weekday: 'short',
+              month: 'short', 
+              day: 'numeric',
+              year: 'numeric'
+            });
+            
+            const total = day.new + day.open + day.pending + day.hold + day.solved + day.closed;
+            
+            const row = document.createElement('tr');
+            row.innerHTML = `
+              <td><strong>${formattedDate}</strong></td>
+              <td class="text-end">${day.new.toLocaleString()}</td>
+              <td class="text-end">${day.open.toLocaleString()}</td>
+              <td class="text-end">${day.pending.toLocaleString()}</td>
+              <td class="text-end">${day.hold.toLocaleString()}</td>
+              <td class="text-end">${day.solved.toLocaleString()}</td>
+              <td class="text-end">${day.closed.toLocaleString()}</td>
+              <td class="text-end"><strong>${total.toLocaleString()}</strong></td>
+            `;
+            
+            tableBody.appendChild(row);
+          });
+          
+        } catch (error) {
+          console.error('Error loading ticket data:', error);
+          document.getElementById('ticket-table-body').innerHTML = 
+            '<tr><td colspan="8" class="text-center"><div class="alert alert-danger">Error loading ticket data. Please ensure execView.json exists and has been generated with the latest script.</div></td></tr>';
+        }
+      });
+    </script>
+    <!-- END PAGE SCRIPTS -->
+  </body>
+</html>

@@ -361,567 +361,317 @@
     <!-- END DEMO SCRIPTS -->
     <!-- BEGIN PAGE SCRIPTS -->
     <script>
-      document.addEventListener("DOMContentLoaded", async function () {
-        try {
-          // Load data from execView.json
-          const response = await fetch('../data/execView.json');
-          const data = await response.json();
+      // Dashboard State Management
+      const DashboardApp = {
+        callAnalyticsChart: null,
+        isLoading: false,
+
+        // Initialize dashboard when DOM is ready
+        async init() {
+          try {
+            await this.loadCallAnalytics();
+            this.setupEventListeners();
+            console.log('✅ Dashboard initialized successfully');
+          } catch (error) {
+            console.error('❌ Dashboard initialization failed:', error);
+            this.showError('Failed to initialize dashboard');
+          }
+        },
+
+        // Setup event listeners (only called once)
+        setupEventListeners() {
+          // Refresh button
+          const refreshBtn = document.getElementById('refresh-call-analytics');
+          if (refreshBtn) {
+            refreshBtn.addEventListener('click', () => this.handleRefresh());
+          }
+        },
+
+        // Handle refresh button click
+        async handleRefresh() {
+          if (this.isLoading) return;
           
-          // Helper function to filter last N weekdays
-          function getLastNWeekdays(dataArray, n) {
-            // Filter only weekdays (comment out to show all days including weekends)
-            const weekdayData = dataArray.filter(item => {
-              const date = new Date(item.date);
-              const dayOfWeek = date.getDay();
-              return dayOfWeek >= 1 && dayOfWeek <= 5; // Monday-Friday
-            });
+          const refreshBtn = document.getElementById('refresh-call-analytics');
+          const originalHTML = refreshBtn.innerHTML;
+          
+          try {
+            refreshBtn.disabled = true;
+            refreshBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status"></span>Refreshing...';
             
-            // Return last N entries from weekdays
-            // For now, if weekday data is empty, return all data
-            if (weekdayData.length === 0) {
-              return dataArray.slice(-n);
+            await this.loadCallAnalytics();
+            
+          } finally {
+            refreshBtn.disabled = false;
+            refreshBtn.innerHTML = originalHTML;
+          }
+        },
+
+        // Load call analytics data (main API call)
+        async loadCallAnalytics() {
+          if (this.isLoading) return;
+          this.isLoading = true;
+
+          try {
+            console.log('📊 Loading call analytics...');
+            
+            // Show loading state
+            this.showLoadingState();
+            
+            // Single API call to get all data
+            const response = await fetch('/api/call-analytics/30-day');
+            
+            if (!response.ok) {
+              throw new Error(`HTTP ${response.status}: ${response.statusText}`);
             }
-            return weekdayData.slice(-n);
+            
+            const result = await response.json();
+            
+            if (!result.success) {
+              throw new Error(result.error || 'Failed to load call analytics');
+            }
+            
+            // Update all UI components with the data
+            this.updateSummaryCards(result.data.summary);
+            this.updateTable(result.data.daily_breakdown);
+            this.updateChart(result.data.chart_data);
+            
+            console.log('✅ Call analytics loaded successfully');
+            
+          } catch (error) {
+            console.error('❌ Error loading call analytics:', error);
+            this.showErrorState(error.message);
+          } finally {
+            this.isLoading = false;
           }
-          
-          // Extract trend data and filter to last 10 weekdays
-          const allTotalInboundData = data.trends.voice.totalInboundCalls;
-          const allNotAnsweredData = data.trends.voice.notAnsweredCalls;
-          
-          const totalInboundData = getLastNWeekdays(allTotalInboundData, 10);
-          const notAnsweredData = getLastNWeekdays(allNotAnsweredData, 10);
-          
-          // Prepare categories (dates)
-          const categories = totalInboundData.map(item => {
-            const date = new Date(item.date);
-            return date.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
-          });
-          
-          // Calculate answered calls (total - not answered) and not answered calls
-          const answeredCalls = totalInboundData.map((item, index) => {
-            const total = item.value;
-            const notAnswered = notAnsweredData[index].value;
-            return total - notAnswered;
-          });
-          
-          const notAnsweredCalls = notAnsweredData.map(item => item.value);
-          
-          // Create the stacked bar chart
-          window.ApexCharts &&
-            new ApexCharts(document.getElementById("chart-inbound-calls"), {
-              chart: {
-                type: "bar",
-                fontFamily: "inherit",
-                height: 480,
-                parentHeightOffset: 0,
-                toolbar: {
-                  show: false,
-                },
-                animations: {
-                  enabled: true,
-                },
-                stacked: true,
-              },
-              plotOptions: {
-                bar: {
-                  columnWidth: "50%",
-                },
-              },
-              dataLabels: {
-                enabled: true,
-                style: {
-                  fontSize: '12px',
-                  fontWeight: 'bold',
-                  colors: ['#fff']
-                },
-              },
-              series: [
-                {
-                  name: "Answered Calls",
-                  data: answeredCalls,
-                },
-                {
-                  name: "Not Answered Calls",
-                  data: notAnsweredCalls,
-                },
-              ],
-              tooltip: {
-                theme: "dark",
-                y: {
-                  formatter: function(value) {
-                    return value + " calls";
-                  }
-                }
-              },
-              grid: {
-                padding: {
-                  top: -20,
-                  right: 0,
-                  left: -4,
-                  bottom: -4,
-                },
-                strokeDashArray: 4,
-              },
-              xaxis: {
-                labels: {
-                  padding: 0,
-                  style: {
-                    fontSize: '14px',
-                  },
-                },
-                tooltip: {
-                  enabled: false,
-                },
-                axisBorder: {
-                  show: false,
-                },
-                categories: categories,
-              },
-              yaxis: {
-                labels: {
-                  padding: 4,
-                  style: {
-                    fontSize: '14px',
-                  },
-                },
-                title: {
-                  text: 'Number of Calls',
-                  style: {
-                    fontSize: '14px',
-                    fontWeight: 600,
-                  },
-                },
-              },
-              colors: ["#2fb344", "#d63939"],
-              legend: {
-                show: true,
-                position: "top",
-                horizontalAlign: "right",
-                offsetY: 0,
-                markers: {
-                  width: 10,
-                  height: 10,
-                  radius: 100,
-                },
-                itemMargin: {
-                  horizontal: 8,
-                  vertical: 8,
-                },
-              },
-            }).render();
-            
-          // Create ticket overview mixed chart
-          const allTicketData = data.trends.tickets.byStatus;
-          
-          if (allTicketData && allTicketData.length > 0) {
-            // Filter to last 10 weekdays
-            const ticketData = getLastNWeekdays(allTicketData, 10);
-            
-            // Sort by date (oldest first for charts)
-            const sortedTicketData = [...ticketData].sort((a, b) => new Date(a.date) - new Date(b.date));
-            
-            // Prepare data for ticket chart
-            const ticketCategories = sortedTicketData.map(day => {
-              const date = new Date(day.date);
-              return date.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
-            });
-            
-            // Calculate total active tickets (new + open + pending + solved)
-            const totalActiveTickets = sortedTicketData.map(day => 
-              day.new + day.open + day.pending + day.solved
-            );
-            
-            // New and Closed for bar chart
-            const newTickets = sortedTicketData.map(day => day.new);
-            const closedTickets = sortedTicketData.map(day => day.closed);
-            
-            // Create mixed chart for tickets
-            window.ApexCharts &&
-              new ApexCharts(document.getElementById("chart-ticket-overview"), {
-                chart: {
-                  type: "line",
-                  fontFamily: "inherit",
-                  height: 400,
-                  parentHeightOffset: 0,
-                  toolbar: {
-                    show: false,
-                  },
-                  animations: {
-                    enabled: true,
-                  },
-                },
-                stroke: {
-                  width: [3, 0, 0],
-                  curve: 'smooth',
-                  dashArray: [0, 0, 0]
-                },
-                plotOptions: {
-                  bar: {
-                    columnWidth: "50%",
-                  },
-                },
-                dataLabels: {
-                  enabled: false,
-                },
-                series: [
-                  {
-                    name: "Total Active Tickets",
-                    type: "line",
-                    data: totalActiveTickets,
-                  },
-                  {
-                    name: "New Tickets",
-                    type: "bar",
-                    data: newTickets,
-                  },
-                  {
-                    name: "Closed Tickets",
-                    type: "bar",
-                    data: closedTickets,
-                  },
-                ],
-                tooltip: {
-                  theme: "dark",
-                  shared: true,
-                  intersect: false,
-                  y: {
-                    formatter: function(value) {
-                      return value + " tickets";
-                    }
-                  }
-                },
-                grid: {
-                  padding: {
-                    top: -20,
-                    right: 0,
-                    left: -4,
-                    bottom: -4,
-                  },
-                  strokeDashArray: 4,
-                },
-                xaxis: {
-                  labels: {
-                    padding: 0,
-                    style: {
-                      fontSize: '12px',
-                    },
-                  },
-                  tooltip: {
-                    enabled: false,
-                  },
-                  axisBorder: {
-                    show: false,
-                  },
-                  categories: ticketCategories,
-                },
-                yaxis: {
-                  labels: {
-                    padding: 4,
-                    style: {
-                      fontSize: '12px',
-                    },
-                  },
-                  title: {
-                    text: 'Number of Tickets',
-                    style: {
-                      fontSize: '13px',
-                      fontWeight: 500,
-                    },
-                  },
-                },
-                colors: ["#206bc4", "#d63939", "#2fb344"],
-                legend: {
-                  show: true,
-                  position: "top",
-                  horizontalAlign: "left",
-                  offsetY: 0,
-                  markers: {
-                    width: 10,
-                    height: 10,
-                    radius: 100,
-                  },
-                  itemMargin: {
-                    horizontal: 12,
-                    vertical: 8,
-                  },
-                },
-              }).render();
-            
-            // Populate ticket status table
-            const tableBody = document.getElementById('ticket-table-body');
-            
-            // Sort by date (newest first for table)
-            const tableSortedData = [...ticketData].sort((a, b) => new Date(b.date) - new Date(a.date));
-            
-            tableSortedData.forEach(day => {
-              const date = new Date(day.date);
-              const formattedDate = date.toLocaleDateString('en-US', { 
-                weekday: 'short',
-                month: 'short', 
-                day: 'numeric',
-                year: 'numeric'
-              });
-              
-              const total = day.new + day.open + day.pending + day.hold + day.solved + day.closed;
-              
-              const row = document.createElement('tr');
-              row.innerHTML = `
-                <td><strong>${formattedDate}</strong></td>
-                <td class="text-end">${day.new.toLocaleString()}</td>
-                <td class="text-end">${day.open.toLocaleString()}</td>
-                <td class="text-end">${day.pending.toLocaleString()}</td>
-                <td class="text-end">${day.hold.toLocaleString()}</td>
-                <td class="text-end">${day.solved.toLocaleString()}</td>
-                <td class="text-end">${day.closed.toLocaleString()}</td>
-                <td class="text-end"><strong>${total.toLocaleString()}</strong></td>
-              `;
-              
-              tableBody.appendChild(row);
-            });
-          }
-          
-        } catch (error) {
-          console.error('Error loading chart data:', error);
-          document.getElementById("chart-inbound-calls").innerHTML = 
-            '<div class="alert alert-danger">Error loading chart data. Please ensure execView.json exists in the data folder.</div>';
-        }
-      });
+        },
 
-      // Call Analytics Functions
-      let callAnalyticsChart = null;
-
-      async function loadCallAnalytics() {
-        try {
-          console.log('Loading call analytics...');
-          
-          // Show loading state
-          document.getElementById('total-calls-30day').textContent = 'Loading...';
-          document.getElementById('answered-calls-30day').textContent = 'Loading...';
-          document.getElementById('abandoned-calls-30day').textContent = 'Loading...';
-          document.getElementById('callbacks-30day').textContent = 'Loading...';
-          document.getElementById('voicemails-30day').textContent = 'Loading...';
-          document.getElementById('answer-rate-30day').textContent = 'Loading...';
-          
-          const tableBody = document.getElementById('call-analytics-table');
-          tableBody.innerHTML = '<tr><td colspan="8" class="text-center text-secondary">Loading call analytics...</td></tr>';
-          
-          // Fetch call analytics data
-          const response = await fetch('http://localhost:3000/api/call-analytics/30-day');
-          const result = await response.json();
-          
-          if (!result.success) {
-            throw new Error(result.error || 'Failed to load call analytics');
-          }
-          
-          const data = result.data;
+        // Show loading state in all UI components
+        showLoadingState() {
+          const loadingText = 'Loading...';
           
           // Update summary cards
-          document.getElementById('total-calls-30day').textContent = data.summary.total_calls.toLocaleString();
-          document.getElementById('answered-calls-30day').textContent = data.summary.answered_calls.toLocaleString();
-          document.getElementById('abandoned-calls-30day').textContent = data.summary.unanswered_calls.toLocaleString();
-          document.getElementById('callbacks-30day').textContent = (data.summary.callbacks || 0).toLocaleString();
-          document.getElementById('voicemails-30day').textContent = (data.summary.voicemails || 0).toLocaleString();
-          document.getElementById('answer-rate-30day').textContent = data.summary.overall_answer_rate + '%';
+          document.getElementById('total-calls-30day').textContent = loadingText;
+          document.getElementById('answered-calls-30day').textContent = loadingText;
+          document.getElementById('abandoned-calls-30day').textContent = loadingText;
+          document.getElementById('callbacks-30day').textContent = loadingText;
+          document.getElementById('voicemails-30day').textContent = loadingText;
+          document.getElementById('answer-rate-30day').textContent = loadingText;
           
           // Update table
-          updateCallAnalyticsTable(data.daily_breakdown);
+          const tableBody = document.getElementById('call-analytics-table');
+          tableBody.innerHTML = '<tr><td colspan="8" class="text-center text-secondary">Loading call analytics...</td></tr>';
+        },
+
+        // Show error state in all UI components
+        showErrorState(errorMessage) {
+          const errorText = 'Error';
+          
+          // Update summary cards
+          document.getElementById('total-calls-30day').textContent = errorText;
+          document.getElementById('answered-calls-30day').textContent = errorText;
+          document.getElementById('abandoned-calls-30day').textContent = errorText;
+          document.getElementById('callbacks-30day').textContent = errorText;
+          document.getElementById('voicemails-30day').textContent = errorText;
+          document.getElementById('answer-rate-30day').textContent = errorText;
+          
+          // Update table
+          const tableBody = document.getElementById('call-analytics-table');
+          tableBody.innerHTML = `<tr><td colspan="8" class="text-center text-danger">Error: ${errorMessage}</td></tr>`;
           
           // Update chart
-          updateCallAnalyticsChart(data.chart_data);
-          
-          console.log('Call analytics loaded successfully');
-          
-        } catch (error) {
-          console.error('Error loading call analytics:', error);
-          
-          // Show error state
-          document.getElementById('total-calls-30day').textContent = 'Error';
-          document.getElementById('answered-calls-30day').textContent = 'Error';
-          document.getElementById('abandoned-calls-30day').textContent = 'Error';
-          document.getElementById('callbacks-30day').textContent = 'Error';
-          document.getElementById('voicemails-30day').textContent = 'Error';
-          document.getElementById('answer-rate-30day').textContent = 'Error';
-          
-          const tableBody = document.getElementById('call-analytics-table');
-          tableBody.innerHTML = `<tr><td colspan="8" class="text-center text-danger">Error loading data: ${error.message}</td></tr>`;
-          
-          // Show error in chart
           document.getElementById('chart-call-analytics-30day').innerHTML = 
-            `<div class="alert alert-danger">Error loading call analytics: ${error.message}</div>`;
-        }
-      }
+            `<div class="alert alert-danger">Error loading call analytics: ${errorMessage}</div>`;
+        },
 
-      function updateCallAnalyticsTable(dailyData) {
-        const tableBody = document.getElementById('call-analytics-table');
-        tableBody.innerHTML = '';
-        
-        // Reverse the array so today appears first (newest to oldest)
-        const reversedData = [...dailyData].reverse();
-        
-        reversedData.forEach(day => {
-          const row = document.createElement('tr');
-          row.innerHTML = `
-            <td><strong>${day.date}</strong></td>
-            <td><span class="badge bg-blue-lt">${day.day_name}</span></td>
-            <td class="text-end">${day.total_calls.toLocaleString()}</td>
-            <td class="text-end text-green">${day.answered_calls.toLocaleString()}</td>
-            <td class="text-end text-red">${day.unanswered_calls.toLocaleString()}</td>
-            <td class="text-end text-orange">${(day.callbacks || 0).toLocaleString()}</td>
-            <td class="text-end text-purple">${(day.voicemails || 0).toLocaleString()}</td>
-            <td class="text-end">
-              <span class="badge ${day.answer_rate >= 80 ? 'bg-green' : day.answer_rate >= 60 ? 'bg-yellow' : 'bg-red'}-lt">
-                ${day.answer_rate}%
-              </span>
-            </td>
-          `;
-          tableBody.appendChild(row);
-        });
-      }
+        // Update summary cards with data
+        updateSummaryCards(summary) {
+          document.getElementById('total-calls-30day').textContent = summary.total_calls.toLocaleString();
+          document.getElementById('answered-calls-30day').textContent = summary.answered_calls.toLocaleString();
+          document.getElementById('abandoned-calls-30day').textContent = summary.unanswered_calls.toLocaleString();
+          document.getElementById('callbacks-30day').textContent = (summary.callbacks || 0).toLocaleString();
+          document.getElementById('voicemails-30day').textContent = (summary.voicemails || 0).toLocaleString();
+          document.getElementById('answer-rate-30day').textContent = summary.overall_answer_rate + '%';
+        },
 
-      function updateCallAnalyticsChart(chartData) {
-        // Destroy existing chart if it exists
-        if (callAnalyticsChart) {
-          callAnalyticsChart.destroy();
-        }
-        
-        const chartElement = document.getElementById('chart-call-analytics-30day');
-        
-        callAnalyticsChart = new ApexCharts(chartElement, {
-          chart: {
-            type: 'bar',
-            height: 400,
-            stacked: true,
-            toolbar: {
-              show: true,
-              tools: {
-                download: true,
-                selection: false,
-                zoom: false,
-                zoomin: false,
-                zoomout: false,
-                pan: false,
-                reset: false
-              }
-            },
-            animations: {
-              enabled: true,
-              easing: 'easeinout',
-              speed: 800
-            }
-          },
-          series: [
-            {
-              name: 'Answered Calls',
-              data: chartData.series.find(s => s.name === 'Answered Calls')?.data || []
-            },
-            {
-              name: 'Abandoned in Queue',
-              data: chartData.series.find(s => s.name === 'Abandoned in Queue')?.data || []
-            },
-            {
-              name: 'Callback Requests',
-              data: chartData.series.find(s => s.name === 'Callback Requests')?.data || []
-            },
-            {
-              name: 'Voicemails',
-              data: chartData.series.find(s => s.name === 'Voicemails')?.data || []
-            },
-            {
-              name: 'Exceeded Wait Time',
-              data: chartData.series.find(s => s.name === 'Exceeded Wait Time')?.data || []
-            },
-            {
-              name: 'Outbound Calls',
-              data: chartData.series.find(s => s.name === 'Outbound Calls')?.data || []
-            }
-          ],
-          xaxis: {
-            categories: chartData.categories,
-            title: {
-              text: 'Days'
-            },
-            labels: {
-              style: {
-                fontSize: '12px'
-              }
-            }
-          },
-          yaxis: {
-            title: {
-              text: 'Number of Calls'
-            },
-            labels: {
-              style: {
-                fontSize: '12px'
-              }
-            }
-          },
-          plotOptions: {
-            bar: {
-              horizontal: false,
-              columnWidth: '55%',
-              endingShape: 'rounded'
-            }
-          },
-          dataLabels: {
-            enabled: false
-          },
-          stroke: {
-            show: true,
-            width: 2,
-            colors: ['transparent']
-          },
-          colors: ['#28a745', '#dc3545', '#fd7e14', '#6f42c1', '#ffc107', '#20c997'], // Green, Red, Orange, Purple, Yellow, Teal
-          fill: {
-            opacity: 0.8
-          },
-          tooltip: {
-            y: {
-              formatter: function (val) {
-                return val + " calls"
-              }
-            }
-          },
-          legend: {
-            position: 'top',
-            horizontalAlign: 'left',
-            offsetY: 0
-          },
-          grid: {
-            borderColor: '#e7e7e7',
-            row: {
-              colors: ['#f3f3f3', 'transparent'],
-              opacity: 0.5
-            }
+        // Update analytics table with daily breakdown
+        updateTable(dailyData) {
+          const tableBody = document.getElementById('call-analytics-table');
+          tableBody.innerHTML = '';
+          
+          // Show newest data first
+          const reversedData = [...dailyData].reverse();
+          
+          reversedData.forEach(day => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+              <td><strong>${day.date}</strong></td>
+              <td><span class="badge bg-blue-lt">${day.day_name}</span></td>
+              <td class="text-end">${day.total_calls.toLocaleString()}</td>
+              <td class="text-end text-green">${day.answered_calls.toLocaleString()}</td>
+              <td class="text-end text-red">${day.unanswered_calls.toLocaleString()}</td>
+              <td class="text-end text-orange">${(day.callbacks || 0).toLocaleString()}</td>
+              <td class="text-end text-purple">${(day.voicemails || 0).toLocaleString()}</td>
+              <td class="text-end">
+                <span class="badge ${this.getAnswerRateBadgeClass(day.answer_rate)}">
+                  ${day.answer_rate}%
+                </span>
+              </td>
+            `;
+            tableBody.appendChild(row);
+          });
+        },
+
+        // Get CSS class for answer rate badge based on percentage
+        getAnswerRateBadgeClass(rate) {
+          if (rate >= 80) return 'bg-green-lt';
+          if (rate >= 60) return 'bg-yellow-lt';
+          return 'bg-red-lt';
+        },
+
+        // Update call analytics chart
+        updateChart(chartData) {
+          // Destroy existing chart if it exists
+          if (this.callAnalyticsChart) {
+            this.callAnalyticsChart.destroy();
+            this.callAnalyticsChart = null;
           }
-        });
-        
-        callAnalyticsChart.render();
-      }
+          
+          const chartElement = document.getElementById('chart-call-analytics-30day');
+          
+          this.callAnalyticsChart = new ApexCharts(chartElement, {
+            chart: {
+              type: 'bar',
+              height: 400,
+              stacked: true,
+              fontFamily: 'inherit',
+              toolbar: {
+                show: true,
+                tools: {
+                  download: true,
+                  selection: false,
+                  zoom: false,
+                  zoomin: false,
+                  zoomout: false,
+                  pan: false,
+                  reset: false
+                }
+              },
+              animations: {
+                enabled: true,
+                easing: 'easeinout',
+                speed: 800
+              }
+            },
+            series: [
+              {
+                name: 'Answered Calls',
+                data: chartData.series.find(s => s.name === 'Answered Calls')?.data || []
+              },
+              {
+                name: 'Abandoned in Queue',
+                data: chartData.series.find(s => s.name === 'Abandoned in Queue')?.data || []
+              },
+              {
+                name: 'Callback Requests',
+                data: chartData.series.find(s => s.name === 'Callback Requests')?.data || []
+              },
+              {
+                name: 'Voicemails',
+                data: chartData.series.find(s => s.name === 'Voicemails')?.data || []
+              },
+              {
+                name: 'Exceeded Wait Time',
+                data: chartData.series.find(s => s.name === 'Exceeded Wait Time')?.data || []
+              },
+              {
+                name: 'Outbound Calls',
+                data: chartData.series.find(s => s.name === 'Outbound Calls')?.data || []
+              }
+            ],
+            xaxis: {
+              categories: chartData.categories,
+              title: {
+                text: 'Days',
+                style: {
+                  fontSize: '14px',
+                  fontWeight: 500
+                }
+              },
+              labels: {
+                style: {
+                  fontSize: '12px'
+                }
+              }
+            },
+            yaxis: {
+              title: {
+                text: 'Number of Calls',
+                style: {
+                  fontSize: '14px',
+                  fontWeight: 500
+                }
+              },
+              labels: {
+                style: {
+                  fontSize: '12px'
+                }
+              }
+            },
+            plotOptions: {
+              bar: {
+                horizontal: false,
+                columnWidth: '55%',
+                endingShape: 'rounded'
+              }
+            },
+            dataLabels: {
+              enabled: false
+            },
+            stroke: {
+              show: true,
+              width: 2,
+              colors: ['transparent']
+            },
+            colors: ['#28a745', '#dc3545', '#fd7e14', '#6f42c1', '#ffc107', '#20c997'],
+            fill: {
+              opacity: 0.8
+            },
+            tooltip: {
+              y: {
+                formatter: function (val) {
+                  return val + " calls"
+                }
+              }
+            },
+            legend: {
+              position: 'top',
+              horizontalAlign: 'left',
+              offsetY: 0,
+              fontSize: '13px'
+            },
+            grid: {
+              borderColor: '#e7e7e7',
+              row: {
+                colors: ['#f3f3f3', 'transparent'],
+                opacity: 0.5
+              }
+            }
+          });
+          
+          this.callAnalyticsChart.render();
+        },
 
-      // Load call analytics on page load
-      loadCallAnalytics();
+        // Generic error display
+        showError(message) {
+          console.error('Dashboard Error:', message);
+          // Could show a toast notification here in the future
+        }
+      };
 
-      // Add refresh button functionality
-      document.getElementById('refresh-call-analytics').addEventListener('click', function() {
-        this.disabled = true;
-        this.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status"></span>Refreshing...';
-        
-        loadCallAnalytics().finally(() => {
-          this.disabled = false;
-          this.innerHTML = `
-            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-              <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-              <path d="M20 11a8.1 8.1 0 0 0 -15.5 -2m-.5 -4v4h4"/>
-              <path d="M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4"/>
-            </svg>
-            Refresh
-          `;
-        });
+      // Initialize dashboard when DOM is ready
+      document.addEventListener("DOMContentLoaded", () => {
+        DashboardApp.init();
       });
-
-      // Auto-refresh every 5 minutes
-      setInterval(loadCallAnalytics, 5 * 60 * 1000);
     </script>
     <!-- END PAGE SCRIPTS -->
   </body>

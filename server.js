@@ -4,9 +4,11 @@ const fs = require('fs');
 const path = require('path');
 const { generateChatReply } = require('./src/services/gptResponder');
 const CallAnalyticsService = require('./src/services/CallAnalyticsService');
+const TicketAnalyticsService = require('./src/services/TicketAnalyticsService');
 
 const PORT = 3000;
 const callAnalytics = new CallAnalyticsService();
+const ticketAnalytics = new TicketAnalyticsService();
 
 // MIME types for different file extensions
 const mimeTypes = {
@@ -134,6 +136,52 @@ async function handleRealTimeCallAnalyticsRequest(req, res) {
   }
 }
 
+// Handle ticket analytics requests
+async function handleTicketAnalyticsRequest(req, res, period = '5-day') {
+  try {
+    console.log(`🎫 Fetching ${period} ticket analytics...`);
+    
+    let analytics;
+    if (period === '5-day') {
+      analytics = await ticketAnalytics.get5DayTicketAnalytics();
+    } else {
+      // For future expansion
+      analytics = await ticketAnalytics.get5DayTicketAnalytics();
+    }
+    
+    console.log('📈 Ticket analytics data received, preparing response...');
+    console.log('📋 Analytics success:', analytics?.success);
+    console.log('📋 Analytics data keys:', analytics?.data ? Object.keys(analytics.data) : 'No data');
+    
+    console.log('📤 Sending JSON response...');
+    sendJson(res, 200, analytics);
+    console.log('✅ Response sent successfully');
+  } catch (error) {
+    console.error(`❌ Error fetching ${period} ticket analytics:`, error);
+    sendJson(res, 500, {
+      success: false,
+      error: `Failed to fetch ${period} ticket analytics`,
+      details: error.message
+    });
+  }
+}
+
+// Handle current ticket counts request
+async function handleCurrentTicketCountsRequest(req, res) {
+  try {
+    console.log('🎫 Fetching current ticket counts...');
+    const counts = await ticketAnalytics.getCurrentTicketCounts();
+    sendJson(res, 200, counts);
+  } catch (error) {
+    console.error('❌ Error fetching current ticket counts:', error);
+    sendJson(res, 500, {
+      success: false,
+      error: 'Failed to fetch current ticket counts',
+      details: error.message
+    });
+  }
+}
+
 const server = http.createServer((req, res) => {
   console.log(`${req.method} ${req.url}`);
   console.log('🔍 Debug - Full URL:', req.url);
@@ -204,6 +252,44 @@ const server = http.createServer((req, res) => {
     
     if (req.method === 'GET') {
       handleRealTimeCallAnalyticsRequest(req, res);
+      return;
+    }
+  }
+
+  // Ticket Analytics endpoints
+  if (req.url === '/api/ticket-analytics' || req.url === '/api/ticket-analytics/5-day') {
+    console.log('🎫 Ticket analytics request (5-day)');
+    if (req.method === 'OPTIONS') {
+      res.writeHead(200, {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+        'Access-Control-Allow-Methods': 'GET, OPTIONS'
+      });
+      res.end();
+      return;
+    }
+    
+    if (req.method === 'GET') {
+      handleTicketAnalyticsRequest(req, res, '5-day');
+      return;
+    }
+  }
+
+  // Current ticket counts endpoint
+  if (req.url === '/api/ticket-analytics/current') {
+    console.log('🎫 Current ticket counts request');
+    if (req.method === 'OPTIONS') {
+      res.writeHead(200, {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+        'Access-Control-Allow-Methods': 'GET, OPTIONS'
+      });
+      res.end();
+      return;
+    }
+    
+    if (req.method === 'GET') {
+      handleCurrentTicketCountsRequest(req, res);
       return;
     }
   }
