@@ -134,16 +134,25 @@
                         <path d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4a2 2 0 0 1 -2 2a16 16 0 0 1 -15 -15a2 2 0 0 1 2 -2"/>
                       </svg>
                       Call Analytics - Last 30 Days
+                      <span id="call-cache-status" class="badge badge-sm ms-2" style="display: none;"></span>
                     </h3>
                     <div class="card-actions">
-                      <button class="btn btn-outline-primary btn-sm" id="refresh-call-analytics">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                          <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                          <path d="M20 11a8.1 8.1 0 0 0 -15.5 -2m-.5 -4v4h4"/>
-                          <path d="M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4"/>
-                        </svg>
-                        Refresh
-                      </button>
+                      <div class="d-flex align-items-center gap-2">
+                        <div class="form-check form-switch m-0">
+                          <input class="form-check-input" type="checkbox" id="force-refresh-calls-toggle" title="When enabled, refreshes all 30 days from API instead of using cache">
+                          <label class="form-check-label text-secondary small" for="force-refresh-calls-toggle">
+                            Refresh All
+                          </label>
+                        </div>
+                        <button class="btn btn-outline-primary btn-sm" id="refresh-call-analytics">
+                          <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                            <path d="M20 11a8.1 8.1 0 0 0 -15.5 -2m-.5 -4v4h4"/>
+                            <path d="M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4"/>
+                          </svg>
+                          Refresh
+                        </button>
+                      </div>
                     </div>
                   </div>
                   <div class="card-body">
@@ -392,13 +401,27 @@
           if (this.isLoading) return;
           
           const refreshBtn = document.getElementById('refresh-call-analytics');
+          const forceRefreshToggle = document.getElementById('force-refresh-calls-toggle');
           const originalHTML = refreshBtn.innerHTML;
           
           try {
             refreshBtn.disabled = true;
-            refreshBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status"></span>Refreshing...';
+            const forceRefresh = forceRefreshToggle.checked;
             
-            await this.loadCallAnalytics();
+            if (forceRefresh) {
+              refreshBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status"></span>Refreshing All...';
+              console.log('🔄 Force refresh requested - fetching all 30 days from API');
+            } else {
+              refreshBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status"></span>Refreshing...';
+              console.log('📅 Smart refresh - only fetching today\'s call data');
+            }
+            
+            await this.loadCallAnalytics(forceRefresh);
+            
+            // Reset toggle after successful refresh
+            if (forceRefresh) {
+              forceRefreshToggle.checked = false;
+            }
             
           } finally {
             refreshBtn.disabled = false;
@@ -407,18 +430,24 @@
         },
 
         // Load call analytics data (main API call)
-        async loadCallAnalytics() {
+        async loadCallAnalytics(forceRefresh = false) {
           if (this.isLoading) return;
           this.isLoading = true;
 
           try {
-            console.log('📊 Loading call analytics...');
+            console.log(`📊 Loading call analytics${forceRefresh ? ' (force refresh)' : ''}...`);
             
             // Show loading state
             this.showLoadingState();
             
+            // Build API URL with forceRefresh parameter if needed
+            let apiUrl = '/api/call-analytics/30-day';
+            if (forceRefresh) {
+              apiUrl += '?forceRefresh=true';
+            }
+            
             // Single API call to get all data
-            const response = await fetch('/api/call-analytics/30-day');
+            const response = await fetch(apiUrl);
             
             if (!response.ok) {
               throw new Error(`HTTP ${response.status}: ${response.statusText}`);
@@ -430,19 +459,72 @@
               throw new Error(result.error || 'Failed to load call analytics');
             }
             
+            // Debug logging
+            console.log('📊 Call analytics response structure:', {
+              success: result.success,
+              hasData: !!result.data,
+              dataKeys: result.data ? Object.keys(result.data) : 'No data',
+              hasSummary: !!(result.data && result.data.summary),
+              summaryKeys: result.data && result.data.summary ? Object.keys(result.data.summary) : 'No summary',
+              hasDailyBreakdown: !!(result.data && result.data.daily_breakdown),
+              dailyBreakdownLength: result.data && result.data.daily_breakdown ? result.data.daily_breakdown.length : 0,
+              firstDayStructure: result.data && result.data.daily_breakdown && result.data.daily_breakdown[0] ? 
+                Object.keys(result.data.daily_breakdown[0]) : 'No first day'
+            });
+            
+            // Validate data structure before updating UI
+            if (!result.data) {
+              throw new Error('No data received from call analytics API');
+            }
+            
             // Update all UI components with the data
             this.updateSummaryCards(result.data.summary);
             this.updateTable(result.data.daily_breakdown);
             this.updateChart(result.data.chart_data);
+            this.updateCallCacheStatus(result.data.cache_info, forceRefresh);
             
             console.log('✅ Call analytics loaded successfully');
             
           } catch (error) {
             console.error('❌ Error loading call analytics:', error);
             this.showErrorState(error.message);
+            this.updateCallCacheStatus(null, false, true);
           } finally {
             this.isLoading = false;
           }
+        },
+
+        // Update call cache status display
+        updateCallCacheStatus(cacheInfo, forceRefresh = false, hasError = false) {
+          const cacheStatus = document.getElementById('call-cache-status');
+          
+          if (hasError) {
+            cacheStatus.className = 'badge badge-sm ms-2 bg-danger';
+            cacheStatus.textContent = 'Error';
+            cacheStatus.style.display = 'inline-block';
+            return;
+          }
+          
+          if (!cacheInfo) {
+            cacheStatus.style.display = 'none';
+            return;
+          }
+          
+          if (forceRefresh) {
+            cacheStatus.className = 'badge badge-sm ms-2 bg-success';
+            cacheStatus.textContent = 'All Data Refreshed';
+            cacheStatus.title = 'All 30 days fetched fresh from API';
+          } else if (cacheInfo.fresh_entries > 0) {
+            cacheStatus.className = 'badge badge-sm ms-2 bg-info';
+            cacheStatus.textContent = `${cacheInfo.fresh_entries} Cached`;
+            cacheStatus.title = `${cacheInfo.fresh_entries} days from cache, today from API`;
+          } else {
+            cacheStatus.className = 'badge badge-sm ms-2 bg-primary';
+            cacheStatus.textContent = 'Real-time';
+            cacheStatus.title = 'All data fetched from API';
+          }
+          
+          cacheStatus.style.display = 'inline-block';
         },
 
         // Show loading state in all UI components
@@ -485,17 +567,34 @@
 
         // Update summary cards with data
         updateSummaryCards(summary) {
-          document.getElementById('total-calls-30day').textContent = summary.total_calls.toLocaleString();
-          document.getElementById('answered-calls-30day').textContent = summary.answered_calls.toLocaleString();
-          document.getElementById('abandoned-calls-30day').textContent = summary.unanswered_calls.toLocaleString();
+          if (!summary) {
+            console.warn('⚠️ No summary data provided to updateSummaryCards');
+            return;
+          }
+          
+          // Safely update each element with null checks
+          document.getElementById('total-calls-30day').textContent = (summary.total_calls || 0).toLocaleString();
+          document.getElementById('answered-calls-30day').textContent = (summary.answered_calls || 0).toLocaleString();
+          document.getElementById('abandoned-calls-30day').textContent = (summary.unanswered_calls || 0).toLocaleString();
           document.getElementById('callbacks-30day').textContent = (summary.callbacks || 0).toLocaleString();
           document.getElementById('voicemails-30day').textContent = (summary.voicemails || 0).toLocaleString();
-          document.getElementById('answer-rate-30day').textContent = summary.overall_answer_rate + '%';
+          document.getElementById('answer-rate-30day').textContent = (summary.overall_answer_rate || 0) + '%';
         },
 
         // Update analytics table with daily breakdown
         updateTable(dailyData) {
           const tableBody = document.getElementById('call-analytics-table');
+          if (!tableBody) {
+            console.error('❌ Call analytics table element not found');
+            return;
+          }
+          
+          if (!dailyData || !Array.isArray(dailyData)) {
+            console.error('❌ Invalid daily data provided to updateTable:', dailyData);
+            tableBody.innerHTML = '<tr><td colspan="8" class="text-center text-muted">No data available</td></tr>';
+            return;
+          }
+          
           tableBody.innerHTML = '';
           
           // Show newest data first
@@ -504,16 +603,16 @@
           reversedData.forEach(day => {
             const row = document.createElement('tr');
             row.innerHTML = `
-              <td><strong>${day.date}</strong></td>
-              <td><span class="badge bg-blue-lt">${day.day_name}</span></td>
-              <td class="text-end">${day.total_calls.toLocaleString()}</td>
-              <td class="text-end text-green">${day.answered_calls.toLocaleString()}</td>
-              <td class="text-end text-red">${day.unanswered_calls.toLocaleString()}</td>
+              <td><strong>${day.date || 'N/A'}</strong></td>
+              <td><span class="badge bg-blue-lt">${day.day_name || 'N/A'}</span></td>
+              <td class="text-end">${(day.total_calls || 0).toLocaleString()}</td>
+              <td class="text-end text-green">${(day.answered_calls || 0).toLocaleString()}</td>
+              <td class="text-end text-red">${(day.unanswered_calls || 0).toLocaleString()}</td>
               <td class="text-end text-orange">${(day.callbacks || 0).toLocaleString()}</td>
               <td class="text-end text-purple">${(day.voicemails || 0).toLocaleString()}</td>
               <td class="text-end">
-                <span class="badge ${this.getAnswerRateBadgeClass(day.answer_rate)}">
-                  ${day.answer_rate}%
+                <span class="badge ${this.getAnswerRateBadgeClass(day.answer_rate || 0)}">
+                  ${day.answer_rate || 0}%
                 </span>
               </td>
             `;

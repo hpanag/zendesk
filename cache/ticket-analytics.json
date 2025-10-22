@@ -1,0 +1,76 @@
+{
+  "daily_data": {
+    "2025-10-18": {
+      "data": {
+        "date": "2025-10-18",
+        "day_name": "Fri, Oct 17",
+        "total_tickets": 281,
+        "new": 106,
+        "open": 11,
+        "pending": 0,
+        "hold": 0,
+        "solved": 12,
+        "closed": 152
+      },
+      "cached_at": "2025-10-22T14:12:07.303Z"
+    },
+    "2025-10-19": {
+      "data": {
+        "date": "2025-10-19",
+        "day_name": "Sat, Oct 18",
+        "total_tickets": 263,
+        "new": 89,
+        "open": 1,
+        "pending": 3,
+        "hold": 0,
+        "solved": 17,
+        "closed": 153
+      },
+      "cached_at": "2025-10-22T14:12:12.554Z"
+    },
+    "2025-10-20": {
+      "data": {
+        "date": "2025-10-20",
+        "day_name": "Sun, Oct 19",
+        "total_tickets": 785,
+        "new": 571,
+        "open": 17,
+        "pending": 29,
+        "hold": 10,
+        "solved": 120,
+        "closed": 38
+      },
+      "cached_at": "2025-10-22T14:12:17.307Z"
+    },
+    "2025-10-21": {
+      "data": {
+        "date": "2025-10-21",
+        "day_name": "Yesterday",
+        "total_tickets": 819,
+        "new": 613,
+        "open": 42,
+        "pending": 30,
+        "hold": 19,
+        "solved": 68,
+        "closed": 47
+      },
+      "cached_at": "2025-10-22T14:12:22.625Z"
+    },
+    "2025-10-22": {
+      "data": {
+        "date": "2025-10-22",
+        "day_name": "Today",
+        "total_tickets": 247,
+        "new": 105,
+        "open": 25,
+        "pending": 22,
+        "hold": 16,
+        "solved": 74,
+        "closed": 5
+      },
+      "cached_at": "2025-10-22T16:10:06.433Z"
+    }
+  },
+  "last_updated": "2025-10-22T16:10:06.433Z",
+  "version": "1.0"
+}

@@ -12,7 +12,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Portal Home - Zendesk Analytics Portal</title>
+    <title>Finance Analytics - Zendesk Analytics Portal</title>
     <!-- BEGIN GLOBAL MANDATORY STYLES -->
     <link href="./original/dist/css/tabler.css?1747674014" rel="stylesheet" />
     <!-- END GLOBAL MANDATORY STYLES -->
@@ -30,28 +30,6 @@
     <!-- BEGIN CUSTOM FONT -->
     <style>
       @import url("https://rsms.me/inter/inter.css");
-      
-      .card-portal {
-          transition: all 0.2s ease;
-          cursor: pointer;
-      }
-      
-      .card-portal:hover {
-          transform: translateY(-2px);
-          box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-      }
-      
-      .icon-portal {
-          width: 48px;
-          height: 48px;
-          background: linear-gradient(45deg, #206bc4, #4299e1);
-          border-radius: 12px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          color: white;
-          margin-bottom: 1rem;
-      }
     </style>
     <!-- END CUSTOM FONT -->
   </head>
@@ -132,7 +110,7 @@
                 <div class="col">
                   <!-- BEGIN NAVBAR MENU -->
                   <ul class="navbar-nav">
-                    <li class="nav-item active">
+                    <li class="nav-item">
                       <a class="nav-link" href="index.html">
                         <span class="nav-link-icon d-md-none d-lg-inline-block">
                           <svg
@@ -202,7 +180,7 @@
                         <span class="nav-link-title"> Product </span>
                       </a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item active">
                       <a class="nav-link" href="finance.html">
                         <span class="nav-link-icon d-md-none d-lg-inline-block">
                           <svg
@@ -239,8 +217,8 @@
           <div class="container-xl">
             <div class="row g-2 align-items-center">
               <div class="col">
-                <h2 class="page-title">Portal Home</h2>
-                <div class="text-secondary mt-1">Welcome to your analytics portal</div>
+                <h2 class="page-title">Finance Analytics</h2>
+                <div class="text-secondary mt-1">Financial reports and revenue analytics dashboard</div>
               </div>
             </div>
           </div>
@@ -249,50 +227,53 @@
         <!-- BEGIN PAGE BODY -->
         <div class="page-body">
           <div class="container-xl">
-            <div class="row g-4">
-              <div class="col-md-4">
-                <div class="card card-portal" onclick="window.location.href='cx.html'">
-                  <div class="card-body text-center">
-                    <div class="icon-portal mx-auto">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                        <circle cx="12" cy="7" r="4"></circle>
-                      </svg>
+            <div class="row g-4 justify-content-center">
+              <div class="col-md-8 col-lg-6">
+                <div class="card">
+                  <div class="card-body text-center py-5">
+                    <div class="mb-3">
+                      <span class="avatar avatar-xl bg-yellow-lt">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="48"
+                          height="48"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="1.5"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          class="icon icon-1"
+                        >
+                          <path d="M17 8v-3a1 1 0 0 0 -1 -1h-10a2 2 0 0 0 0 4h12a1 1 0 0 1 1 1v3m0 4v3a1 1 0 0 1 -1 1h-12a2 2 0 0 1 -2 -2v-12" />
+                          <path d="M20 12v4h-4a2 2 0 0 1 0 -4h4" />
+                        </svg>
+                      </span>
                     </div>
-                    <h3 class="card-title">Customer Experience</h3>
-                    <p class="text-secondary">Access dashboards for tickets, calls, and customer analytics</p>
-                  </div>
-                </div>
-              </div>
-              
-              <div class="col-md-4">
-                <div class="card card-portal" onclick="window.location.href='product.html'">
-                  <div class="card-body text-center">
-                    <div class="icon-portal mx-auto">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M12 3l8 4.5l0 9l-8 4.5l-8 -4.5l0 -9l8 -4.5"></path>
-                        <path d="M12 12l8 -4.5"></path>
-                        <path d="M12 12l0 9"></path>
-                        <path d="M12 12l-8 -4.5"></path>
-                      </svg>
+                    <h3 class="card-title">Finance Analytics</h3>
+                    <p class="text-secondary">This section is currently under development.</p>
+                    <p class="text-secondary">Financial reports, revenue analytics, and cost management tools will be available here soon.</p>
+                    <div class="mt-4">
+                      <a href="index.html" class="btn btn-primary">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          class="icon icon-2 me-2"
+                        >
+                          <path d="M5 12l-2 0l9 -9l9 9l-2 0" />
+                          <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+                          <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+                        </svg>
+                        Back to Portal
+                      </a>
                     </div>
-                    <h3 class="card-title">Product</h3>
-                    <p class="text-secondary">Product analytics and performance metrics</p>
-                  </div>
-                </div>
-              </div>
-              
-              <div class="col-md-4">
-                <div class="card card-portal" onclick="window.location.href='finance.html'">
-                  <div class="card-body text-center">
-                    <div class="icon-portal mx-auto">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M17 8v-3a1 1 0 0 0 -1 -1h-10a2 2 0 0 0 0 4h12a1 1 0 0 1 1 1v3m0 4v3a1 1 0 0 1 -1 1h-12a2 2 0 0 1 -2 -2v-12" />
-                        <path d="M20 12v4h-4a2 2 0 0 1 0 -4h4" />
-                      </svg>
-                    </div>
-                    <h3 class="card-title">Finance</h3>
-                    <p class="text-secondary">Financial reports and business analytics</p>
                   </div>
                 </div>
               </div>
@@ -306,8 +287,8 @@
             <div class="row text-center align-items-center flex-row-reverse">
               <div class="col-lg-auto ms-lg-auto">
                 <ul class="list-inline list-inline-dots mb-0">
-                  <li class="list-inline-item"><a href="dash.html" target="_blank" class="link-secondary" rel="noopener">Analytics Dashboard</a></li>
-                  <li class="list-inline-item"><a href="tickets.html" class="link-secondary">Tickets</a></li>
+                  <li class="list-inline-item"><a href="cx.html" class="link-secondary" rel="noopener">Customer Experience</a></li>
+                  <li class="list-inline-item"><a href="product.html" class="link-secondary">Product</a></li>
                   <li class="list-inline-item">
                     <a href="#" class="link-secondary">
                       <svg

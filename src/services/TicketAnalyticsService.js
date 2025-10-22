@@ -1,34 +1,69 @@
 const ZendeskClient = require('../ZendeskClient');
+const TicketCacheService = require('./TicketCacheService');
 
 /**
  * Ticket Analytics Service for Dashboard
  * Provides business ticket analytics by date (excludes automated call tickets)
+ * Uses caching to reduce API calls - only fetches today's data real-time
  */
 class TicketAnalyticsService {
   constructor() {
     this.client = new ZendeskClient();
+    this.cache = new TicketCacheService();
     this.ticketStatuses = ['new', 'open', 'pending', 'hold', 'solved', 'closed'];
   }
 
   /**
    * Get 5-day ticket analytics with status breakdown
+   * Uses cache for previous days, fetches today's data real-time
    */
-  async get5DayTicketAnalytics() {
+  async get5DayTicketAnalytics(forceRefresh = false) {
     try {
-      console.log('🎫 Fetching 5-day ticket analytics...');
+      console.log(`🎫 Fetching 5-day ticket analytics${forceRefresh ? ' (force refresh)' : ''}...`);
       
       // Generate last 5 days
       const dates = this.getLast5Days();
+      const today = new Date().toISOString().split('T')[0];
       
       // Get data for each day
       const dailyData = [];
       for (const date of dates) {
-        const dayData = await this.getTicketDataForDate(date);
+        let dayData;
+        
+        if (forceRefresh) {
+          // Force refresh: fetch from API and update cache
+          console.log(`🔄 Force refreshing data for ${date}...`);
+          dayData = await this.getTicketDataForDate(date);
+          await this.cache.setCachedData(date, dayData);
+        } else if (date === today) {
+          // Today: check if cache is fresh (< 15 minutes), otherwise fetch new data
+          const isFresh = await this.cache.isTodayDataFresh(date);
+          if (isFresh) {
+            console.log(`📅 Using fresh cached data for today (${date})`);
+            dayData = await this.cache.getCachedData(date);
+          } else {
+            console.log(`📅 Fetching fresh data for today (${date})`);
+            dayData = await this.getTicketDataForDate(date);
+            await this.cache.setCachedData(date, dayData);
+          }
+        } else {
+          // Previous days: use cache if available, otherwise fetch and cache
+          dayData = await this.cache.getCachedData(date);
+          if (!dayData) {
+            console.log(`📅 Cache miss for ${date}, fetching from API...`);
+            dayData = await this.getTicketDataForDate(date);
+            await this.cache.setCachedData(date, dayData);
+          }
+        }
+        
         dailyData.push(dayData);
       }
       
       // Format for dashboard
       const formattedData = this.formatForDashboard(dailyData);
+      
+      // Add cache info to response
+      formattedData.data.cache_info = await this.cache.getCacheStats();
       
       console.log('✅ Ticket analytics retrieved successfully');
       return formattedData;
@@ -358,7 +393,8 @@ class TicketAnalyticsService {
    * Get day name from date string
    */
   getDayName(dateStr) {
-    const date = new Date(dateStr);
+    // Fix timezone issue by explicitly setting local midnight
+    const date = new Date(dateStr + 'T00:00:00');
     const today = new Date();
     const yesterday = new Date(today);
     yesterday.setDate(today.getDate() - 1);
@@ -369,6 +405,32 @@ class TicketAnalyticsService {
       return 'Yesterday';
     } else {
       return date.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+    }
+  }
+
+  /**
+   * Clear cache for ticket analytics
+   */
+  async clearCache() {
+    try {
+      await this.cache.clearAllCache();
+      console.log('🗑️ Ticket analytics cache cleared');
+      return { success: true, message: 'Cache cleared successfully' };
+    } catch (error) {
+      console.error('❌ Error clearing cache:', error.message);
+      return { success: false, error: error.message };
+    }
+  }
+
+  /**
+   * Get cache statistics
+   */
+  async getCacheStats() {
+    try {
+      return await this.cache.getCacheStats();
+    } catch (error) {
+      console.error('❌ Error getting cache stats:', error.message);
+      return null;
     }
   }
 

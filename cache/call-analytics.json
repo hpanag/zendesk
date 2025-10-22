@@ -1,0 +1,546 @@
+{
+  "daily_data": {
+    "2025-09-23": {
+      "data": {
+        "date": "2025-09-23",
+        "day_name": "Tue, Sep 23",
+        "total_calls": 164,
+        "answered_calls": 118,
+        "unanswered_calls": 46,
+        "callbacks": 28,
+        "voicemails": 3,
+        "exceeded_wait_time": 38,
+        "outbound_calls": 7,
+        "inbound_calls": 157,
+        "answer_rate": 72,
+        "callback_rate": 17,
+        "error": null
+      },
+      "cached_at": "2025-10-22T15:20:20.009Z"
+    },
+    "2025-09-24": {
+      "data": {
+        "date": "2025-09-24",
+        "day_name": "Wed, Sep 24",
+        "total_calls": 156,
+        "answered_calls": 112,
+        "unanswered_calls": 44,
+        "callbacks": 27,
+        "voicemails": 3,
+        "exceeded_wait_time": 36,
+        "outbound_calls": 6,
+        "inbound_calls": 150,
+        "answer_rate": 72,
+        "callback_rate": 17,
+        "error": null
+      },
+      "cached_at": "2025-10-22T15:20:20.523Z"
+    },
+    "2025-09-25": {
+      "data": {
+        "date": "2025-09-25",
+        "day_name": "Thu, Sep 25",
+        "total_calls": 155,
+        "answered_calls": 112,
+        "unanswered_calls": 43,
+        "callbacks": 26,
+        "voicemails": 3,
+        "exceeded_wait_time": 36,
+        "outbound_calls": 6,
+        "inbound_calls": 149,
+        "answer_rate": 72,
+        "callback_rate": 17,
+        "error": null
+      },
+      "cached_at": "2025-10-22T15:20:21.044Z"
+    },
+    "2025-09-26": {
+      "data": {
+        "date": "2025-09-26",
+        "day_name": "Fri, Sep 26",
+        "total_calls": 123,
+        "answered_calls": 89,
+        "unanswered_calls": 34,
+        "callbacks": 21,
+        "voicemails": 2,
+        "exceeded_wait_time": 29,
+        "outbound_calls": 5,
+        "inbound_calls": 118,
+        "answer_rate": 72,
+        "callback_rate": 17,
+        "error": null
+      },
+      "cached_at": "2025-10-22T15:20:21.529Z"
+    },
+    "2025-09-27": {
+      "data": {
+        "date": "2025-09-27",
+        "day_name": "Sat, Sep 27",
+        "total_calls": 100,
+        "answered_calls": 72,
+        "unanswered_calls": 28,
+        "callbacks": 17,
+        "voicemails": 2,
+        "exceeded_wait_time": 23,
+        "outbound_calls": 4,
+        "inbound_calls": 96,
+        "answer_rate": 72,
+        "callback_rate": 17,
+        "error": null
+      },
+      "cached_at": "2025-10-22T15:20:21.803Z"
+    },
+    "2025-09-28": {
+      "data": {
+        "date": "2025-09-28",
+        "day_name": "Sun, Sep 28",
+        "total_calls": 63,
+        "answered_calls": 45,
+        "unanswered_calls": 18,
+        "callbacks": 11,
+        "voicemails": 1,
+        "exceeded_wait_time": 15,
+        "outbound_calls": 3,
+        "inbound_calls": 60,
+        "answer_rate": 71,
+        "callback_rate": 17,
+        "error": null
+      },
+      "cached_at": "2025-10-22T15:20:22.038Z"
+    },
+    "2025-09-29": {
+      "data": {
+        "date": "2025-09-29",
+        "day_name": "Mon, Sep 29",
+        "total_calls": 38,
+        "answered_calls": 27,
+        "unanswered_calls": 11,
+        "callbacks": 6,
+        "voicemails": 1,
+        "exceeded_wait_time": 9,
+        "outbound_calls": 2,
+        "inbound_calls": 36,
+        "answer_rate": 71,
+        "callback_rate": 16,
+        "error": null
+      },
+      "cached_at": "2025-10-22T15:20:22.535Z"
+    },
+    "2025-09-30": {
+      "data": {
+        "date": "2025-09-30",
+        "day_name": "Tue, Sep 30",
+        "total_calls": 171,
+        "answered_calls": 123,
+        "unanswered_calls": 48,
+        "callbacks": 29,
+        "voicemails": 3,
+        "exceeded_wait_time": 40,
+        "outbound_calls": 7,
+        "inbound_calls": 164,
+        "answer_rate": 72,
+        "callback_rate": 17,
+        "error": null
+      },
+      "cached_at": "2025-10-22T15:20:23.050Z"
+    },
+    "2025-10-01": {
+      "data": {
+        "date": "2025-10-01",
+        "day_name": "Wed, Oct 1",
+        "total_calls": 151,
+        "answered_calls": 109,
+        "unanswered_calls": 42,
+        "callbacks": 26,
+        "voicemails": 3,
+        "exceeded_wait_time": 35,
+        "outbound_calls": 6,
+        "inbound_calls": 145,
+        "answer_rate": 72,
+        "callback_rate": 17,
+        "error": null
+      },
+      "cached_at": "2025-10-22T15:20:23.560Z"
+    },
+    "2025-10-02": {
+      "data": {
+        "date": "2025-10-02",
+        "day_name": "Thu, Oct 2",
+        "total_calls": 149,
+        "answered_calls": 107,
+        "unanswered_calls": 42,
+        "callbacks": 25,
+        "voicemails": 3,
+        "exceeded_wait_time": 35,
+        "outbound_calls": 6,
+        "inbound_calls": 143,
+        "answer_rate": 72,
+        "callback_rate": 17,
+        "error": null
+      },
+      "cached_at": "2025-10-22T15:20:24.047Z"
+    },
+    "2025-10-03": {
+      "data": {
+        "date": "2025-10-03",
+        "day_name": "Fri, Oct 3",
+        "total_calls": 138,
+        "answered_calls": 99,
+        "unanswered_calls": 39,
+        "callbacks": 24,
+        "voicemails": 3,
+        "exceeded_wait_time": 32,
+        "outbound_calls": 6,
+        "inbound_calls": 132,
+        "answer_rate": 72,
+        "callback_rate": 17,
+        "error": null
+      },
+      "cached_at": "2025-10-22T15:20:24.560Z"
+    },
+    "2025-10-04": {
+      "data": {
+        "date": "2025-10-04",
+        "day_name": "Sat, Oct 4",
+        "total_calls": 101,
+        "answered_calls": 73,
+        "unanswered_calls": 28,
+        "callbacks": 17,
+        "voicemails": 2,
+        "exceeded_wait_time": 23,
+        "outbound_calls": 4,
+        "inbound_calls": 97,
+        "answer_rate": 72,
+        "callback_rate": 17,
+        "error": null
+      },
+      "cached_at": "2025-10-22T15:20:25.086Z"
+    },
+    "2025-10-05": {
+      "data": {
+        "date": "2025-10-05",
+        "day_name": "Sun, Oct 5",
+        "total_calls": 60,
+        "answered_calls": 43,
+        "unanswered_calls": 17,
+        "callbacks": 10,
+        "voicemails": 1,
+        "exceeded_wait_time": 14,
+        "outbound_calls": 2,
+        "inbound_calls": 58,
+        "answer_rate": 72,
+        "callback_rate": 17,
+        "error": null
+      },
+      "cached_at": "2025-10-22T15:20:25.618Z"
+    },
+    "2025-10-06": {
+      "data": {
+        "date": "2025-10-06",
+        "day_name": "Mon, Oct 6",
+        "total_calls": 36,
+        "answered_calls": 26,
+        "unanswered_calls": 10,
+        "callbacks": 6,
+        "voicemails": 1,
+        "exceeded_wait_time": 8,
+        "outbound_calls": 1,
+        "inbound_calls": 35,
+        "answer_rate": 72,
+        "callback_rate": 17,
+        "error": null
+      },
+      "cached_at": "2025-10-22T15:20:25.815Z"
+    },
+    "2025-10-07": {
+      "data": {
+        "date": "2025-10-07",
+        "day_name": "Tue, Oct 7",
+        "total_calls": 154,
+        "answered_calls": 111,
+        "unanswered_calls": 43,
+        "callbacks": 26,
+        "voicemails": 3,
+        "exceeded_wait_time": 36,
+        "outbound_calls": 6,
+        "inbound_calls": 148,
+        "answer_rate": 72,
+        "callback_rate": 17,
+        "error": null
+      },
+      "cached_at": "2025-10-22T15:20:26.332Z"
+    },
+    "2025-10-08": {
+      "data": {
+        "date": "2025-10-08",
+        "day_name": "Wed, Oct 8",
+        "total_calls": 145,
+        "answered_calls": 104,
+        "unanswered_calls": 41,
+        "callbacks": 25,
+        "voicemails": 3,
+        "exceeded_wait_time": 34,
+        "outbound_calls": 6,
+        "inbound_calls": 139,
+        "answer_rate": 72,
+        "callback_rate": 17,
+        "error": null
+      },
+      "cached_at": "2025-10-22T15:20:26.550Z"
+    },
+    "2025-10-09": {
+      "data": {
+        "date": "2025-10-09",
+        "day_name": "Thu, Oct 9",
+        "total_calls": 138,
+        "answered_calls": 99,
+        "unanswered_calls": 39,
+        "callbacks": 24,
+        "voicemails": 3,
+        "exceeded_wait_time": 32,
+        "outbound_calls": 6,
+        "inbound_calls": 132,
+        "answer_rate": 72,
+        "callback_rate": 17,
+        "error": null
+      },
+      "cached_at": "2025-10-22T15:20:27.100Z"
+    },
+    "2025-10-10": {
+      "data": {
+        "date": "2025-10-10",
+        "day_name": "Fri, Oct 10",
+        "total_calls": 120,
+        "answered_calls": 86,
+        "unanswered_calls": 34,
+        "callbacks": 20,
+        "voicemails": 2,
+        "exceeded_wait_time": 28,
+        "outbound_calls": 5,
+        "inbound_calls": 115,
+        "answer_rate": 72,
+        "callback_rate": 17,
+        "error": null
+      },
+      "cached_at": "2025-10-22T15:20:27.646Z"
+    },
+    "2025-10-11": {
+      "data": {
+        "date": "2025-10-11",
+        "day_name": "Sat, Oct 11",
+        "total_calls": 114,
+        "answered_calls": 82,
+        "unanswered_calls": 32,
+        "callbacks": 19,
+        "voicemails": 2,
+        "exceeded_wait_time": 26,
+        "outbound_calls": 5,
+        "inbound_calls": 109,
+        "answer_rate": 72,
+        "callback_rate": 17,
+        "error": null
+      },
+      "cached_at": "2025-10-22T15:20:28.197Z"
+    },
+    "2025-10-12": {
+      "data": {
+        "date": "2025-10-12",
+        "day_name": "Sun, Oct 12",
+        "total_calls": 66,
+        "answered_calls": 47,
+        "unanswered_calls": 19,
+        "callbacks": 11,
+        "voicemails": 1,
+        "exceeded_wait_time": 15,
+        "outbound_calls": 3,
+        "inbound_calls": 63,
+        "answer_rate": 71,
+        "callback_rate": 17,
+        "error": null
+      },
+      "cached_at": "2025-10-22T15:20:28.409Z"
+    },
+    "2025-10-13": {
+      "data": {
+        "date": "2025-10-13",
+        "day_name": "Mon, Oct 13",
+        "total_calls": 35,
+        "answered_calls": 25,
+        "unanswered_calls": 10,
+        "callbacks": 6,
+        "voicemails": 1,
+        "exceeded_wait_time": 8,
+        "outbound_calls": 1,
+        "inbound_calls": 34,
+        "answer_rate": 71,
+        "callback_rate": 17,
+        "error": null
+      },
+      "cached_at": "2025-10-22T15:20:28.650Z"
+    },
+    "2025-10-14": {
+      "data": {
+        "date": "2025-10-14",
+        "day_name": "Tue, Oct 14",
+        "total_calls": 179,
+        "answered_calls": 129,
+        "unanswered_calls": 50,
+        "callbacks": 31,
+        "voicemails": 4,
+        "exceeded_wait_time": 41,
+        "outbound_calls": 7,
+        "inbound_calls": 172,
+        "answer_rate": 72,
+        "callback_rate": 17,
+        "error": null
+      },
+      "cached_at": "2025-10-22T15:20:29.014Z"
+    },
+    "2025-10-15": {
+      "data": {
+        "date": "2025-10-15",
+        "day_name": "Wed, Oct 15",
+        "total_calls": 153,
+        "answered_calls": 110,
+        "unanswered_calls": 43,
+        "callbacks": 26,
+        "voicemails": 3,
+        "exceeded_wait_time": 35,
+        "outbound_calls": 6,
+        "inbound_calls": 147,
+        "answer_rate": 72,
+        "callback_rate": 17,
+        "error": null
+      },
+      "cached_at": "2025-10-22T15:20:29.260Z"
+    },
+    "2025-10-16": {
+      "data": {
+        "date": "2025-10-16",
+        "day_name": "Thu, Oct 16",
+        "total_calls": 139,
+        "answered_calls": 100,
+        "unanswered_calls": 39,
+        "callbacks": 24,
+        "voicemails": 3,
+        "exceeded_wait_time": 32,
+        "outbound_calls": 6,
+        "inbound_calls": 133,
+        "answer_rate": 72,
+        "callback_rate": 17,
+        "error": null
+      },
+      "cached_at": "2025-10-22T15:20:29.822Z"
+    },
+    "2025-10-17": {
+      "data": {
+        "date": "2025-10-17",
+        "day_name": "Fri, Oct 17",
+        "total_calls": 142,
+        "answered_calls": 102,
+        "unanswered_calls": 40,
+        "callbacks": 24,
+        "voicemails": 3,
+        "exceeded_wait_time": 33,
+        "outbound_calls": 6,
+        "inbound_calls": 136,
+        "answer_rate": 72,
+        "callback_rate": 17,
+        "error": null
+      },
+      "cached_at": "2025-10-22T15:20:30.197Z"
+    },
+    "2025-10-18": {
+      "data": {
+        "date": "2025-10-18",
+        "day_name": "Sat, Oct 18",
+        "total_calls": 106,
+        "answered_calls": 76,
+        "unanswered_calls": 30,
+        "callbacks": 18,
+        "voicemails": 2,
+        "exceeded_wait_time": 25,
+        "outbound_calls": 4,
+        "inbound_calls": 102,
+        "answer_rate": 72,
+        "callback_rate": 17,
+        "error": null
+      },
+      "cached_at": "2025-10-22T15:20:30.751Z"
+    },
+    "2025-10-19": {
+      "data": {
+        "date": "2025-10-19",
+        "day_name": "Sun, Oct 19",
+        "total_calls": 57,
+        "answered_calls": 41,
+        "unanswered_calls": 16,
+        "callbacks": 10,
+        "voicemails": 1,
+        "exceeded_wait_time": 13,
+        "outbound_calls": 2,
+        "inbound_calls": 55,
+        "answer_rate": 72,
+        "callback_rate": 18,
+        "error": null
+      },
+      "cached_at": "2025-10-22T15:20:31.000Z"
+    },
+    "2025-10-20": {
+      "data": {
+        "date": "2025-10-20",
+        "day_name": "Mon, Oct 20",
+        "total_calls": 36,
+        "answered_calls": 26,
+        "unanswered_calls": 10,
+        "callbacks": 6,
+        "voicemails": 1,
+        "exceeded_wait_time": 8,
+        "outbound_calls": 1,
+        "inbound_calls": 35,
+        "answer_rate": 72,
+        "callback_rate": 17,
+        "error": null
+      },
+      "cached_at": "2025-10-22T15:20:31.548Z"
+    },
+    "2025-10-21": {
+      "data": {
+        "date": "2025-10-21",
+        "day_name": "Yesterday",
+        "total_calls": 168,
+        "answered_calls": 121,
+        "unanswered_calls": 47,
+        "callbacks": 29,
+        "voicemails": 3,
+        "exceeded_wait_time": 39,
+        "outbound_calls": 7,
+        "inbound_calls": 161,
+        "answer_rate": 72,
+        "callback_rate": 17,
+        "error": null
+      },
+      "cached_at": "2025-10-22T15:20:31.780Z"
+    },
+    "2025-10-22": {
+      "data": {
+        "date": "2025-10-22",
+        "day_name": "Today",
+        "total_calls": 157,
+        "answered_calls": 116,
+        "unanswered_calls": 41,
+        "callbacks": 33,
+        "voicemails": 3,
+        "exceeded_wait_time": 36,
+        "outbound_calls": 6,
+        "inbound_calls": 151,
+        "answer_rate": 74,
+        "callback_rate": 21,
+        "error": null
+      },
+      "cached_at": "2025-10-22T16:14:56.999Z"
+    }
+  },
+  "last_updated": "2025-10-22T16:14:56.999Z",
+  "version": "1.0"
+}

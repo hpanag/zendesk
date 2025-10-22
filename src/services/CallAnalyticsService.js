@@ -1,36 +1,172 @@
 const ZendeskReportingService = require('./ZendeskReportingService');
+const CallAnalyticsCacheService = require('./CallAnalyticsCacheService');
 
 /**
  * Call Analytics Service for Dashboard
  * Provides 30-day call data with answered/unanswered breakdown
+ * Uses caching to reduce API calls - only fetches today's data real-time
  */
 class CallAnalyticsService {
   constructor() {
     this.reportingService = new ZendeskReportingService();
+    this.cache = new CallAnalyticsCacheService();
   }
 
   /**
    * Get formatted 30-day call analytics for dashboard
+   * Uses cache for previous days, fetches today's data real-time
    */
-  async get30DayCallAnalytics(phoneNumberIds = null) {
+  async get30DayCallAnalytics(phoneNumberIds = null, forceRefresh = false) {
     try {
-      console.log('📞 Fetching 30-day call analytics...');
+      console.log(`📞 Fetching 30-day call analytics${forceRefresh ? ' (force refresh)' : ''}...`);
       
-      // Get raw data from Zendesk
-      const rawData = await this.reportingService.getLast30DaysCallData(phoneNumberIds);
+      // Generate last 30 days
+      const dates = this.getLast30Days();
+      const today = new Date().toISOString().split('T')[0];
       
-      // Process the data to get answered/unanswered counts
-      const processedData = this.reportingService.processCallData(rawData);
+      // Get data for each day
+      const dailyData = [];
+      for (const date of dates) {
+        let dayData;
+        
+        if (forceRefresh) {
+          // Force refresh: fetch from API and update cache
+          console.log(`🔄 Force refreshing call data for ${date}...`);
+          dayData = await this.getCallDataForDate(date, phoneNumberIds);
+          await this.cache.setCachedData(date, dayData);
+        } else if (date === today) {
+          // Today: check if cache is fresh (< 15 minutes), otherwise fetch new data
+          const isFresh = await this.cache.isTodayDataFresh(date);
+          if (isFresh) {
+            console.log(`📅 Using fresh cached call data for today (${date})`);
+            dayData = await this.cache.getCachedData(date);
+          } else {
+            console.log(`📅 Fetching fresh call data for today (${date})`);
+            dayData = await this.getCallDataForDate(date, phoneNumberIds);
+            await this.cache.setCachedData(date, dayData);
+          }
+        } else {
+          // Previous days: use cache if available, otherwise fetch and cache
+          dayData = await this.cache.getCachedData(date);
+          if (!dayData) {
+            console.log(`📅 Cache miss for ${date}, fetching call data from API...`);
+            dayData = await this.getCallDataForDate(date, phoneNumberIds);
+            await this.cache.setCachedData(date, dayData);
+          }
+        }
+        
+        dailyData.push(dayData);
+      }
       
       // Format for dashboard consumption
-      const dashboardData = this.formatForDashboard(processedData);
+      const dashboardData = this.formatForDashboard(dailyData);
+      
+      // Add cache info to response
+      dashboardData.data.cache_info = await this.cache.getCacheStats();
       
       console.log('✅ Call analytics retrieved successfully');
       return dashboardData;
       
     } catch (error) {
       console.error('❌ Error fetching call analytics:', error.message);
-      throw error;
+      return {
+        success: false,
+        error: error.message,
+        last_updated: new Date().toISOString()
+      };
+    }
+  }
+
+  /**
+   * Get last 30 days as date strings
+   */
+  getLast30Days() {
+    const dates = [];
+    for (let i = 29; i >= 0; i--) {
+      const date = new Date();
+      date.setDate(date.getDate() - i);
+      dates.push(date.toISOString().split('T')[0]);
+    }
+    return dates;
+  }
+
+  /**
+   * Get call data for a specific date
+   */
+  async getCallDataForDate(dateStr, phoneNumberIds = null) {
+    try {
+      console.log(`📊 Fetching call stats for ${dateStr}...`);
+      
+      // Get call data for this specific date using the correct method
+      const dayData = await this.reportingService.getDailyCallStats(dateStr, phoneNumberIds);
+      
+      // Extract data from the overview object if it exists
+      const overview = dayData.overview || {};
+      const totalCalls = overview.total_calls || 0;
+      const answeredCalls = overview.answered_calls || 0;
+      const unansweredCalls = overview.missed_calls || overview.abandoned_calls || overview.unanswered_calls || 0;
+      
+      console.log(`📊 ${dateStr} data: ${totalCalls} total, ${answeredCalls} answered, ${unansweredCalls} unanswered`);
+      
+      return {
+        date: dateStr,
+        day_name: this.getDayName(dateStr),
+        total_calls: totalCalls,
+        answered_calls: answeredCalls,
+        unanswered_calls: unansweredCalls,
+        callbacks: overview.callbacks || 0,
+        voicemails: overview.voicemails || 0,
+        exceeded_wait_time: overview.exceeded_wait_time || 0,
+        outbound_calls: overview.outbound_calls || 0,
+        inbound_calls: overview.inbound_calls || (totalCalls - (overview.outbound_calls || 0)),
+        answer_rate: totalCalls > 0 ? Math.round((answeredCalls / totalCalls) * 100) : 0,
+        callback_rate: totalCalls > 0 ? Math.round(((overview.callbacks || 0) / totalCalls) * 100) : 0,
+        error: dayData.error || null
+      };
+      
+    } catch (error) {
+      console.error(`❌ Error getting call data for ${dateStr}:`, error.message);
+      return {
+        date: dateStr,
+        day_name: this.getDayName(dateStr),
+        total_calls: 0,
+        answered_calls: 0,
+        unanswered_calls: 0,
+        callbacks: 0,
+        voicemails: 0,
+        exceeded_wait_time: 0,
+        outbound_calls: 0,
+        inbound_calls: 0,
+        answer_rate: 0,
+        callback_rate: 0,
+        error: error.message
+      };
+    }
+  }
+
+  /**
+   * Clear cache for call analytics
+   */
+  async clearCache() {
+    try {
+      await this.cache.clearAllCache();
+      console.log('🗑️ Call analytics cache cleared');
+      return { success: true, message: 'Cache cleared successfully' };
+    } catch (error) {
+      console.error('❌ Error clearing call cache:', error.message);
+      return { success: false, error: error.message };
+    }
+  }
+
+  /**
+   * Get cache statistics
+   */
+  async getCacheStats() {
+    try {
+      return await this.cache.getCacheStats();
+    } catch (error) {
+      console.error('❌ Error getting call cache stats:', error.message);
+      return null;
     }
   }
 
@@ -157,7 +293,8 @@ class CallAnalyticsService {
    * Get day name from date string
    */
   getDayName(dateStr) {
-    const date = new Date(dateStr);
+    // Fix timezone issue by explicitly setting local midnight
+    const date = new Date(dateStr + 'T00:00:00');
     const today = new Date();
     const yesterday = new Date(today);
     yesterday.setDate(today.getDate() - 1);

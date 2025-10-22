@@ -114,7 +114,10 @@
             <div class="row g-2 align-items-center">
               <div class="col">
                 <h2 class="page-title">Ticket Analytics Dashboard</h2>
-                <div class="text-secondary mt-1">Ticket Status Breakdown - Last 5 Days</div>
+                <div class="text-secondary mt-1">
+                  Ticket Status Breakdown - Last 5 Days
+                  <span id="cache-status" class="badge badge-sm ms-2" style="display: none;"></span>
+                </div>
               </div>
             </div>
           </div>
@@ -139,14 +142,22 @@
                       Ticket Analytics - Last 5 Days
                     </h3>
                     <div class="card-actions">
-                      <button class="btn btn-outline-primary btn-sm" id="refresh-ticket-analytics">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                          <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                          <path d="M20 11a8.1 8.1 0 0 0 -15.5 -2m-.5 -4v4h4"/>
-                          <path d="M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4"/>
-                        </svg>
-                        Refresh
-                      </button>
+                      <div class="d-flex align-items-center gap-2">
+                        <div class="form-check form-switch m-0">
+                          <input class="form-check-input" type="checkbox" id="force-refresh-toggle" title="When enabled, refreshes all data from API instead of using cache">
+                          <label class="form-check-label text-secondary small" for="force-refresh-toggle">
+                            Refresh All
+                          </label>
+                        </div>
+                        <button class="btn btn-outline-primary btn-sm" id="refresh-ticket-analytics">
+                          <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                            <path d="M20 11a8.1 8.1 0 0 0 -15.5 -2m-.5 -4v4h4"/>
+                            <path d="M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4"/>
+                          </svg>
+                          Refresh
+                        </button>
+                      </div>
                     </div>
                   </div>
                   <div class="card-body">
@@ -399,13 +410,27 @@
           if (this.isLoading) return;
           
           const refreshBtn = document.getElementById('refresh-ticket-analytics');
+          const forceRefreshToggle = document.getElementById('force-refresh-toggle');
           const originalHTML = refreshBtn.innerHTML;
           
           try {
             refreshBtn.disabled = true;
-            refreshBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status"></span>Refreshing...';
+            const forceRefresh = forceRefreshToggle.checked;
             
-            await this.loadTicketAnalytics();
+            if (forceRefresh) {
+              refreshBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status"></span>Refreshing All...';
+              console.log('🔄 Force refresh requested - fetching all data from API');
+            } else {
+              refreshBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status"></span>Refreshing...';
+              console.log('📅 Smart refresh - only fetching today\'s data');
+            }
+            
+            await this.loadTicketAnalytics(forceRefresh);
+            
+            // Reset toggle after successful refresh
+            if (forceRefresh) {
+              forceRefreshToggle.checked = false;
+            }
             
           } finally {
             refreshBtn.disabled = false;
@@ -414,18 +439,24 @@
         },
 
         // Load ticket analytics data (main API call)
-        async loadTicketAnalytics() {
+        async loadTicketAnalytics(forceRefresh = false) {
           if (this.isLoading) return;
           this.isLoading = true;
 
           try {
-            console.log('🎫 Loading ticket analytics...');
+            console.log(`🎫 Loading ticket analytics${forceRefresh ? ' (force refresh)' : ''}...`);
             
             // Show loading state
             this.showLoadingState();
             
+            // Build API URL with forceRefresh parameter if needed
+            let apiUrl = '/api/ticket-analytics/5-day';
+            if (forceRefresh) {
+              apiUrl += '?forceRefresh=true';
+            }
+            
             // Single API call to get all data
-            const response = await fetch('/api/ticket-analytics/5-day');
+            const response = await fetch(apiUrl);
             
             if (!response.ok) {
               throw new Error(`HTTP ${response.status}: ${response.statusText}`);
@@ -441,12 +472,14 @@
             this.updateSummaryCards(result.data.summary);
             this.updateTable(result.data.daily_breakdown);
             this.updateChart(result.data.chart_data);
+            this.updateCacheStatus(result.data.cache_info, forceRefresh);
             
             console.log('✅ Ticket analytics loaded successfully');
             
           } catch (error) {
             console.error('❌ Error loading ticket analytics:', error);
             this.showErrorState(error.message);
+            this.updateCacheStatus(null, false, true);
           } finally {
             this.isLoading = false;
           }
@@ -488,6 +521,39 @@
           // Update chart
           document.getElementById('chart-ticket-analytics-5day').innerHTML = 
             `<div class="alert alert-danger">Error loading ticket analytics: ${errorMessage}</div>`;
+        },
+
+        // Update cache status display
+        updateCacheStatus(cacheInfo, forceRefresh = false, hasError = false) {
+          const cacheStatus = document.getElementById('cache-status');
+          
+          if (hasError) {
+            cacheStatus.className = 'badge badge-sm ms-2 bg-danger';
+            cacheStatus.textContent = 'Error';
+            cacheStatus.style.display = 'inline-block';
+            return;
+          }
+          
+          if (!cacheInfo) {
+            cacheStatus.style.display = 'none';
+            return;
+          }
+          
+          if (forceRefresh) {
+            cacheStatus.className = 'badge badge-sm ms-2 bg-success';
+            cacheStatus.textContent = 'All Data Refreshed';
+            cacheStatus.title = 'All data fetched fresh from API';
+          } else if (cacheInfo.fresh_entries > 0) {
+            cacheStatus.className = 'badge badge-sm ms-2 bg-info';
+            cacheStatus.textContent = `${cacheInfo.fresh_entries} Cached`;
+            cacheStatus.title = `${cacheInfo.fresh_entries} days from cache, today from API`;
+          } else {
+            cacheStatus.className = 'badge badge-sm ms-2 bg-primary';
+            cacheStatus.textContent = 'Real-time';
+            cacheStatus.title = 'All data fetched from API';
+          }
+          
+          cacheStatus.style.display = 'inline-block';
         },
 
         // Update summary cards with data

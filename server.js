@@ -96,16 +96,25 @@ async function handleCallAnalyticsRequest(req, res, period = '5-day') {
   try {
     console.log(`📊 Fetching ${period} call analytics...`);
     
+    // Check for forceRefresh query parameter
+    const url = new URL(req.url, `http://localhost:${PORT}`);
+    const forceRefresh = url.searchParams.get('forceRefresh') === 'true';
+    
+    if (forceRefresh) {
+      console.log('🔄 Force refresh requested - fetching all call data from API');
+    }
+    
     let analytics;
     if (period === '30-day') {
-      analytics = await callAnalytics.get30DayCallAnalytics();
+      analytics = await callAnalytics.get30DayCallAnalytics(null, forceRefresh);
     } else {
-      analytics = await callAnalytics.get5DayCallAnalytics();
+      analytics = await callAnalytics.get5DayCallAnalytics(forceRefresh);
     }
     
     console.log('📈 Analytics data received, preparing response...');
     console.log('📋 Analytics success:', analytics?.success);
     console.log('📋 Analytics data keys:', analytics?.data ? Object.keys(analytics.data) : 'No data');
+    console.log('📋 Cache info:', analytics?.data?.cache_info ? `${analytics.data.cache_info.fresh_entries} fresh, ${analytics.data.cache_info.expired_entries} expired` : 'No cache info');
     
     console.log('📤 Sending JSON response...');
     sendJson(res, 200, analytics);
@@ -141,17 +150,26 @@ async function handleTicketAnalyticsRequest(req, res, period = '5-day') {
   try {
     console.log(`🎫 Fetching ${period} ticket analytics...`);
     
+    // Check for forceRefresh query parameter
+    const url = new URL(req.url, `http://localhost:${PORT}`);
+    const forceRefresh = url.searchParams.get('forceRefresh') === 'true';
+    
+    if (forceRefresh) {
+      console.log('🔄 Force refresh requested - fetching all data from API');
+    }
+    
     let analytics;
     if (period === '5-day') {
-      analytics = await ticketAnalytics.get5DayTicketAnalytics();
+      analytics = await ticketAnalytics.get5DayTicketAnalytics(forceRefresh);
     } else {
       // For future expansion
-      analytics = await ticketAnalytics.get5DayTicketAnalytics();
+      analytics = await ticketAnalytics.get5DayTicketAnalytics(forceRefresh);
     }
     
     console.log('📈 Ticket analytics data received, preparing response...');
     console.log('📋 Analytics success:', analytics?.success);
     console.log('📋 Analytics data keys:', analytics?.data ? Object.keys(analytics.data) : 'No data');
+    console.log('📋 Cache info:', analytics?.data?.cache_info ? `${analytics.data.cache_info.fresh_entries} fresh, ${analytics.data.cache_info.expired_entries} expired` : 'No cache info');
     
     console.log('📤 Sending JSON response...');
     sendJson(res, 200, analytics);
@@ -177,6 +195,26 @@ async function handleCurrentTicketCountsRequest(req, res) {
     sendJson(res, 500, {
       success: false,
       error: 'Failed to fetch current ticket counts',
+      details: error.message
+    });
+  }
+}
+
+// Handle clear cache request
+async function handleClearCacheRequest(req, res) {
+  try {
+    console.log('🗑️ Clearing ticket analytics cache...');
+    const result = await ticketAnalytics.clearCache();
+    
+    console.log('📈 Cache clear result:', result?.success);
+    
+    sendJson(res, 200, result);
+    console.log('✅ Cache clear response sent');
+  } catch (error) {
+    console.error('❌ Error clearing cache:', error);
+    sendJson(res, 500, {
+      success: false,
+      error: 'Failed to clear cache',
       details: error.message
     });
   }
@@ -290,6 +328,25 @@ const server = http.createServer((req, res) => {
     
     if (req.method === 'GET') {
       handleCurrentTicketCountsRequest(req, res);
+      return;
+    }
+  }
+
+  // Clear cache endpoint
+  if (req.url === '/api/ticket-analytics/clear-cache') {
+    console.log('🗑️ Clear cache request');
+    if (req.method === 'OPTIONS') {
+      res.writeHead(200, {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+        'Access-Control-Allow-Methods': 'POST, OPTIONS'
+      });
+      res.end();
+      return;
+    }
+    
+    if (req.method === 'POST') {
+      handleClearCacheRequest(req, res);
       return;
     }
   }

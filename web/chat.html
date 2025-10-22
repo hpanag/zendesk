@@ -1,49 +1,159 @@
 <!doctype html>
-<!--
-* Tabler - Premium and Open Source dashboard template with responsive and high quality UI.
-* @version 1.3.0
-* @link https://tabler.io
-* Copyright 2018-2025 The Tabler Authors
-* Copyright 2018-2025 codecalm.net Paweł Kuna
-* Licensed under MIT (https://github.com/tabler/tabler/blob/master/LICENSE)
--->
 <html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Ticket Status Dashboard - Zendesk</title>
-    <!-- BEGIN PAGE LEVEL STYLES -->
-    <!-- END PAGE LEVEL STYLES -->
-    <!-- BEGIN GLOBAL MANDATORY STYLES -->
-    <link href="./original/dist/css/tabler.css?1747674014" rel="stylesheet" />
-    <!-- END GLOBAL MANDATORY STYLES -->
-    <!-- BEGIN PLUGINS STYLES -->
-    <link href="./original/dist/css/tabler-flags.css?1747674014" rel="stylesheet" />
-    <link href="./original/dist/css/tabler-socials.css?1747674014" rel="stylesheet" />
-    <link href="./original/dist/css/tabler-payments.css?1747674014" rel="stylesheet" />
-    <link href="./original/dist/css/tabler-vendors.css?1747674014" rel="stylesheet" />
-    <link href="./original/dist/css/tabler-marketing.css?1747674014" rel="stylesheet" />
-    <link href="./original/dist/css/tabler-themes.css?1747674014" rel="stylesheet" />
-    <!-- END PLUGINS STYLES -->
-    <!-- BEGIN DEMO STYLES -->
-    <link href="./original/preview/css/demo.css?1747674014" rel="stylesheet" />
-    <!-- END DEMO STYLES -->
-    <!-- BEGIN CUSTOM FONT -->
+    <title>Zendesk GPT-5 Chat</title>
+    <link href="/web/original/dist/css/tabler.css?1747674014" rel="stylesheet" />
+    <link href="/web/original/dist/css/tabler-themes.css?1747674014" rel="stylesheet" />
     <style>
       @import url("https://rsms.me/inter/inter.css");
+      body {
+        font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        background-color: var(--tblr-body-bg, #f5f7fb);
+      }
+      .navbar-brand-title {
+        font-size: 1.375rem;
+        font-weight: 600;
+        color: inherit;
+      }
+      .page-title {
+        font-size: 1.875rem;
+        font-weight: 600;
+      }
+      .card-chat {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+      }
+      .card-chat .card-body {
+        flex: 1 1 auto;
+        padding: 0;
+        overflow: hidden;
+      }
+      .chat-log {
+        height: 100%;
+        max-height: min(65vh, 640px);
+        overflow-y: auto;
+        padding: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1.25rem;
+        background: linear-gradient(145deg, rgba(32, 107, 196, 0.03), rgba(47, 179, 68, 0.02));
+      }
+      .message {
+        display: flex;
+        flex-direction: row;
+        gap: 0.75rem;
+        align-items: flex-start;
+      }
+      .message-user {
+        flex-direction: row-reverse;
+      }
+      .message-avatar {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        font-weight: 600;
+      }
+      .message-user .message-avatar {
+        background: var(--tblr-primary);
+        color: #fff;
+      }
+      .message-assistant .message-avatar {
+        background: rgba(32, 107, 196, 0.1);
+        color: var(--tblr-primary);
+      }
+      .message-bubble {
+        background: #fff;
+        border-radius: 1rem;
+        padding: 0.85rem 1rem;
+        box-shadow: var(--tblr-shadow-sm, 0 1px 2px rgba(15, 23, 42, 0.08));
+        max-width: min(560px, 100%);
+        font-size: 0.95rem;
+        line-height: 1.6;
+        white-space: pre-wrap;
+      }
+      .message-user .message-bubble {
+        background: linear-gradient(135deg, var(--tblr-primary), #1d5bbd);
+        color: #fff;
+        box-shadow: var(--tblr-shadow-md, 0 12px 20px -12px rgba(32, 107, 196, 0.8));
+      }
+      .message-meta {
+        font-size: 0.75rem;
+        color: var(--tblr-gray-600);
+        margin-top: 0.35rem;
+      }
+      .message-user .message-meta {
+        text-align: right;
+        color: rgba(255, 255, 255, 0.7);
+      }
+      .typing-indicator {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        color: var(--tblr-gray-600);
+      }
+      .typing-indicator span {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: currentColor;
+        animation: typing-bounce 1.2s infinite ease-in-out;
+      }
+      .typing-indicator span:nth-child(2) {
+        animation-delay: 0.2s;
+      }
+      .typing-indicator span:nth-child(3) {
+        animation-delay: 0.4s;
+      }
+      @keyframes typing-bounce {
+        0%, 80%, 100% {
+          opacity: 0.2;
+          transform: translateY(0);
+        }
+        40% {
+          opacity: 1;
+          transform: translateY(-3px);
+        }
+      }
+      .card-footer {
+        border-top: 1px solid var(--tblr-border-color);
+        background-color: rgba(255, 255, 255, 0.9);
+      }
+      #chat-input {
+        resize: none;
+        min-height: 80px;
+        max-height: 180px;
+      }
+      .quick-prompts .list-group-item {
+        cursor: pointer;
+        border: none;
+        padding: 0.75rem 1rem;
+        transition: transform 0.15s ease, box-shadow 0.15s ease;
+      }
+      .quick-prompts .list-group-item:hover {
+        transform: translateY(-1px);
+        box-shadow: var(--tblr-shadow-sm, 0 8px 16px -14px rgba(15, 23, 42, 0.4));
+      }
+      .empty-state {
+        text-align: center;
+        color: var(--tblr-gray-600);
+      }
+      .empty-state svg {
+        color: var(--tblr-primary);
+        margin-bottom: 0.5rem;
+      }
     </style>
-    <!-- END CUSTOM FONT -->
   </head>
   <body>
-    <!-- BEGIN GLOBAL THEME SCRIPT -->
-    <script src="./original/dist/js/tabler-theme.min.js?1747674014"></script>
-    <!-- END GLOBAL THEME SCRIPT -->
+    <script src="/web/original/dist/js/tabler-theme.min.js?1747674014"></script>
     <div class="page">
-      <!-- BEGIN NAVBAR  -->
       <header class="navbar navbar-expand-md d-print-none">
         <div class="container-xl">
-          <!-- BEGIN NAVBAR TOGGLER -->
           <button
             class="navbar-toggler"
             type="button"
@@ -55,48 +165,21 @@
           >
             <span class="navbar-toggler-icon"></span>
           </button>
-          <!-- END NAVBAR TOGGLER -->
-          <!-- BEGIN NAVBAR LOGO -->
           <div class="navbar-brand navbar-brand-autodark d-none-navbar-horizontal pe-0 pe-md-3">
-            <a href="." aria-label="Zendesk Dashboard">
-              <h2 class="m-0">Zendesk Dashboard</h2>
+            <a href="/web/dash.html" class="text-reset text-decoration-none" aria-label="Zendesk Voice Dashboard">
+              <span class="navbar-brand-title">Zendesk KPI Copilot</span>
             </a>
           </div>
-          <!-- END NAVBAR LOGO -->
           <div class="navbar-nav flex-row order-md-last">
             <div class="d-none d-md-flex">
               <div class="nav-item">
                 <a href="?theme=dark" class="nav-link px-0 hide-theme-dark" title="Enable dark mode" data-bs-toggle="tooltip" data-bs-placement="bottom">
-                  <!-- Download SVG icon from http://tabler.io/icons/icon/moon -->
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="icon icon-1"
-                  >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-1">
                     <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
                   </svg>
                 </a>
                 <a href="?theme=light" class="nav-link px-0 hide-theme-light" title="Enable light mode" data-bs-toggle="tooltip" data-bs-placement="bottom">
-                  <!-- Download SVG icon from http://tabler.io/icons/icon/sun -->
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="icon icon-1"
-                  >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-1">
                     <path d="M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" />
                     <path d="M3 12h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7" />
                   </svg>
@@ -106,293 +189,419 @@
           </div>
         </div>
       </header>
-      <!-- END NAVBAR  -->
       <div class="page-wrapper">
-        <!-- BEGIN PAGE HEADER -->
         <div class="page-header d-print-none" aria-label="Page header">
           <div class="container-xl">
             <div class="row g-2 align-items-center">
               <div class="col">
-                <h2 class="page-title">Ticket Analytics Dashboard</h2>
-                <div class="text-secondary mt-1">Ticket Status Breakdown - Last 5 Days</div>
+                <h2 class="page-title">Ask GPT-5 about your Zendesk KPIs</h2>
+                <div class="text-secondary mt-1">Ask natural language questions about volume, SLA, backlog, staffing, and satisfaction—GPT-5 will respond with the latest insights.</div>
               </div>
             </div>
           </div>
         </div>
-        <!-- END PAGE HEADER -->
-        <!-- BEGIN PAGE BODY -->
         <div class="page-body">
           <div class="container-xl">
-            <div class="row row-cards">
-              <!-- Chart Card -->
-              <div class="col-12">
-                <div class="card">
-                  <div class="card-header">
-                    <h3 class="card-title">Ticket Activity Overview</h3>
-                    <div class="card-subtitle">Total active tickets (line) vs New/Closed tickets (bars)</div>
+            <div class="row row-cards align-items-stretch">
+              <div class="col-12 col-lg-8">
+                <section class="card card-chat" aria-labelledby="chat-heading">
+                  <div class="card-header border-0 pb-0">
+                    <div>
+                      <h3 class="card-title mb-1" id="chat-heading">Zendesk GPT-5 Copilot</h3>
+                      <p class="text-secondary mb-0">Converse in real time about ticket trends, queue health, CSAT, staffing, and more.</p>
+                    </div>
                   </div>
                   <div class="card-body">
-                    <div id="chart-ticket-overview" class="position-relative"></div>
+                    <div class="chat-log" id="chat-log" role="log" aria-live="polite" aria-label="GPT-5 conversation">
+                      <div class="empty-state" id="chat-empty-state">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                          <path d="M7 8h10" />
+                          <path d="M7 12h8" />
+                          <path d="M7 16h6" />
+                          <path d="M5 20h14a2 2 0 0 0 2 -2V6a2 2 0 0 0 -2 -2H7l-4 4v10a2 2 0 0 0 2 2z" />
+                        </svg>
+                        <p class="mb-0">Ask GPT-5 anything about your Zendesk KPIs to get started.</p>
+                      </div>
+                    </div>
                   </div>
-                </div>
+                  <div class="card-footer">
+                    <form id="chat-form" class="row gx-2 gy-2 align-items-stretch" autocomplete="off">
+                      <div class="col-12">
+                        <label for="chat-input" class="visually-hidden">Ask a question about Zendesk KPIs</label>
+                        <textarea id="chat-input" class="form-control" placeholder="Example: How did first-response time trend week-over-week?" required></textarea>
+                      </div>
+                      <div class="col-12 d-flex justify-content-between align-items-center">
+                        <div class="form-text text-muted">
+                          Press Enter to send, Shift+Enter for a new line.
+                        </div>
+                        <button class="btn btn-primary" type="submit" id="chat-submit">
+                          <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-send" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M10 14l11 -11" />
+                            <path d="M21 3l-6 18a0.55 .55 0 0 1 -1 0l-3 -7l-7 -3a0.55 .55 0 0 1 0 -1l18 -6" />
+                          </svg>
+                          <span class="ms-1">Send</span>
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+                </section>
               </div>
-              
-              <!-- Table Card -->
-              <div class="col-12">
-                <div class="card">
+              <div class="col-12 col-lg-4">
+                <div class="card h-100 quick-prompts" aria-labelledby="prompt-heading">
                   <div class="card-header">
-                    <h3 class="card-title">Daily Ticket Status Summary</h3>
+                    <h3 class="card-title" id="prompt-heading">Suggested prompts</h3>
+                    <p class="text-secondary mb-0">Tap any prompt to drop it into the chat box.</p>
                   </div>
-                  <div class="table-responsive">
-                    <table class="table table-vcenter card-table table-striped" id="ticket-status-table">
-                      <thead>
-                        <tr>
-                          <th>Date</th>
-                          <th class="text-end">New</th>
-                          <th class="text-end">Open</th>
-                          <th class="text-end">Pending</th>
-                          <th class="text-end">Hold</th>
-                          <th class="text-end">Solved</th>
-                          <th class="text-end">Closed</th>
-                          <th class="text-end">Total</th>
-                        </tr>
-                      </thead>
-                      <tbody id="ticket-table-body">
-                        <!-- Table rows will be populated by JavaScript -->
-                      </tbody>
-                    </table>
+                  <div class="list-group list-group-flush" id="prompt-list">
+                    <button type="button" class="list-group-item list-group-item-action" data-prompt="Summarize today's call and chat volumes alongside SLA performance.">
+                      Summarize today's call and chat volumes alongside SLA performance.
+                    </button>
+                    <button type="button" class="list-group-item list-group-item-action" data-prompt="Which queues had the most SLA breaches in the last 24 hours and why?">
+                      Which queues had the most SLA breaches in the last 24 hours and why?
+                    </button>
+                    <button type="button" class="list-group-item list-group-item-action" data-prompt="Compare CSAT and first-response time for the past 7 days to the previous week.">
+                      Compare CSAT and first-response time for the past 7 days to the previous week.
+                    </button>
+                    <button type="button" class="list-group-item list-group-item-action" data-prompt="Highlight any agents that are nearing capacity limits today.">
+                      Highlight any agents that are nearing capacity limits today.
+                    </button>
+                    <button type="button" class="list-group-item list-group-item-action" data-prompt="Give me a quick executive summary I can share in stand-up.">
+                      Give me a quick executive summary I can share in stand-up.
+                    </button>
+                  </div>
+                  <div class="card-body border-top">
+                    <h4 class="card-title mb-2">How it works</h4>
+                    <p class="text-secondary mb-3">
+                      Your questions trigger real-time API calls to Zendesk to fetch the most current data. GPT-5 analyzes this live data to provide accurate, up-to-date insights.
+                    </p>
+                    <div class="d-inline-flex align-items-center px-3 py-2 rounded bg-success-lt text-success">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-refresh me-2" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20 11a8.1 8.1 0 0 0 -15.5 -2m-.5 -4v4h4" />
+                        <path d="M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4" />
+                      </svg>
+                      Real-time data fetched on every request
+                    </div>
+                  </div>
+                  <div class="card-body border-top">
+                    <h4 class="card-title mb-2">
+                      API Usage Mode
+                      <span class="badge bg-success ms-2">Real-time</span>
+                    </h4>
+                    <p class="text-secondary mb-3">
+                      Each question makes targeted API calls to Zendesk for the most relevant and current data. No background fetching or caching.
+                    </p>
+                    <div class="d-flex gap-2 mb-3">
+                      <div class="d-inline-flex align-items-center px-3 py-2 rounded bg-info-lt text-info">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon me-1" width="16" height="16" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                          <path d="M12 2v20m8-18l-16 16" />
+                        </svg>
+                        On-demand API calls only
+                      </div>
+                    </div>
+                    <div class="small text-muted">
+                      <div>Mode: Real-time Zendesk API integration</div>
+                      <div>Caching: Disabled (API cost optimization)</div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <!-- END PAGE BODY -->
-        <!--  BEGIN FOOTER  -->
         <footer class="footer footer-transparent d-print-none">
           <div class="container-xl">
             <div class="row text-center align-items-center flex-row-reverse">
               <div class="col-12 col-lg-auto mt-3 mt-lg-0">
                 <ul class="list-inline list-inline-dots mb-0">
-                  <li class="list-inline-item">
-                    &copy; 2025 Zendesk Dashboard
-                  </li>
+                  <li class="list-inline-item">&copy; 2025 Zendesk Dashboard</li>
+                  <li class="list-inline-item"><a href="/web/dash.html">Voice Dashboard</a></li>
                 </ul>
               </div>
             </div>
           </div>
         </footer>
-        <!--  END FOOTER  -->
       </div>
     </div>
-    <!-- BEGIN PAGE LIBRARIES -->
-    <script src="./original/dist/libs/apexcharts/dist/apexcharts.min.js?1747674014" defer></script>
-    <!-- END PAGE LIBRARIES -->
-    <!-- BEGIN GLOBAL MANDATORY SCRIPTS -->
-    <script src="./original/dist/js/tabler.min.js?1747674014" defer></script>
-    <!-- END GLOBAL MANDATORY SCRIPTS -->
-    <!-- BEGIN DEMO SCRIPTS -->
-    <script src="./original/preview/js/demo.min.js?1747674014" defer></script>
-    <!-- END DEMO SCRIPTS -->
-    <!-- BEGIN PAGE SCRIPTS -->
+    <script src="/web/original/dist/js/tabler.min.js?1747674014" defer></script>
     <script>
-      document.addEventListener("DOMContentLoaded", async function () {
-        try {
-          // Load data from execView.json
-          const response = await fetch('../data/execView.json');
-          const data = await response.json();
-          
-          // Helper function to filter last N weekdays
-          function getLastNWeekdays(dataArray, n) {
-            // Filter only weekdays
-            const weekdayData = dataArray.filter(item => {
-              const date = new Date(item.date);
-              const dayOfWeek = date.getDay();
-              return dayOfWeek >= 1 && dayOfWeek <= 5; // Monday-Friday
+      document.addEventListener('DOMContentLoaded', () => {
+        // Smart API endpoint detection
+        // If we're on Live Server (port 5501), connect to Node.js server on port 3000
+        // If we're already on the Node.js server (port 3000), use relative path
+        const currentPort = window.location.port;
+        const isLiveServer = currentPort === '5501';
+        const isNodeServer = currentPort === '3000' || currentPort === '';
+        
+        let API_ENDPOINT;
+        if (isLiveServer) {
+          // VS Code Live Server - connect to Node.js server
+          API_ENDPOINT = 'http://localhost:3000/api/gpt5-chat';
+        } else if (isNodeServer) {
+          // Node.js server - use relative path
+          API_ENDPOINT = '/api/gpt5-chat';
+        } else {
+          // Fallback - try Node.js server
+          API_ENDPOINT = 'http://localhost:3000/api/gpt5-chat';
+        }
+        
+        console.log('🚀 Page loaded');
+        console.log('🔗 API_ENDPOINT:', API_ENDPOINT);
+        console.log('🌐 Current environment:', isLiveServer ? 'VS Code Live Server' : isNodeServer ? 'Node.js Server' : 'Unknown');
+        console.log('🌐 window.location:', {
+          href: window.location.href,
+          origin: window.location.origin,
+          hostname: window.location.hostname,
+          port: window.location.port,
+          protocol: window.location.protocol
+        });
+
+        // Add connection test functionality
+        const testConnection = async () => {
+          try {
+            console.log('🔄 Testing connection to:', API_ENDPOINT);
+            const response = await fetch(API_ENDPOINT.replace('/api/gpt5-chat', '/health'), {
+              method: 'GET',
+              timeout: 5000
             });
-            
-            // Return last N entries
-            return weekdayData.slice(-n);
+            console.log('✅ Connection test result:', response.status);
+            return response.ok;
+          } catch (error) {
+            console.log('❌ Connection test failed:', error.message);
+            return false;
+          }
+        };
+
+        // Test connection on page load and show status
+        testConnection().then(connected => {
+          const statusIndicator = document.createElement('div');
+          statusIndicator.id = 'connection-status';
+          statusIndicator.style.cssText = `
+            position: fixed; top: 10px; right: 10px; z-index: 9999;
+            padding: 8px 12px; border-radius: 4px; font-size: 12px;
+            color: white; font-weight: bold;
+          `;
+          
+          if (connected) {
+            statusIndicator.textContent = '✅ Connected to GPT-5 Server';
+            statusIndicator.style.backgroundColor = '#10b981';
+            setTimeout(() => statusIndicator.remove(), 3000);
+          } else {
+            statusIndicator.textContent = isLiveServer ? 
+              '⚠️ Start Node.js server: node server.js' : 
+              '❌ Server Offline';
+            statusIndicator.style.backgroundColor = '#ef4444';
           }
           
-          // Extract ticket trend data and filter to last 10 weekdays
-          const allTicketData = data.trends.tickets.byStatus;
+          document.body.appendChild(statusIndicator);
           
-          if (!allTicketData || allTicketData.length === 0) {
-            throw new Error('No ticket status data available');
+          if (!connected && isLiveServer) {
+            console.log('⚠️ Node.js server not responding. Make sure to run: node server.js');
           }
-          
-          const ticketData = getLastNWeekdays(allTicketData, 10);
-          
-          // Sort by date (oldest first for charts)
-          const sortedData = [...ticketData].sort((a, b) => new Date(a.date) - new Date(b.date));
-          
-          // Prepare data for chart
-          const categories = sortedData.map(day => {
-            const date = new Date(day.date);
-            return date.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+        });
+
+        const chatLog = document.getElementById('chat-log');
+        const chatForm = document.getElementById('chat-form');
+        const chatInput = document.getElementById('chat-input');
+        const chatSubmit = document.getElementById('chat-submit');
+        const promptButtons = document.querySelectorAll('[data-prompt]');
+        const emptyState = document.getElementById('chat-empty-state');
+        const conversation = [
+          {
+            role: 'system',
+            content:
+              'You are a Zendesk KPI copilot powered by GPT-5. You answer questions using the freshest Zendesk ticket, call, and chat insights, always providing clear explanations, metrics, and next steps. If data is unavailable, say so transparently.'
+          }
+        ];
+
+        const scrollToBottom = () => {
+          chatLog.scrollTo({ top: chatLog.scrollHeight, behavior: 'smooth' });
+        };
+
+        const timeStamp = () =>
+          new Date().toLocaleTimeString([], {
+            hour: 'numeric',
+            minute: '2-digit'
           });
-          
-          // Calculate total active tickets (new + open + pending + solved)
-          const totalActiveTickets = sortedData.map(day => 
-            day.new + day.open + day.pending + day.solved
+
+        const createMessageElement = (role, content, { html = false } = {}) => {
+          if (emptyState) {
+            emptyState.remove();
+          }
+
+          const wrapper = document.createElement('div');
+          wrapper.classList.add('message', `message-${role}`);
+
+          const avatar = document.createElement('div');
+          avatar.className = 'message-avatar';
+          avatar.textContent = role === 'user' ? 'You' : 'AI';
+
+          const body = document.createElement('div');
+          body.className = 'message-body';
+
+          const bubble = document.createElement('div');
+          bubble.className = 'message-bubble';
+          if (html) {
+            bubble.innerHTML = content;
+          } else {
+            bubble.textContent = content;
+          }
+
+          const meta = document.createElement('div');
+          meta.className = 'message-meta';
+          meta.textContent = `${role === 'user' ? 'You' : 'GPT-5 Copilot'} • ${timeStamp()}`;
+
+          body.appendChild(bubble);
+          body.appendChild(meta);
+
+          wrapper.appendChild(avatar);
+          wrapper.appendChild(body);
+
+          chatLog.appendChild(wrapper);
+          scrollToBottom();
+
+          return { wrapper, bubble, meta };
+        };
+
+        const sendMessage = async (message) => {
+          const userMessage = message.trim();
+          if (!userMessage) return;
+
+          chatForm.reset();
+          chatInput.focus();
+
+          createMessageElement('user', userMessage);
+          conversation.push({ role: 'user', content: userMessage });
+
+          const placeholder = createMessageElement(
+            'assistant',
+            '<div class="typing-indicator" aria-hidden="true"><span></span><span></span><span></span></div>',
+            { html: true }
           );
-          
-          // New and Closed for bar chart
-          const newTickets = sortedData.map(day => day.new);
-          const closedTickets = sortedData.map(day => day.closed);
-          
-          // Create mixed chart
-          window.ApexCharts &&
-            new ApexCharts(document.getElementById("chart-ticket-overview"), {
-              chart: {
-                type: "line",
-                fontFamily: "inherit",
-                height: 400,
-                parentHeightOffset: 0,
-                toolbar: {
-                  show: false,
-                },
-                animations: {
-                  enabled: true,
-                },
+
+          const setAssistantReply = (reply) => {
+            placeholder.bubble.textContent = reply;
+          };
+
+          try {
+            chatInput.disabled = true;
+            chatSubmit.disabled = true;
+
+            console.log('🔄 Sending request to:', API_ENDPOINT);
+            console.log('📤 Request body:', JSON.stringify({ messages: conversation }));
+
+            const response = await fetch(API_ENDPOINT, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
               },
-              stroke: {
-                width: [3, 0, 0],
-                curve: 'smooth',
-                dashArray: [0, 0, 0]
-              },
-              plotOptions: {
-                bar: {
-                  columnWidth: "50%",
-                },
-              },
-              dataLabels: {
-                enabled: false,
-              },
-              series: [
-                {
-                  name: "Total Active Tickets",
-                  type: "line",
-                  data: totalActiveTickets,
-                },
-                {
-                  name: "New Tickets",
-                  type: "bar",
-                  data: newTickets,
-                },
-                {
-                  name: "Closed Tickets",
-                  type: "bar",
-                  data: closedTickets,
-                },
-              ],
-              tooltip: {
-                theme: "dark",
-                shared: true,
-                intersect: false,
-                y: {
-                  formatter: function(value) {
-                    return value + " tickets";
-                  }
-                }
-              },
-              grid: {
-                padding: {
-                  top: -20,
-                  right: 0,
-                  left: -4,
-                  bottom: -4,
-                },
-                strokeDashArray: 4,
-              },
-              xaxis: {
-                labels: {
-                  padding: 0,
-                  style: {
-                    fontSize: '12px',
-                  },
-                },
-                tooltip: {
-                  enabled: false,
-                },
-                axisBorder: {
-                  show: false,
-                },
-                categories: categories,
-              },
-              yaxis: {
-                labels: {
-                  padding: 4,
-                  style: {
-                    fontSize: '12px',
-                  },
-                },
-                title: {
-                  text: 'Number of Tickets',
-                  style: {
-                    fontSize: '13px',
-                    fontWeight: 500,
-                  },
-                },
-              },
-              colors: ["#206bc4", "#d63939", "#2fb344"],
-              legend: {
-                show: true,
-                position: "top",
-                horizontalAlign: "left",
-                offsetY: 0,
-                markers: {
-                  width: 10,
-                  height: 10,
-                  radius: 100,
-                },
-                itemMargin: {
-                  horizontal: 12,
-                  vertical: 8,
-                },
-              },
-            }).render();
-          
-          // Populate table
-          const tableBody = document.getElementById('ticket-table-body');
-          
-          // Sort by date (newest first for table)
-          const tableSortedData = [...ticketData].sort((a, b) => new Date(b.date) - new Date(a.date));
-          
-          tableSortedData.forEach(day => {
-            const date = new Date(day.date);
-            const formattedDate = date.toLocaleDateString('en-US', { 
-              weekday: 'short',
-              month: 'short', 
-              day: 'numeric',
-              year: 'numeric'
+              body: JSON.stringify({ messages: conversation })
+            });
+
+            console.log('📥 Response status:', response.status);
+            console.log('📥 Response ok:', response.ok);
+
+            if (!response.ok) {
+              throw new Error(`GPT-5 API returned ${response.status}: ${response.statusText}`);
+            }
+
+            const result = await response.json();
+            console.log('✅ Response data:', result);
+            const assistantReply = (result && (result.reply || result.answer || result.message))?.trim();
+
+            if (assistantReply) {
+              setAssistantReply(assistantReply);
+              conversation.push({ role: 'assistant', content: assistantReply });
+            } else {
+              setAssistantReply("I'm here, but I didn't receive a clear answer. Could you try that again?");
+              conversation.push({
+                role: 'assistant',
+                content: "I'm here, but I didn't receive a clear answer. Could you try that again?"
+              });
+            }
+          } catch (error) {
+            console.error('❌ Error chatting with GPT-5:', error);
+            console.error('❌ Error details:', {
+              message: error.message,
+              stack: error.stack,
+              name: error.name
             });
             
-            const total = day.new + day.open + day.pending + day.hold + day.solved + day.closed;
+            let errorMessage = 'I wasn\'t able to reach the GPT-5 service. ';
             
-            const row = document.createElement('tr');
-            row.innerHTML = `
-              <td><strong>${formattedDate}</strong></td>
-              <td class="text-end">${day.new.toLocaleString()}</td>
-              <td class="text-end">${day.open.toLocaleString()}</td>
-              <td class="text-end">${day.pending.toLocaleString()}</td>
-              <td class="text-end">${day.hold.toLocaleString()}</td>
-              <td class="text-end">${day.solved.toLocaleString()}</td>
-              <td class="text-end">${day.closed.toLocaleString()}</td>
-              <td class="text-end"><strong>${total.toLocaleString()}</strong></td>
-            `;
+            if (isLiveServer && error.message.includes('fetch')) {
+              errorMessage += 'Make sure the Node.js server is running with: node server.js';
+            } else if (error.message.includes('ERR_CONNECTION_REFUSED')) {
+              errorMessage += 'The server appears to be offline. Please start it with: node server.js';
+            } else {
+              errorMessage += 'Please check the connection and try again.';
+            }
             
-            tableBody.appendChild(row);
+            setAssistantReply(errorMessage);
+          } finally {
+            chatInput.disabled = false;
+            chatSubmit.disabled = false;
+            chatInput.focus();
+            scrollToBottom();
+          }
+        };
+
+        chatForm.addEventListener('submit', (event) => {
+          event.preventDefault();
+          sendMessage(chatInput.value);
+        });
+
+        chatInput.addEventListener('keydown', (event) => {
+          if (event.key === 'Enter' && !event.shiftKey) {
+            event.preventDefault();
+            chatForm.requestSubmit();
+          }
+        });
+
+        promptButtons.forEach((button) => {
+          button.addEventListener('click', () => {
+            const prompt = button.getAttribute('data-prompt');
+            if (!prompt) return;
+            chatInput.value = prompt;
+            chatInput.focus();
           });
-          
-        } catch (error) {
-          console.error('Error loading ticket data:', error);
-          document.getElementById('ticket-table-body').innerHTML = 
-            '<tr><td colspan="8" class="text-center"><div class="alert alert-danger">Error loading ticket data. Please ensure execView.json exists and has been generated with the latest script.</div></td></tr>';
+        });
+
+        const welcomeMessage = "Hi! I'm your Zendesk KPI copilot powered by GPT-5. Ask me anything about volume trends, SLA breaches, backlog, CSAT, or staffing and I'll synthesize the latest insights.";
+        createMessageElement('assistant', welcomeMessage);
+        conversation.push({ role: 'assistant', content: welcomeMessage });
+
+        // Add test button
+        const testBtn = document.createElement('button');
+        testBtn.textContent = 'Test Connection';
+        testBtn.className = 'btn btn-sm btn-secondary me-2';
+        testBtn.onclick = async function() {
+          try {
+            console.log('🧪 Testing connection to:', API_ENDPOINT);
+            const testResponse = await fetch(API_ENDPOINT, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ messages: [{ role: 'user', content: 'test' }] })
+            });
+            console.log('📊 Test response:', testResponse.status, testResponse.ok);
+            if (testResponse.ok) {
+              const data = await testResponse.json();
+              console.log('✅ Test successful:', data);
+              alert('Connection test successful!');
+            } else {
+              console.log('❌ Test failed:', testResponse.status, testResponse.statusText);
+              alert(`Connection test failed: ${testResponse.status}`);
+            }
+          } catch (err) {
+            console.error('💥 Test error:', err);
+            alert(`Test error: ${err.message}`);
+          }
+        };
+
+        const navbar = document.querySelector('.navbar-brand');
+        if (navbar && navbar.parentNode) {
+          navbar.parentNode.appendChild(testBtn);
         }
       });
     </script>
-    <!-- END PAGE SCRIPTS -->
   </body>
 </html>

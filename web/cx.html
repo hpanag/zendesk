@@ -12,7 +12,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Portal Home - Zendesk Analytics Portal</title>
+    <title>Customer Experience - Zendesk Analytics Portal</title>
     <!-- BEGIN GLOBAL MANDATORY STYLES -->
     <link href="./original/dist/css/tabler.css?1747674014" rel="stylesheet" />
     <!-- END GLOBAL MANDATORY STYLES -->
@@ -31,17 +31,17 @@
     <style>
       @import url("https://rsms.me/inter/inter.css");
       
-      .card-portal {
+      .card-dashboard {
           transition: all 0.2s ease;
           cursor: pointer;
       }
       
-      .card-portal:hover {
+      .card-dashboard:hover {
           transform: translateY(-2px);
           box-shadow: 0 8px 25px rgba(0,0,0,0.15);
       }
       
-      .icon-portal {
+      .icon-dashboard {
           width: 48px;
           height: 48px;
           background: linear-gradient(45deg, #206bc4, #4299e1);
@@ -132,7 +132,7 @@
                 <div class="col">
                   <!-- BEGIN NAVBAR MENU -->
                   <ul class="navbar-nav">
-                    <li class="nav-item active">
+                    <li class="nav-item">
                       <a class="nav-link" href="index.html">
                         <span class="nav-link-icon d-md-none d-lg-inline-block">
                           <svg
@@ -155,7 +155,7 @@
                         <span class="nav-link-title"> Home </span>
                       </a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item active">
                       <a class="nav-link" href="cx.html">
                         <span class="nav-link-icon d-md-none d-lg-inline-block">
                           <svg
@@ -239,8 +239,8 @@
           <div class="container-xl">
             <div class="row g-2 align-items-center">
               <div class="col">
-                <h2 class="page-title">Portal Home</h2>
-                <div class="text-secondary mt-1">Welcome to your analytics portal</div>
+                <h2 class="page-title">Customer Experience</h2>
+                <div class="text-secondary mt-1">Dashboards and analytics for customer support operations</div>
               </div>
             </div>
           </div>
@@ -250,52 +250,43 @@
         <div class="page-body">
           <div class="container-xl">
             <div class="row g-4">
-              <div class="col-md-4">
-                <div class="card card-portal" onclick="window.location.href='cx.html'">
-                  <div class="card-body text-center">
-                    <div class="icon-portal mx-auto">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                        <circle cx="12" cy="7" r="4"></circle>
-                      </svg>
+              <!-- Main Dashboards -->
+              <div class="col-12">
+                <h3 class="mb-3">Analytics Dashboards</h3>
+                <div class="row g-4">
+                  <div class="col-md-6">
+                    <div class="card card-dashboard" onclick="window.location.href='dash.html'">
+                      <div class="card-body text-center">
+                        <div class="icon-dashboard mx-auto">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M3 3v5h5"></path>
+                            <path d="M21 12a9 9 0 1 1 -6 -7l3 3"></path>
+                          </svg>
+                        </div>
+                        <h3 class="card-title">Call Analytics Dashboard</h3>
+                        <p class="text-secondary">Voice analytics, call volume, answer rates, and agent performance metrics</p>
+                      </div>
                     </div>
-                    <h3 class="card-title">Customer Experience</h3>
-                    <p class="text-secondary">Access dashboards for tickets, calls, and customer analytics</p>
+                  </div>
+                  
+                  <div class="col-md-6">
+                    <div class="card card-dashboard" onclick="window.location.href='tickets.html'">
+                      <div class="card-body text-center">
+                        <div class="icon-dashboard mx-auto">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M14 3v4a1 1 0 0 0 1 1h4"></path>
+                            <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z"></path>
+                          </svg>
+                        </div>
+                        <h3 class="card-title">Ticket Dashboard</h3>
+                        <p class="text-secondary">Ticket volume, resolution times, status tracking, and support trends</p>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
               
-              <div class="col-md-4">
-                <div class="card card-portal" onclick="window.location.href='product.html'">
-                  <div class="card-body text-center">
-                    <div class="icon-portal mx-auto">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M12 3l8 4.5l0 9l-8 4.5l-8 -4.5l0 -9l8 -4.5"></path>
-                        <path d="M12 12l8 -4.5"></path>
-                        <path d="M12 12l0 9"></path>
-                        <path d="M12 12l-8 -4.5"></path>
-                      </svg>
-                    </div>
-                    <h3 class="card-title">Product</h3>
-                    <p class="text-secondary">Product analytics and performance metrics</p>
-                  </div>
-                </div>
-              </div>
-              
-              <div class="col-md-4">
-                <div class="card card-portal" onclick="window.location.href='finance.html'">
-                  <div class="card-body text-center">
-                    <div class="icon-portal mx-auto">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M17 8v-3a1 1 0 0 0 -1 -1h-10a2 2 0 0 0 0 4h12a1 1 0 0 1 1 1v3m0 4v3a1 1 0 0 1 -1 1h-12a2 2 0 0 1 -2 -2v-12" />
-                        <path d="M20 12v4h-4a2 2 0 0 1 0 -4h4" />
-                      </svg>
-                    </div>
-                    <h3 class="card-title">Finance</h3>
-                    <p class="text-secondary">Financial reports and business analytics</p>
-                  </div>
-                </div>
-              </div>
+
             </div>
           </div>
         </div>
@@ -306,8 +297,8 @@
             <div class="row text-center align-items-center flex-row-reverse">
               <div class="col-lg-auto ms-lg-auto">
                 <ul class="list-inline list-inline-dots mb-0">
-                  <li class="list-inline-item"><a href="dash.html" target="_blank" class="link-secondary" rel="noopener">Analytics Dashboard</a></li>
-                  <li class="list-inline-item"><a href="tickets.html" class="link-secondary">Tickets</a></li>
+                  <li class="list-inline-item"><a href="dash.html" class="link-secondary" rel="noopener">Call Analytics</a></li>
+                  <li class="list-inline-item"><a href="tickets.html" class="link-secondary">Ticket Dashboard</a></li>
                   <li class="list-inline-item">
                     <a href="#" class="link-secondary">
                       <svg
