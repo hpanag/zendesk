@@ -237,8 +237,8 @@ const server = http.createServer((req, res) => {
     return;
   }
 
-  // Call Analytics endpoints
-  if (req.url === '/api/call-analytics' || req.url === '/api/call-analytics/5-day') {
+  // Call Analytics endpoints - handle with query parameters
+  if (req.url.startsWith('/api/call-analytics/5-day') || req.url === '/api/call-analytics') {
     console.log('📞 Call analytics request (5-day)');
     if (req.method === 'OPTIONS') {
       res.writeHead(200, {
@@ -256,8 +256,8 @@ const server = http.createServer((req, res) => {
     }
   }
 
-  // 30-day Call Analytics endpoint
-  if (req.url === '/api/call-analytics/30-day') {
+  // 30-day Call Analytics endpoint - handle with query parameters
+  if (req.url.startsWith('/api/call-analytics/30-day')) {
     console.log('📞 Call analytics request (30-day)');
     if (req.method === 'OPTIONS') {
       res.writeHead(200, {
@@ -294,8 +294,8 @@ const server = http.createServer((req, res) => {
     }
   }
 
-  // Ticket Analytics endpoints
-  if (req.url === '/api/ticket-analytics' || req.url === '/api/ticket-analytics/5-day') {
+  // Ticket Analytics endpoints - handle with query parameters
+  if (req.url.startsWith('/api/ticket-analytics/5-day') || req.url === '/api/ticket-analytics') {
     console.log('🎫 Ticket analytics request (5-day)');
     if (req.method === 'OPTIONS') {
       res.writeHead(200, {
