@@ -384,12 +384,17 @@
         // Initialize dashboard when DOM is ready
         async init() {
           try {
-            // Setup controls first to set default date
+            // Setup date controls FIRST to set the default date value
+            this.setupDateControls();
+            
+            // Setup other event listeners
             this.setupEventListeners();
             
-            // Get the default selected date (last Monday)
+            // Get the default selected date (now properly set)
             const datePicker = document.getElementById('analysis-date-picker');
             const selectedDate = datePicker ? datePicker.value : null;
+            
+            console.log('📅 Initial selectedDate:', selectedDate);
             
             // Load analytics with the selected date
             await this.loadVoiceAnalytics(false, selectedDate);
@@ -413,38 +418,34 @@
           const diagnosticBtn = document.getElementById('load-diagnostic-data');
           if (diagnosticBtn) {
             diagnosticBtn.addEventListener('click', () => this.loadComprehensiveAnalysis());
-
-            // Date picker functionality
-            this.setupDateControls();
           }
 
-          // Date picker and related buttons
-          this.setupDateControls();
-        },
-
-        // Setup date picker controls
-        setupDateControls() {
-          const datePicker = document.getElementById('analysis-date-picker');
+          // Date picker load button listener
           const loadDateBtn = document.getElementById('load-date-analytics');
-          
-          // Set default date to last Monday
-          if (datePicker) {
-            const lastMonday = this.getLastMonday();
-            datePicker.value = lastMonday.toISOString().split('T')[0];
-          }
-          
-          // Load analytics for selected date
           if (loadDateBtn) {
             loadDateBtn.addEventListener('click', () => this.handleDateSelection());
           }
           
-          // Enter key support for date picker
+          // Date picker enter key support
+          const datePicker = document.getElementById('analysis-date-picker');
           if (datePicker) {
             datePicker.addEventListener('keypress', (e) => {
               if (e.key === 'Enter') {
                 this.handleDateSelection();
               }
             });
+          }
+        },
+
+        // Setup date picker controls
+        setupDateControls() {
+          const datePicker = document.getElementById('analysis-date-picker');
+          
+          // Set default date to last Monday
+          if (datePicker) {
+            const lastMonday = this.getLastMonday();
+            datePicker.value = lastMonday.toISOString().split('T')[0];
+            console.log('📅 Date picker initialized with:', datePicker.value);
           }
         },
 
