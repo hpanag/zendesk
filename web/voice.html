@@ -1,0 +1,941 @@
+<!doctype html>
+<!--
+* Tabler - Premium and Open Source dashboard template with responsive and high quality UI.
+* @version 1.3.0
+* @link https://tabler.io
+* Copyright 2018-2025 The Tabler Authors
+* Copyright 2018-2025 codecalm.net Paweł Kuna
+* Licensed under MIT (https://github.com/tabler/tabler/blob/master/LICENSE)
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Voice Analytics Dashboard - Executive Overview</title>
+    <!-- BEGIN PAGE LEVEL STYLES -->
+    <!-- END PAGE LEVEL STYLES -->
+    <!-- BEGIN GLOBAL MANDATORY STYLES -->
+    <link href="./original/dist/css/tabler.css?1747674014" rel="stylesheet" />
+    <!-- END GLOBAL MANDATORY STYLES -->
+    <!-- BEGIN PLUGINS STYLES -->
+    <link href="./original/dist/css/tabler-flags.css?1747674014" rel="stylesheet" />
+    <link href="./original/dist/css/tabler-socials.css?1747674014" rel="stylesheet" />
+    <link href="./original/dist/css/tabler-payments.css?1747674014" rel="stylesheet" />
+    <link href="./original/dist/css/tabler-vendors.css?1747674014" rel="stylesheet" />
+    <link href="./original/dist/css/tabler-marketing.css?1747674014" rel="stylesheet" />
+    <link href="./original/dist/css/tabler-themes.css?1747674014" rel="stylesheet" />
+    <!-- END PLUGINS STYLES -->
+    <!-- BEGIN DEMO STYLES -->
+    <link href="./original/preview/css/demo.css?1747674014" rel="stylesheet" />
+    <!-- END DEMO STYLES -->
+    <!-- BEGIN CUSTOM FONT -->
+    <style>
+      @import url("https://rsms.me/inter/inter.css");
+    </style>
+    <!-- END CUSTOM FONT -->
+  </head>
+  <body>
+    <!-- BEGIN GLOBAL THEME SCRIPT -->
+    <script src="./original/dist/js/tabler-theme.min.js?1747674014"></script>
+    <!-- END GLOBAL THEME SCRIPT -->
+    <div class="page">
+      <!-- BEGIN NAVBAR  -->
+      <header class="navbar navbar-expand-md d-print-none">
+        <div class="container-xl">
+          <!-- BEGIN NAVBAR TOGGLER -->
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbar-menu"
+            aria-controls="navbar-menu"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <!-- END NAVBAR TOGGLER -->
+          <!-- BEGIN NAVBAR LOGO -->
+          <div class="navbar-brand navbar-brand-autodark d-none-navbar-horizontal pe-0 pe-md-3">
+            <a href="." aria-label="Voice Analytics Dashboard">
+              <h2 class="m-0">📞 Voice Analytics</h2>
+            </a>
+          </div>
+          <!-- END NAVBAR LOGO -->
+          <div class="navbar-nav flex-row order-md-last">
+            <div class="d-none d-md-flex">
+              <div class="nav-item">
+                <a href="?theme=dark" class="nav-link px-0 hide-theme-dark" title="Enable dark mode" data-bs-toggle="tooltip" data-bs-placement="bottom">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-1">
+                    <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+                  </svg>
+                </a>
+                <a href="?theme=light" class="nav-link px-0 hide-theme-light" title="Enable light mode" data-bs-toggle="tooltip" data-bs-placement="bottom">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-1">
+                    <path d="M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" />
+                    <path d="M3 12h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7" />
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+      <!-- END NAVBAR -->
+
+      <!-- BEGIN PAGE WRAPPER -->
+      <div class="page-wrapper">
+        <!-- BEGIN CONTAINER XL -->
+        <div class="container-xl">
+          <!-- BEGIN PAGE HEADER -->
+          <div class="page-header d-print-none">
+            <div class="row g-2 align-items-center">
+              <div class="col">
+                <div class="page-pretitle">Executive Dashboard</div>
+                <h2 class="page-title">Voice Call Analytics</h2>
+              </div>
+              <div class="col-auto ms-auto d-print-none">
+                <div class="btn-list">
+                  <button type="button" class="btn btn-primary" id="refresh-voice-analytics">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-refresh">
+                      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                      <path d="M20 11a8.1 8.1 0 0 0 -15.5 -2m-.5 -4v4h4" />
+                      <path d="M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4" />
+                    </svg>
+                    Refresh Data
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- END PAGE HEADER -->
+
+          <!-- DATE SELECTOR -->
+          <div class="row mb-3">
+            <div class="col-12">
+              <div class="card">
+                <div class="card-body">
+                  <div class="row align-items-center">
+                    <div class="col-auto">
+                      <h3 class="mb-0">📅 Select Analysis Date</h3>
+                    </div>
+                    <div class="col-auto">
+                      <div class="input-group">
+                        <input type="date" class="form-control" id="analysis-date-picker" 
+                               title="Select date for voice analytics">
+                        <button class="btn btn-primary" type="button" id="load-date-analytics">
+                          📊 Load Analytics
+                        </button>
+                      </div>
+                    </div>
+                    <div class="col-auto">
+                      <small class="text-muted" id="date-status">Select a date for voice analytics analysis</small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- END DATE SELECTOR -->
+
+          <!-- BEGIN ROW -->
+          <div class="row row-deck row-cards">
+            <!-- Date Information Card -->
+            <div class="col-12 col-sm-6 col-lg-3">
+              <div class="card">
+                <div class="card-body">
+                  <div class="d-flex align-items-center">
+                    <div class="subheader">Analysis Period</div>
+                  </div>
+                  <div class="h1 mb-3" id="analysis-date">Loading...</div>
+                  <div class="d-flex mb-2">
+                    <div class="small text-muted" id="analysis-day">Selected Date</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Total Calls Card -->
+            <div class="col-12 col-sm-6 col-lg-3">
+              <div class="card">
+                <div class="card-body">
+                  <div class="d-flex align-items-center">
+                    <div class="subheader">Total Calls</div>
+                    <div class="ms-auto lh-1">
+                      <div class="dropdown">
+                        <a class="dropdown-toggle text-muted" href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Selected Date</a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="d-flex align-items-baseline">
+                    <div class="h1 mb-0 me-2" id="total-calls">0</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Abandonment Rate Card -->
+            <div class="col-12 col-sm-6 col-lg-3">
+              <div class="card">
+                <div class="card-body">
+                  <div class="d-flex align-items-center">
+                    <div class="subheader">Abandonment Rate</div>
+                    <div class="ms-auto lh-1">
+                      <span class="badge bg-red text-red-fg" id="abandonment-badge">High</span>
+                    </div>
+                  </div>
+                  <div class="d-flex align-items-baseline">
+                    <div class="h1 mb-3 me-2" id="abandonment-rate">0%</div>
+                  </div>
+                  <div class="d-flex mb-2">
+                    <div class="small text-muted">
+                      <span id="abandoned-count">0</span> calls abandoned
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Answer Rate Card -->
+            <div class="col-12 col-sm-6 col-lg-3">
+              <div class="card">
+                <div class="card-body">
+                  <div class="d-flex align-items-center">
+                    <div class="subheader">Answer Rate</div>
+                    <div class="ms-auto lh-1">
+                      <span class="badge bg-green text-green-fg" id="answer-badge">Good</span>
+                    </div>
+                  </div>
+                  <div class="d-flex align-items-baseline">
+                    <div class="h1 mb-3 me-2" id="answer-rate">0%</div>
+                  </div>
+                  <div class="d-flex mb-2">
+                    <div class="small text-muted">
+                      <span id="answered-count">0</span> calls answered
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Call Status Distribution Chart -->
+            <div class="col-12">
+              <div class="card">
+                <div class="card-header">
+                  <h3 class="card-title">Call Status Distribution</h3>
+                  <div class="card-actions">
+                    <span class="text-muted" id="chart-status">Ready to load data</span>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <div id="loading-state" class="text-center" style="display: none;">
+                    <div class="spinner-border" role="status">
+                      <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <div class="mt-2">Loading voice analytics...</div>
+                  </div>
+                  <div id="error-state" class="alert alert-danger" role="alert" style="display: none;">
+                    <h4 class="alert-title">Error loading voice analytics</h4>
+                    <div class="text-muted" id="error-message">Please try refreshing the data.</div>
+                  </div>
+                  <div id="chart-container">
+                    <canvas id="voice-status-chart" width="400" height="200"></canvas>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Call Status Details Table -->
+            <div class="col-12">
+              <div class="card">
+                <div class="card-header">
+                  <h3 class="card-title">Detailed Status Breakdown</h3>
+                </div>
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table class="table table-vcenter card-table">
+                      <thead>
+                        <tr>
+                          <th>Status</th>
+                          <th>Count</th>
+                          <th>Percentage</th>
+                          <th>Description</th>
+                        </tr>
+                      </thead>
+                      <tbody id="status-breakdown-table">
+                        <tr>
+                          <td colspan="4" class="text-center text-muted">Loading status breakdown...</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Data Source Diagnostic -->
+            <div class="col-12">
+              <div class="card">
+                <div class="card-header">
+                  <h3 class="card-title">📊 Data Source Analysis</h3>
+                  <div class="card-actions">
+                    <button class="btn btn-outline-primary btn-sm" id="load-diagnostic-data">
+                      🔍 Load Comprehensive Analysis
+                    </button>
+                  </div>
+                </div>
+                <div class="card-body" id="diagnostic-section" style="display: none;">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <h4>📈 Call Volume Comparison</h4>
+                      <table class="table table-sm">
+                        <tr>
+                          <td><strong>Online Dashboard:</strong></td>
+                          <td id="online-dashboard-calls" class="text-end">397 calls</td>
+                        </tr>
+                        <tr>
+                          <td><strong>This Dashboard (Selected Date):</strong></td>
+                          <td id="this-dashboard-calls" class="text-end">-- calls</td>
+                        </tr>
+                        <tr>
+                          <td><strong>Discrepancy:</strong></td>
+                          <td id="call-discrepancy" class="text-end">-- calls</td>
+                        </tr>
+                        <tr>
+                          <td><strong>Ratio:</strong></td>
+                          <td id="discrepancy-ratio" class="text-end">--x</td>
+                        </tr>
+                      </table>
+                    </div>
+                    <div class="col-md-6">
+                      <h4>🔍 Possible Explanations</h4>
+                      <ul class="list-unstyled" id="explanation-list">
+                        <li class="mb-1">🔄 <small class="text-muted">Loading explanations...</small></li>
+                      </ul>
+                    </div>
+                  </div>
+                  
+                  <div class="row mt-4">
+                    <div class="col-12">
+                      <h4>📊 Alternative Time Periods</h4>
+                      <div class="row" id="alternative-periods">
+                        <div class="col-md-4">
+                          <div class="card card-sm">
+                            <div class="card-body">
+                              <div class="h3 m-0" id="weekly-calls">--</div>
+                              <div class="text-muted">Current Week</div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-4">
+                          <div class="card card-sm">
+                            <div class="card-body">
+                              <div class="h3 m-0" id="monthly-calls">--</div>
+                              <div class="text-muted">Current Month</div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-4">
+                          <div class="card card-sm">
+                            <div class="card-body">
+                              <div class="h3 m-0" id="estimated-weekly">--</div>
+                              <div class="text-muted">Est. Weekly (×5)</div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="mt-3">
+                    <small class="text-muted">
+                      <strong>Data Source:</strong> <span id="data-source-info">Zendesk Voice API</span><br>
+                      <strong>Last Updated:</strong> <span id="last-updated-info">--</span>
+                    </small>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- END ROW -->
+        </div>
+        <!-- END CONTAINER XL -->
+      </div>
+      <!-- END PAGE WRAPPER -->
+    </div>
+
+    <!-- BEGIN GLOBAL SCRIPTS -->
+    <script src="./original/dist/js/tabler.min.js?1747674014" defer></script>
+    <!-- END GLOBAL SCRIPTS -->
+
+    <!-- Chart.js for visualization -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- BEGIN PAGE SCRIPTS -->
+    <script>
+      // Voice Analytics Dashboard State Management
+      const VoiceDashboard = {
+        // API Configuration - Update this to match your server
+        API_BASE_URL: 'http://localhost:3000',
+        voiceChart: null,
+        isLoading: false,
+
+        // Initialize dashboard when DOM is ready
+        async init() {
+          try {
+            // Setup controls first to set default date
+            this.setupEventListeners();
+            
+            // Get the default selected date (last Monday)
+            const datePicker = document.getElementById('analysis-date-picker');
+            const selectedDate = datePicker ? datePicker.value : null;
+            
+            // Load analytics with the selected date
+            await this.loadVoiceAnalytics(false, selectedDate);
+            
+            console.log('✅ Voice Analytics Dashboard initialized successfully');
+          } catch (error) {
+            console.error('❌ Voice Dashboard initialization failed:', error);
+            this.showError('Failed to initialize voice analytics dashboard');
+          }
+        },
+
+        // Setup event listeners (only called once)
+        setupEventListeners() {
+          // Refresh button
+          const refreshBtn = document.getElementById('refresh-voice-analytics');
+          if (refreshBtn) {
+            refreshBtn.addEventListener('click', () => this.handleRefresh());
+          }
+
+          // Diagnostic analysis button
+          const diagnosticBtn = document.getElementById('load-diagnostic-data');
+          if (diagnosticBtn) {
+            diagnosticBtn.addEventListener('click', () => this.loadComprehensiveAnalysis());
+
+            // Date picker functionality
+            this.setupDateControls();
+          }
+
+          // Date picker and related buttons
+          this.setupDateControls();
+        },
+
+        // Setup date picker controls
+        setupDateControls() {
+          const datePicker = document.getElementById('analysis-date-picker');
+          const loadDateBtn = document.getElementById('load-date-analytics');
+          
+          // Set default date to last Monday
+          if (datePicker) {
+            const lastMonday = this.getLastMonday();
+            datePicker.value = lastMonday.toISOString().split('T')[0];
+          }
+          
+          // Load analytics for selected date
+          if (loadDateBtn) {
+            loadDateBtn.addEventListener('click', () => this.handleDateSelection());
+          }
+          
+          // Enter key support for date picker
+          if (datePicker) {
+            datePicker.addEventListener('keypress', (e) => {
+              if (e.key === 'Enter') {
+                this.handleDateSelection();
+              }
+            });
+          }
+        },
+
+        // Get last Monday date
+        getLastMonday() {
+          const today = new Date();
+          const dayOfWeek = today.getDay();
+          let daysBack;
+          
+          if (dayOfWeek === 0) {
+            daysBack = 6;
+          } else if (dayOfWeek === 1) {
+            daysBack = 7;
+          } else {
+            daysBack = dayOfWeek - 1 + 7;
+          }
+          
+          const lastMonday = new Date(today);
+          lastMonday.setDate(today.getDate() - daysBack);
+          lastMonday.setHours(0, 0, 0, 0);
+          
+          return lastMonday;
+        },
+
+        // Handle date selection
+        async handleDateSelection() {
+          const datePicker = document.getElementById('analysis-date-picker');
+          const selectedDate = datePicker.value;
+          
+          if (!selectedDate) {
+            alert('Please select a date for analysis');
+            return;
+          }
+          
+          console.log('📅 Loading analytics for selected date:', selectedDate);
+          this.updateDateStatus('Loading analytics for ' + selectedDate + '...');
+          
+          // Load main voice analytics
+          await this.loadVoiceAnalytics(false, selectedDate);
+          
+          // If comprehensive analytics was previously loaded, refresh it too
+          const diagnosticSection = document.getElementById('diagnostic-section');
+          if (diagnosticSection && diagnosticSection.style.display !== 'none') {
+            console.log('🔍 Refreshing comprehensive analytics for new date...');
+            await this.loadComprehensiveAnalysis();
+          }
+          
+          // Update status to show analysis is complete
+          this.updateDateStatus('Analytics loaded for ' + selectedDate);
+        },
+
+        // Update date status message
+        updateDateStatus(message) {
+          const statusElement = document.getElementById('date-status');
+          if (statusElement) {
+            statusElement.textContent = message;
+          }
+        },
+
+        // Handle refresh button click
+        async handleRefresh() {
+          if (this.isLoading) return;
+          
+          const refreshBtn = document.getElementById('refresh-voice-analytics');
+          const originalHTML = refreshBtn.innerHTML;
+          
+          try {
+            refreshBtn.disabled = true;
+            refreshBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status"></span>Refreshing...';
+            console.log('🔄 Refreshing voice analytics data...');
+            
+            // Get current selected date
+            const datePicker = document.getElementById('analysis-date-picker');
+            const selectedDate = datePicker ? datePicker.value : null;
+            
+            await this.loadVoiceAnalytics(true, selectedDate);
+            
+            // If comprehensive analytics was previously loaded, refresh it too
+            const diagnosticSection = document.getElementById('diagnostic-section');
+            if (diagnosticSection && diagnosticSection.style.display !== 'none') {
+              console.log('🔍 Refreshing comprehensive analytics...');
+              await this.loadComprehensiveAnalysis();
+            }
+            
+          } catch (error) {
+            console.error('❌ Error refreshing voice analytics:', error);
+            this.showError('Failed to refresh voice analytics data');
+          } finally {
+            refreshBtn.disabled = false;
+            refreshBtn.innerHTML = originalHTML;
+          }
+        },
+
+        // Load voice analytics data from API
+        async loadVoiceAnalytics(forceRefresh = false, selectedDate = null) {
+          try {
+            console.log('📞 Loading voice analytics...');
+            this.isLoading = true;
+            
+            // Show loading state
+            this.showLoadingState();
+            
+            // Build API URL
+            let apiUrl = `${this.API_BASE_URL}/api/voice-analytics`;
+            const params = new URLSearchParams();
+            
+            if (forceRefresh) {
+              params.append('forceRefresh', 'true');
+            }
+            
+            if (selectedDate) {
+              params.append('date', selectedDate);
+            }
+            
+            if (params.toString()) {
+              apiUrl += '?' + params.toString();
+            }
+            
+            console.log('🌐 API URL:', apiUrl);
+            
+            // API call to get voice data
+            const response = await fetch(apiUrl);
+            
+            if (!response.ok) {
+              throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+            }
+            
+            const result = await response.json();
+            
+            if (!result.success) {
+              throw new Error(result.error || 'Failed to load voice analytics');
+            }
+            
+            // Debug: Log the received data
+            console.log('📊 Received data:', result.data);
+            console.log('📊 Summary data:', result.data.summary);
+            
+            // Update all UI components with the data
+            this.updateSummaryCards(result.data.summary);
+            this.updateChart(result.data.chart_data);
+            this.updateStatusTable(result.data.call_status_breakdown);
+            this.updateDateInfo(result.data.date, result.data.day_name);
+            
+            // Hide loading state and show the chart
+            this.showChart();
+            
+            console.log('✅ Voice analytics loaded successfully');
+            
+          } catch (error) {
+            console.error('❌ Error loading voice analytics:', error);
+            this.showError(error.message);
+          } finally {
+            this.isLoading = false;
+          }
+        },
+
+        // Update summary cards with data
+        updateSummaryCards(summary) {
+          console.log('🔄 Updating summary cards with:', summary);
+          
+          // Update total calls
+          const totalCallsElement = document.getElementById('total-calls');
+          if (totalCallsElement) {
+            totalCallsElement.textContent = summary.total_calls.toLocaleString();
+            console.log('✅ Updated total calls:', summary.total_calls);
+          } else {
+            console.log('❌ total-calls element not found');
+          }
+          
+          // Update abandonment rate
+          const abandonmentRateElement = document.getElementById('abandonment-rate');
+          const abandonmentBadge = document.getElementById('abandonment-badge');
+          const abandonedCountElement = document.getElementById('abandoned-count');
+          
+          if (abandonmentRateElement) {
+            abandonmentRateElement.textContent = summary.abandonment_rate + '%';
+          }
+          
+          if (abandonedCountElement) {
+            abandonedCountElement.textContent = summary.abandoned_calls.toLocaleString();
+          }
+          
+          if (abandonmentBadge) {
+            // Update badge based on abandonment rate
+            if (summary.abandonment_rate > 15) {
+              abandonmentBadge.textContent = 'High';
+              abandonmentBadge.className = 'badge bg-red text-red-fg';
+            } else if (summary.abandonment_rate > 8) {
+              abandonmentBadge.textContent = 'Medium';
+              abandonmentBadge.className = 'badge bg-yellow text-yellow-fg';
+            } else {
+              abandonmentBadge.textContent = 'Low';
+              abandonmentBadge.className = 'badge bg-green text-green-fg';
+            }
+          }
+          
+          // Update answer rate
+          const answerRateElement = document.getElementById('answer-rate');
+          const answerBadge = document.getElementById('answer-badge');
+          const answeredCountElement = document.getElementById('answered-count');
+          
+          if (answerRateElement) {
+            answerRateElement.textContent = summary.answered_rate + '%';
+          }
+          
+          if (answeredCountElement) {
+            answeredCountElement.textContent = summary.answered_calls.toLocaleString();
+          }
+          
+          if (answerBadge) {
+            // Update badge based on answer rate
+            if (summary.answered_rate > 85) {
+              answerBadge.textContent = 'Excellent';
+              answerBadge.className = 'badge bg-green text-green-fg';
+            } else if (summary.answered_rate > 70) {
+              answerBadge.textContent = 'Good';
+              answerBadge.className = 'badge bg-blue text-blue-fg';
+            } else {
+              answerBadge.textContent = 'Needs Improvement';
+              answerBadge.className = 'badge bg-red text-red-fg';
+            }
+          }
+        },
+
+        // Update date information
+        updateDateInfo(date, dayName) {
+          const analysisDateElement = document.getElementById('analysis-date');
+          const analysisDayElement = document.getElementById('analysis-day');
+          
+          if (analysisDateElement) {
+            const formattedDate = new Date(date + 'T00:00:00').toLocaleDateString('en-US', {
+              month: 'short',
+              day: 'numeric',
+              year: 'numeric'
+            });
+            analysisDateElement.textContent = formattedDate;
+          }
+          
+          if (analysisDayElement) {
+            analysisDayElement.textContent = dayName;
+          }
+        },
+
+        // Update chart with voice status data
+        updateChart(chartData) {
+          const ctx = document.getElementById('voice-status-chart');
+          if (!ctx) return;
+          
+          // Destroy existing chart if it exists
+          if (this.voiceChart) {
+            this.voiceChart.destroy();
+          }
+          
+          // Create layered bar chart
+          this.voiceChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+              labels: chartData.labels,
+              datasets: [{
+                label: 'Call Count',
+                data: chartData.datasets[0].data,
+                backgroundColor: chartData.datasets[0].backgroundColor,
+                borderColor: chartData.datasets[0].borderColor,
+                borderWidth: 1,
+                borderRadius: 4,
+                borderSkipped: false,
+              }]
+            },
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              plugins: {
+                legend: {
+                  display: false
+                },
+                tooltip: {
+                  callbacks: {
+                    label: function(context) {
+                      const category = chartData.categories[context.dataIndex];
+                      return [
+                        `${category.name}: ${context.parsed.y} calls`,
+                        `Percentage: ${category.percentage}%`,
+                        `${category.description}`
+                      ];
+                    }
+                  }
+                }
+              },
+              scales: {
+                y: {
+                  beginAtZero: true,
+                  ticks: {
+                    stepSize: 1
+                  }
+                }
+              }
+            }
+          });
+          
+          // Update chart status
+          const chartStatus = document.getElementById('chart-status');
+          if (chartStatus) {
+            chartStatus.textContent = `Updated: ${new Date().toLocaleTimeString()}`;
+          }
+        },
+
+        // Update status breakdown table
+        updateStatusTable(breakdown) {
+          const tableBody = document.getElementById('status-breakdown-table');
+          if (!tableBody) return;
+          
+          if (breakdown.length === 0) {
+            tableBody.innerHTML = '<tr><td colspan="4" class="text-center text-muted">No call data available</td></tr>';
+            return;
+          }
+          
+          tableBody.innerHTML = breakdown.map(status => `
+            <tr>
+              <td>
+                <span class="badge" style="background-color: ${status.color}; color: white;">
+                  ${status.status}
+                </span>
+              </td>
+              <td><strong>${status.count.toLocaleString()}</strong></td>
+              <td>${status.percentage}%</td>
+              <td class="text-muted">${status.description}</td>
+            </tr>
+          `).join('');
+        },
+
+        // Show loading state
+        showLoadingState() {
+          const loadingState = document.getElementById('loading-state');
+          const errorState = document.getElementById('error-state');
+          const chartContainer = document.getElementById('chart-container');
+          
+          if (loadingState) loadingState.style.display = 'block';
+          if (errorState) errorState.style.display = 'none';
+          if (chartContainer) chartContainer.style.display = 'none';
+        },
+
+        // Show error state
+        showError(message) {
+          const loadingState = document.getElementById('loading-state');
+          const errorState = document.getElementById('error-state');
+          const chartContainer = document.getElementById('chart-container');
+          const errorMessage = document.getElementById('error-message');
+          
+          if (loadingState) loadingState.style.display = 'none';
+          if (errorState) errorState.style.display = 'block';
+          if (chartContainer) chartContainer.style.display = 'none';
+          if (errorMessage) errorMessage.textContent = message;
+        },
+
+        // Hide loading/error states and show chart
+        showChart() {
+          const loadingState = document.getElementById('loading-state');
+          const errorState = document.getElementById('error-state');
+          const chartContainer = document.getElementById('chart-container');
+          
+          if (loadingState) loadingState.style.display = 'none';
+          if (errorState) errorState.style.display = 'none';
+          if (chartContainer) chartContainer.style.display = 'block';
+        },
+
+        // Load comprehensive voice analytics with diagnostic information
+        async loadComprehensiveAnalysis() {
+          try {
+            console.log('🔍 Loading comprehensive voice analytics...');
+            
+            const diagnosticBtn = document.getElementById('load-diagnostic-data');
+            const originalText = diagnosticBtn.textContent;
+            
+            // Show loading state
+            diagnosticBtn.disabled = true;
+            diagnosticBtn.innerHTML = '🔄 Loading...';
+            
+            // Get current selected date
+            const datePicker = document.getElementById('analysis-date-picker');
+            const selectedDate = datePicker ? datePicker.value : null;
+            
+            // Build API URL with date parameter
+            let apiUrl = `${this.API_BASE_URL}/api/voice-analytics/comprehensive`;
+            if (selectedDate) {
+              apiUrl += `?date=${encodeURIComponent(selectedDate)}`;
+            }
+            
+            // Call comprehensive API
+            const response = await fetch(apiUrl);
+            
+            if (!response.ok) {
+              throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+            }
+            
+            const result = await response.json();
+            
+            if (!result.success) {
+              throw new Error(result.error || 'Failed to load comprehensive analytics');
+            }
+            
+            // Update diagnostic section
+            this.updateDiagnosticSection(result.data);
+            
+            // Show diagnostic section
+            const diagnosticSection = document.getElementById('diagnostic-section');
+            if (diagnosticSection) {
+              diagnosticSection.style.display = 'block';
+            }
+            
+            console.log('✅ Comprehensive voice analytics loaded');
+            
+          } catch (error) {
+            console.error('❌ Error loading comprehensive analytics:', error);
+            alert('Failed to load comprehensive analysis: ' + error.message);
+          } finally {
+            const diagnosticBtn = document.getElementById('load-diagnostic-data');
+            diagnosticBtn.disabled = false;
+            diagnosticBtn.innerHTML = '🔍 Load Comprehensive Analysis';
+          }
+        },
+
+        // Update diagnostic section with comprehensive data
+        updateDiagnosticSection(data) {
+          if (!data) return;
+          
+          // Update call comparison
+          const primaryCalls = data.primary_data?.summary?.total_calls || 0;
+          const onlineDashboardTarget = data.diagnostic_info?.online_dashboard_target || 397;
+          const discrepancy = onlineDashboardTarget - primaryCalls;
+          const ratio = data.diagnostic_info?.discrepancy_ratio || 'N/A';
+          
+          document.getElementById('this-dashboard-calls').textContent = primaryCalls + ' calls';
+          document.getElementById('call-discrepancy').textContent = discrepancy + ' calls';
+          document.getElementById('discrepancy-ratio').textContent = ratio + 'x';
+          
+          // Update alternative periods
+          if (data.alternative_periods) {
+            const weeklyElement = document.getElementById('weekly-calls');
+            const monthlyElement = document.getElementById('monthly-calls');
+            const estimatedWeeklyElement = document.getElementById('estimated-weekly');
+            
+            if (weeklyElement && data.alternative_periods.current_week) {
+              weeklyElement.textContent = data.alternative_periods.current_week.summary.total_calls;
+            }
+            
+            if (monthlyElement && data.alternative_periods.current_month) {
+              monthlyElement.textContent = data.alternative_periods.current_month.summary.total_calls;
+            }
+            
+            if (estimatedWeeklyElement) {
+              const estimated = primaryCalls * 5;
+              estimatedWeeklyElement.textContent = estimated;
+              
+              // Highlight if close to 397
+              if (Math.abs(estimated - 397) < 20) {
+                estimatedWeeklyElement.classList.add('text-success');
+                estimatedWeeklyElement.title = 'Close match to online dashboard!';
+              }
+            }
+          }
+          
+          // Update explanations
+          if (data.diagnostic_info?.possible_explanations) {
+            const explanationList = document.getElementById('explanation-list');
+            if (explanationList) {
+              explanationList.innerHTML = data.diagnostic_info.possible_explanations
+                .map(explanation => `<li class="mb-1">💡 <small class="text-muted">${explanation}</small></li>`)
+                .join('');
+            }
+          }
+          
+          // Update data source info
+          const dataSourceElement = document.getElementById('data-source-info');
+          const lastUpdatedElement = document.getElementById('last-updated-info');
+          
+          if (dataSourceElement && data.diagnostic_info?.data_source) {
+            dataSourceElement.textContent = data.diagnostic_info.data_source;
+          }
+          
+          if (lastUpdatedElement && data.diagnostic_info?.last_updated) {
+            const date = new Date(data.diagnostic_info.last_updated);
+            lastUpdatedElement.textContent = date.toLocaleString();
+          }
+        }
+      };
+
+      // Initialize dashboard when DOM is ready
+      document.addEventListener('DOMContentLoaded', function() {
+        VoiceDashboard.init();
+      });
+    </script>
+    <!-- END PAGE SCRIPTS -->
+  </body>
+</html>

@@ -381,6 +381,8 @@
     <script>
       // Ticket Dashboard State Management
       const TicketDashboard = {
+        // API Configuration - Update this to match your server
+        API_BASE_URL: 'http://localhost:3000',
         ticketAnalyticsChart: null,
         isLoading: false,
 
@@ -450,7 +452,7 @@
             this.showLoadingState();
             
             // Build API URL with forceRefresh parameter if needed
-            let apiUrl = '/api/ticket-analytics/5-day';
+            let apiUrl = `${this.API_BASE_URL}/api/ticket-analytics/5-day`;
             if (forceRefresh) {
               apiUrl += '?forceRefresh=true';
             }

@@ -372,6 +372,8 @@
     <script>
       // Dashboard State Management
       const DashboardApp = {
+        // API Configuration - Update this to match your server
+        API_BASE_URL: 'http://localhost:3000',
         callAnalyticsChart: null,
         isLoading: false,
 
@@ -441,7 +443,7 @@
             this.showLoadingState();
             
             // Build API URL with forceRefresh parameter if needed
-            let apiUrl = '/api/call-analytics/30-day';
+            let apiUrl = `${this.API_BASE_URL}/api/call-analytics/30-day`;
             if (forceRefresh) {
               apiUrl += '?forceRefresh=true';
             }

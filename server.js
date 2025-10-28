@@ -5,10 +5,12 @@ const path = require('path');
 const { generateChatReply } = require('./src/services/gptResponder');
 const CallAnalyticsService = require('./src/services/CallAnalyticsService');
 const TicketAnalyticsService = require('./src/services/TicketAnalyticsService');
+const VoiceAnalyticsService = require('./src/services/VoiceAnalyticsService');
 
 const PORT = 3000;
 const callAnalytics = new CallAnalyticsService();
 const ticketAnalytics = new TicketAnalyticsService();
+const voiceAnalytics = new VoiceAnalyticsService();
 
 // MIME types for different file extensions
 const mimeTypes = {
@@ -220,6 +222,72 @@ async function handleClearCacheRequest(req, res) {
   }
 }
 
+async function handleVoiceAnalyticsRequest(req, res) {
+  try {
+    // Parse query parameters
+    const url = new URL(req.url, `http://localhost:${PORT}`);
+    const forceRefresh = url.searchParams.get('forceRefresh') === 'true';
+    const selectedDate = url.searchParams.get('date'); // YYYY-MM-DD format
+    
+    if (selectedDate) {
+      console.log('📞 Fetching voice analytics for selected date:', selectedDate);
+    } else {
+      console.log('📞 Fetching voice analytics for last Monday...');
+    }
+    
+    if (forceRefresh) {
+      console.log('🔄 Force refresh requested for voice analytics');
+    }
+    
+    const result = await voiceAnalytics.getVoiceAnalyticsForDate(selectedDate);
+    
+    console.log('📊 Voice analytics result:', result?.success, 
+      result?.data ? `Total calls: ${result.data.summary?.total_calls}` : 'No data');
+    
+    sendJson(res, 200, result);
+    console.log('✅ Voice analytics response sent');
+  } catch (error) {
+    console.error('❌ Error getting voice analytics:', error);
+    sendJson(res, 500, {
+      success: false,
+      error: 'Failed to get voice analytics',
+      details: error.message
+    });
+  }
+}
+
+// Handle comprehensive voice analytics request with diagnostic info
+async function handleComprehensiveVoiceAnalyticsRequest(req, res) {
+  try {
+    // Parse query parameters
+    const url = new URL(req.url, `http://localhost:${PORT}`);
+    const selectedDate = url.searchParams.get('date'); // YYYY-MM-DD format
+    
+    if (selectedDate) {
+      console.log('📊 Getting comprehensive voice analytics for selected date:', selectedDate);
+    } else {
+      console.log('📊 Getting comprehensive voice analytics for last Monday...');
+    }
+    
+    const service = new VoiceAnalyticsService();
+    
+    const result = await service.getComprehensiveVoiceAnalytics(selectedDate);
+    
+    console.log('📊 Comprehensive voice analytics result:', 
+      result?.data ? `Primary: ${result.data.primary_data?.summary?.total_calls} calls, Online target: ${result.data.diagnostic_info?.online_dashboard_target}` : 'No data');
+    
+    sendJson(res, 200, result);
+    console.log('✅ Comprehensive voice analytics response sent');
+  } catch (error) {
+    console.error('❌ Error getting comprehensive voice analytics:', error);
+    sendJson(res, 500, {
+      success: false,
+      error: 'Failed to get comprehensive voice analytics',
+      details: error.message
+    });
+  }
+}
+
 const server = http.createServer((req, res) => {
   console.log(`${req.method} ${req.url}`);
   console.log('🔍 Debug - Full URL:', req.url);
@@ -351,6 +419,61 @@ const server = http.createServer((req, res) => {
     }
   }
 
+  // Voice Analytics endpoints
+  if (req.url.startsWith('/api/voice-analytics') && !req.url.startsWith('/api/voice-analytics/comprehensive') && !req.url.startsWith('/api/voice-analytics/last-monday')) {
+    console.log('📞 Voice analytics request (with date support)');
+    if (req.method === 'OPTIONS') {
+      res.writeHead(200, {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+        'Access-Control-Allow-Methods': 'GET, OPTIONS'
+      });
+      res.end();
+      return;
+    }
+    
+    if (req.method === 'GET') {
+      handleVoiceAnalyticsRequest(req, res);
+      return;
+    }
+  }
+
+  if (req.url.startsWith('/api/voice-analytics/comprehensive')) {
+    console.log('📞 Comprehensive voice analytics request');
+    if (req.method === 'OPTIONS') {
+      res.writeHead(200, {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+        'Access-Control-Allow-Methods': 'GET, OPTIONS'
+      });
+      res.end();
+      return;
+    }
+    
+    if (req.method === 'GET') {
+      handleComprehensiveVoiceAnalyticsRequest(req, res);
+      return;
+    }
+  }
+
+  if (req.url.startsWith('/api/voice-analytics/last-monday')) {
+    console.log('📞 Voice analytics request (Last Monday)');
+    if (req.method === 'OPTIONS') {
+      res.writeHead(200, {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+        'Access-Control-Allow-Methods': 'GET, OPTIONS'
+      });
+      res.end();
+      return;
+    }
+    
+    if (req.method === 'GET') {
+      handleVoiceAnalyticsRequest(req, res);
+      return;
+    }
+  }
+
   if (req.url.startsWith('/api/gpt5-chat')) {
     console.log('🎯 Routing to chat handler');
     handleChatRequest(req, res);
@@ -406,6 +529,7 @@ server.listen(PORT, () => {
   console.log('📊 Available dashboards:');
   console.log(`   • Executive Dashboard: http://localhost:${PORT}/web/dash.html`);
   console.log(`   • Tickets Dashboard:   http://localhost:${PORT}/web/tickets.html`);
+  console.log(`   • Voice Analytics:     http://localhost:${PORT}/web/voice.html`);
   console.log('');
   console.log('📂 Data file:');
   console.log(`   • API Data: http://localhost:${PORT}/data/execView.json`);
@@ -436,3 +560,6 @@ process.on('unhandledRejection', (reason, promise) => {
   console.error('Reason:', reason);
   // Don't exit, just log the error
 });
+
+// Start the server
+// ...existing code...
