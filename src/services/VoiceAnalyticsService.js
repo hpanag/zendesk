@@ -250,6 +250,19 @@ class VoiceAnalyticsService {
       });
     }
     
+    // Show "Other/In Progress" calls (calls without a recognized completion status)
+    const otherCallsCount = callsData.total_calls - callsData.answered_calls - callsData.abandoned_calls - 
+                           callsData.voicemail_calls - callsData.callback_calls;
+    if (otherCallsCount > 0) {
+      breakdown.push({
+        status: 'In Progress',
+        count: otherCallsCount,
+        percentage: Math.round((otherCallsCount / total) * 100),
+        color: '#6c757d',
+        description: 'Calls currently in progress or no status available'
+      });
+    }
+    
     // If no calls at all, return empty breakdown
     if (breakdown.length === 0 && callsData.total_calls === 0) {
       return [];
