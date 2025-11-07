@@ -96,15 +96,26 @@ async function handleChatRequest(req, res) {
 // Handle today's calls request using incremental API
 async function handleTodaysCallsRequest(req, res) {
   try {
-    console.log('📊 Fetching today\'s calls from incremental API...');
-    
     const ZendeskClient = require('./src/ZendeskClient');
     const zendesk = new ZendeskClient();
     
-    // Get today's start time
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    const startTime = Math.floor(today.getTime() / 1000);
+    // Parse date from query parameter or use today
+    const url = new URL(req.url, `http://localhost:${PORT}`);
+    const dateParam = url.searchParams.get('date');
+    
+    let targetDate;
+    if (dateParam) {
+      // Parse as local date to avoid timezone issues
+      const [year, month, day] = dateParam.split('-').map(Number);
+      targetDate = new Date(year, month - 1, day, 0, 0, 0, 0);
+      console.log(`📊 Fetching calls for selected date: ${dateParam}`);
+    } else {
+      targetDate = new Date();
+      targetDate.setHours(0, 0, 0, 0);
+      console.log('📊 Fetching today\'s calls from incremental API...');
+    }
+    
+    const startTime = Math.floor(targetDate.getTime() / 1000);
     
     // Fetch calls from incremental API
     const response = await zendesk.makeRequest('GET', 
@@ -113,13 +124,16 @@ async function handleTodaysCallsRequest(req, res) {
     
     const allCalls = response.calls || [];
     
-    // Filter to only today's calls
-    const todaysCalls = allCalls.filter(call => {
+    // Filter to only calls from the target date
+    const nextDay = new Date(targetDate);
+    nextDay.setDate(nextDay.getDate() + 1);
+    
+    const targetCalls = allCalls.filter(call => {
       const callTime = new Date(call.created_at);
-      return callTime >= today;
+      return callTime >= targetDate && callTime < nextDay;
     });
     
-    console.log(`✅ Retrieved ${todaysCalls.length} calls for today`);
+    console.log(`✅ Retrieved ${targetCalls.length} calls for ${targetDate.toISOString().split('T')[0]}`);
     
     // Categorize calls with detailed breakdown
     const hourlyData = new Array(24).fill(0).map((_, hour) => ({
@@ -139,7 +153,7 @@ async function handleTodaysCallsRequest(req, res) {
     let abandonedVoicemail = 0;
     let voicemailsLeft = 0;
     
-    todaysCalls.forEach(call => {
+    targetCalls.forEach(call => {
       const callTime = new Date(call.created_at);
       const hour = callTime.getHours();
       
@@ -175,8 +189,8 @@ async function handleTodaysCallsRequest(req, res) {
     
     const result = {
       success: true,
-      date: today.toISOString().split('T')[0],
-      total_calls: todaysCalls.length,
+      date: targetDate.toISOString().split('T')[0],
+      total_calls: targetCalls.length,
       answered_by_agent: answeredByAgent,
       abandoned_ivr: abandonedIVR,
       abandoned_queue: abandonedQueue,
@@ -687,7 +701,7 @@ const server = http.createServer((req, res) => {
   }
 
   // Today's calls endpoint - using incremental API
-  if (req.url === '/api/calls/today') {
+  if (req.url === '/api/calls/today' || req.url.startsWith('/api/calls/today?')) {
     console.log('📞 Today\'s calls request');
     if (req.method === 'OPTIONS') {
       res.writeHead(200, {
