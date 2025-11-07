@@ -139,8 +139,78 @@
         "closed": 14
       },
       "cached_at": "2025-10-28T18:29:08.559Z"
+    },
+    "2025-11-03": {
+      "data": {
+        "date": "2025-11-03",
+        "day_name": "Mon, Nov 3",
+        "total_tickets": 591,
+        "new": 494,
+        "open": 5,
+        "pending": 10,
+        "hold": 1,
+        "solved": 46,
+        "closed": 35
+      },
+      "cached_at": "2025-11-07T15:31:35.336Z"
+    },
+    "2025-11-04": {
+      "data": {
+        "date": "2025-11-04",
+        "day_name": "Tue, Nov 4",
+        "total_tickets": 739,
+        "new": 591,
+        "open": 8,
+        "pending": 6,
+        "hold": 3,
+        "solved": 86,
+        "closed": 45
+      },
+      "cached_at": "2025-11-07T15:31:39.392Z"
+    },
+    "2025-11-05": {
+      "data": {
+        "date": "2025-11-05",
+        "day_name": "Wed, Nov 5",
+        "total_tickets": 601,
+        "new": 451,
+        "open": 6,
+        "pending": 15,
+        "hold": 11,
+        "solved": 108,
+        "closed": 10
+      },
+      "cached_at": "2025-11-07T15:31:43.502Z"
+    },
+    "2025-11-06": {
+      "data": {
+        "date": "2025-11-06",
+        "day_name": "Yesterday",
+        "total_tickets": 679,
+        "new": 442,
+        "open": 23,
+        "pending": 31,
+        "hold": 26,
+        "solved": 151,
+        "closed": 6
+      },
+      "cached_at": "2025-11-07T15:31:47.240Z"
+    },
+    "2025-11-07": {
+      "data": {
+        "date": "2025-11-07",
+        "day_name": "Today",
+        "total_tickets": 199,
+        "new": 75,
+        "open": 19,
+        "pending": 15,
+        "hold": 15,
+        "solved": 54,
+        "closed": 21
+      },
+      "cached_at": "2025-11-07T17:08:38.143Z"
     }
   },
-  "last_updated": "2025-10-28T18:29:08.560Z",
+  "last_updated": "2025-11-07T17:08:38.143Z",
   "version": "1.0"
 }

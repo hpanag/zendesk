@@ -12,7 +12,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Today's Voice Calls - Zendesk Dashboard</title>
+    <title>Today's Tickets - Zendesk Dashboard</title>
     <!-- BEGIN GLOBAL MANDATORY STYLES -->
     <link href="./original/dist/css/tabler.css?1747674014" rel="stylesheet" />
     <!-- END GLOBAL MANDATORY STYLES -->
@@ -224,7 +224,7 @@
           <div class="container-xl">
             <div class="row g-2 align-items-center">
               <div class="col">
-                <h2 class="page-title">📞 Today's Voice Calls</h2>
+                <h2 class="page-title">🎫 Today's Tickets</h2>
                 <div class="text-secondary mt-1">
                   <span id="last-updated">Data not loaded yet</span>
                 </div>
@@ -251,53 +251,53 @@
               <div class="col-sm-6 col-lg-2">
                 <div class="card metric-card" style="border-left-color: #206bc4;">
                   <div class="card-body">
-                    <div class="subheader">Total Calls</div>
-                    <div class="h1 mb-0" id="total-calls">-</div>
+                    <div class="subheader">Total Tickets</div>
+                    <div class="h1 mb-0" id="total-tickets">-</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6 col-lg-2">
+                <div class="card metric-card" style="border-left-color: #5c7cfa;">
+                  <div class="card-body">
+                    <div class="subheader">New</div>
+                    <div class="h1 mb-0" id="new-tickets">-</div>
+                    <div class="text-secondary" id="new-pct">-</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6 col-lg-2">
+                <div class="card metric-card" style="border-left-color: #fab005;">
+                  <div class="card-body">
+                    <div class="subheader">Open</div>
+                    <div class="h1 mb-0" id="open-tickets">-</div>
+                    <div class="text-secondary" id="open-pct">-</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6 col-lg-2">
+                <div class="card metric-card" style="border-left-color: #fd7e14;">
+                  <div class="card-body">
+                    <div class="subheader">Pending</div>
+                    <div class="h1 mb-0" id="pending-tickets">-</div>
+                    <div class="text-secondary" id="pending-pct">-</div>
                   </div>
                 </div>
               </div>
               <div class="col-sm-6 col-lg-2">
                 <div class="card metric-card" style="border-left-color: #2fb344;">
                   <div class="card-body">
-                    <div class="subheader">Answered by Agent</div>
-                    <div class="h1 mb-0" id="answered-calls">-</div>
-                    <div class="text-secondary" id="answered-pct">-</div>
+                    <div class="subheader">Solved</div>
+                    <div class="h1 mb-0" id="solved-tickets">-</div>
+                    <div class="text-secondary" id="solved-pct">-</div>
                   </div>
                 </div>
               </div>
               <div class="col-sm-6 col-lg-2">
-                <div class="card metric-card" style="border-left-color: #f59f00;">
+                <div class="card metric-card" style="border-left-color: #868e96;">
                   <div class="card-body">
-                    <div class="subheader">Abandoned IVR</div>
-                    <div class="h1 mb-0" id="abandoned-ivr">-</div>
-                    <div class="text-secondary" id="abandoned-ivr-pct">-</div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-sm-6 col-lg-2">
-                <div class="card metric-card" style="border-left-color: #d63939;">
-                  <div class="card-body">
-                    <div class="subheader">Abandoned Queue</div>
-                    <div class="h1 mb-0" id="abandoned-queue">-</div>
-                    <div class="text-secondary" id="abandoned-queue-pct">-</div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-sm-6 col-lg-2">
-                <div class="card metric-card" style="border-left-color: #e74c3c;">
-                  <div class="card-body">
-                    <div class="subheader">Abandoned VM</div>
-                    <div class="h1 mb-0" id="abandoned-vm">-</div>
-                    <div class="text-secondary" id="abandoned-vm-pct">-</div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-sm-6 col-lg-2">
-                <div class="card metric-card" style="border-left-color: #9b59b6;">
-                  <div class="card-body">
-                    <div class="subheader">Voicemails Left</div>
-                    <div class="h1 mb-0" id="voicemails">-</div>
-                    <div class="text-secondary" id="voicemails-pct">-</div>
+                    <div class="subheader">Closed</div>
+                    <div class="h1 mb-0" id="closed-tickets">-</div>
+                    <div class="text-secondary" id="closed-pct">-</div>
                   </div>
                 </div>
               </div>
@@ -305,19 +305,10 @@
             <!-- Hourly Chart -->
             <div class="card mb-3">
               <div class="card-header">
-                <h3 class="card-title">Calls by Hour</h3>
+                <h3 class="card-title">Tickets by Hour</h3>
               </div>
               <div class="card-body">
                 <div id="hourly-chart"></div>
-              </div>
-            </div>
-            <!-- Abandoned Rate Line Graph -->
-            <div class="card mb-3">
-              <div class="card-header">
-                <h3 class="card-title">Abandoned Rate by Hour</h3>
-              </div>
-              <div class="card-body">
-                <canvas id="abandoned-rate-chart" height="80"></canvas>
               </div>
             </div>
             <!-- Hourly Table -->
@@ -331,11 +322,11 @@
                     <tr>
                       <th>Hour</th>
                       <th class="text-end">Total</th>
-                      <th class="text-end">Agent</th>
-                      <th class="text-end">IVR</th>
-                      <th class="text-end">Queue</th>
-                      <th class="text-end">VM</th>
-                      <th class="text-end">VM Left</th>
+                      <th class="text-end">New</th>
+                      <th class="text-end">Open</th>
+                      <th class="text-end">Pending</th>
+                      <th class="text-end">Solved</th>
+                      <th class="text-end">Closed</th>
                       <th>Distribution</th>
                     </tr>
                   </thead>
@@ -396,21 +387,19 @@
     </div>
     <!-- BEGIN GLOBAL MANDATORY SCRIPTS -->
     <script src="./original/dist/js/tabler.min.js?1747674014"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <!-- END GLOBAL MANDATORY SCRIPTS -->
     <script>
       const app = {
         API_BASE_URL: 'http://localhost:3000',
-        abandonedRateChart: null,
         
         init() {
-          console.log('🚀 Initializing dashboard...');
+          console.log('🚀 Initializing tickets dashboard...');
           this.loadData();
         },
         
         async loadData() {
           try {
-            console.log('📊 Loading today\'s call data...');
+            console.log('📊 Loading today\'s ticket data...');
             
             // Disable refresh button and show loading state
             const refreshBtn = document.getElementById('refresh-btn');
@@ -418,18 +407,13 @@
             if (refreshBtn) refreshBtn.disabled = true;
             if (lastUpdated) lastUpdated.textContent = 'Loading...';
             
-            const response = await fetch(`${this.API_BASE_URL}/api/calls/today`);
+            const response = await fetch(`${this.API_BASE_URL}/api/tickets/today`);
             if (!response.ok) throw new Error(`HTTP ${response.status}`);
             const data = await response.json();
             console.log('✅ Data loaded:', data);
-            console.log('  Abandoned IVR:', data.abandoned_ivr);
-            console.log('  Abandoned Queue:', data.abandoned_queue);
-            console.log('  Abandoned VM:', data.abandoned_voicemail);
-            console.log('  Total Abandoned:', data.total_abandoned);
             
             this.updateSummary(data);
             this.updateChart(data.hourly_data);
-            this.updateAbandonedRateChart(data.hourly_data);
             this.updateTable(data.hourly_data);
             
             // Update last fetched timestamp
@@ -455,19 +439,20 @@
         },
         
         updateSummary(d) {
-          document.getElementById('total-calls').textContent = d.total_calls || 0;
-          document.getElementById('answered-calls').textContent = d.answered_by_agent || 0;
-          document.getElementById('abandoned-ivr').textContent = d.abandoned_ivr || 0;
-          document.getElementById('abandoned-queue').textContent = d.abandoned_queue || 0;
-          document.getElementById('abandoned-vm').textContent = d.abandoned_voicemail || 0;
-          document.getElementById('voicemails').textContent = d.voicemails_left || 0;
+          const status = d.status_counts || {};
+          document.getElementById('total-tickets').textContent = d.total_tickets || 0;
+          document.getElementById('new-tickets').textContent = status.new || 0;
+          document.getElementById('open-tickets').textContent = status.open || 0;
+          document.getElementById('pending-tickets').textContent = status.pending || 0;
+          document.getElementById('solved-tickets').textContent = status.solved || 0;
+          document.getElementById('closed-tickets').textContent = status.closed || 0;
           
-          const t = d.total_calls || 1;
-          document.getElementById('answered-pct').textContent = `${((d.answered_by_agent / t) * 100).toFixed(1)}%`;
-          document.getElementById('abandoned-ivr-pct').textContent = `${((d.abandoned_ivr / t) * 100).toFixed(1)}%`;
-          document.getElementById('abandoned-queue-pct').textContent = `${((d.abandoned_queue / t) * 100).toFixed(1)}%`;
-          document.getElementById('abandoned-vm-pct').textContent = `${((d.abandoned_voicemail / t) * 100).toFixed(1)}%`;
-          document.getElementById('voicemails-pct').textContent = `${((d.voicemails_left / t) * 100).toFixed(1)}%`;
+          const t = d.total_tickets || 1;
+          document.getElementById('new-pct').textContent = `${(((status.new || 0) / t) * 100).toFixed(1)}%`;
+          document.getElementById('open-pct').textContent = `${(((status.open || 0) / t) * 100).toFixed(1)}%`;
+          document.getElementById('pending-pct').textContent = `${(((status.pending || 0) / t) * 100).toFixed(1)}%`;
+          document.getElementById('solved-pct').textContent = `${(((status.solved || 0) / t) * 100).toFixed(1)}%`;
+          document.getElementById('closed-pct').textContent = `${(((status.closed || 0) / t) * 100).toFixed(1)}%`;
         },
         
         updateChart(hrs) {
@@ -484,15 +469,15 @@
                 <div class="hour-label">${h.hour_display}</div>
                 <div class="flex-fill ms-3">
                   <div class="bar-container">
-                    ${this.bar(h.agent_answered, h.total, '#2fb344', 'Agent Answered')}
-                    ${this.bar(h.abandoned_ivr, h.total, '#f59f00', 'Abandoned IVR')}
-                    ${this.bar(h.abandoned_queue, h.total, '#d63939', 'Abandoned Queue')}
-                    ${this.bar(h.abandoned_voicemail, h.total, '#e74c3c', 'Abandoned Voicemail')}
-                    ${this.bar(h.voicemails_left, h.total, '#9b59b6', 'Voicemails Left')}
+                    ${this.bar(h.new || 0, h.total, '#5c7cfa', 'New')}
+                    ${this.bar(h.open || 0, h.total, '#fab005', 'Open')}
+                    ${this.bar(h.pending || 0, h.total, '#fd7e14', 'Pending')}
+                    ${this.bar(h.solved || 0, h.total, '#2fb344', 'Solved')}
+                    ${this.bar(h.closed || 0, h.total, '#868e96', 'Closed')}
                   </div>
                 </div>
-                <div class="ms-3 text-secondary" style="min-width:60px;text-align:right">
-                  ${h.total} call${h.total !== 1 ? 's' : ''}
+                <div class="ms-3 text-secondary" style="min-width:80px;text-align:right">
+                  ${h.total} ticket${h.total !== 1 ? 's' : ''}
                 </div>
               </div>
             `;
@@ -506,82 +491,6 @@
           return `<div class="bar-segment" style="width:${w}%;background-color:${color}" title="${label}: ${c}"></div>`;
         },
         
-        updateAbandonedRateChart(hrs) {
-          const ctx = document.getElementById('abandoned-rate-chart');
-          if (!ctx) return;
-          
-          // Filter hours with calls and prepare data
-          const hoursWithCalls = hrs.filter(h => h.total > 0);
-          const labels = hoursWithCalls.map(h => h.hour_display);
-          const abandonedRates = hoursWithCalls.map(h => {
-            const totalAbandoned = h.abandoned_ivr + h.abandoned_queue + h.abandoned_voicemail;
-            return h.total > 0 ? ((totalAbandoned / h.total) * 100).toFixed(1) : 0;
-          });
-          
-          // Destroy existing chart if it exists
-          if (this.abandonedRateChart) {
-            this.abandonedRateChart.destroy();
-          }
-          
-          // Create new chart
-          this.abandonedRateChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-              labels: labels,
-              datasets: [{
-                label: 'Abandoned Rate (%)',
-                data: abandonedRates,
-                borderColor: '#d63939',
-                backgroundColor: 'rgba(214, 57, 57, 0.1)',
-                tension: 0.4,
-                fill: true,
-                pointBackgroundColor: '#d63939',
-                pointBorderColor: '#fff',
-                pointBorderWidth: 2,
-                pointRadius: 4,
-                pointHoverRadius: 6
-              }]
-            },
-            options: {
-              responsive: true,
-              maintainAspectRatio: true,
-              plugins: {
-                legend: {
-                  display: false
-                },
-                tooltip: {
-                  callbacks: {
-                    label: function(context) {
-                      return 'Abandoned: ' + context.parsed.y + '%';
-                    }
-                  }
-                }
-              },
-              scales: {
-                y: {
-                  beginAtZero: true,
-                  max: 100,
-                  ticks: {
-                    callback: function(value) {
-                      return value + '%';
-                    }
-                  },
-                  title: {
-                    display: true,
-                    text: 'Abandoned Rate'
-                  }
-                },
-                x: {
-                  title: {
-                    display: true,
-                    text: 'Hour of Day'
-                  }
-                }
-              }
-            }
-          });
-        },
-        
         updateTable(hrs) {
           const tbody = document.getElementById('hourly-table-body');
           tbody.innerHTML = '';
@@ -591,25 +500,25 @@
             row.innerHTML = `
               <td><strong>${h.hour_display}</strong></td>
               <td class="text-end">${h.total}</td>
-              <td class="text-end"><span class="text-green">${h.agent_answered}</span></td>
-              <td class="text-end"><span class="text-orange">${h.abandoned_ivr}</span></td>
-              <td class="text-end"><span class="text-red">${h.abandoned_queue}</span></td>
-              <td class="text-end"><span class="text-red">${h.abandoned_voicemail}</span></td>
-              <td class="text-end"><span class="text-purple">${h.voicemails_left}</span></td>
+              <td class="text-end"><span class="text-blue">${h.new || 0}</span></td>
+              <td class="text-end"><span class="text-yellow">${h.open || 0}</span></td>
+              <td class="text-end"><span class="text-orange">${h.pending || 0}</span></td>
+              <td class="text-end"><span class="text-green">${h.solved || 0}</span></td>
+              <td class="text-end"><span class="text-secondary">${h.closed || 0}</span></td>
               <td>
                 <div class="bar-container" style="height:20px">
-                  ${this.bar(h.agent_answered, h.total, '#2fb344', 'Agent')}
-                  ${this.bar(h.abandoned_ivr, h.total, '#f59f00', 'IVR')}
-                  ${this.bar(h.abandoned_queue, h.total, '#d63939', 'Queue')}
-                  ${this.bar(h.abandoned_voicemail, h.total, '#e74c3c', 'VM')}
-                  ${this.bar(h.voicemails_left, h.total, '#9b59b6', 'VM Left')}
+                  ${this.bar(h.new || 0, h.total, '#5c7cfa', 'New')}
+                  ${this.bar(h.open || 0, h.total, '#fab005', 'Open')}
+                  ${this.bar(h.pending || 0, h.total, '#fd7e14', 'Pending')}
+                  ${this.bar(h.solved || 0, h.total, '#2fb344', 'Solved')}
+                  ${this.bar(h.closed || 0, h.total, '#868e96', 'Closed')}
                 </div>
               </td>
             `;
             tbody.appendChild(row);
           });
           if (tbody.children.length === 0) {
-            tbody.innerHTML = '<tr><td colspan="8" class="text-center">No calls yet today</td></tr>';
+            tbody.innerHTML = '<tr><td colspan="8" class="text-center">No tickets yet today</td></tr>';
           }
         }
       };

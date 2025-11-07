@@ -93,7 +93,388 @@ async function handleChatRequest(req, res) {
   });
 }
 
-// Handle call analytics requests
+// Handle today's calls request using incremental API
+async function handleTodaysCallsRequest(req, res) {
+  try {
+    console.log('📊 Fetching today\'s calls from incremental API...');
+    
+    const ZendeskClient = require('./src/ZendeskClient');
+    const zendesk = new ZendeskClient();
+    
+    // Get today's start time
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const startTime = Math.floor(today.getTime() / 1000);
+    
+    // Fetch calls from incremental API
+    const response = await zendesk.makeRequest('GET', 
+      `/channels/voice/stats/incremental/calls.json?start_time=${startTime}`
+    );
+    
+    const allCalls = response.calls || [];
+    
+    // Filter to only today's calls
+    const todaysCalls = allCalls.filter(call => {
+      const callTime = new Date(call.created_at);
+      return callTime >= today;
+    });
+    
+    console.log(`✅ Retrieved ${todaysCalls.length} calls for today`);
+    
+    // Categorize calls with detailed breakdown
+    const hourlyData = new Array(24).fill(0).map((_, hour) => ({
+      hour: hour,
+      hour_display: formatHour(hour),
+      total: 0,
+      agent_answered: 0,
+      abandoned_ivr: 0,
+      abandoned_queue: 0,
+      abandoned_voicemail: 0,
+      voicemails_left: 0
+    }));
+    
+    let answeredByAgent = 0;
+    let abandonedIVR = 0;
+    let abandonedQueue = 0;
+    let abandonedVoicemail = 0;
+    let voicemailsLeft = 0;
+    
+    todaysCalls.forEach(call => {
+      const callTime = new Date(call.created_at);
+      const hour = callTime.getHours();
+      
+      hourlyData[hour].total++;
+      
+      // TRUE answered by agent: has agent_id AND talk_time > 0
+      if (call.agent_id && call.talk_time > 0) {
+        hourlyData[hour].agent_answered++;
+        answeredByAgent++;
+      }
+      // Abandoned in IVR
+      else if (call.completion_status === 'abandoned_in_ivr') {
+        hourlyData[hour].abandoned_ivr++;
+        abandonedIVR++;
+      }
+      // Abandoned in Queue
+      else if (call.completion_status === 'abandoned_in_queue') {
+        hourlyData[hour].abandoned_queue++;
+        abandonedQueue++;
+      }
+      // Abandoned in Voicemail
+      else if (call.completion_status === 'abandoned_in_voicemail') {
+        hourlyData[hour].abandoned_voicemail++;
+        abandonedVoicemail++;
+      }
+      
+      // Check if voicemail was left (has recording)
+      if (call.recording_url || call.voicemail) {
+        hourlyData[hour].voicemails_left++;
+        voicemailsLeft++;
+      }
+    });
+    
+    const result = {
+      success: true,
+      date: today.toISOString().split('T')[0],
+      total_calls: todaysCalls.length,
+      answered_by_agent: answeredByAgent,
+      abandoned_ivr: abandonedIVR,
+      abandoned_queue: abandonedQueue,
+      abandoned_voicemail: abandonedVoicemail,
+      voicemails_left: voicemailsLeft,
+      total_abandoned: abandonedIVR + abandonedQueue + abandonedVoicemail,
+      hourly_data: hourlyData,
+      last_updated: new Date().toISOString()
+    };
+    
+    console.log('📊 Response summary:');
+    console.log(`  Total: ${result.total_calls}`);
+    console.log(`  Answered: ${result.answered_by_agent}`);
+    console.log(`  Abandoned IVR: ${result.abandoned_ivr}`);
+    console.log(`  Abandoned Queue: ${result.abandoned_queue}`);
+    console.log(`  Abandoned VM: ${result.abandoned_voicemail}`);
+    console.log(`  Total Abandoned: ${result.total_abandoned}`);
+    
+    sendJson(res, 200, result);
+    console.log('✅ Today\'s calls response sent');
+    
+  } catch (error) {
+    console.error('❌ Error getting today\'s calls:', error);
+    sendJson(res, 500, {
+      success: false,
+      error: 'Failed to get today\'s calls',
+      details: error.message
+    });
+  }
+}
+
+function formatHour(hour) {
+  const period = hour >= 12 ? 'PM' : 'AM';
+  const displayHour = hour === 0 ? 12 : (hour > 12 ? hour - 12 : hour);
+  return `${displayHour}:00 ${period}`;
+}
+
+async function handleTodaysTicketsRequest(req, res) {
+  try {
+    console.log('🎫 Fetching today\'s tickets...');
+    
+    const ZendeskClient = require('./src/ZendeskClient');
+    const zendesk = new ZendeskClient();
+    
+    // Get today's start time
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    
+    // Fetch tickets created today
+    const response = await zendesk.makeRequest('GET', 
+      `/incremental/tickets.json?start_time=${Math.floor(today.getTime() / 1000)}`
+    );
+    
+    const allTickets = response.tickets || [];
+    
+    // Filter to only today's tickets
+    const todaysTickets = allTickets.filter(ticket => {
+      const createdTime = new Date(ticket.created_at);
+      return createdTime >= today;
+    });
+    
+    console.log(`✅ Retrieved ${todaysTickets.length} tickets for today`);
+    
+    // Categorize tickets by status, priority, and channel
+    const statusCounts = {};
+    const priorityCounts = {};
+    const channelCounts = {};
+    const hourlyData = new Array(24).fill(0).map((_, hour) => ({
+      hour: hour,
+      hour_display: formatHour(hour),
+      total: 0,
+      new: 0,
+      open: 0,
+      pending: 0,
+      solved: 0,
+      closed: 0
+    }));
+    
+    todaysTickets.forEach(ticket => {
+      const createdTime = new Date(ticket.created_at);
+      const hour = createdTime.getHours();
+      
+      // Count by status
+      const status = ticket.status || 'unknown';
+      statusCounts[status] = (statusCounts[status] || 0) + 1;
+      hourlyData[hour][status] = (hourlyData[hour][status] || 0) + 1;
+      hourlyData[hour].total++;
+      
+      // Count by priority
+      const priority = ticket.priority || 'normal';
+      priorityCounts[priority] = (priorityCounts[priority] || 0) + 1;
+      
+      // Count by channel
+      const channel = ticket.via?.channel || 'unknown';
+      channelCounts[channel] = (channelCounts[channel] || 0) + 1;
+    });
+    
+    const result = {
+      success: true,
+      date: today.toISOString().split('T')[0],
+      total_tickets: todaysTickets.length,
+      status_counts: statusCounts,
+      priority_counts: priorityCounts,
+      channel_counts: channelCounts,
+      hourly_data: hourlyData,
+      last_updated: new Date().toISOString()
+    };
+    
+    console.log('📊 Tickets summary:');
+    console.log(`  Total: ${result.total_tickets}`);
+    console.log(`  Status:`, statusCounts);
+    console.log(`  Priority:`, priorityCounts);
+    console.log(`  Channel:`, channelCounts);
+    
+    sendJson(res, 200, result);
+    console.log('✅ Today\'s tickets response sent');
+    
+  } catch (error) {
+    console.error('❌ Error getting today\'s tickets:', error);
+    sendJson(res, 500, {
+      success: false,
+      error: 'Failed to get today\'s tickets',
+      details: error.message
+    });
+  }
+}
+
+async function handleTodaysAgentsRequest(req, res) {
+  try {
+    console.log('👥 Today\'s agents request');
+    console.log('📊 Fetching today\'s agent performance data...');
+    
+    const ZendeskClient = require('./src/ZendeskClient');
+    const zendesk = new ZendeskClient();
+    
+    // Get today's start time
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const startTime = Math.floor(today.getTime() / 1000);
+    
+    // Fetch today's tickets and calls in parallel
+    const [ticketsResponse, callsResponse, usersResponse] = await Promise.all([
+      zendesk.makeRequest('GET', `/incremental/tickets.json?start_time=${startTime}`),
+      zendesk.makeRequest('GET', `/channels/voice/stats/incremental/calls.json?start_time=${startTime}`),
+      zendesk.makeRequest('GET', '/users.json')
+    ]);
+    
+    const allTickets = ticketsResponse.tickets || [];
+    const allCalls = callsResponse.calls || [];
+    const allUsers = usersResponse.users || [];
+    
+    // Filter to only today's data
+    const todaysTickets = allTickets.filter(ticket => {
+      const createdTime = new Date(ticket.created_at);
+      return createdTime >= today;
+    });
+    
+    const todaysCalls = allCalls.filter(call => {
+      const createdTime = new Date(call.created_at);
+      return createdTime >= today;
+    });
+    
+    console.log(`✅ Retrieved ${todaysTickets.length} tickets and ${todaysCalls.length} calls for today`);
+    
+    // Create agent performance map
+    const agentPerformance = {};
+    
+    // Process tickets - track assignee and solver
+    todaysTickets.forEach(ticket => {
+      const assigneeId = ticket.assignee_id;
+      const updaterId = ticket.updated_by_id;
+      
+      if (assigneeId) {
+        if (!agentPerformance[assigneeId]) {
+          agentPerformance[assigneeId] = {
+            id: assigneeId,
+            tickets_assigned: 0,
+            tickets_solved: 0,
+            tickets_updated: 0,
+            calls_answered: 0,
+            calls_total: 0,
+            total_talk_time: 0,
+            avg_talk_time: 0
+          };
+        }
+        agentPerformance[assigneeId].tickets_assigned++;
+        
+        if (ticket.status === 'solved' || ticket.status === 'closed') {
+          agentPerformance[assigneeId].tickets_solved++;
+        }
+      }
+      
+      if (updaterId && updaterId !== assigneeId) {
+        if (!agentPerformance[updaterId]) {
+          agentPerformance[updaterId] = {
+            id: updaterId,
+            tickets_assigned: 0,
+            tickets_solved: 0,
+            tickets_updated: 0,
+            calls_answered: 0,
+            calls_total: 0,
+            total_talk_time: 0,
+            avg_talk_time: 0
+          };
+        }
+        agentPerformance[updaterId].tickets_updated++;
+      }
+    });
+    
+    // Process calls
+    todaysCalls.forEach(call => {
+      const agentId = call.agent_id;
+      
+      if (agentId) {
+        if (!agentPerformance[agentId]) {
+          agentPerformance[agentId] = {
+            id: agentId,
+            tickets_assigned: 0,
+            tickets_solved: 0,
+            tickets_updated: 0,
+            calls_answered: 0,
+            calls_total: 0,
+            total_talk_time: 0,
+            avg_talk_time: 0
+          };
+        }
+        
+        agentPerformance[agentId].calls_total++;
+        
+        if (call.talk_time && call.talk_time > 0) {
+          agentPerformance[agentId].calls_answered++;
+          agentPerformance[agentId].total_talk_time += call.talk_time;
+        }
+      }
+    });
+    
+    // Calculate averages and add user info
+    const userMap = {};
+    allUsers.forEach(user => {
+      userMap[user.id] = user;
+    });
+    
+    const agents = Object.values(agentPerformance).map(agent => {
+      const user = userMap[agent.id];
+      agent.name = user ? user.name : `Agent ${agent.id}`;
+      agent.email = user ? user.email : '';
+      
+      if (agent.calls_answered > 0) {
+        agent.avg_talk_time = Math.round(agent.total_talk_time / agent.calls_answered);
+      }
+      
+      return agent;
+    });
+    
+    // Filter to only agents with activity today
+    const activeAgents = agents.filter(agent => 
+      agent.tickets_assigned > 0 || 
+      agent.tickets_solved > 0 || 
+      agent.tickets_updated > 0 || 
+      agent.calls_total > 0
+    );
+    
+    // Sort by total activity (tickets + calls)
+    activeAgents.sort((a, b) => {
+      const aTotal = a.tickets_assigned + a.tickets_solved + a.calls_answered;
+      const bTotal = b.tickets_assigned + b.tickets_solved + b.calls_answered;
+      return bTotal - aTotal;
+    });
+    
+    console.log(`📊 Agent performance summary:`);
+    console.log(`  Active agents: ${activeAgents.length}`);
+    console.log(`  Total tickets handled: ${activeAgents.reduce((sum, a) => sum + a.tickets_assigned, 0)}`);
+    console.log(`  Total calls answered: ${activeAgents.reduce((sum, a) => sum + a.calls_answered, 0)}`);
+    
+    const response = {
+      success: true,
+      date: new Date().toISOString().split('T')[0],
+      total_active_agents: activeAgents.length,
+      total_tickets_handled: activeAgents.reduce((sum, a) => sum + a.tickets_assigned, 0),
+      total_tickets_solved: activeAgents.reduce((sum, a) => sum + a.tickets_solved, 0),
+      total_calls_answered: activeAgents.reduce((sum, a) => sum + a.calls_answered, 0),
+      total_talk_time: activeAgents.reduce((sum, a) => sum + a.total_talk_time, 0),
+      agents: activeAgents
+    };
+    
+    sendJson(res, 200, response);
+    console.log('✅ Today\'s agents response sent');
+    
+  } catch (error) {
+    console.error('❌ Error getting today\'s agents:', error);
+    sendJson(res, 500, {
+      success: false,
+      error: 'Failed to fetch agent data',
+      message: error.message
+    });
+  }
+}
+
 async function handleCallAnalyticsRequest(req, res, period = '5-day') {
   try {
     console.log(`📊 Fetching ${period} call analytics...`);
@@ -303,6 +684,63 @@ const server = http.createServer((req, res) => {
       mode: 'real-time'
     });
     return;
+  }
+
+  // Today's calls endpoint - using incremental API
+  if (req.url === '/api/calls/today') {
+    console.log('📞 Today\'s calls request');
+    if (req.method === 'OPTIONS') {
+      res.writeHead(200, {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+        'Access-Control-Allow-Methods': 'GET, OPTIONS'
+      });
+      res.end();
+      return;
+    }
+    
+    if (req.method === 'GET') {
+      handleTodaysCallsRequest(req, res);
+      return;
+    }
+  }
+
+  // Today's tickets endpoint
+  if (req.url === '/api/tickets/today') {
+    console.log('🎫 Today\'s tickets request');
+    if (req.method === 'OPTIONS') {
+      res.writeHead(200, {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+        'Access-Control-Allow-Methods': 'GET, OPTIONS'
+      });
+      res.end();
+      return;
+    }
+    
+    if (req.method === 'GET') {
+      handleTodaysTicketsRequest(req, res);
+      return;
+    }
+  }
+
+  // Today's agents endpoint
+  if (req.url === '/api/agents/today') {
+    console.log('👥 Today\'s agents request');
+    if (req.method === 'OPTIONS') {
+      res.writeHead(200, {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+        'Access-Control-Allow-Methods': 'GET, OPTIONS'
+      });
+      res.end();
+      return;
+    }
+    
+    if (req.method === 'GET') {
+      handleTodaysAgentsRequest(req, res);
+      return;
+    }
   }
 
   // Call Analytics endpoints - handle with query parameters

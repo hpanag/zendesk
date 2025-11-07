@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head><title>API Test</title></head>
+<body>
+<h1>Testing /api/calls/today</h1>
+<pre id="output">Loading...</pre>
+<script>
+fetch('http://localhost:3000/api/calls/today')
+  .then(r => r.json())
+  .then(data => {
+    document.getElementById('output').textContent = JSON.stringify(data, null, 2);
+    console.log('Data received:', data);
+  })
+  .catch(e => {
+    document.getElementById('output').textContent = 'Error: ' + e.message;
+  });
+</script>
+</body>
+</html>

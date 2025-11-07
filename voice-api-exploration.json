@@ -1,0 +1,36 @@
+{
+  "incremental_calls": {
+    "total_calls": 221,
+    "abandoned_calls": 44,
+    "status_breakdown": {
+      "abandoned_in_voicemail": 44,
+      "abandoned_in_ivr": 52,
+      "completed": 106,
+      "abandoned_in_queue": 19
+    }
+  },
+  "account_overview": {
+    "total_calls": 29,
+    "abandoned_in_queue": 3,
+    "voicemails": 0,
+    "outside_business_hours": 1
+  },
+  "calls_with_filter": {
+    "total_calls": 0,
+    "abandoned_calls": 0,
+    "status_breakdown": {}
+  },
+  "agents_activity": {
+    "agents_count": 14,
+    "total_calls": 0,
+    "accepted_calls": 0,
+    "missed_calls": 0
+  },
+  "queue_activity": {
+    "agents_online": 4,
+    "average_wait_time": 3236
+  },
+  "phone_numbers": {
+    "error": "Request failed with status code 404"
+  }
+}

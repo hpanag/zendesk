@@ -254,7 +254,7 @@
               <div class="col-12">
                 <h3 class="mb-3">Analytics Dashboards</h3>
                 <div class="row g-4">
-                  <div class="col-md-6">
+                  <div class="col-md-6 col-lg-4">
                     <div class="card card-dashboard" onclick="window.location.href='dash.html'">
                       <div class="card-body text-center">
                         <div class="icon-dashboard mx-auto">
@@ -263,23 +263,42 @@
                             <path d="M21 12a9 9 0 1 1 -6 -7l3 3"></path>
                           </svg>
                         </div>
-                        <h3 class="card-title">Call Analytics Dashboard</h3>
-                        <p class="text-secondary">Voice analytics, call volume, answer rates, and agent performance metrics</p>
+                        <h3 class="card-title">📞 Today's Calls</h3>
+                        <p class="text-secondary">Real-time call data, hourly breakdown, and abandoned rates</p>
                       </div>
                     </div>
                   </div>
                   
-                  <div class="col-md-6">
-                    <div class="card card-dashboard" onclick="window.location.href='tickets.html'">
+                  <div class="col-md-6 col-lg-4">
+                    <div class="card card-dashboard" onclick="window.location.href='tickets-today.html'">
                       <div class="card-body text-center">
                         <div class="icon-dashboard mx-auto">
                           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M14 3v4a1 1 0 0 0 1 1h4"></path>
-                            <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z"></path>
+                            <path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2"></path>
+                            <path d="M9 3m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z"></path>
+                            <path d="M9 12l.01 0"></path>
+                            <path d="M13 12l2 0"></path>
+                            <path d="M9 16l.01 0"></path>
+                            <path d="M13 16l2 0"></path>
                           </svg>
                         </div>
-                        <h3 class="card-title">Ticket Dashboard</h3>
-                        <p class="text-secondary">Ticket volume, resolution times, status tracking, and support trends</p>
+                        <h3 class="card-title">🎫 Today's Tickets</h3>
+                        <p class="text-secondary">Real-time ticket data, status breakdown, and hourly activity</p>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div class="col-md-6 col-lg-4">
+                    <div class="card card-dashboard" onclick="window.location.href='agent.html'">
+                      <div class="card-body text-center">
+                        <div class="icon-dashboard mx-auto">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0"></path>
+                            <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"></path>
+                          </svg>
+                        </div>
+                        <h3 class="card-title">👥 Agent Performance</h3>
+                        <p class="text-secondary">Today's agent activity, productivity metrics, and performance tracking</p>
                       </div>
                     </div>
                   </div>
@@ -297,8 +316,9 @@
             <div class="row text-center align-items-center flex-row-reverse">
               <div class="col-lg-auto ms-lg-auto">
                 <ul class="list-inline list-inline-dots mb-0">
-                  <li class="list-inline-item"><a href="dash.html" class="link-secondary" rel="noopener">Call Analytics</a></li>
-                  <li class="list-inline-item"><a href="tickets.html" class="link-secondary">Ticket Dashboard</a></li>
+                  <li class="list-inline-item"><a href="dash.html" class="link-secondary" rel="noopener">Today's Calls</a></li>
+                  <li class="list-inline-item"><a href="tickets-today.html" class="link-secondary">Today's Tickets</a></li>
+                  <li class="list-inline-item"><a href="agent.html" class="link-secondary">Agent Performance</a></li>
                   <li class="list-inline-item">
                     <a href="#" class="link-secondary">
                       <svg
