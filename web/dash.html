@@ -31,9 +31,9 @@
     <style>
       @import url("https://rsms.me/inter/inter.css");
       body { font-family: 'Inter', sans-serif; }
-      .bar-segment { display: inline-block; height: 100%; transition: all 0.3s ease; }
-      .bar-segment:hover { opacity: 0.8; }
-      .bar-container { background: #f1f3f5; height: 40px; border-radius: 4px; overflow: hidden; display: flex; }
+      .bar-segment { height: 100%; transition: all 0.3s ease; cursor: pointer; position: relative; }
+      .bar-segment:hover { opacity: 0.8; filter: brightness(1.1); }
+      .bar-container { background: #f1f3f5; height: 40px; border-radius: 4px; overflow: hidden; display: flex; width: 100%; }
       .hour-label { font-weight: 600; min-width: 80px; }
       .metric-card { border-left: 4px solid; transition: transform 0.2s; }
       .metric-card:hover { transform: translateY(-2px); }
@@ -303,11 +303,11 @@
                 </div>
               </div>
               <div class="col-sm-6 col-lg-2">
-                <div class="card metric-card" style="border-left-color: #9b59b6;">
+                <div class="card metric-card" style="border-left-color: #4299e1;">
                   <div class="card-body">
-                    <div class="subheader">Voicemails Left</div>
-                    <div class="h1 mb-0" id="voicemails">-</div>
-                    <div class="text-secondary" id="voicemails-pct">-</div>
+                    <div class="subheader">Callbacks</div>
+                    <div class="h1 mb-0" id="callbacks">-</div>
+                    <div class="text-secondary" id="callbacks-pct">-</div>
                   </div>
                 </div>
               </div>
@@ -410,7 +410,7 @@
     <!-- END GLOBAL MANDATORY SCRIPTS -->
     <script>
       const app = {
-        API_BASE_URL: 'http://localhost:3000',
+        API_BASE_URL: window.location.origin,
         abandonedRateChart: null,
         
         init() {
@@ -501,14 +501,14 @@
           document.getElementById('abandoned-ivr').textContent = d.abandoned_ivr || 0;
           document.getElementById('abandoned-queue').textContent = d.abandoned_queue || 0;
           document.getElementById('abandoned-vm').textContent = d.abandoned_voicemail || 0;
-          document.getElementById('voicemails').textContent = d.voicemails_left || 0;
+          document.getElementById('callbacks').textContent = d.other || 0;
           
           const t = d.total_calls || 1;
           document.getElementById('answered-pct').textContent = `${((d.answered_by_agent / t) * 100).toFixed(1)}%`;
           document.getElementById('abandoned-ivr-pct').textContent = `${((d.abandoned_ivr / t) * 100).toFixed(1)}%`;
           document.getElementById('abandoned-queue-pct').textContent = `${((d.abandoned_queue / t) * 100).toFixed(1)}%`;
           document.getElementById('abandoned-vm-pct').textContent = `${((d.abandoned_voicemail / t) * 100).toFixed(1)}%`;
-          document.getElementById('voicemails-pct').textContent = `${((d.voicemails_left / t) * 100).toFixed(1)}%`;
+          document.getElementById('callbacks-pct').textContent = `${((d.other / t) * 100).toFixed(1)}%`;
         },
         
         updateChart(hrs) {
@@ -529,7 +529,7 @@
                     ${this.bar(h.abandoned_ivr, h.total, '#f59f00', 'Abandoned IVR')}
                     ${this.bar(h.abandoned_queue, h.total, '#d63939', 'Abandoned Queue')}
                     ${this.bar(h.abandoned_voicemail, h.total, '#e74c3c', 'Abandoned Voicemail')}
-                    ${this.bar(h.voicemails_left, h.total, '#9b59b6', 'Voicemails Left')}
+                    ${this.bar(h.other, h.total, '#4299e1', 'Callbacks')}
                   </div>
                 </div>
                 <div class="ms-3 text-secondary" style="min-width:60px;text-align:right">
@@ -542,9 +542,9 @@
         },
         
         bar(c, t, color, label) {
-          if (c === 0) return '';
+          if (c === 0 || t === 0) return '';
           const w = (c / t) * 100;
-          return `<div class="bar-segment" style="width:${w}%;background-color:${color}" title="${label}: ${c}"></div>`;
+          return `<div class="bar-segment" style="flex:${c};background-color:${color}" title="${label}: ${c}"></div>`;
         },
         
         updateAbandonedRateChart(hrs) {

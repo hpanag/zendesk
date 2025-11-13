@@ -4,7 +4,7 @@
   "description": "A Node.js client for interacting with Zendesk API",
   "main": "src/index.js",
   "scripts": {
-    "start": "node src/index.js",
+    "start": "node server.js",
     "dev": "nodemon src/index.js",
     "server": "nodemon server.js",
     "export": "node export-tickets.js",

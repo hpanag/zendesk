@@ -7,7 +7,7 @@ const CallAnalyticsService = require('./src/services/CallAnalyticsService');
 const TicketAnalyticsService = require('./src/services/TicketAnalyticsService');
 const VoiceAnalyticsService = require('./src/services/VoiceAnalyticsService');
 
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 const callAnalytics = new CallAnalyticsService();
 const ticketAnalytics = new TicketAnalyticsService();
 const voiceAnalytics = new VoiceAnalyticsService();
@@ -144,7 +144,8 @@ async function handleTodaysCallsRequest(req, res) {
       abandoned_ivr: 0,
       abandoned_queue: 0,
       abandoned_voicemail: 0,
-      voicemails_left: 0
+      voicemails_left: 0,
+      other: 0
     }));
     
     let answeredByAgent = 0;
@@ -152,6 +153,8 @@ async function handleTodaysCallsRequest(req, res) {
     let abandonedQueue = 0;
     let abandonedVoicemail = 0;
     let voicemailsLeft = 0;
+    let other = 0;
+    const otherStatuses = {}; // Track what statuses fall into "other"
     
     targetCalls.forEach(call => {
       const callTime = new Date(call.created_at);
@@ -179,6 +182,17 @@ async function handleTodaysCallsRequest(req, res) {
         hourlyData[hour].abandoned_voicemail++;
         abandonedVoicemail++;
       }
+      // Any other status
+      else {
+        hourlyData[hour].other++;
+        other++;
+        // Track this status
+        const status = call.completion_status || 'null';
+        otherStatuses[status] = (otherStatuses[status] || 0) + 1;
+        
+        // Log details about this call
+        console.log(`   🔍 Other call: status="${call.completion_status}", agent_id=${call.agent_id}, talk_time=${call.talk_time}, id=${call.id}`);
+      }
       
       // Check if voicemail was left (has recording)
       if (call.recording_url || call.voicemail) {
@@ -196,6 +210,7 @@ async function handleTodaysCallsRequest(req, res) {
       abandoned_queue: abandonedQueue,
       abandoned_voicemail: abandonedVoicemail,
       voicemails_left: voicemailsLeft,
+      other: other,
       total_abandoned: abandonedIVR + abandonedQueue + abandonedVoicemail,
       hourly_data: hourlyData,
       last_updated: new Date().toISOString()
@@ -207,6 +222,10 @@ async function handleTodaysCallsRequest(req, res) {
     console.log(`  Abandoned IVR: ${result.abandoned_ivr}`);
     console.log(`  Abandoned Queue: ${result.abandoned_queue}`);
     console.log(`  Abandoned VM: ${result.abandoned_voicemail}`);
+    console.log(`  Other: ${result.other}`);
+    if (Object.keys(otherStatuses).length > 0) {
+      console.log(`  Other statuses breakdown:`, otherStatuses);
+    }
     console.log(`  Total Abandoned: ${result.total_abandoned}`);
     
     sendJson(res, 200, result);
@@ -230,29 +249,44 @@ function formatHour(hour) {
 
 async function handleTodaysTicketsRequest(req, res) {
   try {
-    console.log('🎫 Fetching today\'s tickets...');
-    
     const ZendeskClient = require('./src/ZendeskClient');
     const zendesk = new ZendeskClient();
     
-    // Get today's start time
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
+    // Parse date from query parameter or use today
+    const url = new URL(req.url, `http://localhost:${PORT}`);
+    const dateParam = url.searchParams.get('date');
     
-    // Fetch tickets created today
+    let targetDate;
+    if (dateParam) {
+      // Parse as local date to avoid timezone issues
+      const [year, month, day] = dateParam.split('-').map(Number);
+      targetDate = new Date(year, month - 1, day, 0, 0, 0, 0);
+      console.log(`🎫 Fetching tickets for selected date: ${dateParam}`);
+    } else {
+      targetDate = new Date();
+      targetDate.setHours(0, 0, 0, 0);
+      console.log('🎫 Fetching today\'s tickets...');
+    }
+    
+    const startTime = Math.floor(targetDate.getTime() / 1000);
+    
+    // Fetch tickets from incremental API
     const response = await zendesk.makeRequest('GET', 
-      `/incremental/tickets.json?start_time=${Math.floor(today.getTime() / 1000)}`
+      `/incremental/tickets.json?start_time=${startTime}`
     );
     
     const allTickets = response.tickets || [];
     
-    // Filter to only today's tickets
-    const todaysTickets = allTickets.filter(ticket => {
+    // Filter to only tickets from the target date
+    const nextDay = new Date(targetDate);
+    nextDay.setDate(nextDay.getDate() + 1);
+    
+    const targetTickets = allTickets.filter(ticket => {
       const createdTime = new Date(ticket.created_at);
-      return createdTime >= today;
+      return createdTime >= targetDate && createdTime < nextDay;
     });
     
-    console.log(`✅ Retrieved ${todaysTickets.length} tickets for today`);
+    console.log(`✅ Retrieved ${targetTickets.length} tickets for ${targetDate.toISOString().split('T')[0]}`);
     
     // Categorize tickets by status, priority, and channel
     const statusCounts = {};
@@ -269,7 +303,7 @@ async function handleTodaysTicketsRequest(req, res) {
       closed: 0
     }));
     
-    todaysTickets.forEach(ticket => {
+    targetTickets.forEach(ticket => {
       const createdTime = new Date(ticket.created_at);
       const hour = createdTime.getHours();
       
@@ -290,8 +324,8 @@ async function handleTodaysTicketsRequest(req, res) {
     
     const result = {
       success: true,
-      date: today.toISOString().split('T')[0],
-      total_tickets: todaysTickets.length,
+      date: targetDate.toISOString().split('T')[0],
+      total_tickets: targetTickets.length,
       status_counts: statusCounts,
       priority_counts: priorityCounts,
       channel_counts: channelCounts,
@@ -320,18 +354,32 @@ async function handleTodaysTicketsRequest(req, res) {
 
 async function handleTodaysAgentsRequest(req, res) {
   try {
-    console.log('👥 Today\'s agents request');
-    console.log('📊 Fetching today\'s agent performance data...');
+    // Parse date from query parameter
+    const url = new URL(req.url, `http://localhost:${PORT}`);
+    const dateParam = url.searchParams.get('date');
+    
+    // Determine target date (use provided date or default to today)
+    let targetDate;
+    if (dateParam) {
+      // Parse as local date to avoid timezone issues
+      const [year, month, day] = dateParam.split('-').map(Number);
+      targetDate = new Date(year, month - 1, day, 0, 0, 0, 0);
+      console.log(`👥 Fetching agents for selected date: ${dateParam}`);
+    } else {
+      targetDate = new Date();
+      targetDate.setHours(0, 0, 0, 0);
+      console.log('� Fetching agents for today');
+    }
+    
+    console.log('📊 Fetching agent performance data...');
     
     const ZendeskClient = require('./src/ZendeskClient');
     const zendesk = new ZendeskClient();
     
-    // Get today's start time
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    const startTime = Math.floor(today.getTime() / 1000);
+    // Get start time for API query
+    const startTime = Math.floor(targetDate.getTime() / 1000);
     
-    // Fetch today's tickets and calls in parallel
+    // Fetch tickets and calls in parallel
     const [ticketsResponse, callsResponse, usersResponse] = await Promise.all([
       zendesk.makeRequest('GET', `/incremental/tickets.json?start_time=${startTime}`),
       zendesk.makeRequest('GET', `/channels/voice/stats/incremental/calls.json?start_time=${startTime}`),
@@ -342,24 +390,28 @@ async function handleTodaysAgentsRequest(req, res) {
     const allCalls = callsResponse.calls || [];
     const allUsers = usersResponse.users || [];
     
-    // Filter to only today's data
-    const todaysTickets = allTickets.filter(ticket => {
+    // Calculate next day boundary for filtering
+    const nextDay = new Date(targetDate);
+    nextDay.setDate(nextDay.getDate() + 1);
+    
+    // Filter to only target date's data
+    const targetTickets = allTickets.filter(ticket => {
       const createdTime = new Date(ticket.created_at);
-      return createdTime >= today;
+      return createdTime >= targetDate && createdTime < nextDay;
     });
     
-    const todaysCalls = allCalls.filter(call => {
+    const targetCalls = allCalls.filter(call => {
       const createdTime = new Date(call.created_at);
-      return createdTime >= today;
+      return createdTime >= targetDate && createdTime < nextDay;
     });
     
-    console.log(`✅ Retrieved ${todaysTickets.length} tickets and ${todaysCalls.length} calls for today`);
+    console.log(`✅ Retrieved ${targetTickets.length} tickets and ${targetCalls.length} calls for selected date`);
     
     // Create agent performance map
     const agentPerformance = {};
     
     // Process tickets - track assignee and solver
-    todaysTickets.forEach(ticket => {
+    targetTickets.forEach(ticket => {
       const assigneeId = ticket.assignee_id;
       const updaterId = ticket.updated_by_id;
       
@@ -401,7 +453,7 @@ async function handleTodaysAgentsRequest(req, res) {
     });
     
     // Process calls
-    todaysCalls.forEach(call => {
+    targetCalls.forEach(call => {
       const agentId = call.agent_id;
       
       if (agentId) {
@@ -467,7 +519,7 @@ async function handleTodaysAgentsRequest(req, res) {
     
     const response = {
       success: true,
-      date: new Date().toISOString().split('T')[0],
+      date: targetDate.toISOString().split('T')[0],
       total_active_agents: activeAgents.length,
       total_tickets_handled: activeAgents.reduce((sum, a) => sum + a.tickets_assigned, 0),
       total_tickets_solved: activeAgents.reduce((sum, a) => sum + a.tickets_solved, 0),
@@ -720,7 +772,7 @@ const server = http.createServer((req, res) => {
   }
 
   // Today's tickets endpoint
-  if (req.url === '/api/tickets/today') {
+  if (req.url === '/api/tickets/today' || req.url.startsWith('/api/tickets/today?')) {
     console.log('🎫 Today\'s tickets request');
     if (req.method === 'OPTIONS') {
       res.writeHead(200, {
@@ -739,8 +791,8 @@ const server = http.createServer((req, res) => {
   }
 
   // Today's agents endpoint
-  if (req.url === '/api/agents/today') {
-    console.log('👥 Today\'s agents request');
+  if (req.url === '/api/agents/today' || req.url.startsWith('/api/agents/today?')) {
+    console.log('👥 Agents request');
     if (req.method === 'OPTIONS') {
       res.writeHead(200, {
         'Access-Control-Allow-Origin': '*',

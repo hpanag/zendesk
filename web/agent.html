@@ -229,14 +229,23 @@
                   <span id="last-updated">Data not loaded yet</span>
                 </div>
               </div>
-              <div class="col-auto ms-auto">
-                <button class="btn btn-primary" id="refresh-btn" onclick="app.loadData()">
+              <div class="col-auto ms-auto d-flex gap-2">
+                <input type="date" class="form-control" id="date-picker" style="width: 180px;">
+                <button class="btn btn-primary" id="get-data-btn" onclick="app.loadData()">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                    <path d="M9 11l3 3l8 -8"/>
+                    <path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9"/>
+                  </svg>
+                  Get Data
+                </button>
+                <button class="btn btn-secondary" id="refresh-btn" onclick="app.loadData()">
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon">
                     <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
                     <path d="M20 11a8.1 8.1 0 0 0 -15.5 -2m-.5 -4v4h4"/>
                     <path d="M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4"/>
                   </svg>
-                  Refresh Data
+                  Refresh
                 </button>
               </div>
             </div>
@@ -364,24 +373,41 @@
     <!-- END GLOBAL MANDATORY SCRIPTS -->
     <script>
       const app = {
-        API_BASE_URL: 'http://localhost:3000',
+        API_BASE_URL: window.location.origin,
         
         init() {
           console.log('🚀 Initializing agent performance dashboard...');
+          
+          // Set date picker to today
+          const datePicker = document.getElementById('date-picker');
+          const today = new Date();
+          const dateString = today.toISOString().split('T')[0];
+          datePicker.value = dateString;
+          
+          // Add Enter key listener
+          datePicker.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') this.loadData();
+          });
+          
           this.loadData();
         },
         
         async loadData() {
           try {
-            console.log('📊 Loading today\'s agent performance data...');
+            const selectedDate = document.getElementById('date-picker').value;
+            console.log(`📊 Loading agent performance data for ${selectedDate}...`);
             
-            // Disable refresh button and show loading state
+            // Disable buttons and show loading state
             const refreshBtn = document.getElementById('refresh-btn');
+            const getDataBtn = document.getElementById('get-data-btn');
             const lastUpdated = document.getElementById('last-updated');
             if (refreshBtn) refreshBtn.disabled = true;
+            if (getDataBtn) getDataBtn.disabled = true;
             if (lastUpdated) lastUpdated.textContent = 'Loading...';
             
-            const response = await fetch(`${this.API_BASE_URL}/api/agents/today`);
+            // Build URL with date parameter
+            const url = `${this.API_BASE_URL}/api/agents/today${selectedDate ? `?date=${selectedDate}` : ''}`;
+            const response = await fetch(url);
             if (!response.ok) throw new Error(`HTTP ${response.status}`);
             const data = await response.json();
             console.log('✅ Data loaded:', data);
@@ -389,14 +415,21 @@
             this.updateSummary(data);
             this.updateTable(data.agents);
             
-            // Update last fetched timestamp
+            // Update last fetched timestamp and show selected date
             const now = new Date();
             if (lastUpdated) {
-              lastUpdated.textContent = `Last updated: ${now.toLocaleTimeString('en-US')}`;
+              const displayDate = new Date(selectedDate).toLocaleDateString('en-US', { 
+                weekday: 'short', 
+                year: 'numeric', 
+                month: 'short', 
+                day: 'numeric' 
+              });
+              lastUpdated.textContent = `${displayDate} - Last updated: ${now.toLocaleTimeString('en-US')}`;
             }
             
-            // Re-enable refresh button
+            // Re-enable buttons
             if (refreshBtn) refreshBtn.disabled = false;
+            if (getDataBtn) getDataBtn.disabled = false;
             
           } catch (e) {
             console.error('❌ Error:', e);
@@ -409,7 +442,9 @@
             if (lastUpdated) lastUpdated.textContent = 'Failed to load data';
             
             const refreshBtn = document.getElementById('refresh-btn');
+            const getDataBtn = document.getElementById('get-data-btn');
             if (refreshBtn) refreshBtn.disabled = false;
+            if (getDataBtn) getDataBtn.disabled = false;
           }
         },
         
