@@ -373,7 +373,8 @@
     <!-- END GLOBAL MANDATORY SCRIPTS -->
     <script>
       const app = {
-        API_BASE_URL: window.location.origin,
+        // Use current origin, but fallback to localhost:3000 if using Live Server
+        API_BASE_URL: window.location.port === '5501' ? 'http://localhost:3000' : window.location.origin,
         
         init() {
           console.log('🚀 Initializing agent performance dashboard...');
