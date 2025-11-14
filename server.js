@@ -541,6 +541,179 @@ async function handleTodaysAgentsRequest(req, res) {
   }
 }
 
+async function handleOnlineAgentsRequest(req, res) {
+  try {
+    const url = new URL(req.url, `http://localhost:${PORT}`);
+    const dateParam = url.searchParams.get('date');
+    
+    let targetDate;
+    if (dateParam) {
+      const [year, month, day] = dateParam.split('-').map(Number);
+      targetDate = new Date(year, month - 1, day, 0, 0, 0, 0);
+      console.log(`🌐 Fetching online agents for selected date: ${dateParam}`);
+    } else {
+      targetDate = new Date();
+      targetDate.setHours(0, 0, 0, 0);
+      console.log('🌐 Fetching online agents for today');
+    }
+    
+    const ZendeskClient = require('./src/ZendeskClient');
+    const zendesk = new ZendeskClient();
+    
+    const startTime = Math.floor(targetDate.getTime() / 1000);
+    
+    // Fetch tickets and calls for the day
+    const [ticketsResponse, callsResponse, usersResponse] = await Promise.all([
+      zendesk.makeRequest('GET', `/incremental/tickets.json?start_time=${startTime}`),
+      zendesk.makeRequest('GET', `/channels/voice/stats/incremental/calls.json?start_time=${startTime}`),
+      zendesk.makeRequest('GET', '/users.json')
+    ]);
+    
+    const allTickets = ticketsResponse.tickets || [];
+    const allCalls = callsResponse.calls || [];
+    const allUsers = usersResponse.users || [];
+    
+    const nextDay = new Date(targetDate);
+    nextDay.setDate(nextDay.getDate() + 1);
+    
+    // Filter to target date
+    const targetTickets = allTickets.filter(ticket => {
+      const createdTime = new Date(ticket.created_at);
+      return createdTime >= targetDate && createdTime < nextDay;
+    });
+    
+    const targetCalls = allCalls.filter(call => {
+      const createdTime = new Date(call.created_at);
+      return createdTime >= targetDate && createdTime < nextDay;
+    });
+    
+    // Build agent activity map
+    const agentActivity = {};
+    const userMap = {};
+    
+    allUsers.forEach(user => {
+      userMap[user.id] = user;
+    });
+    
+    // Track agent activity from tickets
+    targetTickets.forEach(ticket => {
+      const createdTime = new Date(ticket.created_at);
+      const hour = createdTime.getHours();
+      
+      [ticket.assignee_id, ticket.updated_by_id].forEach(agentId => {
+        if (agentId && userMap[agentId] && userMap[agentId].role === 'agent') {
+          if (!agentActivity[agentId]) {
+            agentActivity[agentId] = {
+              id: agentId,
+              name: userMap[agentId].name,
+              hours: new Set()
+            };
+          }
+          agentActivity[agentId].hours.add(hour);
+        }
+      });
+    });
+    
+    // Track agent activity from calls
+    targetCalls.forEach(call => {
+      if (call.agent_id) {
+        const createdTime = new Date(call.created_at);
+        const hour = createdTime.getHours();
+        
+        if (!agentActivity[call.agent_id]) {
+          const user = userMap[call.agent_id];
+          agentActivity[call.agent_id] = {
+            id: call.agent_id,
+            name: user ? user.name : `Agent ${call.agent_id}`,
+            hours: new Set()
+          };
+        }
+        agentActivity[call.agent_id].hours.add(hour);
+      }
+    });
+    
+    // Convert to array and process online periods
+    const agents = Object.values(agentActivity).map(agent => {
+      const hours = Array.from(agent.hours).sort((a, b) => a - b);
+      
+      // Group consecutive hours into periods
+      const periods = [];
+      let currentPeriod = null;
+      
+      hours.forEach(hour => {
+        if (!currentPeriod) {
+          currentPeriod = { start_hour: hour, end_hour: hour };
+        } else if (hour === currentPeriod.end_hour + 1) {
+          currentPeriod.end_hour = hour;
+        } else {
+          periods.push({
+            ...currentPeriod,
+            duration: currentPeriod.end_hour - currentPeriod.start_hour + 1
+          });
+          currentPeriod = { start_hour: hour, end_hour: hour };
+        }
+      });
+      
+      if (currentPeriod) {
+        periods.push({
+          ...currentPeriod,
+          duration: currentPeriod.end_hour - currentPeriod.start_hour + 1
+        });
+      }
+      
+      return {
+        id: agent.id,
+        name: agent.name,
+        online_periods: periods,
+        total_hours: hours.length
+      };
+    }).sort((a, b) => b.total_hours - a.total_hours);
+    
+    // Calculate hourly counts
+    const hourlyCounts = Array.from({ length: 24 }, (_, hour) => {
+      const count = agents.filter(agent => 
+        agent.online_periods.some(period => 
+          hour >= period.start_hour && hour <= period.end_hour
+        )
+      ).length;
+      
+      return {
+        hour: `${hour.toString().padStart(2, '0')}:00`,
+        count
+      };
+    });
+    
+    // Calculate summary metrics
+    const peakCount = Math.max(...hourlyCounts.map(h => h.count));
+    const peakHour = hourlyCounts.find(h => h.count === peakCount);
+    const avgOnline = Math.round(hourlyCounts.reduce((sum, h) => sum + h.count, 0) / 24);
+    const coverageHours = hourlyCounts.filter(h => h.count > 0).length;
+    
+    const response = {
+      success: true,
+      date: targetDate.toISOString().split('T')[0],
+      total_agents: agents.length,
+      peak_concurrent: peakCount,
+      peak_time: peakHour ? peakHour.hour : '-',
+      avg_online: avgOnline,
+      coverage_hours: coverageHours,
+      hourly_counts: hourlyCounts,
+      agents: agents
+    };
+    
+    sendJson(res, 200, response);
+    console.log('✅ Online agents response sent');
+    
+  } catch (error) {
+    console.error('❌ Error getting online agents:', error);
+    sendJson(res, 500, {
+      success: false,
+      error: 'Failed to fetch online agents data',
+      message: error.message
+    });
+  }
+}
+
 async function handleCallAnalyticsRequest(req, res, period = '5-day') {
   try {
     console.log(`📊 Fetching ${period} call analytics...`);
@@ -805,6 +978,25 @@ const server = http.createServer((req, res) => {
     
     if (req.method === 'GET') {
       handleTodaysAgentsRequest(req, res);
+      return;
+    }
+  }
+
+  // Online agents timeline endpoint
+  if (req.url === '/api/agents/online' || req.url.startsWith('/api/agents/online?')) {
+    console.log('🌐 Online agents request');
+    if (req.method === 'OPTIONS') {
+      res.writeHead(200, {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+        'Access-Control-Allow-Methods': 'GET, OPTIONS'
+      });
+      res.end();
+      return;
+    }
+    
+    if (req.method === 'GET') {
+      handleOnlineAgentsRequest(req, res);
       return;
     }
   }
