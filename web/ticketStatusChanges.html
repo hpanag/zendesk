@@ -1,0 +1,700 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Ticket Status Changes - Zendesk Dashboard</title>
+    <link href="./original/dist/css/tabler.css?1747674014" rel="stylesheet" />
+    <link href="./original/dist/css/tabler-flags.css?1747674014" rel="stylesheet" />
+    <link href="./original/dist/css/tabler-vendors.css?1747674014" rel="stylesheet" />
+    <style>
+      @import url("https://rsms.me/inter/inter.css");
+      body { font-family: 'Inter', sans-serif; }
+      .metric-card { border-left: 4px solid; transition: transform 0.2s; }
+      .metric-card:hover { transform: translateY(-2px); }
+      .status-badge {
+        padding: 4px 10px;
+        border-radius: 4px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        display: inline-block;
+      }
+      .status-new { background: #d3f9e3; color: #2fb344; }
+      .status-open { background: #fff4e6; color: #f59f00; }
+      .status-pending { background: #e7f5ff; color: #206bc4; }
+      .status-hold { background: #f3f0ff; color: #7950f2; }
+      .status-solved { background: #d8f5e8; color: #12b886; }
+      .status-closed { background: #e9ecef; color: #495057; }
+      
+      .transition-arrow {
+        margin: 0 10px;
+        color: #868e96;
+        font-weight: bold;
+      }
+      
+      .ticket-row {
+        padding: 12px;
+        border-bottom: 1px solid #e9ecef;
+        transition: background 0.2s;
+      }
+      .ticket-row:hover {
+        background: #f8f9fa;
+      }
+      .ticket-id {
+        font-weight: 600;
+        color: #206bc4;
+        cursor: pointer;
+      }
+      .ticket-id:hover {
+        text-decoration: underline;
+      }
+      .ticket-subject {
+        color: #495057;
+        font-size: 0.9rem;
+        margin-top: 4px;
+      }
+      .ticket-time {
+        color: #868e96;
+        font-size: 0.85rem;
+      }
+      .ticket-agent {
+        color: #495057;
+        font-size: 0.85rem;
+      }
+      
+      .change-group {
+        margin-bottom: 30px;
+      }
+      .change-group-header {
+        background: linear-gradient(135deg, #206bc4 0%, #4299e1 100%);
+        color: white;
+        padding: 15px 20px;
+        border-radius: 8px 8px 0 0;
+        font-weight: 600;
+        font-size: 1.1rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .change-group-count {
+        background: rgba(255,255,255,0.2);
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 0.9rem;
+      }
+      .change-group-body {
+        background: white;
+        border: 1px solid #dee2e6;
+        border-top: none;
+        border-radius: 0 0 8px 8px;
+      }
+      
+      .filter-buttons {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        margin-bottom: 20px;
+      }
+      .filter-btn {
+        padding: 6px 16px;
+        border: 2px solid #dee2e6;
+        background: white;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: all 0.2s;
+        font-weight: 500;
+        font-size: 0.9rem;
+      }
+      .filter-btn:hover {
+        border-color: #206bc4;
+        background: #f8f9fa;
+      }
+      .filter-btn.active {
+        border-color: #206bc4;
+        background: #206bc4;
+        color: white;
+      }
+      
+      .empty-state {
+        text-align: center;
+        padding: 40px;
+        color: #6c757d;
+      }
+      
+      .export-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+    </style>
+  </head>
+  <body>
+    <script src="./original/dist/js/tabler-theme.min.js?1747674014"></script>
+    <div class="page">
+      <header class="navbar navbar-expand-md d-print-none">
+        <div class="container-xl">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-menu">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="navbar-brand navbar-brand-autodark d-none-navbar-horizontal pe-0 pe-md-3">
+            <a href="index.html" aria-label="Automations">
+              <h4 class="m-0 text-dark">Automations</h4>
+            </a>
+          </div>
+          <div class="navbar-nav flex-row order-md-last">
+            <div class="d-none d-md-flex">
+              <div class="nav-item">
+                <a href="?theme=dark" class="nav-link px-0 hide-theme-dark" title="Enable dark mode">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-1">
+                    <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+                  </svg>
+                </a>
+                <a href="?theme=light" class="nav-link px-0 hide-theme-light" title="Enable light mode">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-1">
+                    <path d="M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" />
+                    <path d="M3 12h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7" />
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+      <header class="navbar-expand-md">
+        <div class="collapse navbar-collapse" id="navbar-menu">
+          <div class="navbar">
+            <div class="container-xl">
+              <div class="row flex-column flex-md-row flex-fill align-items-center">
+                <div class="col">
+                  <ul class="navbar-nav">
+                    <li class="nav-item">
+                      <a class="nav-link" href="index.html">
+                        <span class="nav-link-title">Home</span>
+                      </a>
+                    </li>
+                    <li class="nav-item active">
+                      <a class="nav-link" href="cx.html">
+                        <span class="nav-link-title">Customer Experience</span>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="product.html">
+                        <span class="nav-link-title">Product</span>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="finance.html">
+                        <span class="nav-link-title">Finance</span>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+      
+      <div class="page-wrapper">
+        <div class="page-header d-print-none">
+          <div class="container-xl">
+            <div class="row g-2 align-items-center">
+              <div class="col">
+                <h2 class="page-title">🔄 Ticket Status Changes</h2>
+                <div class="text-secondary mt-1">
+                  <span id="last-updated">Select a date to view all ticket status transitions</span>
+                </div>
+              </div>
+              <div class="col-auto ms-auto d-flex gap-2">
+                <input type="date" class="form-control" id="date-picker" style="width: 180px;">
+                <button class="btn btn-primary" id="get-data-btn" onclick="app.loadData()">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                    <path d="M7 10l5 5l5 -5"/>
+                  </svg>
+                  Get Data
+                </button>
+                <button class="btn btn-success export-btn" id="export-btn" onclick="app.exportToCSV()">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                    <path d="M14 3v4a1 1 0 0 0 1 1h4" />
+                    <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" />
+                    <path d="M12 11v6" />
+                    <path d="M9.5 13.5l2.5 2.5l2.5 -2.5" />
+                  </svg>
+                  Export CSV
+                </button>
+                <button class="btn btn-secondary" id="refresh-btn" onclick="app.loadData()">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                    <path d="M20 11a8.1 8.1 0 0 0 -15.5 -2m-.5 -4v4h4"/>
+                    <path d="M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4"/>
+                  </svg>
+                  Refresh
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="page-body">
+          <div class="container-xl">
+            <!-- Summary Cards -->
+            <div class="row row-cards mb-3">
+              <div class="col-sm-6 col-lg-3">
+                <div class="card metric-card" style="border-left-color: #2fb344;">
+                  <div class="card-body">
+                    <div class="subheader">New Tickets</div>
+                    <div class="h1 mb-0" id="total-new">-</div>
+                    <div class="text-secondary">Created today</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6 col-lg-3">
+                <div class="card metric-card" style="border-left-color: #206bc4;">
+                  <div class="card-body">
+                    <div class="subheader">Status Changes</div>
+                    <div class="h1 mb-0" id="total-changes">-</div>
+                    <div class="text-secondary">Transitions recorded</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6 col-lg-3">
+                <div class="card metric-card" style="border-left-color: #12b886;">
+                  <div class="card-body">
+                    <div class="subheader">Solved Today</div>
+                    <div class="h1 mb-0" id="total-solved">-</div>
+                    <div class="text-secondary">Tickets resolved</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6 col-lg-3">
+                <div class="card metric-card" style="border-left-color: #f59f00;">
+                  <div class="card-body">
+                    <div class="subheader">Total Tickets</div>
+                    <div class="h1 mb-0" id="total-tickets">-</div>
+                    <div class="text-secondary">Unique tickets touched</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Filter Buttons -->
+            <div class="card mb-3">
+              <div class="card-body">
+                <h3 class="card-title mb-3">Filter by Transition Type</h3>
+                <div class="filter-buttons" id="filter-buttons">
+                  <button class="filter-btn active" data-filter="all">All Changes</button>
+                  <button class="filter-btn" data-filter="new">New Tickets</button>
+                  <button class="filter-btn" data-filter="to-open">→ Open</button>
+                  <button class="filter-btn" data-filter="to-pending">→ Pending</button>
+                  <button class="filter-btn" data-filter="to-hold">→ Hold</button>
+                  <button class="filter-btn" data-filter="to-solved">→ Solved</button>
+                  <button class="filter-btn" data-filter="to-closed">→ Closed</button>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Status Changes -->
+            <div id="changes-container">
+              <div class="empty-state">
+                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon mb-3">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                  <path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2" />
+                  <path d="M9 3m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z" />
+                  <path d="M9 12l.01 0" />
+                  <path d="M13 12l2 0" />
+                  <path d="M9 16l.01 0" />
+                  <path d="M13 16l2 0" />
+                </svg>
+                <p>Select a date to view ticket status changes</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <footer class="footer footer-transparent d-print-none">
+          <div class="container-xl">
+            <div class="row text-center align-items-center flex-row-reverse">
+              <div class="col-lg-auto ms-lg-auto">
+                <ul class="list-inline list-inline-dots mb-0">
+                  <li class="list-inline-item"><a href="tickets-today.html" class="link-secondary">Today's Tickets</a></li>
+                  <li class="list-inline-item"><a href="agent.html" class="link-secondary">Agent Performance</a></li>
+                  <li class="list-inline-item">
+                    <a href="#" class="link-secondary">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon text-pink icon-inline icon-4">
+                        <path d="M19.5 12.572l-7.5 7.428l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572" />
+                      </svg>
+                      Support
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              <div class="col-12 col-lg-auto mt-3 mt-lg-0">
+                <ul class="list-inline list-inline-dots mb-0">
+                  <li class="list-inline-item">
+                    Copyright &copy; 2025
+                    <a href="." class="link-secondary">Zendesk Analytics</a>. All rights reserved.
+                  </li>
+                  <li class="list-inline-item">
+                    <a href="#" class="link-secondary" rel="noopener">v1.0.0</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </footer>
+      </div>
+    </div>
+    
+    <script src="./original/dist/js/tabler.min.js?1747674014"></script>
+    <script>
+      const app = {
+        API_BASE_URL: window.location.port === '5501' ? 'http://localhost:3000' : window.location.origin,
+        allTickets: [],
+        currentFilter: 'all',
+        selectedDate: '',
+        
+        init() {
+          console.log('🚀 Initializing ticket status changes dashboard...');
+          
+          const datePicker = document.getElementById('date-picker');
+          const today = new Date();
+          datePicker.value = today.toISOString().split('T')[0];
+          this.selectedDate = datePicker.value;
+          
+          datePicker.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') this.loadData();
+          });
+          
+          // Setup filter buttons
+          document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+              document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+              e.target.classList.add('active');
+              this.currentFilter = e.target.dataset.filter;
+              this.displayChanges();
+            });
+          });
+          
+          this.loadData();
+        },
+        
+        async loadData() {
+          try {
+            this.selectedDate = document.getElementById('date-picker').value;
+            console.log(`📊 Loading ticket status changes for ${this.selectedDate}...`);
+            
+            const refreshBtn = document.getElementById('refresh-btn');
+            const getDataBtn = document.getElementById('get-data-btn');
+            const exportBtn = document.getElementById('export-btn');
+            const lastUpdated = document.getElementById('last-updated');
+            if (refreshBtn) refreshBtn.disabled = true;
+            if (getDataBtn) getDataBtn.disabled = true;
+            if (exportBtn) exportBtn.disabled = true;
+            if (lastUpdated) lastUpdated.textContent = 'Loading...';
+            
+            // Fetch tickets with all their status changes for the selected date
+            const response = await fetch(`${this.API_BASE_URL}/api/tickets/status-changes?date=${this.selectedDate}`);
+            const data = await response.json();
+            
+            console.log('✅ Data loaded:', data);
+            
+            if (data.success) {
+              this.allTickets = data.tickets || [];
+              this.updateSummary();
+              this.displayChanges();
+            } else {
+              // Handle rate limiting specifically
+              if (data.rate_limited) {
+                throw new Error(`Rate limit exceeded - ${data.suggestion || 'Please try again in a moment'}`);
+              }
+              throw new Error(data.error || data.message || 'Failed to load data');
+            }
+            
+            const now = new Date();
+            if (lastUpdated) {
+              const displayDate = new Date(this.selectedDate).toLocaleDateString('en-US', { 
+                weekday: 'short', 
+                year: 'numeric', 
+                month: 'short', 
+                day: 'numeric' 
+              });
+              lastUpdated.textContent = `${displayDate} - Last updated: ${now.toLocaleTimeString('en-US')}`;
+            }
+            
+            if (refreshBtn) refreshBtn.disabled = false;
+            if (getDataBtn) getDataBtn.disabled = false;
+            if (exportBtn) exportBtn.disabled = false;
+            
+          } catch (e) {
+            console.error('❌ Error:', e);
+            const container = document.getElementById('changes-container');
+            if (container) {
+              const errorMsg = e.message || 'Failed to load data';
+              const isRateLimit = errorMsg.includes('Rate limit');
+              
+              container.innerHTML = `
+                <div class="alert alert-${isRateLimit ? 'warning' : 'danger'}" role="alert">
+                  <h4 class="alert-heading">${isRateLimit ? '⏱️ Rate Limit Reached' : '❌ Error Loading Data'}</h4>
+                  <p>${errorMsg}</p>
+                  ${isRateLimit ? '<p class="mb-0"><small>This dashboard fetches detailed audit logs for each ticket. Try selecting a different date with fewer ticket updates, or wait a moment before refreshing.</small></p>' : '<p class="mb-0"><small>Make sure the server is running and you have a stable connection.</small></p>'}
+                </div>
+              `;
+            }
+            
+            const lastUpdated = document.getElementById('last-updated');
+            if (lastUpdated) lastUpdated.textContent = 'Failed to load data';
+            
+            const refreshBtn = document.getElementById('refresh-btn');
+            const getDataBtn = document.getElementById('get-data-btn');
+            const exportBtn = document.getElementById('export-btn');
+            if (refreshBtn) refreshBtn.disabled = false;
+            if (getDataBtn) getDataBtn.disabled = false;
+            if (exportBtn) exportBtn.disabled = false;
+          }
+        },
+        
+        updateSummary() {
+          let newTickets = 0;
+          let totalChanges = 0;
+          let solvedTickets = 0;
+          const uniqueTickets = new Set();
+          
+          this.allTickets.forEach(ticket => {
+            uniqueTickets.add(ticket.ticket_id);
+            
+            if (ticket.is_new) {
+              newTickets++;
+            }
+            
+            if (ticket.status_changes && ticket.status_changes.length > 0) {
+              totalChanges += ticket.status_changes.length;
+              
+              ticket.status_changes.forEach(change => {
+                if (change.new_status === 'solved' || change.new_status === 'closed') {
+                  solvedTickets++;
+                }
+              });
+            }
+          });
+          
+          document.getElementById('total-new').textContent = newTickets;
+          document.getElementById('total-changes').textContent = totalChanges;
+          document.getElementById('total-solved').textContent = solvedTickets;
+          document.getElementById('total-tickets').textContent = uniqueTickets.size;
+        },
+        
+        displayChanges() {
+          const container = document.getElementById('changes-container');
+          container.innerHTML = '';
+          
+          let filteredTickets = this.allTickets;
+          
+          // Apply filter
+          if (this.currentFilter !== 'all') {
+            filteredTickets = this.allTickets.filter(ticket => {
+              if (this.currentFilter === 'new') {
+                return ticket.is_new;
+              } else {
+                const targetStatus = this.currentFilter.replace('to-', '');
+                return ticket.status_changes && ticket.status_changes.some(change => 
+                  change.new_status === targetStatus
+                );
+              }
+            });
+          }
+          
+          if (filteredTickets.length === 0) {
+            container.innerHTML = '<div class="empty-state"><p>No tickets found for the selected filter</p></div>';
+            return;
+          }
+          
+          // Group by change type
+          const groups = {
+            new: { title: '🆕 New Tickets Created', tickets: [] },
+            changed: { title: '🔄 Status Changes', tickets: [] }
+          };
+          
+          filteredTickets.forEach(ticket => {
+            if (ticket.is_new) {
+              groups.new.tickets.push(ticket);
+            }
+            if (ticket.status_changes && ticket.status_changes.length > 0) {
+              groups.changed.tickets.push(ticket);
+            }
+          });
+          
+          // Display new tickets first
+          if (groups.new.tickets.length > 0) {
+            const groupDiv = this.createChangeGroup(groups.new.title, groups.new.tickets, true);
+            container.appendChild(groupDiv);
+          }
+          
+          // Display changed tickets
+          if (groups.changed.tickets.length > 0) {
+            const groupDiv = this.createChangeGroup(groups.changed.title, groups.changed.tickets, false);
+            container.appendChild(groupDiv);
+          }
+        },
+        
+        createChangeGroup(title, tickets, isNew) {
+          const groupDiv = document.createElement('div');
+          groupDiv.className = 'change-group';
+          
+          const header = document.createElement('div');
+          header.className = 'change-group-header';
+          header.innerHTML = `
+            <span>${title}</span>
+            <span class="change-group-count">${tickets.length}</span>
+          `;
+          
+          const body = document.createElement('div');
+          body.className = 'change-group-body';
+          
+          tickets.forEach(ticket => {
+            if (isNew) {
+              const row = this.createNewTicketRow(ticket);
+              body.appendChild(row);
+            } else {
+              ticket.status_changes.forEach(change => {
+                const row = this.createChangeRow(ticket, change);
+                body.appendChild(row);
+              });
+            }
+          });
+          
+          groupDiv.appendChild(header);
+          groupDiv.appendChild(body);
+          
+          return groupDiv;
+        },
+        
+        createNewTicketRow(ticket) {
+          const row = document.createElement('div');
+          row.className = 'ticket-row';
+          
+          const createdTime = new Date(ticket.created_at).toLocaleTimeString('en-US', { 
+            hour: '2-digit', 
+            minute: '2-digit' 
+          });
+          
+          row.innerHTML = `
+            <div class="d-flex justify-content-between align-items-start flex-wrap gap-2">
+              <div class="flex-grow-1">
+                <div>
+                  <span class="ticket-id" onclick="window.open('https://esolutionsfurniture.zendesk.com/agent/tickets/${ticket.ticket_id}', '_blank')">
+                    #${ticket.ticket_id}
+                  </span>
+                  <span class="ms-3">
+                    <span class="status-badge status-new">NEW</span>
+                    <span class="transition-arrow">→</span>
+                    <span class="status-badge status-${ticket.current_status}">${ticket.current_status.toUpperCase()}</span>
+                  </span>
+                </div>
+                <div class="ticket-subject">${ticket.subject || 'No subject'}</div>
+              </div>
+              <div class="text-end">
+                <div class="ticket-time">${createdTime}</div>
+                <div class="ticket-agent">${ticket.assignee_name || 'Unassigned'}</div>
+              </div>
+            </div>
+          `;
+          
+          return row;
+        },
+        
+        createChangeRow(ticket, change) {
+          const row = document.createElement('div');
+          row.className = 'ticket-row';
+          
+          const changeTime = new Date(change.changed_at).toLocaleTimeString('en-US', { 
+            hour: '2-digit', 
+            minute: '2-digit' 
+          });
+          
+          row.innerHTML = `
+            <div class="d-flex justify-content-between align-items-start flex-wrap gap-2">
+              <div class="flex-grow-1">
+                <div>
+                  <span class="ticket-id" onclick="window.open('https://esolutionsfurniture.zendesk.com/agent/tickets/${ticket.ticket_id}', '_blank')">
+                    #${ticket.ticket_id}
+                  </span>
+                  <span class="ms-3">
+                    <span class="status-badge status-${change.old_status}">${change.old_status.toUpperCase()}</span>
+                    <span class="transition-arrow">→</span>
+                    <span class="status-badge status-${change.new_status}">${change.new_status.toUpperCase()}</span>
+                  </span>
+                </div>
+                <div class="ticket-subject">${ticket.subject || 'No subject'}</div>
+              </div>
+              <div class="text-end">
+                <div class="ticket-time">${changeTime}</div>
+                <div class="ticket-agent">${change.changed_by || ticket.assignee_name || 'System'}</div>
+              </div>
+            </div>
+          `;
+          
+          return row;
+        },
+        
+        exportToCSV() {
+          if (this.allTickets.length === 0) {
+            alert('No data to export. Please load data first.');
+            return;
+          }
+          
+          const rows = [];
+          rows.push(['Ticket ID', 'Subject', 'Type', 'From Status', 'To Status', 'Changed At', 'Changed By', 'Assignee']);
+          
+          this.allTickets.forEach(ticket => {
+            if (ticket.is_new) {
+              rows.push([
+                ticket.ticket_id,
+                ticket.subject || '',
+                'New Ticket',
+                'N/A',
+                ticket.current_status,
+                ticket.created_at,
+                ticket.assignee_name || 'Unassigned',
+                ticket.assignee_name || 'Unassigned'
+              ]);
+            }
+            
+            if (ticket.status_changes) {
+              ticket.status_changes.forEach(change => {
+                rows.push([
+                  ticket.ticket_id,
+                  ticket.subject || '',
+                  'Status Change',
+                  change.old_status,
+                  change.new_status,
+                  change.changed_at,
+                  change.changed_by || 'System',
+                  ticket.assignee_name || 'Unassigned'
+                ]);
+              });
+            }
+          });
+          
+          const csv = rows.map(row => 
+            row.map(cell => `"${String(cell).replace(/"/g, '""')}"`).join(',')
+          ).join('\n');
+          
+          const blob = new Blob([csv], { type: 'text/csv' });
+          const url = window.URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = `ticket-status-changes-${this.selectedDate}.csv`;
+          a.click();
+          window.URL.revokeObjectURL(url);
+          
+          console.log('✅ CSV exported successfully');
+        }
+      };
+      
+      document.addEventListener('DOMContentLoaded', () => app.init());
+    </script>
+  </body>
+</html>

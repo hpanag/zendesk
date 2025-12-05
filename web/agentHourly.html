@@ -1,0 +1,688 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Hourly Agent Performance - Zendesk Dashboard</title>
+    <link href="./original/dist/css/tabler.css?1747674014" rel="stylesheet" />
+    <link href="./original/dist/css/tabler-flags.css?1747674014" rel="stylesheet" />
+    <link href="./original/dist/css/tabler-vendors.css?1747674014" rel="stylesheet" />
+    <style>
+      @import url("https://rsms.me/inter/inter.css");
+      body { font-family: 'Inter', sans-serif; }
+      .metric-card { border-left: 4px solid; transition: transform 0.2s; }
+      .metric-card:hover { transform: translateY(-2px); }
+      .agent-row { margin-bottom: 20px; padding: 0; background: #fff; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); overflow: hidden; }
+      .agent-header { 
+        background: linear-gradient(135deg, #206bc4 0%, #4299e1 100%); 
+        padding: 20px; 
+        color: white;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 15px;
+      }
+      .agent-name { 
+        font-weight: 600; 
+        font-size: 1.3rem; 
+        margin: 0;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .agent-summary {
+        display: flex;
+        gap: 20px;
+        flex-wrap: wrap;
+      }
+      .summary-stat {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 10px 15px;
+        background: rgba(255,255,255,0.15);
+        border-radius: 8px;
+        backdrop-filter: blur(10px);
+        min-width: 100px;
+      }
+      .summary-stat-value {
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin-bottom: 2px;
+      }
+      .summary-stat-label {
+        font-size: 0.75rem;
+        opacity: 0.9;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+      .agent-content {
+        padding: 20px;
+      }
+      .hourly-section-title {
+        font-weight: 600;
+        font-size: 0.95rem;
+        color: #495057;
+        margin-bottom: 15px;
+        padding-bottom: 10px;
+        border-bottom: 2px solid #e9ecef;
+      }
+      .hourly-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; }
+      .hour-card { 
+        background: #f8f9fa; 
+        padding: 12px; 
+        border-radius: 6px; 
+        border-left: 3px solid #dee2e6;
+        transition: all 0.2s;
+      }
+      .hour-card:hover { 
+        transform: translateY(-2px); 
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      }
+      .hour-card.active { 
+        background: #e7f5ff; 
+        border-left-color: #206bc4;
+      }
+      .hour-time { 
+        font-weight: 600; 
+        font-size: 0.85rem; 
+        color: #495057;
+        margin-bottom: 8px;
+      }
+      .hour-stats { 
+        display: flex; 
+        flex-direction: column;
+        gap: 4px;
+      }
+      .stat-item { 
+        display: flex; 
+        justify-content: space-between;
+        font-size: 0.85rem;
+      }
+      .stat-label { 
+        color: #6c757d;
+      }
+      .stat-value { 
+        font-weight: 600;
+      }
+      .stat-value.clickable {
+        cursor: pointer;
+      }
+      .stat-value.clickable:hover {
+        text-decoration: underline;
+      }
+      .stat-tickets { color: #206bc4; }
+      .stat-calls { color: #2fb344; }
+      .stat-talk-time { color: #f59f00; }
+      .empty-state {
+        text-align: center;
+        padding: 40px;
+        color: #6c757d;
+      }
+      
+      /* Modal styles */
+      .ticket-ids-modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.5);
+        z-index: 1000;
+        align-items: center;
+        justify-content: center;
+      }
+      .ticket-ids-modal.show {
+        display: flex;
+      }
+      .modal-content {
+        background: white;
+        padding: 30px;
+        border-radius: 12px;
+        max-width: 600px;
+        max-height: 80vh;
+        overflow-y: auto;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+      }
+      .modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        padding-bottom: 15px;
+        border-bottom: 2px solid #e9ecef;
+      }
+      .modal-title {
+        font-size: 1.3rem;
+        font-weight: 600;
+        color: #206bc4;
+      }
+      .modal-close {
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        cursor: pointer;
+        color: #6c757d;
+        padding: 0;
+        width: 30px;
+        height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 4px;
+      }
+      .modal-close:hover {
+        background: #f8f9fa;
+        color: #dc3545;
+      }
+      .ticket-list {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+      .ticket-item {
+        padding: 12px 15px;
+        background: #f8f9fa;
+        border-radius: 6px;
+        border-left: 3px solid #206bc4;
+        cursor: pointer;
+        transition: all 0.2s;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .ticket-item:hover {
+        background: #e7f5ff;
+        transform: translateX(5px);
+        box-shadow: 0 2px 8px rgba(32, 107, 196, 0.15);
+      }
+      .ticket-id {
+        font-weight: 600;
+        color: #206bc4;
+        font-size: 0.95rem;
+      }
+    </style>
+  </head>
+  <body>
+    <script src="./original/dist/js/tabler-theme.min.js?1747674014"></script>
+    <div class="page">
+      <header class="navbar navbar-expand-md d-print-none">
+        <div class="container-xl">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-menu">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="navbar-brand navbar-brand-autodark d-none-navbar-horizontal pe-0 pe-md-3">
+            <a href="index.html" aria-label="Automations">
+              <h4 class="m-0 text-dark">Automations</h4>
+            </a>
+          </div>
+          <div class="navbar-nav flex-row order-md-last">
+            <div class="d-none d-md-flex">
+              <div class="nav-item">
+                <a href="?theme=dark" class="nav-link px-0 hide-theme-dark" title="Enable dark mode">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-1">
+                    <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+                  </svg>
+                </a>
+                <a href="?theme=light" class="nav-link px-0 hide-theme-light" title="Enable light mode">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-1">
+                    <path d="M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" />
+                    <path d="M3 12h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7" />
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+      <header class="navbar-expand-md">
+        <div class="collapse navbar-collapse" id="navbar-menu">
+          <div class="navbar">
+            <div class="container-xl">
+              <div class="row flex-column flex-md-row flex-fill align-items-center">
+                <div class="col">
+                  <ul class="navbar-nav">
+                    <li class="nav-item">
+                      <a class="nav-link" href="index.html">
+                        <span class="nav-link-title">Home</span>
+                      </a>
+                    </li>
+                    <li class="nav-item active">
+                      <a class="nav-link" href="cx.html">
+                        <span class="nav-link-title">Customer Experience</span>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="product.html">
+                        <span class="nav-link-title">Product</span>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="finance.html">
+                        <span class="nav-link-title">Finance</span>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+      
+      <div class="page-wrapper">
+        <div class="page-header d-print-none">
+          <div class="container-xl">
+            <div class="row g-2 align-items-center">
+              <div class="col">
+                <h2 class="page-title">⏰ Hourly Agent Performance</h2>
+                <div class="text-secondary mt-1">
+                  <span id="last-updated">Select a date to view hourly breakdown</span>
+                </div>
+              </div>
+              <div class="col-auto ms-auto d-flex gap-2">
+                <input type="date" class="form-control" id="date-picker" style="width: 180px;">
+                <button class="btn btn-primary" id="get-data-btn" onclick="app.loadData()">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                    <path d="M7 10l5 5l5 -5"/>
+                  </svg>
+                  Get Data
+                </button>
+                <button class="btn btn-secondary" id="refresh-btn" onclick="app.loadData()">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                    <path d="M20 11a8.1 8.1 0 0 0 -15.5 -2m-.5 -4v4h4"/>
+                    <path d="M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4"/>
+                  </svg>
+                  Refresh
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="page-body">
+          <div class="container-xl">
+            <!-- Summary Cards -->
+            <div class="row row-cards mb-3">
+              <div class="col-sm-6 col-lg-3">
+                <div class="card metric-card" style="border-left-color: #206bc4;">
+                  <div class="card-body">
+                    <div class="subheader">Active Agents</div>
+                    <div class="h1 mb-0" id="total-agents">-</div>
+                    <div class="text-secondary">With activity today</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6 col-lg-3">
+                <div class="card metric-card" style="border-left-color: #5c7cfa;">
+                  <div class="card-body">
+                    <div class="subheader">Total Tickets</div>
+                    <div class="h1 mb-0" id="total-tickets">-</div>
+                    <div class="text-secondary" id="avg-tickets">-</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6 col-lg-3">
+                <div class="card metric-card" style="border-left-color: #2fb344;">
+                  <div class="card-body">
+                    <div class="subheader">Total Calls</div>
+                    <div class="h1 mb-0" id="total-calls">-</div>
+                    <div class="text-secondary" id="avg-calls">-</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6 col-lg-3">
+                <div class="card metric-card" style="border-left-color: #f59f00;">
+                  <div class="card-body">
+                    <div class="subheader">Total Talk Time</div>
+                    <div class="h1 mb-0" id="total-talk-time">-</div>
+                    <div class="text-secondary" id="avg-talk-time">-</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Hourly Agent Performance -->
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Hourly Breakdown by Agent</h3>
+              </div>
+              <div class="card-body" id="agent-hourly-container">
+                <div class="empty-state">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon mb-3">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                    <circle cx="12" cy="12" r="9" />
+                    <polyline points="12 7 12 12 15 15" />
+                  </svg>
+                  <p>Select a date to view hourly agent performance</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <footer class="footer footer-transparent d-print-none">
+          <div class="container-xl">
+            <div class="row text-center align-items-center flex-row-reverse">
+              <div class="col-lg-auto ms-lg-auto">
+                <ul class="list-inline list-inline-dots mb-0">
+                  <li class="list-inline-item"><a href="agent.html" class="link-secondary">Daily Agent Performance</a></li>
+                  <li class="list-inline-item"><a href="dash.html" class="link-secondary">Daily Calls</a></li>
+                  <li class="list-inline-item">
+                    <a href="#" class="link-secondary">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon text-pink icon-inline icon-4">
+                        <path d="M19.5 12.572l-7.5 7.428l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572" />
+                      </svg>
+                      Support
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              <div class="col-12 col-lg-auto mt-3 mt-lg-0">
+                <ul class="list-inline list-inline-dots mb-0">
+                  <li class="list-inline-item">
+                    Copyright &copy; 2025
+                    <a href="." class="link-secondary">Zendesk Analytics</a>. All rights reserved.
+                  </li>
+                  <li class="list-inline-item">
+                    <a href="#" class="link-secondary" rel="noopener">v1.0.0</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </footer>
+      </div>
+    </div>
+    
+    <!-- Ticket IDs Modal -->
+    <div class="ticket-ids-modal" id="ticketIdsModal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <div class="modal-title" id="modalTitle">Tickets</div>
+          <button class="modal-close" id="modalClose">&times;</button>
+        </div>
+        <div class="ticket-list" id="ticketList"></div>
+      </div>
+    </div>
+    
+    <script src="./original/dist/js/tabler.min.js?1747674014"></script>
+    <script>
+      const app = {
+        API_BASE_URL: window.location.port === '5501' ? 'http://localhost:3000' : window.location.origin,
+        
+        showTicketModal(ticketIds, agentName, hour) {
+          const modal = document.getElementById('ticketIdsModal');
+          const modalTitle = document.getElementById('modalTitle');
+          const ticketList = document.getElementById('ticketList');
+          
+          modalTitle.textContent = `${agentName} - ${hour} Tickets`;
+          
+          ticketList.innerHTML = ticketIds.map(ticketId => `
+            <div class="ticket-item" onclick="app.openTicketDetails(${ticketId})">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 5m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z"></path>
+                <path d="M3 7l9 6l9 -6"></path>
+              </svg>
+              <span class="ticket-id">Ticket #${ticketId}</span>
+            </div>
+          `).join('');
+          
+          modal.classList.add('show');
+        },
+        
+        openTicketDetails(ticketId) {
+          window.open(`ticketDetails.html?id=${ticketId}`, '_blank');
+        },
+        
+        init() {
+          console.log('🚀 Initializing hourly agent performance dashboard...');
+          
+          const datePicker = document.getElementById('date-picker');
+          const today = new Date();
+          datePicker.value = today.toISOString().split('T')[0];
+          
+          datePicker.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') this.loadData();
+          });
+          
+          // Modal close handlers
+          const modal = document.getElementById('ticketIdsModal');
+          const modalClose = document.getElementById('modalClose');
+          
+          modalClose.addEventListener('click', () => {
+            modal.classList.remove('show');
+          });
+          
+          modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+              modal.classList.remove('show');
+            }
+          });
+          
+          this.loadData();
+        },
+        
+        async loadData() {
+          try {
+            const selectedDate = document.getElementById('date-picker').value;
+            console.log(`📊 Loading hourly agent data for ${selectedDate}...`);
+            
+            const refreshBtn = document.getElementById('refresh-btn');
+            const getDataBtn = document.getElementById('get-data-btn');
+            const lastUpdated = document.getElementById('last-updated');
+            if (refreshBtn) refreshBtn.disabled = true;
+            if (getDataBtn) getDataBtn.disabled = true;
+            if (lastUpdated) lastUpdated.textContent = 'Loading...';
+            
+            // Fetch agent data with hourly breakdown
+            const response = await fetch(`${this.API_BASE_URL}/api/agents/today?date=${selectedDate}`);
+            const data = await response.json();
+            
+            console.log('✅ Data loaded:', data);
+            
+            if (!data.success || !data.agents || data.agents.length === 0) {
+              const container = document.getElementById('agent-hourly-container');
+              container.innerHTML = '<div class="empty-state"><p>No agent activity found for this date</p></div>';
+              if (lastUpdated) lastUpdated.textContent = 'No data available';
+              if (refreshBtn) refreshBtn.disabled = false;
+              if (getDataBtn) getDataBtn.disabled = false;
+              return;
+            }
+            
+            this.updateSummary(data.agents);
+            this.displayAgentHourly(data.agents);
+            
+            const now = new Date();
+            if (lastUpdated) {
+              const displayDate = new Date(selectedDate).toLocaleDateString('en-US', { 
+                weekday: 'short', 
+                year: 'numeric', 
+                month: 'short', 
+                day: 'numeric' 
+              });
+              lastUpdated.textContent = `${displayDate} - Last updated: ${now.toLocaleTimeString('en-US')}`;
+            }
+            
+            if (refreshBtn) refreshBtn.disabled = false;
+            if (getDataBtn) getDataBtn.disabled = false;
+            
+          } catch (e) {
+            console.error('❌ Error:', e);
+            const container = document.getElementById('agent-hourly-container');
+            if (container) {
+              container.innerHTML = '<div class="alert alert-danger">Failed to load data. Make sure server is running on port 3000.</div>';
+            }
+            
+            const lastUpdated = document.getElementById('last-updated');
+            if (lastUpdated) lastUpdated.textContent = 'Failed to load data';
+            
+            const refreshBtn = document.getElementById('refresh-btn');
+            const getDataBtn = document.getElementById('get-data-btn');
+            if (refreshBtn) refreshBtn.disabled = false;
+            if (getDataBtn) getDataBtn.disabled = false;
+          }
+        },
+        
+
+        
+        formatHour(hour) {
+          const period = hour >= 12 ? 'PM' : 'AM';
+          const displayHour = hour === 0 ? 12 : (hour > 12 ? hour - 12 : hour);
+          return `${displayHour}:00 ${period}`;
+        },
+        
+        formatTime(seconds) {
+          if (!seconds || seconds === 0) return '0s';
+          const minutes = Math.floor(seconds / 60);
+          const secs = seconds % 60;
+          if (minutes > 0) {
+            return `${minutes}m ${secs}s`;
+          }
+          return `${secs}s`;
+        },
+        
+        updateSummary(agents) {
+          const totalAgents = agents.length;
+          let totalTickets = 0;
+          let totalCalls = 0;
+          let totalTalkTime = 0;
+          
+          agents.forEach(agent => {
+            totalTickets += agent.tickets_assigned || 0;
+            totalCalls += agent.calls_answered || 0;
+            totalTalkTime += agent.total_talk_time || 0;
+          });
+          
+          document.getElementById('total-agents').textContent = totalAgents;
+          document.getElementById('total-tickets').textContent = totalTickets;
+          document.getElementById('total-calls').textContent = totalCalls;
+          document.getElementById('total-talk-time').textContent = this.formatTime(totalTalkTime);
+          
+          const avgTickets = totalAgents > 0 ? (totalTickets / totalAgents).toFixed(1) : 0;
+          const avgCalls = totalAgents > 0 ? (totalCalls / totalAgents).toFixed(1) : 0;
+          const avgTalkTime = totalAgents > 0 ? Math.floor(totalTalkTime / totalAgents) : 0;
+          
+          document.getElementById('avg-tickets').textContent = `${avgTickets} per agent`;
+          document.getElementById('avg-calls').textContent = `${avgCalls} per agent`;
+          document.getElementById('avg-talk-time').textContent = `${this.formatTime(avgTalkTime)} per agent`;
+        },
+        
+        displayAgentHourly(agents) {
+          const container = document.getElementById('agent-hourly-container');
+          container.innerHTML = '';
+          
+          agents.forEach(agent => {
+            const agentRow = document.createElement('div');
+            agentRow.className = 'agent-row';
+            
+            // Calculate daily totals
+            const dailyTickets = agent.tickets_assigned || 0;
+            const dailyCalls = agent.calls_answered || 0;
+            const dailyTalkTime = agent.total_talk_time || 0;
+            const avgHandleTime = dailyCalls > 0 ? Math.floor(dailyTalkTime / dailyCalls) : 0;
+            
+            // Create header with summary
+            const agentHeader = document.createElement('div');
+            agentHeader.className = 'agent-header';
+            agentHeader.innerHTML = `
+              <div class="agent-name">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0"></path>
+                  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"></path>
+                </svg>
+                ${agent.name}
+              </div>
+              <div class="agent-summary">
+                <div class="summary-stat">
+                  <div class="summary-stat-value">${dailyTickets}</div>
+                  <div class="summary-stat-label">Tickets</div>
+                </div>
+                <div class="summary-stat">
+                  <div class="summary-stat-value">${dailyCalls}</div>
+                  <div class="summary-stat-label">Calls</div>
+                </div>
+                <div class="summary-stat">
+                  <div class="summary-stat-value">${this.formatTime(dailyTalkTime)}</div>
+                  <div class="summary-stat-label">Total Talk Time</div>
+                </div>
+                <div class="summary-stat">
+                  <div class="summary-stat-value">${this.formatTime(avgHandleTime)}</div>
+                  <div class="summary-stat-label">Avg Handle Time</div>
+                </div>
+              </div>
+            `;
+            
+            // Create content section with hourly breakdown
+            const agentContent = document.createElement('div');
+            agentContent.className = 'agent-content';
+            
+            const hourlyTitle = document.createElement('div');
+            hourlyTitle.className = 'hourly-section-title';
+            hourlyTitle.innerHTML = '📊 Hourly Breakdown';
+            
+            const hourlyGrid = document.createElement('div');
+            hourlyGrid.className = 'hourly-grid';
+            
+            agent.hourly_data.forEach(hourData => {
+              const isActive = hourData.tickets > 0 || hourData.calls > 0;
+              const hasTickets = hourData.ticket_ids && hourData.ticket_ids.length > 0;
+              
+              const hourCard = document.createElement('div');
+              hourCard.className = `hour-card ${isActive ? 'active' : ''}`;
+              hourCard.innerHTML = `
+                <div class="hour-time">${hourData.hour_display}</div>
+                <div class="hour-stats">
+                  <div class="stat-item">
+                    <span class="stat-label">Tickets:</span>
+                    <span class="stat-value stat-tickets ${hasTickets ? 'clickable' : ''}" 
+                          data-tickets='${hasTickets ? JSON.stringify(hourData.ticket_ids) : '[]'}'
+                          data-agent="${agent.name}"
+                          data-hour="${hourData.hour_display}">
+                      ${hourData.tickets}
+                    </span>
+                  </div>
+                  <div class="stat-item">
+                    <span class="stat-label">Calls:</span>
+                    <span class="stat-value stat-calls">${hourData.calls}</span>
+                  </div>
+                  <div class="stat-item">
+                    <span class="stat-label">Talk Time:</span>
+                    <span class="stat-value stat-talk-time">${this.formatTime(hourData.talk_time)}</span>
+                  </div>
+                </div>
+              `;
+              
+              // Add click handler for tickets if they exist
+              if (hasTickets) {
+                const ticketElement = hourCard.querySelector('.stat-tickets');
+                ticketElement.addEventListener('click', (e) => {
+                  const ticketIds = JSON.parse(e.target.dataset.tickets);
+                  const agentName = e.target.dataset.agent;
+                  const hour = e.target.dataset.hour;
+                  this.showTicketModal(ticketIds, agentName, hour);
+                });
+              }
+              
+              hourlyGrid.appendChild(hourCard);
+            });
+            
+            agentContent.appendChild(hourlyTitle);
+            agentContent.appendChild(hourlyGrid);
+            
+            agentRow.appendChild(agentHeader);
+            agentRow.appendChild(agentContent);
+            container.appendChild(agentRow);
+          });
+        }
+      };
+      
+      document.addEventListener('DOMContentLoaded', () => app.init());
+    </script>
+  </body>
+</html>

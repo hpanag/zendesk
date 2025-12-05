@@ -7,8 +7,8 @@
       "voice",
       "tickets"
     ],
-    "lastUpdated": "2025-11-14T06:27:40.383Z",
-    "lastFetchDate": "2025-11-14"
+    "lastUpdated": "2025-12-04T13:56:03.644Z",
+    "lastFetchDate": "2025-12-04"
   },
   "dailyKPIs": {
     "2025-10-12": {
@@ -451,6 +451,153 @@
           "description": "Total outbound calls placed today"
         }
       }
+    },
+    "2025-11-15": {
+      "date": "2025-11-15",
+      "timestamp": "2025-11-15T08:47:13.082Z",
+      "voice": {
+        "totalInboundCalls": {
+          "value": 0,
+          "displayName": "Total Inbound Calls",
+          "description": "Total number of inbound calls received today"
+        },
+        "notAnsweredCalls": {
+          "value": 0,
+          "displayName": "Not Answered Calls",
+          "description": "Number of calls that were not answered by any agent today"
+        },
+        "outboundCalls": {
+          "value": 0,
+          "displayName": "Outbound Calls",
+          "description": "Total outbound calls placed today"
+        }
+      }
+    },
+    "2025-11-17": {
+      "date": "2025-11-17",
+      "timestamp": "2025-11-17T13:47:38.435Z",
+      "voice": {
+        "totalInboundCalls": {
+          "value": 6,
+          "displayName": "Total Inbound Calls",
+          "description": "Total number of inbound calls received today"
+        },
+        "notAnsweredCalls": {
+          "value": 0,
+          "displayName": "Not Answered Calls",
+          "description": "Number of calls that were not answered by any agent today"
+        },
+        "outboundCalls": {
+          "value": 0,
+          "displayName": "Outbound Calls",
+          "description": "Total outbound calls placed today"
+        }
+      }
+    },
+    "2025-11-19": {
+      "date": "2025-11-19",
+      "timestamp": "2025-11-19T13:34:38.552Z",
+      "voice": {
+        "totalInboundCalls": {
+          "value": 11,
+          "displayName": "Total Inbound Calls",
+          "description": "Total number of inbound calls received today"
+        },
+        "notAnsweredCalls": {
+          "value": 0,
+          "displayName": "Not Answered Calls",
+          "description": "Number of calls that were not answered by any agent today"
+        },
+        "outboundCalls": {
+          "value": 0,
+          "displayName": "Outbound Calls",
+          "description": "Total outbound calls placed today"
+        }
+      }
+    },
+    "2025-11-22": {
+      "date": "2025-11-22",
+      "timestamp": "2025-11-22T09:02:52.481Z",
+      "voice": {
+        "totalInboundCalls": {
+          "value": 0,
+          "displayName": "Total Inbound Calls",
+          "description": "Total number of inbound calls received today"
+        },
+        "notAnsweredCalls": {
+          "value": 0,
+          "displayName": "Not Answered Calls",
+          "description": "Number of calls that were not answered by any agent today"
+        },
+        "outboundCalls": {
+          "value": 0,
+          "displayName": "Outbound Calls",
+          "description": "Total outbound calls placed today"
+        }
+      }
+    },
+    "2025-11-23": {
+      "date": "2025-11-23",
+      "timestamp": "2025-11-23T06:57:37.796Z",
+      "voice": {
+        "totalInboundCalls": {
+          "value": 0,
+          "displayName": "Total Inbound Calls",
+          "description": "Total number of inbound calls received today"
+        },
+        "notAnsweredCalls": {
+          "value": 0,
+          "displayName": "Not Answered Calls",
+          "description": "Number of calls that were not answered by any agent today"
+        },
+        "outboundCalls": {
+          "value": 0,
+          "displayName": "Outbound Calls",
+          "description": "Total outbound calls placed today"
+        }
+      }
+    },
+    "2025-11-29": {
+      "date": "2025-11-29",
+      "timestamp": "2025-11-29T12:25:57.898Z",
+      "voice": {
+        "totalInboundCalls": {
+          "value": 1,
+          "displayName": "Total Inbound Calls",
+          "description": "Total number of inbound calls received today"
+        },
+        "notAnsweredCalls": {
+          "value": 0,
+          "displayName": "Not Answered Calls",
+          "description": "Number of calls that were not answered by any agent today"
+        },
+        "outboundCalls": {
+          "value": 0,
+          "displayName": "Outbound Calls",
+          "description": "Total outbound calls placed today"
+        }
+      }
+    },
+    "2025-12-04": {
+      "date": "2025-12-04",
+      "timestamp": "2025-12-04T13:56:03.027Z",
+      "voice": {
+        "totalInboundCalls": {
+          "value": 7,
+          "displayName": "Total Inbound Calls",
+          "description": "Total number of inbound calls received today"
+        },
+        "notAnsweredCalls": {
+          "value": 0,
+          "displayName": "Not Answered Calls",
+          "description": "Number of calls that were not answered by any agent today"
+        },
+        "outboundCalls": {
+          "value": 0,
+          "displayName": "Outbound Calls",
+          "description": "Total outbound calls placed today"
+        }
+      }
     }
   },
   "trends": {
@@ -535,6 +682,18 @@
         {
           "date": "2025-11-14",
           "value": 0
+        },
+        {
+          "date": "2025-11-17",
+          "value": 6
+        },
+        {
+          "date": "2025-11-19",
+          "value": 11
+        },
+        {
+          "date": "2025-12-04",
+          "value": 7
         }
       ],
       "notAnsweredCalls": [
@@ -617,6 +776,18 @@
         {
           "date": "2025-11-14",
           "value": 0
+        },
+        {
+          "date": "2025-11-17",
+          "value": 0
+        },
+        {
+          "date": "2025-11-19",
+          "value": 0
+        },
+        {
+          "date": "2025-12-04",
+          "value": 0
         }
       ],
       "outboundCalls": [
@@ -698,6 +869,18 @@
         },
         {
           "date": "2025-11-14",
+          "value": 0
+        },
+        {
+          "date": "2025-11-17",
+          "value": 0
+        },
+        {
+          "date": "2025-11-19",
+          "value": 0
+        },
+        {
+          "date": "2025-12-04",
           "value": 0
         }
       ]
@@ -928,6 +1111,69 @@
           "hold": 76,
           "solved": 1249,
           "closed": 294831
+        },
+        {
+          "date": "2025-11-15",
+          "new": 121,
+          "open": 167,
+          "pending": 92,
+          "hold": 78,
+          "solved": 1139,
+          "closed": 295367
+        },
+        {
+          "date": "2025-11-17",
+          "new": 190,
+          "open": 176,
+          "pending": 85,
+          "hold": 102,
+          "solved": 610,
+          "closed": 296159
+        },
+        {
+          "date": "2025-11-19",
+          "new": 152,
+          "open": 149,
+          "pending": 67,
+          "hold": 98,
+          "solved": 807,
+          "closed": 297198
+        },
+        {
+          "date": "2025-11-22",
+          "new": 154,
+          "open": 0,
+          "pending": 0,
+          "hold": 0,
+          "solved": 0,
+          "closed": 0
+        },
+        {
+          "date": "2025-11-23",
+          "new": 189,
+          "open": 134,
+          "pending": 0,
+          "hold": 0,
+          "solved": 0,
+          "closed": 0
+        },
+        {
+          "date": "2025-11-29",
+          "new": 154,
+          "open": 235,
+          "pending": 0,
+          "hold": 0,
+          "solved": 0,
+          "closed": 0
+        },
+        {
+          "date": "2025-12-04",
+          "new": 239,
+          "open": 133,
+          "pending": 90,
+          "hold": 75,
+          "solved": 1263,
+          "closed": 303108
         }
       ]
     }

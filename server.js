@@ -154,6 +154,8 @@ async function handleTodaysCallsRequest(req, res) {
     let abandonedVoicemail = 0;
     let voicemailsLeft = 0;
     let other = 0;
+    let totalWaitTime = 0;
+    let callsWithWaitTime = 0;
     const otherStatuses = {}; // Track what statuses fall into "other"
     
     targetCalls.forEach(call => {
@@ -161,6 +163,12 @@ async function handleTodaysCallsRequest(req, res) {
       const hour = callTime.getHours();
       
       hourlyData[hour].total++;
+      
+      // Track wait time for answered calls
+      if (call.wait_time && call.wait_time > 0) {
+        totalWaitTime += call.wait_time;
+        callsWithWaitTime++;
+      }
       
       // TRUE answered by agent: has agent_id AND talk_time > 0
       if (call.agent_id && call.talk_time > 0) {
@@ -201,17 +209,33 @@ async function handleTodaysCallsRequest(req, res) {
       }
     });
     
+    const totalAbandoned = abandonedIVR + abandonedQueue + abandonedVoicemail;
+    const abandonRate = targetCalls.length > 0 
+      ? ((totalAbandoned / targetCalls.length) * 100).toFixed(2)
+      : 0;
+    
+    // Calculate average wait time
+    const avgWaitTime = callsWithWaitTime > 0 
+      ? Math.round(totalWaitTime / callsWithWaitTime) 
+      : 0;
+    
     const result = {
       success: true,
       date: targetDate.toISOString().split('T')[0],
+      total: targetCalls.length,
       total_calls: targetCalls.length,
+      answered: answeredByAgent,
       answered_by_agent: answeredByAgent,
       abandoned_ivr: abandonedIVR,
       abandoned_queue: abandonedQueue,
       abandoned_voicemail: abandonedVoicemail,
       voicemails_left: voicemailsLeft,
       other: other,
-      total_abandoned: abandonedIVR + abandonedQueue + abandonedVoicemail,
+      total_abandoned: totalAbandoned,
+      abandoned_rate: parseFloat(abandonRate),
+      avg_wait_time: avgWaitTime,
+      total_wait_time: totalWaitTime,
+      calls_with_wait_time: callsWithWaitTime,
       hourly_data: hourlyData,
       last_updated: new Date().toISOString()
     };
@@ -219,6 +243,7 @@ async function handleTodaysCallsRequest(req, res) {
     console.log('📊 Response summary:');
     console.log(`  Total: ${result.total_calls}`);
     console.log(`  Answered: ${result.answered_by_agent}`);
+    console.log(`  Avg Wait Time: ${result.avg_wait_time}s (from ${result.calls_with_wait_time} calls)`);
     console.log(`  Abandoned IVR: ${result.abandoned_ivr}`);
     console.log(`  Abandoned Queue: ${result.abandoned_queue}`);
     console.log(`  Abandoned VM: ${result.abandoned_voicemail}`);
@@ -410,10 +435,12 @@ async function handleTodaysAgentsRequest(req, res) {
     // Create agent performance map
     const agentPerformance = {};
     
-    // Process tickets - track assignee and solver
+    // Process tickets - track assignee and solver with hourly breakdown
     targetTickets.forEach(ticket => {
       const assigneeId = ticket.assignee_id;
       const updaterId = ticket.updated_by_id;
+      const createdTime = new Date(ticket.created_at);
+      const hour = createdTime.getHours();
       
       if (assigneeId) {
         if (!agentPerformance[assigneeId]) {
@@ -425,10 +452,24 @@ async function handleTodaysAgentsRequest(req, res) {
             calls_answered: 0,
             calls_total: 0,
             total_talk_time: 0,
-            avg_talk_time: 0
+            avg_talk_time: 0,
+            ticket_ids: [],
+            hourly_breakdown: {}
           };
         }
         agentPerformance[assigneeId].tickets_assigned++;
+        agentPerformance[assigneeId].ticket_ids.push(ticket.id);
+        
+        // Track hourly breakdown
+        if (!agentPerformance[assigneeId].hourly_breakdown[hour]) {
+          agentPerformance[assigneeId].hourly_breakdown[hour] = {
+            hour: hour,
+            tickets: [],
+            calls: 0,
+            talk_time: 0
+          };
+        }
+        agentPerformance[assigneeId].hourly_breakdown[hour].tickets.push(ticket.id);
         
         if (ticket.status === 'solved' || ticket.status === 'closed') {
           agentPerformance[assigneeId].tickets_solved++;
@@ -452,9 +493,11 @@ async function handleTodaysAgentsRequest(req, res) {
       }
     });
     
-    // Process calls
+    // Process calls with hourly breakdown
     targetCalls.forEach(call => {
       const agentId = call.agent_id;
+      const createdTime = new Date(call.created_at);
+      const hour = createdTime.getHours();
       
       if (agentId) {
         if (!agentPerformance[agentId]) {
@@ -466,7 +509,9 @@ async function handleTodaysAgentsRequest(req, res) {
             calls_answered: 0,
             calls_total: 0,
             total_talk_time: 0,
-            avg_talk_time: 0
+            avg_talk_time: 0,
+            ticket_ids: [],
+            hourly_breakdown: {}
           };
         }
         
@@ -475,6 +520,18 @@ async function handleTodaysAgentsRequest(req, res) {
         if (call.talk_time && call.talk_time > 0) {
           agentPerformance[agentId].calls_answered++;
           agentPerformance[agentId].total_talk_time += call.talk_time;
+          
+          // Track hourly breakdown for calls
+          if (!agentPerformance[agentId].hourly_breakdown[hour]) {
+            agentPerformance[agentId].hourly_breakdown[hour] = {
+              hour: hour,
+              tickets: [],
+              calls: 0,
+              talk_time: 0
+            };
+          }
+          agentPerformance[agentId].hourly_breakdown[hour].calls++;
+          agentPerformance[agentId].hourly_breakdown[hour].talk_time += call.talk_time;
         }
       }
     });
@@ -493,6 +550,21 @@ async function handleTodaysAgentsRequest(req, res) {
       if (agent.calls_answered > 0) {
         agent.avg_talk_time = Math.round(agent.total_talk_time / agent.calls_answered);
       }
+      
+      // Convert hourly_breakdown object to sorted array
+      agent.hourly_data = Object.values(agent.hourly_breakdown)
+        .sort((a, b) => a.hour - b.hour)
+        .map(hourData => ({
+          hour: hourData.hour,
+          hour_display: formatHour(hourData.hour),
+          tickets: hourData.tickets.length,
+          ticket_ids: hourData.tickets,
+          calls: hourData.calls,
+          talk_time: hourData.talk_time
+        }));
+      
+      // Remove the temporary hourly_breakdown object
+      delete agent.hourly_breakdown;
       
       return agent;
     });
@@ -536,6 +608,346 @@ async function handleTodaysAgentsRequest(req, res) {
     sendJson(res, 500, {
       success: false,
       error: 'Failed to fetch agent data',
+      message: error.message
+    });
+  }
+}
+
+async function handleTicketStatusChangesRequest(req, res) {
+  try {
+    const ZendeskClient = require('./src/ZendeskClient');
+    const zendesk = new ZendeskClient();
+    
+    // Parse date from query parameter or use today
+    const url = new URL(req.url, `http://localhost:${PORT}`);
+    const dateParam = url.searchParams.get('date');
+    
+    let targetDate;
+    if (dateParam) {
+      const [year, month, day] = dateParam.split('-').map(Number);
+      targetDate = new Date(year, month - 1, day, 0, 0, 0, 0);
+      console.log(`🔄 Fetching ticket status changes for: ${dateParam}`);
+    } else {
+      targetDate = new Date();
+      targetDate.setHours(0, 0, 0, 0);
+      console.log('🔄 Fetching today\'s ticket status changes...');
+    }
+    
+    const startTime = Math.floor(targetDate.getTime() / 1000);
+    const nextDay = new Date(targetDate);
+    nextDay.setDate(nextDay.getDate() + 1);
+    const endTime = Math.floor(nextDay.getTime() / 1000);
+    
+    console.log(`📊 Fetching tickets and audits for date range...`);
+    
+    // Fetch tickets from incremental API
+    const ticketsResponse = await zendesk.makeRequest('GET', 
+      `/incremental/tickets.json?start_time=${startTime}`
+    );
+    
+    const allTickets = ticketsResponse.tickets || [];
+    
+    // Filter to tickets created or updated on target date
+    const targetTickets = allTickets.filter(ticket => {
+      const createdTime = new Date(ticket.created_at);
+      const updatedTime = new Date(ticket.updated_at);
+      return (createdTime >= targetDate && createdTime < nextDay) || 
+             (updatedTime >= targetDate && updatedTime < nextDay);
+    });
+    
+    console.log(`✅ Found ${targetTickets.length} tickets with activity on ${targetDate.toISOString().split('T')[0]}`);
+    
+    // Build ticket map for quick lookup
+    const ticketMap = {};
+    targetTickets.forEach(ticket => {
+      ticketMap[ticket.id] = {
+        ticket_id: ticket.id,
+        subject: ticket.subject,
+        current_status: ticket.status,
+        created_at: ticket.created_at,
+        updated_at: ticket.updated_at,
+        assignee_id: ticket.assignee_id,
+        assignee_name: null,
+        is_new: false,
+        status_changes: []
+      };
+    });
+    
+    // Fetch user info for assignees
+    const usersResponse = await zendesk.makeRequest('GET', '/users.json');
+    const userMap = {};
+    (usersResponse.users || []).forEach(user => {
+      userMap[user.id] = user.name;
+    });
+    
+    // Add assignee names
+    Object.values(ticketMap).forEach(ticket => {
+      if (ticket.assignee_id && userMap[ticket.assignee_id]) {
+        ticket.assignee_name = userMap[ticket.assignee_id];
+      }
+    });
+    
+    // Check for new tickets created on this date
+    targetTickets.forEach(ticket => {
+      const createdTime = new Date(ticket.created_at);
+      if (createdTime >= targetDate && createdTime < nextDay) {
+        ticketMap[ticket.id].is_new = true;
+      }
+    });
+    
+    // Fetch audit logs for each ticket to get status changes
+    // Limit to first 50 tickets to avoid rate limiting
+    const ticketsToFetch = targetTickets.slice(0, 50);
+    console.log(`🔍 Fetching audit logs for ${ticketsToFetch.length} tickets (limited to avoid rate limits)...`);
+    
+    // Fetch audits in batches of 5 to avoid rate limiting
+    const batchSize = 5;
+    const auditResults = [];
+    
+    for (let i = 0; i < ticketsToFetch.length; i += batchSize) {
+      const batch = ticketsToFetch.slice(i, i + batchSize);
+      console.log(`  Processing batch ${Math.floor(i / batchSize) + 1}/${Math.ceil(ticketsToFetch.length / batchSize)}...`);
+      
+      const batchPromises = batch.map(ticket => 
+        zendesk.makeRequest('GET', `/tickets/${ticket.id}/audits.json`)
+          .then(response => ({ ticket_id: ticket.id, audits: response.audits || [] }))
+          .catch(error => {
+            console.warn(`⚠️ Failed to fetch audits for ticket ${ticket.id}:`, error.message);
+            return { ticket_id: ticket.id, audits: [] };
+          })
+      );
+      
+      const batchResults = await Promise.all(batchPromises);
+      auditResults.push(...batchResults);
+      
+      // Add a small delay between batches to avoid rate limiting
+      if (i + batchSize < ticketsToFetch.length) {
+        await new Promise(resolve => setTimeout(resolve, 1000));
+      }
+    }
+    
+    // Process audits to extract status changes on the target date
+    auditResults.forEach(({ ticket_id, audits }) => {
+      audits.forEach(audit => {
+        const auditTime = new Date(audit.created_at);
+        
+        // Only process audits from the target date
+        if (auditTime >= targetDate && auditTime < nextDay) {
+          const events = audit.events || [];
+          
+          events.forEach(event => {
+            // Look for status change events
+            if (event.type === 'Change' && event.field_name === 'status') {
+              const authorName = userMap[audit.author_id] || 'System';
+              
+              ticketMap[ticket_id].status_changes.push({
+                old_status: event.previous_value || 'new',
+                new_status: event.value,
+                changed_at: audit.created_at,
+                changed_by: authorName
+              });
+            }
+          });
+        }
+      });
+    });
+    
+    // Filter to only tickets with changes or new tickets
+    const ticketsWithChanges = Object.values(ticketMap).filter(ticket => 
+      ticket.is_new || ticket.status_changes.length > 0
+    );
+    
+    // Sort by most recent activity
+    ticketsWithChanges.sort((a, b) => {
+      const aTime = a.status_changes.length > 0 
+        ? new Date(a.status_changes[a.status_changes.length - 1].changed_at)
+        : new Date(a.created_at);
+      const bTime = b.status_changes.length > 0
+        ? new Date(b.status_changes[b.status_changes.length - 1].changed_at)
+        : new Date(b.created_at);
+      return bTime - aTime;
+    });
+    
+    console.log(`✅ Processed ${ticketsWithChanges.length} tickets with status changes or new creations`);
+    console.log(`📊 Summary:`);
+    console.log(`  New tickets: ${ticketsWithChanges.filter(t => t.is_new).length}`);
+    console.log(`  Tickets with status changes: ${ticketsWithChanges.filter(t => t.status_changes.length > 0).length}`);
+    console.log(`  Total status transitions: ${ticketsWithChanges.reduce((sum, t) => sum + t.status_changes.length, 0)}`);
+    
+    const result = {
+      success: true,
+      date: targetDate.toISOString().split('T')[0],
+      total_tickets: ticketsWithChanges.length,
+      new_tickets: ticketsWithChanges.filter(t => t.is_new).length,
+      tickets_with_changes: ticketsWithChanges.filter(t => t.status_changes.length > 0).length,
+      total_transitions: ticketsWithChanges.reduce((sum, t) => sum + t.status_changes.length, 0),
+      tickets: ticketsWithChanges,
+      last_updated: new Date().toISOString()
+    };
+    
+    sendJson(res, 200, result);
+    console.log('✅ Ticket status changes response sent');
+    
+  } catch (error) {
+    console.error('❌ Error getting ticket status changes:', error);
+    
+    // Check if it's a rate limit error
+    const isRateLimit = error.status === 429 || (error.response && error.response.status === 429);
+    
+    sendJson(res, 500, {
+      success: false,
+      error: isRateLimit ? 'Rate limit exceeded' : 'Failed to get ticket status changes',
+      details: error.message,
+      rate_limited: isRateLimit,
+      suggestion: isRateLimit ? 'Please wait a moment and try again, or select a date with fewer tickets' : null
+    });
+  }
+}
+
+async function handleTicketDetailsRequest(req, res) {
+  try {
+    const url = new URL(req.url, `http://localhost:${PORT}`);
+    const ticketId = url.searchParams.get('id');
+    
+    if (!ticketId) {
+      sendJson(res, 400, {
+        success: false,
+        error: 'Missing ticket ID parameter'
+      });
+      return;
+    }
+    
+    console.log(`🎫 Fetching ticket details for ID: ${ticketId}`);
+    
+    const ZendeskClient = require('./src/ZendeskClient');
+    const zendesk = new ZendeskClient();
+    
+    // Fetch ticket details, audits, and comments in parallel
+    const [ticketResponse, auditsResponse, usersResponse] = await Promise.all([
+      zendesk.makeRequest('GET', `/tickets/${ticketId}.json`),
+      zendesk.makeRequest('GET', `/tickets/${ticketId}/audits.json`),
+      zendesk.makeRequest('GET', '/users.json')
+    ]);
+    
+    const ticket = ticketResponse.ticket;
+    const audits = auditsResponse.audits || [];
+    const users = usersResponse.users || [];
+    
+    // Create user map
+    const userMap = {};
+    users.forEach(user => {
+      userMap[user.id] = user.name;
+    });
+    
+    // Process audits to build timeline
+    const timeline = [];
+    const createdAt = new Date(ticket.created_at);
+    
+    // Add ticket creation event
+    timeline.push({
+      type: 'created',
+      timestamp: ticket.created_at,
+      author: userMap[ticket.requester_id] || 'Customer',
+      status: 'new',
+      description: 'Ticket created',
+      duration_from_previous: 0
+    });
+    
+    let previousTimestamp = createdAt;
+    
+    // Process each audit
+    audits.forEach(audit => {
+      const auditTime = new Date(audit.created_at);
+      const events = audit.events || [];
+      const author = userMap[audit.author_id] || 'System';
+      
+      events.forEach(event => {
+        if (event.type === 'Change') {
+          const duration = Math.floor((auditTime - previousTimestamp) / 1000);
+          
+          if (event.field_name === 'status') {
+            timeline.push({
+              type: 'status_change',
+              timestamp: audit.created_at,
+              author: author,
+              old_value: event.previous_value,
+              new_value: event.value,
+              description: `Status changed from ${event.previous_value} to ${event.value}`,
+              duration_from_previous: duration
+            });
+            previousTimestamp = auditTime;
+          } else if (event.field_name === 'assignee_id') {
+            const oldAssignee = userMap[event.previous_value] || 'Unassigned';
+            const newAssignee = userMap[event.value] || 'Unassigned';
+            timeline.push({
+              type: 'assignment',
+              timestamp: audit.created_at,
+              author: author,
+              old_value: oldAssignee,
+              new_value: newAssignee,
+              description: `Assigned from ${oldAssignee} to ${newAssignee}`,
+              duration_from_previous: duration
+            });
+            previousTimestamp = auditTime;
+          } else if (event.field_name === 'priority') {
+            timeline.push({
+              type: 'priority_change',
+              timestamp: audit.created_at,
+              author: author,
+              old_value: event.previous_value,
+              new_value: event.value,
+              description: `Priority changed from ${event.previous_value} to ${event.value}`,
+              duration_from_previous: duration
+            });
+            previousTimestamp = auditTime;
+          }
+        } else if (event.type === 'Comment' && event.public) {
+          const duration = Math.floor((auditTime - previousTimestamp) / 1000);
+          timeline.push({
+            type: 'comment',
+            timestamp: audit.created_at,
+            author: author,
+            description: 'Comment added',
+            body: event.body,
+            duration_from_previous: duration
+          });
+          previousTimestamp = auditTime;
+        }
+      });
+    });
+    
+    // Calculate total resolution time
+    const lastEvent = timeline[timeline.length - 1];
+    const totalDuration = lastEvent ? Math.floor((new Date(lastEvent.timestamp) - createdAt) / 1000) : 0;
+    
+    const result = {
+      success: true,
+      ticket: {
+        id: ticket.id,
+        subject: ticket.subject,
+        description: ticket.description,
+        status: ticket.status,
+        priority: ticket.priority,
+        created_at: ticket.created_at,
+        updated_at: ticket.updated_at,
+        requester: userMap[ticket.requester_id] || 'Unknown',
+        assignee: userMap[ticket.assignee_id] || 'Unassigned',
+        channel: ticket.via?.channel || 'unknown',
+        tags: ticket.tags || []
+      },
+      timeline: timeline,
+      total_duration: totalDuration,
+      total_events: timeline.length
+    };
+    
+    sendJson(res, 200, result);
+    console.log(`✅ Ticket details sent for ID: ${ticketId}`);
+    
+  } catch (error) {
+    console.error('❌ Error getting ticket details:', error);
+    sendJson(res, 500, {
+      success: false,
+      error: 'Failed to fetch ticket details',
       message: error.message
     });
   }
@@ -625,10 +1037,12 @@ async function handleOnlineAgentsRequest(req, res) {
           agentActivity[call.agent_id] = {
             id: call.agent_id,
             name: user ? user.name : `Agent ${call.agent_id}`,
-            hours: new Set()
+            hours: new Set(),
+            calls: 0
           };
         }
         agentActivity[call.agent_id].hours.add(hour);
+        agentActivity[call.agent_id].calls = (agentActivity[call.agent_id].calls || 0) + 1;
       }
     });
     
@@ -665,7 +1079,8 @@ async function handleOnlineAgentsRequest(req, res) {
         id: agent.id,
         name: agent.name,
         online_periods: periods,
-        total_hours: hours.length
+        total_hours: hours.length,
+        total_calls: agent.calls || 0
       };
     }).sort((a, b) => b.total_hours - a.total_hours);
     
@@ -959,6 +1374,44 @@ const server = http.createServer((req, res) => {
     
     if (req.method === 'GET') {
       handleTodaysTicketsRequest(req, res);
+      return;
+    }
+  }
+
+  // Ticket details endpoint
+  if (req.url === '/api/tickets/details' || req.url.startsWith('/api/tickets/details?')) {
+    console.log('🎫 Ticket details request');
+    if (req.method === 'OPTIONS') {
+      res.writeHead(200, {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+        'Access-Control-Allow-Methods': 'GET, OPTIONS'
+      });
+      res.end();
+      return;
+    }
+    
+    if (req.method === 'GET') {
+      handleTicketDetailsRequest(req, res);
+      return;
+    }
+  }
+
+  // Ticket status changes endpoint
+  if (req.url === '/api/tickets/status-changes' || req.url.startsWith('/api/tickets/status-changes?')) {
+    console.log('🔄 Ticket status changes request');
+    if (req.method === 'OPTIONS') {
+      res.writeHead(200, {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+        'Access-Control-Allow-Methods': 'GET, OPTIONS'
+      });
+      res.end();
+      return;
+    }
+    
+    if (req.method === 'GET') {
+      handleTicketStatusChangesRequest(req, res);
       return;
     }
   }

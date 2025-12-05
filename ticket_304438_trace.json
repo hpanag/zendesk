@@ -1,0 +1,163 @@
+{
+  "success": true,
+  "ticket": {
+    "id": 304438,
+    "subject": "Viva 72W L-Shaped Standing Desk with Credenza ",
+    "description": "Hello,\n\nI'm wondering if I can order just the legs and lifting mechanism (white metal part)  for the above desk.  I do not need the wood cabinets or desk top.  If so , what would the cost be ?\n\nThanks ! Shaun",
+    "status": "pending",
+    "priority": "normal",
+    "created_at": "2025-11-04T21:54:15Z",
+    "updated_at": "2025-11-27T13:14:03Z",
+    "requester": "Unknown",
+    "assignee": "Tracy Mabes",
+    "channel": "web",
+    "tags": [
+      "other_presales",
+      "purchased_before",
+      "ticket_routing"
+    ]
+  },
+  "timeline": [
+    {
+      "type": "created",
+      "timestamp": "2025-11-04T21:54:15Z",
+      "author": "Customer",
+      "status": "new",
+      "description": "Ticket created",
+      "duration_from_previous": 0
+    },
+    {
+      "type": "comment",
+      "timestamp": "2025-11-04T21:54:15Z",
+      "author": "System",
+      "description": "Comment added",
+      "body": "Hello,\n\nI'm wondering if I can order just the legs and lifting mechanism (white metal part)  for the above desk.  I do not need the wood cabinets or desk top.  If so , what would the cost be ?\n\nThanks ! Shaun",
+      "duration_from_previous": 0
+    },
+    {
+      "type": "priority_change",
+      "timestamp": "2025-11-04T21:54:15Z",
+      "author": "System",
+      "old_value": null,
+      "new_value": "normal",
+      "description": "Priority changed from null to normal",
+      "duration_from_previous": 0
+    },
+    {
+      "type": "assignment",
+      "timestamp": "2025-11-05T13:36:03Z",
+      "author": "System",
+      "old_value": "Unassigned",
+      "new_value": "Tracy Mabes",
+      "description": "Assigned from Unassigned to Tracy Mabes",
+      "duration_from_previous": 56508
+    },
+    {
+      "type": "status_change",
+      "timestamp": "2025-11-05T13:36:03Z",
+      "author": "System",
+      "old_value": "new",
+      "new_value": "open",
+      "description": "Status changed from new to open",
+      "duration_from_previous": 0
+    },
+    {
+      "type": "comment",
+      "timestamp": "2025-11-18T19:43:22Z",
+      "author": "Tracy Mabes",
+      "description": "Comment added",
+      "body": "Hello Shaun -\n\nWe can get you a quote for the 2 boxes that make up the white metal Standing Desk, but I'll need your complete shipping info and a valid phone #.\n\nThanks\n\n![esolutions furniture](https://esolutionsfurniture.com/wp-content/uploads/2024/01/logo50.png)\n\nTracy\nSr. Consumer Service Administrator\n\neSolutions Furniture\nCréer des espaces. Enrichir des vies.\nCreating spaces. Enriching lives.",
+      "duration_from_previous": 1145239
+    },
+    {
+      "type": "assignment",
+      "timestamp": "2025-11-18T19:43:22Z",
+      "author": "Tracy Mabes",
+      "old_value": "Tracy Mabes",
+      "new_value": "Unassigned",
+      "description": "Assigned from Tracy Mabes to Unassigned",
+      "duration_from_previous": 0
+    },
+    {
+      "type": "comment",
+      "timestamp": "2025-11-18T20:01:05Z",
+      "author": "System",
+      "description": "Comment added",
+      "body": "Thanks Tracy\n\n\n\n7459 bell mckinnon rd , duncan bc V9L6A9\n\n250-886-0186\n\n\n\nThanks,\n\n\n\nShaun",
+      "duration_from_previous": 1063
+    },
+    {
+      "type": "assignment",
+      "timestamp": "2025-11-18T20:31:43Z",
+      "author": "System",
+      "old_value": "Unassigned",
+      "new_value": "Tracy Mabes",
+      "description": "Assigned from Unassigned to Tracy Mabes",
+      "duration_from_previous": 1838
+    },
+    {
+      "type": "assignment",
+      "timestamp": "2025-11-26T19:44:20Z",
+      "author": "Tracy Mabes",
+      "old_value": "Tracy Mabes",
+      "new_value": "Unassigned",
+      "description": "Assigned from Tracy Mabes to Unassigned",
+      "duration_from_previous": 688357
+    },
+    {
+      "type": "assignment",
+      "timestamp": "2025-11-26T19:55:10Z",
+      "author": "System",
+      "old_value": "Unassigned",
+      "new_value": "Kimberly Cotter",
+      "description": "Assigned from Unassigned to Kimberly Cotter",
+      "duration_from_previous": 650
+    },
+    {
+      "type": "assignment",
+      "timestamp": "2025-11-26T19:58:19Z",
+      "author": "Kimberly Cotter",
+      "old_value": "Kimberly Cotter",
+      "new_value": "Tracy Mabes",
+      "description": "Assigned from Kimberly Cotter to Tracy Mabes",
+      "duration_from_previous": 189
+    },
+    {
+      "type": "comment",
+      "timestamp": "2025-11-26T20:11:06Z",
+      "author": "Tracy Mabes",
+      "description": "Comment added",
+      "body": "Hello Shaun -\n\nSorry about the delay! Thanks for the address.\n\nFor the white metal L-Shaped Standing Desk which comes in 2 boxes. For box # PA-1140-17-A is $579.29 and for box # PA-1140-17-B is $568.87 which comes to $1,148.16 before taxes.\n\nPlease advise.\n\nThanks\n\n\n\n![esolutions furniture](https://esolutionsfurniture.com/wp-content/uploads/2024/01/logo50.png)\n\nTracy\nSr. Consumer Service Administrator\n\neSolutions Furniture\nCréer des espaces. Enrichir des vies.\nCreating spaces. Enriching lives.",
+      "duration_from_previous": 767
+    },
+    {
+      "type": "status_change",
+      "timestamp": "2025-11-26T20:11:06Z",
+      "author": "Tracy Mabes",
+      "old_value": "open",
+      "new_value": "pending",
+      "description": "Status changed from open to pending",
+      "duration_from_previous": 0
+    },
+    {
+      "type": "assignment",
+      "timestamp": "2025-11-26T20:11:06Z",
+      "author": "Tracy Mabes",
+      "old_value": "Tracy Mabes",
+      "new_value": "Unassigned",
+      "description": "Assigned from Tracy Mabes to Unassigned",
+      "duration_from_previous": 0
+    },
+    {
+      "type": "assignment",
+      "timestamp": "2025-11-27T13:14:03Z",
+      "author": "System",
+      "old_value": "Unassigned",
+      "new_value": "Tracy Mabes",
+      "description": "Assigned from Unassigned to Tracy Mabes",
+      "duration_from_previous": 61377
+    }
+  ],
+  "total_duration": 1955988,
+  "total_events": 16
+}

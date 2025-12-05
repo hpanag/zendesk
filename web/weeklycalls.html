@@ -1,54 +1,43 @@
 <!doctype html>
-<!--
-* Tabler - Premium and Open Source dashboard template with responsive and high quality UI.
-* @version 1.3.0
-* @link https://tabler.io
-* Copyright 2018-2025 The Tabler Authors
-* Copyright 2018-2025 codecalm.net Paweł Kuna
-* Licensed under MIT (https://github.com/tabler/tabler/blob/master/LICENSE)
--->
 <html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Today's Voice Calls - Zendesk Dashboard</title>
-    <!-- BEGIN GLOBAL MANDATORY STYLES -->
+    <title>Weekly Voice Calls - Zendesk Dashboard</title>
     <link href="./original/dist/css/tabler.css?1747674014" rel="stylesheet" />
-    <!-- END GLOBAL MANDATORY STYLES -->
-    <!-- BEGIN PLUGINS STYLES -->
     <link href="./original/dist/css/tabler-flags.css?1747674014" rel="stylesheet" />
     <link href="./original/dist/css/tabler-socials.css?1747674014" rel="stylesheet" />
     <link href="./original/dist/css/tabler-payments.css?1747674014" rel="stylesheet" />
     <link href="./original/dist/css/tabler-vendors.css?1747674014" rel="stylesheet" />
     <link href="./original/dist/css/tabler-marketing.css?1747674014" rel="stylesheet" />
     <link href="./original/dist/css/tabler-themes.css?1747674014" rel="stylesheet" />
-    <!-- END PLUGINS STYLES -->
-    <!-- BEGIN DEMO STYLES -->
     <link href="./original/preview/css/demo.css?1747674014" rel="stylesheet" />
-    <!-- END DEMO STYLES -->
-    <!-- BEGIN CUSTOM FONT -->
     <style>
       @import url("https://rsms.me/inter/inter.css");
       body { font-family: 'Inter', sans-serif; }
       .bar-segment { height: 100%; transition: all 0.3s ease; cursor: pointer; position: relative; }
       .bar-segment:hover { opacity: 0.8; filter: brightness(1.1); }
       .bar-container { background: #f1f3f5; height: 40px; border-radius: 4px; overflow: hidden; display: flex; width: 100%; }
-      .hour-label { font-weight: 600; min-width: 80px; }
+      .day-label { font-weight: 600; min-width: 100px; }
       .metric-card { border-left: 4px solid; transition: transform 0.2s; }
       .metric-card:hover { transform: translateY(-2px); }
+      .week-selector { display: flex; gap: 10px; align-items: center; }
+      .week-range-display { 
+        padding: 8px 16px; 
+        background: #f8f9fa; 
+        border-radius: 4px; 
+        font-weight: 600;
+        color: #495057;
+      }
     </style>
-    <!-- END CUSTOM FONT -->
   </head>
   <body>
-    <!-- BEGIN GLOBAL THEME SCRIPT -->
     <script src="./original/dist/js/tabler-theme.min.js?1747674014"></script>
-    <!-- END GLOBAL THEME SCRIPT -->
     <div class="page">
       <!-- BEGIN NAVBAR  -->
       <header class="navbar navbar-expand-md d-print-none">
         <div class="container-xl">
-          <!-- BEGIN NAVBAR TOGGLER -->
           <button
             class="navbar-toggler"
             type="button"
@@ -60,46 +49,21 @@
           >
             <span class="navbar-toggler-icon"></span>
           </button>
-          <!-- END NAVBAR TOGGLER -->
-          <!-- BEGIN NAVBAR LOGO -->
           <div class="navbar-brand navbar-brand-autodark d-none-navbar-horizontal pe-0 pe-md-3">
             <a href="index.html" aria-label="Automations">
               <h4 class="m-0 text-dark">Automations</h4>
             </a>
           </div>
-          <!-- END NAVBAR LOGO -->
           <div class="navbar-nav flex-row order-md-last">
             <div class="d-none d-md-flex">
               <div class="nav-item">
                 <a href="?theme=dark" class="nav-link px-0 hide-theme-dark" title="Enable dark mode" data-bs-toggle="tooltip" data-bs-placement="bottom">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="icon icon-1"
-                  >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-1">
                     <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
                   </svg>
                 </a>
                 <a href="?theme=light" class="nav-link px-0 hide-theme-light" title="Enable light mode" data-bs-toggle="tooltip" data-bs-placement="bottom">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="icon icon-1"
-                  >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-1">
                     <path d="M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" />
                     <path d="M3 12h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7" />
                   </svg>
@@ -115,68 +79,34 @@
             <div class="container-xl">
               <div class="row flex-column flex-md-row flex-fill align-items-center">
                 <div class="col">
-                  <!-- BEGIN NAVBAR MENU -->
                   <ul class="navbar-nav">
-                    <li class="nav-item ">
+                    <li class="nav-item">
                       <a class="nav-link" href="index.html">
                         <span class="nav-link-icon d-md-none d-lg-inline-block">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            class="icon icon-1"
-                          >
+                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-1">
                             <path d="M5 12l-2 0l9 -9l9 9l-2 0" />
                             <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
                             <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
                           </svg>
                         </span>
-                        <span class="nav-link-title"> Home </span>
+                        <span class="nav-link-title">Home</span>
                       </a>
                     </li>
                     <li class="nav-item active">
                       <a class="nav-link" href="cx.html">
                         <span class="nav-link-icon d-md-none d-lg-inline-block">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            class="icon icon-1"
-                          >
+                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-1">
                             <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                             <circle cx="12" cy="7" r="4"></circle>
                           </svg>
                         </span>
-                        <span class="nav-link-title"> Customer Experience </span>
+                        <span class="nav-link-title">Customer Experience</span>
                       </a>
                     </li>
                     <li class="nav-item">
                       <a class="nav-link" href="product.html">
                         <span class="nav-link-icon d-md-none d-lg-inline-block">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            class="icon icon-1"
-                          >
+                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-1">
                             <path d="M12 3l8 4.5l0 9l-8 4.5l-8 -4.5l0 -9l8 -4.5" />
                             <path d="M12 12l8 -4.5" />
                             <path d="M12 12l0 9" />
@@ -184,33 +114,21 @@
                             <path d="M16 5.25l-8 4.5" />
                           </svg>
                         </span>
-                        <span class="nav-link-title"> Product </span>
+                        <span class="nav-link-title">Product</span>
                       </a>
                     </li>
                     <li class="nav-item">
                       <a class="nav-link" href="finance.html">
                         <span class="nav-link-icon d-md-none d-lg-inline-block">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            class="icon icon-1"
-                          >
+                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-1">
                             <path d="M17 8v-3a1 1 0 0 0 -1 -1h-10a2 2 0 0 0 0 4h12a1 1 0 0 1 1 1v3m0 4v3a1 1 0 0 1 -1 1h-12a2 2 0 0 1 -2 -2v-12" />
                             <path d="M20 12v4h-4a2 2 0 0 1 0 -4h4" />
                           </svg>
                         </span>
-                        <span class="nav-link-title"> Finance </span>
+                        <span class="nav-link-title">Finance</span>
                       </a>
                     </li>
                   </ul>
-                  <!-- END NAVBAR MENU -->
                 </div>
               </div>
             </div>
@@ -224,30 +142,39 @@
           <div class="container-xl">
             <div class="row g-2 align-items-center">
               <div class="col">
-                <h2 class="page-title">📞 Today's Voice Calls</h2>
+                <h2 class="page-title">📞 Weekly Voice Calls (Mon-Fri)</h2>
                 <div class="text-secondary mt-1">
-                  <span id="last-updated">Data not loaded yet</span>
+                  <span id="last-updated">Select a week to view data</span>
                 </div>
               </div>
-              <div class="col-auto ms-auto d-flex gap-2">
-                <input type="date" class="form-control" id="date-picker" style="width: 180px;">
-                <button class="btn btn-primary" id="get-data-btn" onclick="app.loadData()">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon">
-                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                    <path d="M7 10l5 5l5 -5"/>
-                    <path d="M21 10l-2 -2"/>
-                    <path d="M3 10l2 -2"/>
-                  </svg>
-                  Get Data
-                </button>
-                <button class="btn btn-secondary" id="refresh-btn" onclick="app.loadData()">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon">
-                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                    <path d="M20 11a8.1 8.1 0 0 0 -15.5 -2m-.5 -4v4h4"/>
-                    <path d="M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4"/>
-                  </svg>
-                  Refresh
-                </button>
+              <div class="col-auto ms-auto">
+                <div class="week-selector">
+                  <button class="btn btn-outline-primary" id="prev-week-btn" onclick="app.changeWeek(-1)">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon">
+                      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                      <polyline points="15 6 9 12 15 18" />
+                    </svg>
+                    Previous
+                  </button>
+                  <div class="week-range-display" id="week-range-display">
+                    Week of ...
+                  </div>
+                  <button class="btn btn-outline-primary" id="next-week-btn" onclick="app.changeWeek(1)">
+                    Next
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon">
+                      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                      <polyline points="9 6 15 12 9 18" />
+                    </svg>
+                  </button>
+                  <button class="btn btn-primary" id="refresh-btn" onclick="app.loadData()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon">
+                      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                      <path d="M20 11a8.1 8.1 0 0 0 -15.5 -2m-.5 -4v4h4"/>
+                      <path d="M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4"/>
+                    </svg>
+                    Refresh
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -263,6 +190,7 @@
                   <div class="card-body">
                     <div class="subheader">Total Calls</div>
                     <div class="h1 mb-0" id="total-calls">-</div>
+                    <div class="text-secondary" id="avg-daily">-</div>
                   </div>
                 </div>
               </div>
@@ -305,51 +233,54 @@
               <div class="col-sm-6 col-lg-2">
                 <div class="card metric-card" style="border-left-color: #4299e1;">
                   <div class="card-body">
-                    <div class="subheader">Callbacks</div>
+                    <div class="subheader">Other</div>
                     <div class="h1 mb-0" id="callbacks">-</div>
                     <div class="text-secondary" id="callbacks-pct">-</div>
                   </div>
                 </div>
               </div>
             </div>
-            <!-- Hourly Chart -->
+            
+            <!-- Daily Breakdown Chart -->
             <div class="card mb-3">
               <div class="card-header">
-                <h3 class="card-title">Calls by Hour</h3>
+                <h3 class="card-title">Daily Call Breakdown (Monday - Friday)</h3>
               </div>
               <div class="card-body">
-                <div id="hourly-chart"></div>
+                <div id="daily-chart"></div>
               </div>
             </div>
-            <!-- Abandoned Rate Line Graph -->
+            
+            <!-- Abandoned Rate Trend -->
             <div class="card mb-3">
               <div class="card-header">
-                <h3 class="card-title">Abandoned Rate by Hour</h3>
+                <h3 class="card-title">Abandoned Rate Trend</h3>
               </div>
               <div class="card-body">
-                <canvas id="abandoned-rate-chart" height="80"></canvas>
+                <canvas id="abandoned-rate-chart" style="max-height: 300px;"></canvas>
               </div>
             </div>
-            <!-- Hourly Table -->
+            
+            <!-- Detailed Table -->
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">Hourly Breakdown</h3>
+                <h3 class="card-title">Detailed Daily Breakdown</h3>
               </div>
               <div class="table-responsive">
                 <table class="table table-vcenter card-table">
                   <thead>
                     <tr>
-                      <th>Hour</th>
+                      <th>Day</th>
                       <th class="text-end">Total</th>
-                      <th class="text-end">Agent</th>
-                      <th class="text-end">IVR</th>
-                      <th class="text-end">Queue</th>
-                      <th class="text-end">VM</th>
-                      <th class="text-end">VM Left</th>
-                      <th>Distribution</th>
+                      <th class="text-end">Answered</th>
+                      <th class="text-end">Abandoned IVR</th>
+                      <th class="text-end">Abandoned Queue</th>
+                      <th class="text-end">Abandoned VM</th>
+                      <th class="text-end">Voicemails Left</th>
+                      <th style="min-width:200px">Distribution</th>
                     </tr>
                   </thead>
-                  <tbody id="hourly-table-body">
+                  <tbody id="daily-table-body">
                     <tr><td colspan="8" class="text-center">Loading...</td></tr>
                   </tbody>
                 </table>
@@ -364,22 +295,11 @@
             <div class="row text-center align-items-center flex-row-reverse">
               <div class="col-lg-auto ms-lg-auto">
                 <ul class="list-inline list-inline-dots mb-0">
-                  <li class="list-inline-item"><a href="dash.html" target="_blank" class="link-secondary" rel="noopener">Analytics Dashboard</a></li>
+                  <li class="list-inline-item"><a href="dash.html" class="link-secondary">Daily Calls</a></li>
                   <li class="list-inline-item"><a href="tickets.html" class="link-secondary">Tickets</a></li>
                   <li class="list-inline-item">
                     <a href="#" class="link-secondary">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        class="icon text-pink icon-inline icon-4"
-                      >
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon text-pink icon-inline icon-4">
                         <path d="M19.5 12.572l-7.5 7.428l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572" />
                       </svg>
                       Support
@@ -394,7 +314,7 @@
                     <a href="." class="link-secondary">Zendesk Analytics</a>. All rights reserved.
                   </li>
                   <li class="list-inline-item">
-                    <a href="#" class="link-secondary" rel="noopener"> v1.0.0 </a>
+                    <a href="#" class="link-secondary" rel="noopener">v1.0.0</a>
                   </li>
                 </ul>
               </div>
@@ -404,137 +324,166 @@
         <!--  END FOOTER  -->
       </div>
     </div>
-    <!-- BEGIN GLOBAL MANDATORY SCRIPTS -->
     <script src="./original/dist/js/tabler.min.js?1747674014"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-    <!-- END GLOBAL MANDATORY SCRIPTS -->
     <script>
       const app = {
-        // Use current origin, but fallback to localhost:3000 if using Live Server
         API_BASE_URL: window.location.port === '5501' ? 'http://localhost:3000' : window.location.origin,
+        currentMonday: null,
         abandonedRateChart: null,
         
         init() {
-          console.log('🚀 Initializing dashboard...');
+          console.log('🚀 Initializing weekly calls dashboard...');
           
-          // Set date picker to today
-          const datePicker = document.getElementById('date-picker');
+          // Set to current week's Monday
           const today = new Date();
-          const dateString = today.toISOString().split('T')[0];
-          datePicker.value = dateString;
+          this.currentMonday = this.getMondayOfWeek(today);
           
-          // Add event listener for Enter key on date picker
-          datePicker.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-              this.loadData();
-            }
-          });
-          
+          this.updateWeekDisplay();
           this.loadData();
+        },
+        
+        getMondayOfWeek(date) {
+          const d = new Date(date);
+          const day = d.getDay();
+          const diff = d.getDate() - day + (day === 0 ? -6 : 1); // adjust when day is sunday
+          const monday = new Date(d.setDate(diff));
+          monday.setHours(0, 0, 0, 0);
+          return monday;
+        },
+        
+        changeWeek(direction) {
+          // Move forward or backward by 7 days
+          this.currentMonday = new Date(this.currentMonday.getTime() + (direction * 7 * 24 * 60 * 60 * 1000));
+          this.updateWeekDisplay();
+          this.loadData();
+        },
+        
+        updateWeekDisplay() {
+          const friday = new Date(this.currentMonday.getTime() + (4 * 24 * 60 * 60 * 1000));
+          
+          const options = { month: 'short', day: 'numeric', year: 'numeric' };
+          const mondayStr = this.currentMonday.toLocaleDateString('en-US', options);
+          const fridayStr = friday.toLocaleDateString('en-US', options);
+          
+          document.getElementById('week-range-display').textContent = `${mondayStr} - ${fridayStr}`;
         },
         
         async loadData() {
           try {
-            const datePicker = document.getElementById('date-picker');
-            const selectedDate = datePicker.value;
+            console.log(`📊 Loading weekly call data starting ${this.currentMonday.toISOString().split('T')[0]}...`);
             
-            console.log(`📊 Loading call data for ${selectedDate}...`);
-            
-            // Disable buttons and show loading state
             const refreshBtn = document.getElementById('refresh-btn');
-            const getDataBtn = document.getElementById('get-data-btn');
             const lastUpdated = document.getElementById('last-updated');
-            
             if (refreshBtn) refreshBtn.disabled = true;
-            if (getDataBtn) getDataBtn.disabled = true;
             if (lastUpdated) lastUpdated.textContent = 'Loading...';
             
-            // Build URL with date parameter
-            const url = `${this.API_BASE_URL}/api/calls/today${selectedDate ? `?date=${selectedDate}` : ''}`;
-            const response = await fetch(url);
-            if (!response.ok) throw new Error(`HTTP ${response.status}`);
-            const data = await response.json();
-            console.log('✅ Data loaded:', data);
-            console.log('  Abandoned IVR:', data.abandoned_ivr);
-            console.log('  Abandoned Queue:', data.abandoned_queue);
-            console.log('  Abandoned VM:', data.abandoned_voicemail);
-            console.log('  Total Abandoned:', data.total_abandoned);
+            // Fetch data for Monday through Friday
+            const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
+            const promises = [];
             
-            this.updateSummary(data);
-            this.updateChart(data.hourly_data);
-            this.updateAbandonedRateChart(data.hourly_data);
-            this.updateTable(data.hourly_data);
-            
-            // Update last fetched timestamp and show selected date
-            const now = new Date();
-            if (lastUpdated) {
-              const displayDate = new Date(selectedDate).toLocaleDateString('en-US', { 
-                weekday: 'short', 
-                year: 'numeric', 
-                month: 'short', 
-                day: 'numeric' 
-              });
-              lastUpdated.textContent = `${displayDate} - Last updated: ${now.toLocaleTimeString('en-US')}`;
+            for (let i = 0; i < 5; i++) {
+              const date = new Date(this.currentMonday.getTime() + (i * 24 * 60 * 60 * 1000));
+              const dateStr = date.toISOString().split('T')[0];
+              const url = `${this.API_BASE_URL}/api/calls/today?date=${dateStr}`;
+              promises.push(
+                fetch(url)
+                  .then(r => r.json())
+                  .then(data => ({ day: days[i], date: dateStr, data }))
+              );
             }
             
-            // Re-enable buttons
+            const results = await Promise.all(promises);
+            console.log('✅ Weekly data loaded:', results);
+            
+            this.updateSummary(results);
+            this.updateChart(results);
+            this.updateAbandonedRateChart(results);
+            this.updateTable(results);
+            
+            const now = new Date();
+            if (lastUpdated) {
+              lastUpdated.textContent = `Last updated: ${now.toLocaleTimeString('en-US')}`;
+            }
+            
             if (refreshBtn) refreshBtn.disabled = false;
-            if (getDataBtn) getDataBtn.disabled = false;
             
           } catch (e) {
             console.error('❌ Error:', e);
-            document.getElementById('hourly-chart').innerHTML = 
-              '<div class="alert alert-danger">Failed to load data. Make sure server is running on port 3000.</div>';
+            const tbody = document.getElementById('daily-table-body');
+            if (tbody) {
+              tbody.innerHTML = '<tr><td colspan="8" class="text-center"><div class="alert alert-danger">Failed to load data. Make sure server is running on port 3000.</div></td></tr>';
+            }
             
             const lastUpdated = document.getElementById('last-updated');
             if (lastUpdated) lastUpdated.textContent = 'Failed to load data';
             
             const refreshBtn = document.getElementById('refresh-btn');
-            const getDataBtn = document.getElementById('get-data-btn');
             if (refreshBtn) refreshBtn.disabled = false;
-            if (getDataBtn) getDataBtn.disabled = false;
           }
         },
         
-        updateSummary(d) {
-          document.getElementById('total-calls').textContent = d.total_calls || 0;
-          document.getElementById('answered-calls').textContent = d.answered_by_agent || 0;
-          document.getElementById('abandoned-ivr').textContent = d.abandoned_ivr || 0;
-          document.getElementById('abandoned-queue').textContent = d.abandoned_queue || 0;
-          document.getElementById('abandoned-vm').textContent = d.abandoned_voicemail || 0;
-          document.getElementById('callbacks').textContent = d.other || 0;
+        updateSummary(results) {
+          // Sum up totals across all days
+          let totalCalls = 0;
+          let answeredByAgent = 0;
+          let abandonedIVR = 0;
+          let abandonedQueue = 0;
+          let abandonedVM = 0;
+          let other = 0;
           
-          const t = d.total_calls || 1;
-          document.getElementById('answered-pct').textContent = `${((d.answered_by_agent / t) * 100).toFixed(1)}%`;
-          document.getElementById('abandoned-ivr-pct').textContent = `${((d.abandoned_ivr / t) * 100).toFixed(1)}%`;
-          document.getElementById('abandoned-queue-pct').textContent = `${((d.abandoned_queue / t) * 100).toFixed(1)}%`;
-          document.getElementById('abandoned-vm-pct').textContent = `${((d.abandoned_voicemail / t) * 100).toFixed(1)}%`;
-          document.getElementById('callbacks-pct').textContent = `${((d.other / t) * 100).toFixed(1)}%`;
+          results.forEach(r => {
+            const d = r.data;
+            totalCalls += d.total_calls || 0;
+            answeredByAgent += d.answered_by_agent || 0;
+            abandonedIVR += d.abandoned_ivr || 0;
+            abandonedQueue += d.abandoned_queue || 0;
+            abandonedVM += d.abandoned_voicemail || 0;
+            other += d.other || 0;
+          });
+          
+          document.getElementById('total-calls').textContent = totalCalls;
+          document.getElementById('answered-calls').textContent = answeredByAgent;
+          document.getElementById('abandoned-ivr').textContent = abandonedIVR;
+          document.getElementById('abandoned-queue').textContent = abandonedQueue;
+          document.getElementById('abandoned-vm').textContent = abandonedVM;
+          document.getElementById('callbacks').textContent = other;
+          
+          const avgDaily = (totalCalls / 5).toFixed(0);
+          document.getElementById('avg-daily').textContent = `${avgDaily} avg/day`;
+          
+          const t = totalCalls || 1;
+          document.getElementById('answered-pct').textContent = `${((answeredByAgent / t) * 100).toFixed(1)}%`;
+          document.getElementById('abandoned-ivr-pct').textContent = `${((abandonedIVR / t) * 100).toFixed(1)}%`;
+          document.getElementById('abandoned-queue-pct').textContent = `${((abandonedQueue / t) * 100).toFixed(1)}%`;
+          document.getElementById('abandoned-vm-pct').textContent = `${((abandonedVM / t) * 100).toFixed(1)}%`;
+          document.getElementById('callbacks-pct').textContent = `${((other / t) * 100).toFixed(1)}%`;
         },
         
-        updateChart(hrs) {
-          const div = document.getElementById('hourly-chart');
+        updateChart(results) {
+          const div = document.getElementById('daily-chart');
           div.innerHTML = '';
-          console.log('📊 Updating chart with hourly data:', hrs);
-          hrs.forEach(h => {
-            if (h.total === 0) return;
-            console.log(`  Hour ${h.hour_display}:`, h);
+          
+          results.forEach(r => {
+            const d = r.data;
+            const total = d.total_calls || 0;
+            
             const row = document.createElement('div');
             row.className = 'mb-3';
             row.innerHTML = `
               <div class="d-flex align-items-center mb-1">
-                <div class="hour-label">${h.hour_display}</div>
+                <div class="day-label">${r.day}</div>
                 <div class="flex-fill ms-3">
                   <div class="bar-container">
-                    ${this.bar(h.agent_answered, h.total, '#2fb344', 'Agent Answered')}
-                    ${this.bar(h.abandoned_ivr, h.total, '#f59f00', 'Abandoned IVR')}
-                    ${this.bar(h.abandoned_queue, h.total, '#d63939', 'Abandoned Queue')}
-                    ${this.bar(h.abandoned_voicemail, h.total, '#e74c3c', 'Abandoned Voicemail')}
-                    ${this.bar(h.other, h.total, '#4299e1', 'Callbacks')}
+                    ${this.bar(d.answered_by_agent, total, '#2fb344', 'Agent Answered')}
+                    ${this.bar(d.abandoned_ivr, total, '#f59f00', 'Abandoned IVR')}
+                    ${this.bar(d.abandoned_queue, total, '#d63939', 'Abandoned Queue')}
+                    ${this.bar(d.abandoned_voicemail, total, '#e74c3c', 'Abandoned Voicemail')}
+                    ${this.bar(d.other, total, '#4299e1', 'Other')}
                   </div>
                 </div>
-                <div class="ms-3 text-secondary" style="min-width:60px;text-align:right">
-                  ${h.total} call${h.total !== 1 ? 's' : ''}
+                <div class="ms-3 text-secondary" style="min-width:80px;text-align:right">
+                  ${total} call${total !== 1 ? 's' : ''}
                 </div>
               </div>
             `;
@@ -548,16 +497,16 @@
           return `<div class="bar-segment" style="flex:${c};background-color:${color}" title="${label}: ${c}"></div>`;
         },
         
-        updateAbandonedRateChart(hrs) {
+        updateAbandonedRateChart(results) {
           const ctx = document.getElementById('abandoned-rate-chart');
           if (!ctx) return;
           
-          // Filter hours with calls and prepare data
-          const hoursWithCalls = hrs.filter(h => h.total > 0);
-          const labels = hoursWithCalls.map(h => h.hour_display);
-          const abandonedRates = hoursWithCalls.map(h => {
-            const totalAbandoned = h.abandoned_ivr + h.abandoned_queue + h.abandoned_voicemail;
-            return h.total > 0 ? ((totalAbandoned / h.total) * 100).toFixed(1) : 0;
+          const labels = results.map(r => r.day);
+          const abandonedRates = results.map(r => {
+            const d = r.data;
+            const totalAbandoned = (d.abandoned_ivr || 0) + (d.abandoned_queue || 0) + (d.abandoned_voicemail || 0);
+            const total = d.total_calls || 1;
+            return ((totalAbandoned / total) * 100).toFixed(1);
           });
           
           // Destroy existing chart if it exists
@@ -580,8 +529,8 @@
                 pointBackgroundColor: '#d63939',
                 pointBorderColor: '#fff',
                 pointBorderWidth: 2,
-                pointRadius: 4,
-                pointHoverRadius: 6
+                pointRadius: 5,
+                pointHoverRadius: 7
               }]
             },
             options: {
@@ -616,7 +565,7 @@
                 x: {
                   title: {
                     display: true,
-                    text: 'Hour of Day'
+                    text: 'Day of Week'
                   }
                 }
               }
@@ -624,34 +573,38 @@
           });
         },
         
-        updateTable(hrs) {
-          const tbody = document.getElementById('hourly-table-body');
+        updateTable(results) {
+          const tbody = document.getElementById('daily-table-body');
           tbody.innerHTML = '';
-          hrs.forEach(h => {
-            if (h.total === 0) return;
+          
+          results.forEach(r => {
+            const d = r.data;
+            const total = d.total_calls || 0;
+            
             const row = document.createElement('tr');
             row.innerHTML = `
-              <td><strong>${h.hour_display}</strong></td>
-              <td class="text-end">${h.total}</td>
-              <td class="text-end"><span class="text-green">${h.agent_answered}</span></td>
-              <td class="text-end"><span class="text-orange">${h.abandoned_ivr}</span></td>
-              <td class="text-end"><span class="text-red">${h.abandoned_queue}</span></td>
-              <td class="text-end"><span class="text-red">${h.abandoned_voicemail}</span></td>
-              <td class="text-end"><span class="text-purple">${h.voicemails_left}</span></td>
+              <td><strong>${r.day}</strong><br><small class="text-muted">${r.date}</small></td>
+              <td class="text-end">${total}</td>
+              <td class="text-end"><span class="text-green">${d.answered_by_agent || 0}</span></td>
+              <td class="text-end"><span class="text-orange">${d.abandoned_ivr || 0}</span></td>
+              <td class="text-end"><span class="text-red">${d.abandoned_queue || 0}</span></td>
+              <td class="text-end"><span class="text-red">${d.abandoned_voicemail || 0}</span></td>
+              <td class="text-end"><span class="text-purple">${d.voicemails_left || 0}</span></td>
               <td>
                 <div class="bar-container" style="height:20px">
-                  ${this.bar(h.agent_answered, h.total, '#2fb344', 'Agent')}
-                  ${this.bar(h.abandoned_ivr, h.total, '#f59f00', 'IVR')}
-                  ${this.bar(h.abandoned_queue, h.total, '#d63939', 'Queue')}
-                  ${this.bar(h.abandoned_voicemail, h.total, '#e74c3c', 'VM')}
-                  ${this.bar(h.voicemails_left, h.total, '#9b59b6', 'VM Left')}
+                  ${this.bar(d.answered_by_agent, total, '#2fb344', 'Agent')}
+                  ${this.bar(d.abandoned_ivr, total, '#f59f00', 'IVR')}
+                  ${this.bar(d.abandoned_queue, total, '#d63939', 'Queue')}
+                  ${this.bar(d.abandoned_voicemail, total, '#e74c3c', 'VM')}
+                  ${this.bar(d.voicemails_left, total, '#9b59b6', 'VM Left')}
                 </div>
               </td>
             `;
             tbody.appendChild(row);
           });
+          
           if (tbody.children.length === 0) {
-            tbody.innerHTML = '<tr><td colspan="8" class="text-center">No calls yet today</td></tr>';
+            tbody.innerHTML = '<tr><td colspan="8" class="text-center">No data available for this week</td></tr>';
           }
         }
       };

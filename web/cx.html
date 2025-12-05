@@ -78,7 +78,7 @@
           <!-- END NAVBAR TOGGLER -->
           <!-- BEGIN NAVBAR LOGO -->
           <div class="navbar-brand navbar-brand-autodark d-none-navbar-horizontal pe-0 pe-md-3">
-            <a href="." aria-label="Automations">
+            <a href="index.html" aria-label="Automations">
               <h4 class="m-0 text-dark">Automations</h4>
             </a>
           </div>
@@ -250,6 +250,16 @@
         <div class="page-body">
           <div class="container-xl">
             <div class="row g-4">
+              <!-- Executive Overview - Featured -->
+              <div class="col-12 mb-4">
+                <div class="card" style="background: linear-gradient(135deg, #206bc4 0%, #4299e1 100%); cursor: pointer; border: none;" onclick="window.location.href='overview.html'">
+                  <div class="card-body text-center py-5">
+                    <h2 class="text-white mb-3">📊 Executive Overview</h2>
+                    <p class="text-white mb-0" style="font-size: 1.1rem; opacity: 0.95;">Comprehensive business health dashboard with real-time KPIs, trends, and actionable insights</p>
+                  </div>
+                </div>
+              </div>
+              
               <!-- Main Dashboards -->
               <div class="col-12">
                 <h3 class="mb-3">Analytics Dashboards</h3>
@@ -319,6 +329,79 @@
                       </div>
                     </div>
                   </div>
+                  
+                  <div class="col-md-6 col-lg-4">
+                    <div class="card card-dashboard" onclick="window.location.href='weeklycalls.html'">
+                      <div class="card-body text-center">
+                        <div class="icon-dashboard mx-auto">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z"></path>
+                            <path d="M16 3v4"></path>
+                            <path d="M8 3v4"></path>
+                            <path d="M4 11h16"></path>
+                            <path d="M7 14h.013"></path>
+                            <path d="M10.01 14h.005"></path>
+                            <path d="M13.01 14h.005"></path>
+                            <path d="M16.015 14h.005"></path>
+                            <path d="M13.015 17h.005"></path>
+                            <path d="M7.01 17h.005"></path>
+                            <path d="M10.01 17h.005"></path>
+                          </svg>
+                        </div>
+                        <h3 class="card-title">📅 Weekly Calls</h3>
+                        <p class="text-secondary">Weekly call analytics from Monday to Friday with daily breakdown</p>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div class="col-md-6 col-lg-4">
+                    <div class="card card-dashboard" onclick="window.location.href='monthlycalls.html'">
+                      <div class="card-body text-center">
+                        <div class="icon-dashboard mx-auto">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M4 5m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z"></path>
+                            <path d="M16 3l0 4"></path>
+                            <path d="M8 3l0 4"></path>
+                            <path d="M4 11l16 0"></path>
+                            <path d="M8 15h2v2h-2z"></path>
+                          </svg>
+                        </div>
+                        <h3 class="card-title">📆 Monthly Calls</h3>
+                        <p class="text-secondary">Complete monthly call analytics with day-by-day breakdown and trends</p>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div class="col-md-6 col-lg-4">
+                    <div class="card card-dashboard" onclick="window.location.href='agentHourly.html'">
+                      <div class="card-body text-center">
+                        <div class="icon-dashboard mx-auto">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="9" />
+                            <polyline points="12 7 12 12 15 15" />
+                          </svg>
+                        </div>
+                        <h3 class="card-title">⏰ Hourly Agent Performance</h3>
+                        <p class="text-secondary">Hour-by-hour breakdown of what each agent did throughout the day</p>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div class="col-md-6 col-lg-4">
+                    <div class="card card-dashboard" onclick="window.location.href='ticketStatusChanges.html'">
+                      <div class="card-body text-center">
+                        <div class="icon-dashboard mx-auto">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M9 5H7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2V7a2 2 0 0 0 -2 -2h-2" />
+                            <path d="M9 3m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z" />
+                            <path d="M9 12l2 2l4 -4" />
+                          </svg>
+                        </div>
+                        <h3 class="card-title">🔄 Ticket Status Changes</h3>
+                        <p class="text-secondary">Complete audit trail of all ticket status transitions throughout the day</p>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
               
@@ -333,9 +416,14 @@
             <div class="row text-center align-items-center flex-row-reverse">
               <div class="col-lg-auto ms-lg-auto">
                 <ul class="list-inline list-inline-dots mb-0">
+                  <li class="list-inline-item"><a href="overview.html" class="link-secondary" rel="noopener">Executive Overview</a></li>
                   <li class="list-inline-item"><a href="dash.html" class="link-secondary" rel="noopener">Today's Calls</a></li>
+                  <li class="list-inline-item"><a href="weeklycalls.html" class="link-secondary">Weekly Calls</a></li>
+                  <li class="list-inline-item"><a href="monthlycalls.html" class="link-secondary">Monthly Calls</a></li>
                   <li class="list-inline-item"><a href="tickets-today.html" class="link-secondary">Today's Tickets</a></li>
                   <li class="list-inline-item"><a href="agent.html" class="link-secondary">Agent Performance</a></li>
+                  <li class="list-inline-item"><a href="agentHourly.html" class="link-secondary">Hourly Agent Performance</a></li>
+                  <li class="list-inline-item"><a href="ticketStatusChanges.html" class="link-secondary">Status Changes</a></li>
                   <li class="list-inline-item">
                     <a href="#" class="link-secondary">
                       <svg

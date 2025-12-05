@@ -1,0 +1,134 @@
+{
+  "success": true,
+  "ticket": {
+    "id": 312669,
+    "subject": "L shaped desk sold through Costco ",
+    "description": "Can this L shaped desk be configured as a straight desk without the short end of the L?",
+    "status": "open",
+    "priority": "normal",
+    "created_at": "2025-11-24T14:41:41Z",
+    "updated_at": "2025-11-27T12:20:29Z",
+    "requester": "Unknown",
+    "assignee": "Fabiane Roy",
+    "channel": "web",
+    "tags": [
+      "product_inquiry",
+      "ticket_routing"
+    ]
+  },
+  "timeline": [
+    {
+      "type": "created",
+      "timestamp": "2025-11-24T14:41:41Z",
+      "author": "Customer",
+      "status": "new",
+      "description": "Ticket created",
+      "duration_from_previous": 0
+    },
+    {
+      "type": "comment",
+      "timestamp": "2025-11-24T14:41:41Z",
+      "author": "System",
+      "description": "Comment added",
+      "body": "Can this L shaped desk be configured as a straight desk without the short end of the L?",
+      "duration_from_previous": 0
+    },
+    {
+      "type": "priority_change",
+      "timestamp": "2025-11-24T14:41:41Z",
+      "author": "System",
+      "old_value": null,
+      "new_value": "normal",
+      "description": "Priority changed from null to normal",
+      "duration_from_previous": 0
+    },
+    {
+      "type": "assignment",
+      "timestamp": "2025-11-24T15:07:44Z",
+      "author": "Fabiane Roy",
+      "old_value": "Unassigned",
+      "new_value": "Fabiane Roy",
+      "description": "Assigned from Unassigned to Fabiane Roy",
+      "duration_from_previous": 1563
+    },
+    {
+      "type": "status_change",
+      "timestamp": "2025-11-24T15:07:44Z",
+      "author": "Fabiane Roy",
+      "old_value": "new",
+      "new_value": "open",
+      "description": "Status changed from new to open",
+      "duration_from_previous": 0
+    },
+    {
+      "type": "comment",
+      "timestamp": "2025-11-24T23:56:00Z",
+      "author": "Fabiane Roy",
+      "description": "Comment added",
+      "body": "Hello,\n\nThank you for reaching out. In order to confirm whether this L-shaped desk can be configured as a straight desk without the return, could you please provide us with the model number or a link to the product you are inquiring about?\n\nThis will allow us to give you an accurate answer.\n\nBest regards\n\n![esolutions furniture](https://esolutionsfurniture.com/wp-content/uploads/2024/01/logo50.png)\n\nAnn\nSpécialiste en soutien aux ventes\nSales Support Specialist\n\neSolutions Furniture\nCreating spaces. Enriching lives.",
+      "duration_from_previous": 31696
+    },
+    {
+      "type": "assignment",
+      "timestamp": "2025-11-24T23:56:00Z",
+      "author": "Fabiane Roy",
+      "old_value": "Fabiane Roy",
+      "new_value": "Unassigned",
+      "description": "Assigned from Fabiane Roy to Unassigned",
+      "duration_from_previous": 0
+    },
+    {
+      "type": "status_change",
+      "timestamp": "2025-11-24T23:56:00Z",
+      "author": "Fabiane Roy",
+      "old_value": "open",
+      "new_value": "pending",
+      "description": "Status changed from open to pending",
+      "duration_from_previous": 0
+    },
+    {
+      "type": "comment",
+      "timestamp": "2025-11-25T00:34:02Z",
+      "author": "System",
+      "description": "Comment added",
+      "body": "Hi - I don’t know what the product number is because it isn’t posted on the Costco site but this is a screenshot of the posting and link below.\n\n\n\nhttps://www.costco.com/p/-/viva-l-shape-height-sit-and-stand-adjustable-workstation-with-an-adjustable-dual-monitor-arm-with-storage-tower/100432285?COSTID=iosapp_25.11.2&TRACKING=NO&sh=true&nf=true\n\n\n ![](https://esolutionsfurniture.zendesk.com/attachments/token/a1TiCgkIG4u0YmlGH1RWm3DvZ/?name=IMG_0261.jpeg)\n\n\n\n\n**Best,**\n**Chris Choi**",
+      "duration_from_previous": 2282
+    },
+    {
+      "type": "status_change",
+      "timestamp": "2025-11-25T00:34:02Z",
+      "author": "System",
+      "old_value": "pending",
+      "new_value": "open",
+      "description": "Status changed from pending to open",
+      "duration_from_previous": 0
+    },
+    {
+      "type": "comment",
+      "timestamp": "2025-11-25T16:00:51Z",
+      "author": "System",
+      "description": "Comment added",
+      "body": "Hello, follow up on this topic - can someone please advise?\n\n\n**Best,**\n**Chris Choi**",
+      "duration_from_previous": 55609
+    },
+    {
+      "type": "comment",
+      "timestamp": "2025-11-26T03:04:32Z",
+      "author": "System",
+      "description": "Comment added",
+      "body": "Hi - following up again. Please advise. Thanks!\n\n\n**Best,**\n**Chris Choi**",
+      "duration_from_previous": 39821
+    },
+    {
+      "type": "assignment",
+      "timestamp": "2025-11-27T12:20:29Z",
+      "author": "System",
+      "old_value": "Unassigned",
+      "new_value": "Fabiane Roy",
+      "description": "Assigned from Unassigned to Fabiane Roy",
+      "duration_from_previous": 119757
+    }
+  ],
+  "total_duration": 250728,
+  "total_events": 13
+}

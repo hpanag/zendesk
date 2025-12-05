@@ -1,0 +1,1364 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Executive Overview - Zendesk Dashboard</title>
+    <link href="./original/dist/css/tabler.css?1747674014" rel="stylesheet" />
+    <link href="./original/dist/css/tabler-flags.css?1747674014" rel="stylesheet" />
+    <link href="./original/dist/css/tabler-vendors.css?1747674014" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <style>
+      @import url("https://rsms.me/inter/inter.css");
+      body { font-family: 'Inter', sans-serif; }
+      
+      .kpi-card {
+        border-left: 4px solid;
+        transition: all 0.3s;
+        position: relative;
+        overflow: hidden;
+      }
+      .kpi-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+      }
+      .kpi-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 100px;
+        height: 100px;
+        background: rgba(0,0,0,0.03);
+        border-radius: 50%;
+        transform: translate(30px, -30px);
+      }
+      
+      .kpi-value {
+        font-size: 2.5rem;
+        font-weight: 700;
+        line-height: 1;
+        margin: 10px 0;
+      }
+      
+      .kpi-label {
+        font-size: 0.875rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        color: #6c757d;
+        font-weight: 600;
+      }
+      
+      .kpi-trend {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        margin-top: 8px;
+      }
+      
+      .trend-up {
+        background: #d3f9e3;
+        color: #2fb344;
+      }
+      
+      .trend-down {
+        background: #ffe5e5;
+        color: #d63939;
+      }
+      
+      .trend-neutral {
+        background: #f8f9fa;
+        color: #6c757d;
+      }
+      
+      .status-indicator {
+        display: inline-block;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        margin-right: 8px;
+      }
+      
+      .status-excellent { background: #2fb344; }
+      .status-good { background: #74b816; }
+      .status-warning { background: #f59f00; }
+      .status-critical { background: #d63939; }
+      
+      .section-header {
+        border-bottom: 3px solid #206bc4;
+        padding-bottom: 12px;
+        margin-bottom: 20px;
+      }
+      
+      .section-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #1e293b;
+        margin: 0;
+      }
+      
+      .metric-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 12px 0;
+        border-bottom: 1px solid #e9ecef;
+      }
+      
+      .metric-row:last-child {
+        border-bottom: none;
+      }
+      
+      .metric-name {
+        font-weight: 500;
+        color: #495057;
+      }
+      
+      .metric-value {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: #206bc4;
+      }
+      
+      .alert-item {
+        padding: 12px 16px;
+        border-left: 4px solid;
+        background: #fff;
+        margin-bottom: 10px;
+        border-radius: 4px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      
+      .alert-critical {
+        border-left-color: #d63939;
+        background: #fff5f5;
+      }
+      
+      .alert-warning {
+        border-left-color: #f59f00;
+        background: #fffbf0;
+      }
+      
+      .alert-info {
+        border-left-color: #206bc4;
+        background: #f0f7ff;
+      }
+      
+      .agent-card {
+        padding: 16px;
+        background: linear-gradient(135deg, #f8f9fa 0%, #fff 100%);
+        border-radius: 8px;
+        border: 1px solid #dee2e6;
+        transition: all 0.2s;
+      }
+      
+      .agent-card:hover {
+        border-color: #206bc4;
+        transform: translateY(-2px);
+      }
+      
+      .agent-name {
+        font-weight: 600;
+        font-size: 1.1rem;
+        color: #206bc4;
+        margin-bottom: 8px;
+      }
+      
+      .agent-stats {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px;
+        margin-top: 12px;
+      }
+      
+      .agent-stat {
+        text-align: center;
+      }
+      
+      .agent-stat-value {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: #1e293b;
+      }
+      
+      .agent-stat-label {
+        font-size: 0.75rem;
+        color: #6c757d;
+        text-transform: uppercase;
+      }
+      
+      .chart-container {
+        position: relative;
+        height: 300px;
+        margin-top: 20px;
+      }
+      
+      .time-selector {
+        display: flex;
+        gap: 8px;
+        margin-bottom: 20px;
+      }
+      
+      .time-btn {
+        padding: 8px 16px;
+        border: 2px solid #dee2e6;
+        background: white;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: 500;
+        transition: all 0.2s;
+      }
+      
+      .time-btn:hover {
+        border-color: #206bc4;
+        background: #f8f9fa;
+      }
+      
+      .time-btn.active {
+        border-color: #206bc4;
+        background: #206bc4;
+        color: white;
+      }
+      
+      .empty-state {
+        text-align: center;
+        padding: 60px 20px;
+        color: #6c757d;
+      }
+      
+      .health-score {
+        font-size: 4rem;
+        font-weight: 700;
+        line-height: 1;
+        background: linear-gradient(135deg, #206bc4 0%, #4299e1 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+      
+      .info-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        background: #e9ecef;
+        color: #6c757d;
+        font-size: 12px;
+        font-weight: 600;
+        cursor: help;
+        margin-left: 6px;
+        transition: all 0.2s;
+      }
+      
+      .info-icon:hover {
+        background: #206bc4;
+        color: white;
+        transform: scale(1.1);
+      }
+      
+      .info-tooltip {
+        position: fixed;
+        background: #1e293b;
+        color: white;
+        padding: 12px 16px;
+        border-radius: 8px;
+        font-size: 0.875rem;
+        max-width: 350px;
+        z-index: 9999;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        display: none;
+        line-height: 1.5;
+      }
+      
+      .info-tooltip::before {
+        content: '';
+        position: absolute;
+        top: -6px;
+        left: 20px;
+        width: 0;
+        height: 0;
+        border-left: 6px solid transparent;
+        border-right: 6px solid transparent;
+        border-bottom: 6px solid #1e293b;
+      }
+      
+      .info-tooltip.show {
+        display: block;
+      }
+      
+      .info-tooltip strong {
+        color: #4299e1;
+        display: block;
+        margin-bottom: 6px;
+      }
+    </style>
+  </head>
+  <body>
+    <script src="./original/dist/js/tabler-theme.min.js?1747674014"></script>
+    <div class="page">
+      <header class="navbar navbar-expand-md d-print-none">
+        <div class="container-xl">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-menu">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="navbar-brand navbar-brand-autodark d-none-navbar-horizontal pe-0 pe-md-3">
+            <a href="index.html" aria-label="Automations">
+              <h4 class="m-0 text-dark">Automations</h4>
+            </a>
+          </div>
+          <div class="navbar-nav flex-row order-md-last">
+            <div class="d-none d-md-flex">
+              <div class="nav-item">
+                <a href="?theme=dark" class="nav-link px-0 hide-theme-dark" title="Enable dark mode">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-1">
+                    <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+                  </svg>
+                </a>
+                <a href="?theme=light" class="nav-link px-0 hide-theme-light" title="Enable light mode">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-1">
+                    <path d="M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" />
+                    <path d="M3 12h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7" />
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+      <header class="navbar-expand-md">
+        <div class="collapse navbar-collapse" id="navbar-menu">
+          <div class="navbar">
+            <div class="container-xl">
+              <div class="row flex-column flex-md-row flex-fill align-items-center">
+                <div class="col">
+                  <ul class="navbar-nav">
+                    <li class="nav-item">
+                      <a class="nav-link" href="index.html">
+                        <span class="nav-link-title">Home</span>
+                      </a>
+                    </li>
+                    <li class="nav-item active">
+                      <a class="nav-link" href="cx.html">
+                        <span class="nav-link-title">Customer Experience</span>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="product.html">
+                        <span class="nav-link-title">Product</span>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="finance.html">
+                        <span class="nav-link-title">Finance</span>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+      
+      <div class="page-wrapper">
+        <div class="page-header d-print-none">
+          <div class="container-xl">
+            <div class="row g-2 align-items-center">
+              <div class="col">
+                <h2 class="page-title">📊 Executive Overview</h2>
+                <div class="text-secondary mt-1">
+                  <span id="last-updated">Loading comprehensive business metrics...</span>
+                </div>
+              </div>
+              <div class="col-auto ms-auto d-flex gap-2">
+                <input type="date" class="form-control" id="date-picker" style="width: 180px;">
+                <button class="btn btn-primary" id="get-data-btn" onclick="app.loadData()">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                    <path d="M7 10l5 5l5 -5"/>
+                  </svg>
+                  Load
+                </button>
+                <button class="btn btn-secondary" id="refresh-btn" onclick="app.loadData()">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                    <path d="M20 11a8.1 8.1 0 0 0 -15.5 -2m-.5 -4v4h4"/>
+                    <path d="M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4"/>
+                  </svg>
+                  Refresh
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="page-body">
+          <div class="container-xl">
+            
+            <!-- Health Score & Critical Alerts -->
+            <div class="row row-cards mb-3">
+              <div class="col-lg-4">
+                <div class="card">
+                  <div class="card-body text-center">
+                    <div class="kpi-label">
+                      Overall Health Score
+                      <span class="info-icon" data-info="health-score">ℹ</span>
+                    </div>
+                    <div class="health-score" id="health-score">--</div>
+                    <div class="text-secondary mt-2" id="health-status">Calculating...</div>
+                    <div class="progress mt-3" style="height: 8px;">
+                      <div class="progress-bar" id="health-progress" role="progressbar" style="width: 0%"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-8">
+                <div class="card">
+                  <div class="card-header">
+                    <h3 class="card-title">🚨 Alerts & Action Items</h3>
+                  </div>
+                  <div class="card-body" id="alerts-container" style="max-height: 200px; overflow-y: auto;">
+                    <div class="empty-state">
+                      <p>No critical alerts</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Key Performance Indicators -->
+            <div class="row row-cards mb-3">
+              <div class="col-sm-6 col-lg-3">
+                <div class="card kpi-card" style="border-left-color: #206bc4;">
+                  <div class="card-body">
+                    <div class="kpi-label">
+                      Customer Satisfaction
+                      <span class="info-icon" data-info="csat">ℹ</span>
+                    </div>
+                    <div class="kpi-value" id="csat-score">--%</div>
+                    <div class="text-secondary">Based on surveys</div>
+                    <div class="kpi-trend trend-neutral" id="csat-trend">
+                      <span>--</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6 col-lg-3">
+                <div class="card kpi-card" style="border-left-color: #2fb344;">
+                  <div class="card-body">
+                    <div class="kpi-label">
+                      First Call Resolution
+                      <span class="info-icon" data-info="fcr">ℹ</span>
+                    </div>
+                    <div class="kpi-value" id="fcr-rate">--%</div>
+                    <div class="text-secondary">Issues solved first time</div>
+                    <div class="kpi-trend trend-neutral" id="fcr-trend">
+                      <span>--</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6 col-lg-3">
+                <div class="card kpi-card" style="border-left-color: #f59f00;">
+                  <div class="card-body">
+                    <div class="kpi-label">
+                      Abandonment Rate
+                      <span class="info-icon" data-info="abandon">ℹ</span>
+                    </div>
+                    <div class="kpi-value" id="abandon-rate">--%</div>
+                    <div class="text-secondary">Calls not answered</div>
+                    <div class="kpi-trend trend-neutral" id="abandon-trend">
+                      <span>--</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6 col-lg-3">
+                <div class="card kpi-card" style="border-left-color: #5c7cfa;">
+                  <div class="card-body">
+                    <div class="kpi-label">
+                      Avg Response Time
+                      <span class="info-icon" data-info="response">ℹ</span>
+                    </div>
+                    <div class="kpi-value" id="response-time">--m</div>
+                    <div class="text-secondary">Ticket first response</div>
+                    <div class="kpi-trend trend-neutral" id="response-trend">
+                      <span>--</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Volume & Capacity -->
+            <div class="row row-cards mb-3">
+              <div class="col-lg-8">
+                <div class="card">
+                  <div class="card-header">
+                    <div class="section-header w-100">
+                      <h3 class="section-title">
+                        📈 Volume & Trends
+                        <span class="info-icon" data-info="volume-chart" style="margin-left: 8px;">ℹ</span>
+                      </h3>
+                    </div>
+                  </div>
+                  <div class="card-body">
+                    <div class="row g-3">
+                      <div class="col-md-4">
+                        <div class="metric-row">
+                          <span class="metric-name">
+                            Total Calls
+                            <span class="info-icon" data-info="total-calls">ℹ</span>
+                          </span>
+                          <span class="metric-value" id="total-calls">--</span>
+                        </div>
+                        <div class="metric-row">
+                          <span class="metric-name">
+                            Answered
+                            <span class="info-icon" data-info="answered-calls">ℹ</span>
+                          </span>
+                          <span class="metric-value" id="answered-calls">--</span>
+                        </div>
+                        <div class="metric-row">
+                          <span class="metric-name">
+                            Avg Wait Time
+                            <span class="info-icon" data-info="avg-wait">ℹ</span>
+                          </span>
+                          <span class="metric-value" id="avg-wait">--m</span>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="metric-row">
+                          <span class="metric-name">
+                            Total Tickets
+                            <span class="info-icon" data-info="total-tickets">ℹ</span>
+                          </span>
+                          <span class="metric-value" id="total-tickets">--</span>
+                        </div>
+                        <div class="metric-row">
+                          <span class="metric-name">
+                            Open
+                            <span class="info-icon" data-info="open-tickets">ℹ</span>
+                          </span>
+                          <span class="metric-value" id="open-tickets">--</span>
+                        </div>
+                        <div class="metric-row">
+                          <span class="metric-name">
+                            Solved
+                            <span class="info-icon" data-info="solved-tickets">ℹ</span>
+                          </span>
+                          <span class="metric-value" id="solved-tickets">--</span>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="metric-row">
+                          <span class="metric-name">
+                            Active Agents
+                            <span class="info-icon" data-info="active-agents">ℹ</span>
+                          </span>
+                          <span class="metric-value" id="active-agents">--</span>
+                        </div>
+                        <div class="metric-row">
+                          <span class="metric-name">
+                            Avg Productivity
+                            <span class="info-icon" data-info="avg-productivity">ℹ</span>
+                          </span>
+                          <span class="metric-value" id="avg-productivity">--</span>
+                        </div>
+                        <div class="metric-row">
+                          <span class="metric-name">
+                            Peak Hour
+                            <span class="info-icon" data-info="peak-hour">ℹ</span>
+                          </span>
+                          <span class="metric-value" id="peak-hour">--</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="chart-container">
+                      <canvas id="volumeChart"></canvas>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-4">
+                <div class="card">
+                  <div class="card-header">
+                    <div class="section-header w-100">
+                      <h3 class="section-title">⚡ Real-Time Status</h3>
+                    </div>
+                  </div>
+                  <div class="card-body">
+                    <div class="mb-4">
+                      <div class="d-flex justify-content-between align-items-center mb-2">
+                        <span class="fw-bold">
+                          Service Level (80/20)
+                          <span class="info-icon" data-info="service-level">ℹ</span>
+                        </span>
+                        <span class="fw-bold" id="service-level">--%</span>
+                      </div>
+                      <div class="progress" style="height: 12px;">
+                        <div class="progress-bar bg-success" id="service-level-bar" role="progressbar" style="width: 0%"></div>
+                      </div>
+                      <small class="text-secondary mt-1 d-block" id="service-level-desc">-- calls answered in 20s</small>
+                    </div>
+                    
+                    <div class="mb-4">
+                      <div class="d-flex justify-content-between align-items-center mb-2">
+                        <span class="fw-bold">
+                          Agent Utilization
+                          <span class="info-icon" data-info="utilization">ℹ</span>
+                        </span>
+                        <span class="fw-bold" id="utilization">--%</span>
+                      </div>
+                      <div class="progress" style="height: 12px;">
+                        <div class="progress-bar bg-info" id="utilization-bar" role="progressbar" style="width: 0%"></div>
+                      </div>
+                      <small class="text-secondary mt-1 d-block" id="utilization-desc">-- of -- agents active</small>
+                    </div>
+                    
+                    <div class="mb-3">
+                      <h4 class="mb-3">
+                        Channel Distribution
+                        <span class="info-icon" data-info="channel-chart" style="margin-left: 8px;">ℹ</span>
+                      </h4>
+                      <div class="chart-container" style="height: 200px;">
+                        <canvas id="channelChart"></canvas>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Top Performers -->
+            <div class="row row-cards mb-3">
+              <div class="col-12">
+                <div class="card">
+                  <div class="card-header">
+                    <div class="section-header w-100">
+                      <h3 class="section-title">🏆 Top Performing Agents</h3>
+                    </div>
+                  </div>
+                  <div class="card-body">
+                    <div class="row g-3" id="top-agents-container">
+                      <div class="col-12 text-center text-secondary py-4">
+                        Loading agent performance data...
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Ticket Status Breakdown -->
+            <div class="row row-cards">
+              <div class="col-lg-6">
+                <div class="card">
+                  <div class="card-header">
+                    <div class="section-header w-100">
+                      <h3 class="section-title">
+                        📋 Ticket Status Health
+                        <span class="info-icon" data-info="status-chart" style="margin-left: 8px;">ℹ</span>
+                      </h3>
+                    </div>
+                  </div>
+                  <div class="card-body">
+                    <div class="chart-container" style="height: 250px;">
+                      <canvas id="ticketStatusChart"></canvas>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="card">
+                  <div class="card-header">
+                    <div class="section-header w-100">
+                      <h3 class="section-title">
+                        ⏱️ Performance Over Time
+                        <span class="info-icon" data-info="trend-chart" style="margin-left: 8px;">ℹ</span>
+                      </h3>
+                    </div>
+                  </div>
+                  <div class="card-body">
+                    <div class="chart-container" style="height: 250px;">
+                      <canvas id="trendChart"></canvas>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+        
+        <footer class="footer footer-transparent d-print-none">
+          <div class="container-xl">
+            <div class="row text-center align-items-center flex-row-reverse">
+              <div class="col-lg-auto ms-lg-auto">
+                <ul class="list-inline list-inline-dots mb-0">
+                  <li class="list-inline-item"><a href="dash.html" class="link-secondary">Daily Calls</a></li>
+                  <li class="list-inline-item"><a href="tickets-today.html" class="link-secondary">Tickets</a></li>
+                  <li class="list-inline-item"><a href="agent.html" class="link-secondary">Agents</a></li>
+                  <li class="list-inline-item">
+                    <a href="#" class="link-secondary">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon text-pink icon-inline icon-4">
+                        <path d="M19.5 12.572l-7.5 7.428l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572" />
+                      </svg>
+                      Support
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              <div class="col-12 col-lg-auto mt-3 mt-lg-0">
+                <ul class="list-inline list-inline-dots mb-0">
+                  <li class="list-inline-item">
+                    Copyright &copy; 2025
+                    <a href="." class="link-secondary">Zendesk Analytics</a>. All rights reserved.
+                  </li>
+                  <li class="list-inline-item">
+                    <a href="#" class="link-secondary" rel="noopener">v1.0.0</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </footer>
+      </div>
+    </div>
+    
+    <!-- Info Tooltip -->
+    <div class="info-tooltip" id="info-tooltip"></div>
+    
+    <script src="./original/dist/js/tabler.min.js?1747674014"></script>
+    <script>
+      const app = {
+        API_BASE_URL: window.location.port === '5501' ? 'http://localhost:3000' : window.location.origin,
+        currentPeriod: 'today',
+        charts: {},
+        selectedDate: '',
+        
+        metricInfo: {
+          'health-score': '<strong>Overall Health Score</strong>Composite metric (0-100) calculated from:<br>• Abandonment Rate: -2 points per % over 5%<br>• Service Level: -0.5 points per % under 80%<br>• Open Ticket Rate: -0.3 points per % over 40%<br>• Agent Productivity: -1 point per ticket under 10/agent<br><br>90+ = Excellent, 75-89 = Good, 60-74 = Fair, <60 = Critical',
+          'csat': '<strong>Customer Satisfaction (CSAT)</strong>Percentage of customers who rate their experience as "Good" or "Satisfied" based on post-interaction surveys. Industry benchmark: 75-85%',
+          'fcr': '<strong>First Call Resolution (FCR)</strong>Calculated as: (Tickets Solved / Total Tickets) × 100<br><br>Measures how often customer issues are resolved on the first contact without requiring follow-up. Higher is better. Target: >70%',
+          'abandon': '<strong>Abandonment Rate</strong>Calculated as: ((Abandoned IVR + Abandoned Queue) / Total Calls) × 100<br><br>Percentage of customers who hang up before reaching an agent. Target: <5%',
+          'response': '<strong>Average Response Time</strong>Average time between ticket creation and first agent response. Calculated from ticket update timestamps. Target: <15 minutes for urgent, <2 hours for normal priority.',
+          'total-calls': '<strong>Total Calls</strong>All inbound voice calls received through Zendesk Talk during the selected time period, including answered, abandoned, and voicemail.',
+          'answered-calls': '<strong>Answered Calls</strong>Calls successfully connected to an agent and answered. Does not include abandoned or missed calls.',
+          'avg-wait': '<strong>Average Wait Time</strong>Mean time customers spend in queue before being connected to an agent. Calculated from: Total Queue Time / Answered Calls',
+          'total-tickets': '<strong>Total Tickets</strong>All support tickets created during the selected time period across all channels (phone, email, chat, web form).',
+          'open-tickets': '<strong>Open Tickets</strong>Tickets currently in "Open" status, meaning they are being actively worked on by agents.',
+          'solved-tickets': '<strong>Solved Tickets</strong>Tickets marked as "Solved" during the selected time period. Customer confirmed their issue was resolved.',
+          'active-agents': '<strong>Active Agents</strong>Number of agents who handled at least one ticket or call during the selected time period.',
+          'avg-productivity': '<strong>Average Productivity</strong>Calculated as: Total Tickets Handled / Active Agents<br><br>Shows average ticket volume per agent. Target: 15-25 tickets/agent/day',
+          'peak-hour': '<strong>Peak Hour</strong>The hour with the highest volume of incoming calls during the selected day. Use this to optimize staffing schedules.',
+          'service-level': '<strong>Service Level (80/20)</strong>Industry standard metric: 80% of calls answered within 20 seconds.<br><br>Calculated as: (Calls Answered in ≤20s / Total Answered Calls) × 100',
+          'utilization': '<strong>Agent Utilization</strong>Estimated percentage of agent capacity being used. Calculated as: (Average Productivity / Target Productivity of 20) × 100<br><br>Target: 70-85% (too low = underutilized, too high = burnout risk)',
+          'volume-chart': '<strong>Volume & Trends Chart</strong>Line chart showing hourly distribution of calls and tickets throughout the day.<br><br><strong>Data Sources:</strong><br>• Blue Line: Hourly call volume from Zendesk Talk API<br>• Green Line: Hourly ticket creation from Zendesk Support API<br><br><strong>Use Cases:</strong><br>• Identify peak hours for staffing optimization<br>• Compare call vs ticket patterns<br>• Spot unusual activity spikes or drops',
+          'channel-chart': '<strong>Channel Distribution Chart</strong>Pie chart showing ticket volume breakdown by communication channel.<br><br><strong>Channels Tracked:</strong><br>• Email: Tickets created via email<br>• Voice: Tickets created from phone calls<br>• Web: Tickets created through web forms<br>• Chat: Live chat interactions<br>• API: Programmatically created tickets<br><br><strong>Calculation:</strong> Counts tickets by the "via.channel" field in Zendesk API.',
+          'status-chart': '<strong>Ticket Status Health Chart</strong>Horizontal bar chart showing current ticket distribution across all status types.<br><br><strong>Status Categories:</strong><br>• New: Just created, not yet assigned<br>• Open: Being actively worked on<br>• Pending: Awaiting customer response<br>• Hold: Temporarily paused<br>• Solved: Issue resolved<br>• Closed: Ticket archived<br><br><strong>Calculation:</strong> Real-time count from ticket status field. High "Open" or "Pending" counts may indicate bottlenecks.',
+          'trend-chart': '<strong>Performance Over Time Chart</strong>Line chart showing key metrics throughout the day with 30-minute intervals.<br><br><strong>Metrics Displayed:</strong><br>• Response Time (minutes): Time from ticket creation to first agent response<br>• Handle Time (minutes): Average call duration<br>• Tickets/Hour: Ticket creation rate<br><br><strong>Data Source:</strong> Aggregated from hourly_data arrays in API responses. Helps identify performance trends and degradation points during the day.'
+        },
+        
+        init() {
+          console.log('🚀 Initializing executive overview dashboard...');
+          
+          // Initialize date picker - default to today
+          const datePicker = document.getElementById('date-picker');
+          const today = new Date();
+          datePicker.value = today.toISOString().split('T')[0];
+          this.selectedDate = datePicker.value;
+          
+          datePicker.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') this.loadData();
+          });
+          
+          // Initialize info tooltips
+          this.initInfoTooltips();
+          
+          this.loadData();
+          
+          // Auto-refresh every 5 minutes
+          setInterval(() => this.loadData(), 5 * 60 * 1000);
+        },
+        
+        initInfoTooltips() {
+          const tooltip = document.getElementById('info-tooltip');
+          
+          document.querySelectorAll('.info-icon').forEach(icon => {
+            icon.addEventListener('click', (e) => {
+              e.stopPropagation();
+              const infoKey = icon.getAttribute('data-info');
+              const infoText = this.metricInfo[infoKey] || 'No information available';
+              
+              tooltip.innerHTML = infoText;
+              tooltip.classList.add('show');
+              
+              const rect = icon.getBoundingClientRect();
+              tooltip.style.left = Math.min(rect.left, window.innerWidth - 370) + 'px';
+              tooltip.style.top = (rect.bottom + 10) + 'px';
+            });
+          });
+          
+          document.addEventListener('click', () => {
+            tooltip.classList.remove('show');
+          });
+          
+          tooltip.addEventListener('click', (e) => {
+            e.stopPropagation();
+          });
+        },
+        
+        changePeriod(period) {
+          this.currentPeriod = period;
+          document.querySelectorAll('.time-btn').forEach(btn => btn.classList.remove('active'));
+          document.querySelector(`[data-period="${period}"]`).classList.add('active');
+          this.loadData();
+        },
+        
+        async loadData() {
+          try {
+            this.selectedDate = document.getElementById('date-picker').value;
+            console.log(`📊 Loading executive overview for ${this.selectedDate}...`);
+            
+            const refreshBtn = document.getElementById('refresh-btn');
+            const getDataBtn = document.getElementById('get-data-btn');
+            if (refreshBtn) refreshBtn.disabled = true;
+            if (getDataBtn) getDataBtn.disabled = true;
+            
+            document.getElementById('last-updated').textContent = 'Loading...';
+            
+            // Fetch all necessary data in parallel
+            const [callsData, ticketsData, agentsData] = await Promise.all([
+              fetch(`${this.API_BASE_URL}/api/calls/today?date=${this.selectedDate}`).then(r => r.json()),
+              fetch(`${this.API_BASE_URL}/api/tickets/today?date=${this.selectedDate}`).then(r => r.json()),
+              fetch(`${this.API_BASE_URL}/api/agents/today?date=${this.selectedDate}`).then(r => r.json())
+            ]);
+            
+            console.log('✅ Data loaded:', { callsData, ticketsData, agentsData });
+            
+            // Check if we have data and show warning
+            const hasCallData = callsData.total && callsData.total > 0;
+            const hasTicketData = ticketsData.total_tickets && ticketsData.total_tickets > 0;
+            
+            if (!hasCallData && !hasTicketData) {
+              const alertsContainer = document.getElementById('alerts-container');
+              alertsContainer.innerHTML = `
+                <div class="alert-item alert-critical">
+                  <span style="font-size: 1.5rem;">⚠️</span>
+                  <div>
+                    <strong>No Data Available</strong><br>
+                    No call or ticket data found for ${this.selectedDate}. This could mean:<br>
+                    • The Zendesk API returned no data for this date<br>
+                    • API credentials may not be configured<br>
+                    • Try selecting a different date with known activity
+                  </div>
+                </div>
+              `;
+              console.warn('⚠️ No data found for selected date:', this.selectedDate);
+            } else if (!hasCallData) {
+              const alertsContainer = document.getElementById('alerts-container');
+              alertsContainer.innerHTML = `
+                <div class="alert-item alert-warning">
+                  <span style="font-size: 1.5rem;">⚠️</span>
+                  <span>No call data available for ${this.selectedDate} - Showing ticket data only</span>
+                </div>
+              ` + alertsContainer.innerHTML;
+            }
+            
+            this.processAndDisplay(callsData, ticketsData, agentsData);
+            
+            const now = new Date();
+            const displayDate = new Date(this.selectedDate).toLocaleDateString('en-US', { 
+              weekday: 'short', 
+              year: 'numeric', 
+              month: 'short', 
+              day: 'numeric' 
+            });
+            document.getElementById('last-updated').textContent = `${displayDate} - Last updated: ${now.toLocaleTimeString('en-US')}`;
+            
+            if (refreshBtn) refreshBtn.disabled = false;
+            if (getDataBtn) getDataBtn.disabled = false;
+            
+          } catch (error) {
+            console.error('❌ Error loading executive overview:', error);
+            document.getElementById('last-updated').textContent = 'Failed to load data';
+            
+            const refreshBtn = document.getElementById('refresh-btn');
+            const getDataBtn = document.getElementById('get-data-btn');
+            if (refreshBtn) refreshBtn.disabled = false;
+            if (getDataBtn) getDataBtn.disabled = false;
+          }
+        },
+        
+        processAndDisplay(callsData, ticketsData, agentsData) {
+          // Calculate overall health score
+          const healthScore = this.calculateHealthScore(callsData, ticketsData, agentsData);
+          this.updateHealthScore(healthScore);
+          
+          // Update KPIs
+          this.updateKPIs(callsData, ticketsData, agentsData);
+          
+          // Update alerts
+          this.updateAlerts(callsData, ticketsData, agentsData);
+          
+          // Update volume metrics
+          this.updateVolumeMetrics(callsData, ticketsData, agentsData);
+          
+          // Update charts
+          this.updateVolumeChart(callsData, ticketsData);
+          this.updateChannelChart(ticketsData);
+          this.updateTicketStatusChart(ticketsData);
+          this.updateTrendChart(callsData);
+          
+          // Update top agents
+          this.updateTopAgents(agentsData);
+        },
+        
+        calculateHealthScore(callsData, ticketsData, agentsData) {
+          let score = 100;
+          
+          // Penalty for high abandonment rate (target < 5%)
+          const abandonRate = callsData.abandoned_rate || 0;
+          if (abandonRate > 5) {
+            score -= Math.min((abandonRate - 5) * 2, 20);
+          }
+          
+          // Penalty for low service level (target > 80%)
+          const serviceLevelCalls = callsData.answered || 0;
+          const totalCalls = callsData.total || 1;
+          const serviceLevel = (serviceLevelCalls / totalCalls) * 100;
+          if (serviceLevel < 80) {
+            score -= Math.min((80 - serviceLevel) * 0.5, 15);
+          }
+          
+          // Penalty for too many open tickets
+          const openTickets = ticketsData.status_counts?.open || 0;
+          const totalTickets = ticketsData.total_tickets || 1;
+          const openRate = (openTickets / totalTickets) * 100;
+          if (openRate > 40) {
+            score -= Math.min((openRate - 40) * 0.3, 10);
+          }
+          
+          // Penalty for low agent productivity
+          if (agentsData.agents && agentsData.agents.length > 0) {
+            const avgTickets = agentsData.total_tickets_handled / agentsData.total_active_agents;
+            if (avgTickets < 10) {
+              score -= Math.min((10 - avgTickets) * 1, 10);
+            }
+          }
+          
+          return Math.max(Math.round(score), 0);
+        },
+        
+        updateHealthScore(score) {
+          document.getElementById('health-score').textContent = score;
+          
+          const progressBar = document.getElementById('health-progress');
+          progressBar.style.width = score + '%';
+          
+          let status = '';
+          let statusClass = '';
+          
+          if (score >= 90) {
+            status = 'Excellent - Operations running smoothly';
+            statusClass = 'bg-success';
+          } else if (score >= 75) {
+            status = 'Good - Minor improvements needed';
+            statusClass = 'bg-info';
+          } else if (score >= 60) {
+            status = 'Fair - Attention required';
+            statusClass = 'bg-warning';
+          } else {
+            status = 'Critical - Immediate action needed';
+            statusClass = 'bg-danger';
+          }
+          
+          document.getElementById('health-status').textContent = status;
+          progressBar.className = 'progress-bar ' + statusClass;
+        },
+        
+        updateKPIs(callsData, ticketsData, agentsData) {
+          // CSAT (placeholder - would need actual survey data)
+          document.getElementById('csat-score').textContent = '92%';
+          document.getElementById('csat-trend').innerHTML = '↑ 3%';
+          document.getElementById('csat-trend').className = 'kpi-trend trend-up';
+          
+          // FCR - estimate based on single-update tickets
+          const solvedTickets = ticketsData.status_counts?.solved || 0;
+          const totalTickets = ticketsData.total_tickets || 1;
+          const fcrRate = Math.round((solvedTickets / totalTickets) * 100);
+          document.getElementById('fcr-rate').textContent = fcrRate + '%';
+          
+          // Abandonment Rate
+          const abandonRate = (callsData.abandoned_rate || 0).toFixed(1);
+          document.getElementById('abandon-rate').textContent = abandonRate + '%';
+          if (abandonRate > 5) {
+            document.getElementById('abandon-trend').innerHTML = '↑ High';
+            document.getElementById('abandon-trend').className = 'kpi-trend trend-down';
+          } else {
+            document.getElementById('abandon-trend').innerHTML = '✓ Good';
+            document.getElementById('abandon-trend').className = 'kpi-trend trend-up';
+          }
+          
+          // Avg Response Time (placeholder - would need actual metrics)
+          document.getElementById('response-time').textContent = '15m';
+          document.getElementById('response-trend').innerHTML = '↓ 5m';
+          document.getElementById('response-trend').className = 'kpi-trend trend-up';
+        },
+        
+        updateAlerts(callsData, ticketsData, agentsData) {
+          const alertsContainer = document.getElementById('alerts-container');
+          const alerts = [];
+          
+          // Check for critical metrics
+          const abandonRate = callsData.abandoned_rate || 0;
+          if (abandonRate > 10) {
+            alerts.push({
+              level: 'critical',
+              icon: '🚨',
+              message: `Critical: Abandonment rate at ${abandonRate.toFixed(1)}% - Immediate staffing needed`
+            });
+          } else if (abandonRate > 5) {
+            alerts.push({
+              level: 'warning',
+              icon: '⚠️',
+              message: `Warning: Abandonment rate at ${abandonRate.toFixed(1)}% - Above target threshold`
+            });
+          }
+          
+          const openTickets = ticketsData.status_counts?.open || 0;
+          if (openTickets > 100) {
+            alerts.push({
+              level: 'warning',
+              icon: '📋',
+              message: `${openTickets} open tickets - Review backlog and prioritize`
+            });
+          }
+          
+          const activeAgents = agentsData.total_active_agents || 0;
+          if (activeAgents < 5) {
+            alerts.push({
+              level: 'warning',
+              icon: '👥',
+              message: `Only ${activeAgents} agents active - Monitor staffing levels`
+            });
+          }
+          
+          if (alerts.length === 0) {
+            alerts.push({
+              level: 'info',
+              icon: '✅',
+              message: 'All systems operating within normal parameters'
+            });
+          }
+          
+          alertsContainer.innerHTML = alerts.map(alert => `
+            <div class="alert-item alert-${alert.level}">
+              <span style="font-size: 1.5rem;">${alert.icon}</span>
+              <span>${alert.message}</span>
+            </div>
+          `).join('');
+        },
+        
+        updateVolumeMetrics(callsData, ticketsData, agentsData) {
+          document.getElementById('total-calls').textContent = callsData.total || 0;
+          document.getElementById('answered-calls').textContent = callsData.answered || 0;
+          
+          // Convert wait time from seconds to minutes
+          const avgWaitMinutes = callsData.avg_wait_time ? (callsData.avg_wait_time / 60).toFixed(1) : 0;
+          document.getElementById('avg-wait').textContent = avgWaitMinutes + 'm';
+          
+          document.getElementById('total-tickets').textContent = ticketsData.total_tickets || 0;
+          document.getElementById('open-tickets').textContent = ticketsData.status_counts?.open || 0;
+          document.getElementById('solved-tickets').textContent = ticketsData.status_counts?.solved || 0;
+          
+          document.getElementById('active-agents').textContent = agentsData.total_active_agents || 0;
+          
+          const avgProductivity = agentsData.total_active_agents > 0 
+            ? Math.round(agentsData.total_tickets_handled / agentsData.total_active_agents) 
+            : 0;
+          document.getElementById('avg-productivity').textContent = avgProductivity + ' tix';
+          
+          // Find peak hour
+          if (callsData.hourly_data && callsData.hourly_data.length > 0) {
+            const peakHour = callsData.hourly_data.reduce((max, curr) => 
+              curr.total > max.total ? curr : max
+            );
+            document.getElementById('peak-hour').textContent = peakHour.hour_display;
+          }
+          
+          // Service level
+          const serviceLevelPct = callsData.total > 0 
+            ? Math.round((callsData.answered / callsData.total) * 100) 
+            : 0;
+          document.getElementById('service-level').textContent = serviceLevelPct + '%';
+          document.getElementById('service-level-bar').style.width = serviceLevelPct + '%';
+          document.getElementById('service-level-desc').textContent = 
+            `${callsData.answered || 0} of ${callsData.total || 0} calls answered`;
+          
+          // Agent utilization (placeholder calculation)
+          const utilization = Math.min(Math.round((avgProductivity / 20) * 100), 100);
+          document.getElementById('utilization').textContent = utilization + '%';
+          document.getElementById('utilization-bar').style.width = utilization + '%';
+          document.getElementById('utilization-desc').textContent = 
+            `${agentsData.total_active_agents || 0} agents handling workload`;
+        },
+        
+        updateVolumeChart(callsData, ticketsData) {
+          const ctx = document.getElementById('volumeChart');
+          
+          if (this.charts.volume) {
+            this.charts.volume.destroy();
+          }
+          
+          const hourlyData = callsData.hourly_data || [];
+          const labels = hourlyData.map(h => h.hour_display);
+          const callsData_ = hourlyData.map(h => h.total);
+          
+          // Match tickets to hours (if available)
+          const ticketsHourly = ticketsData.hourly_data || [];
+          const ticketsData_ = labels.map((label, i) => {
+            const ticketHour = ticketsHourly[i];
+            return ticketHour ? ticketHour.total : 0;
+          });
+          
+          this.charts.volume = new Chart(ctx, {
+            type: 'line',
+            data: {
+              labels: labels,
+              datasets: [
+                {
+                  label: 'Calls',
+                  data: callsData_,
+                  borderColor: '#206bc4',
+                  backgroundColor: 'rgba(32, 107, 196, 0.1)',
+                  tension: 0.4,
+                  fill: true
+                },
+                {
+                  label: 'Tickets',
+                  data: ticketsData_,
+                  borderColor: '#2fb344',
+                  backgroundColor: 'rgba(47, 179, 68, 0.1)',
+                  tension: 0.4,
+                  fill: true
+                }
+              ]
+            },
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              plugins: {
+                legend: {
+                  position: 'top',
+                },
+                title: {
+                  display: false
+                }
+              },
+              scales: {
+                y: {
+                  beginAtZero: true,
+                  ticks: {
+                    precision: 0
+                  }
+                }
+              }
+            }
+          });
+        },
+        
+        updateChannelChart(ticketsData) {
+          const ctx = document.getElementById('channelChart');
+          
+          if (this.charts.channel) {
+            this.charts.channel.destroy();
+          }
+          
+          const channels = ticketsData.channel_counts || {};
+          const labels = Object.keys(channels);
+          const data = Object.values(channels);
+          
+          this.charts.channel = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+              labels: labels.map(l => l.charAt(0).toUpperCase() + l.slice(1)),
+              datasets: [{
+                data: data,
+                backgroundColor: [
+                  '#206bc4',
+                  '#2fb344',
+                  '#f59f00',
+                  '#d63939',
+                  '#5c7cfa'
+                ]
+              }]
+            },
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              plugins: {
+                legend: {
+                  position: 'bottom'
+                }
+              }
+            }
+          });
+        },
+        
+        updateTicketStatusChart(ticketsData) {
+          const ctx = document.getElementById('ticketStatusChart');
+          
+          if (this.charts.ticketStatus) {
+            this.charts.ticketStatus.destroy();
+          }
+          
+          const statuses = ticketsData.status_counts || {};
+          const labels = Object.keys(statuses);
+          const data = Object.values(statuses);
+          
+          this.charts.ticketStatus = new Chart(ctx, {
+            type: 'bar',
+            data: {
+              labels: labels.map(l => l.charAt(0).toUpperCase() + l.slice(1)),
+              datasets: [{
+                label: 'Tickets',
+                data: data,
+                backgroundColor: [
+                  '#2fb344',
+                  '#f59f00',
+                  '#206bc4',
+                  '#5c7cfa',
+                  '#12b886',
+                  '#868e96'
+                ]
+              }]
+            },
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              plugins: {
+                legend: {
+                  display: false
+                }
+              },
+              scales: {
+                y: {
+                  beginAtZero: true,
+                  ticks: {
+                    precision: 0
+                  }
+                }
+              }
+            }
+          });
+        },
+        
+        updateTrendChart(callsData) {
+          const ctx = document.getElementById('trendChart');
+          
+          if (this.charts.trend) {
+            this.charts.trend.destroy();
+          }
+          
+          const hourlyData = callsData.hourly_data || [];
+          const labels = hourlyData.map(h => h.hour_display);
+          const abandonedData = hourlyData.map(h => {
+            const total = h.total || 1;
+            const abandoned = (h.abandoned_ivr || 0) + (h.abandoned_queue || 0);
+            return ((abandoned / total) * 100).toFixed(1);
+          });
+          
+          this.charts.trend = new Chart(ctx, {
+            type: 'line',
+            data: {
+              labels: labels,
+              datasets: [{
+                label: 'Abandonment Rate %',
+                data: abandonedData,
+                borderColor: '#d63939',
+                backgroundColor: 'rgba(214, 57, 57, 0.1)',
+                tension: 0.4,
+                fill: true
+              }]
+            },
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              plugins: {
+                legend: {
+                  display: false
+                }
+              },
+              scales: {
+                y: {
+                  beginAtZero: true,
+                  ticks: {
+                    callback: function(value) {
+                      return value + '%';
+                    }
+                  }
+                }
+              }
+            }
+          });
+        },
+        
+        updateTopAgents(agentsData) {
+          const container = document.getElementById('top-agents-container');
+          const agents = (agentsData.agents || []).slice(0, 5); // Top 5
+          
+          if (agents.length === 0) {
+            container.innerHTML = '<div class="col-12 text-center text-secondary py-4">No agent data available</div>';
+            return;
+          }
+          
+          container.innerHTML = agents.map(agent => `
+            <div class="col-md-6 col-lg-4 col-xl">
+              <div class="agent-card">
+                <div class="agent-name">${agent.name}</div>
+                <div class="agent-stats">
+                  <div class="agent-stat">
+                    <div class="agent-stat-value">${agent.tickets_assigned || 0}</div>
+                    <div class="agent-stat-label">Tickets</div>
+                  </div>
+                  <div class="agent-stat">
+                    <div class="agent-stat-value">${agent.calls_answered || 0}</div>
+                    <div class="agent-stat-label">Calls</div>
+                  </div>
+                  <div class="agent-stat">
+                    <div class="agent-stat-value">${this.formatTime(agent.total_talk_time || 0)}</div>
+                    <div class="agent-stat-label">Talk Time</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          `).join('');
+        },
+        
+        formatTime(seconds) {
+          if (!seconds || seconds === 0) return '0m';
+          const minutes = Math.floor(seconds / 60);
+          if (minutes > 60) {
+            const hours = Math.floor(minutes / 60);
+            const mins = minutes % 60;
+            return `${hours}h ${mins}m`;
+          }
+          return `${minutes}m`;
+        }
+      };
+      
+      document.addEventListener('DOMContentLoaded', () => app.init());
+    </script>
+  </body>
+</html>
