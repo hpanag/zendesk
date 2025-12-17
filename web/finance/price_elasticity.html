@@ -1,0 +1,1074 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Price Elasticity Calculator - Zendesk Analytics Portal</title>
+    <link href="../original/dist/css/tabler.css?1747674014" rel="stylesheet" />
+    <link href="../original/dist/css/tabler-flags.css?1747674014" rel="stylesheet" />
+    <link href="../original/dist/css/tabler-socials.css?1747674014" rel="stylesheet" />
+    <link href="../original/dist/css/tabler-payments.css?1747674014" rel="stylesheet" />
+    <link href="../original/dist/css/tabler-vendors.css?1747674014" rel="stylesheet" />
+    <link href="../original/dist/css/tabler-marketing.css?1747674014" rel="stylesheet" />
+    <link href="../original/dist/css/tabler-themes.css?1747674014" rel="stylesheet" />
+    <link href="../original/preview/css/demo.css?1747674014" rel="stylesheet" />
+    <style>
+      @import url("https://rsms.me/inter/inter.css");
+    </style>
+  </head>
+  <body>
+    <script src="../original/dist/js/tabler-theme.min.js?1747674014"></script>
+    <div class="page">
+      <header class="navbar navbar-expand-md d-print-none">
+        <div class="container-xl">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-menu">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="navbar-brand navbar-brand-autodark d-none-navbar-horizontal pe-0 pe-md-3">
+            <a href="../index.html">
+              <h4 class="m-0 text-dark">Automations</h4>
+            </a>
+          </div>
+          <div class="navbar-nav flex-row order-md-last">
+            <div class="d-none d-md-flex">
+              <div class="nav-item">
+                <a href="?theme=dark" class="nav-link px-0 hide-theme-dark" title="Enable dark mode">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-1">
+                    <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+                  </svg>
+                </a>
+                <a href="?theme=light" class="nav-link px-0 hide-theme-light" title="Enable light mode">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-1">
+                    <path d="M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" />
+                    <path d="M3 12h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7" />
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+      <header class="navbar-expand-md">
+        <div class="collapse navbar-collapse" id="navbar-menu">
+          <div class="navbar">
+            <div class="container-xl">
+              <ul class="navbar-nav">
+                <li class="nav-item">
+                  <a class="nav-link" href="../index.html">
+                    <span class="nav-link-icon d-md-none d-lg-inline-block">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-1">
+                        <path d="M5 12l-2 0l9 -9l9 9l-2 0" />
+                        <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+                        <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+                      </svg>
+                    </span>
+                    <span class="nav-link-title">Home</span>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../cx.html">
+                    <span class="nav-link-icon d-md-none d-lg-inline-block">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-1">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                      </svg>
+                    </span>
+                    <span class="nav-link-title">Customer Experience</span>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../product.html">
+                    <span class="nav-link-icon d-md-none d-lg-inline-block">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-1">
+                        <path d="M12 3l8 4.5l0 9l-8 4.5l-8 -4.5l0 -9l8 -4.5" />
+                        <path d="M12 12l8 -4.5" />
+                        <path d="M12 12l0 9" />
+                        <path d="M12 12l-8 -4.5" />
+                        <path d="M16 5.25l-8 4.5" />
+                      </svg>
+                    </span>
+                    <span class="nav-link-title">Product</span>
+                  </a>
+                </li>
+                <li class="nav-item active">
+                  <a class="nav-link" href="../finance.html">
+                    <span class="nav-link-icon d-md-none d-lg-inline-block">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-1">
+                        <path d="M17 8v-3a1 1 0 0 0 -1 -1h-10a2 2 0 0 0 0 4h12a1 1 0 0 1 1 1v3m0 4v3a1 1 0 0 1 -1 1h-12a2 2 0 0 1 -2 -2v-12" />
+                        <path d="M20 12v4h-4a2 2 0 0 1 0 -4h4" />
+                      </svg>
+                    </span>
+                    <span class="nav-link-title">Finance</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </header>
+      <div class="page-wrapper">
+        <div class="page-body">
+          <div class="container-xl">
+            <!-- File Upload Section -->
+            <div class="card mb-3">
+              <div class="card-header">
+                <h3 class="card-title">Data Source</h3>
+              </div>
+              <div class="card-body">
+                <div class="row align-items-center">
+                  <div class="col-auto">
+                    <span class="avatar avatar-lg" style="background-color: #206bc4;">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg>
+                    </span>
+                  </div>
+                  <div class="col">
+                    <input type="file" id="csvFileInput" accept=".csv" class="form-control" style="display: none;">
+                    <button onclick="document.getElementById('csvFileInput').click()" class="btn btn-primary">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon me-1"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                      Upload CSV File
+                    </button>
+                    <button onclick="loadDefaultData()" class="btn btn-outline-secondary ms-2">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon me-1"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"></path><path d="M21 3v5h-5"></path><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"></path><path d="M3 21v-5h5"></path></svg>
+                      Load Default Data
+                    </button>
+                  </div>
+                  <div class="col-auto">
+                    <div id="dataStatus" class="text-muted">
+                      <span class="badge bg-secondary">No data loaded</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Filter Controls -->
+            <div class="card mb-3" id="filterSection" style="display: none;">
+              <div class="card-header">
+                <h3 class="card-title">Analysis Filters</h3>
+              </div>
+              <div class="card-body">
+                <div class="row g-3">
+                  <div class="col-md-3">
+                    <label class="form-label">Analysis Type</label>
+                    <select id="analysisType" class="form-select" onchange="updateAnalysis()">
+                      <option value="item">By Item Number</option>
+                      <option value="subpillar">By Sub-Pillar (Category)</option>
+                    </select>
+                  </div>
+                  <div class="col-md-3">
+                    <label class="form-label" id="selectionLabel">Select Item</label>
+                    <select id="itemSelection" class="form-select" onchange="updateCharts()">
+                      <option value="">-- Select --</option>
+                    </select>
+                  </div>
+                  <div class="col-md-2">
+                    <label class="form-label">Start Date</label>
+                    <input type="date" id="startDate" class="form-control" onchange="updateCharts()">
+                  </div>
+                  <div class="col-md-2">
+                    <label class="form-label">End Date</label>
+                    <input type="date" id="endDate" class="form-control" onchange="updateCharts()">
+                  </div>
+                  <div class="col-md-2">
+                    <label class="form-label">Lifecycle</label>
+                    <select id="lifecycleFilter" class="form-select" onchange="updateCharts()">
+                      <option value="all">All</option>
+                      <option value="Active">Active Only</option>
+                      <option value="End of life">End of Life</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="row g-3 mt-1">
+                  <div class="col-md-3">
+                    <label class="form-label">Pillar</label>
+                    <select id="pillarFilter" class="form-select" onchange="updateCharts()">
+                      <option value="all">All Pillars</option>
+                    </select>
+                  </div>
+                  <div class="col-md-3">
+                    <label class="form-label">Country</label>
+                    <select id="countryFilter" class="form-select" onchange="updateCharts()">
+                      <option value="all">All Countries</option>
+                    </select>
+                  </div>
+                  <div class="col-md-3">
+                    <label class="form-label">&nbsp;</label>
+                    <button class="btn btn-outline-secondary w-100" onclick="resetDateFilters()">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon me-1"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"></path><path d="M21 3v5h-5"></path><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"></path><path d="M3 21v-5h5"></path></svg>
+                      Reset Date Range
+                    </button>
+                  </div>
+                  <div class="col-md-3">
+                    <label class="form-label">&nbsp;</label>
+                    <div class="text-muted small" id="dateRangeDisplay">Using all available data</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Key Metrics -->
+            <div id="metricsSection" style="display: none;">
+              <div class="row g-3 mb-3">
+                <div class="col-md-3">
+                  <div class="card">
+                    <div class="card-body">
+                      <div class="d-flex align-items-center">
+                        <div class="subheader">Total Sales Volume</div>
+                      </div>
+                      <div class="h1 mb-0" id="totalVolume">0</div>
+                      <div class="text-secondary mt-1">units sold</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="card">
+                    <div class="card-body">
+                      <div class="d-flex align-items-center">
+                        <div class="subheader">Average Price</div>
+                      </div>
+                      <div class="h1 mb-0" id="avgPrice">$0</div>
+                      <div class="text-secondary mt-1">per unit</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="card">
+                    <div class="card-body">
+                      <div class="d-flex align-items-center">
+                        <div class="subheader">Price Range</div>
+                      </div>
+                      <div class="h1 mb-0" id="priceRange">$0 - $0</div>
+                      <div class="text-secondary mt-1">min - max</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="card">
+                    <div class="card-body">
+                      <div class="d-flex align-items-center">
+                        <div class="subheader">Optimal Price</div>
+                      </div>
+                      <div class="h1 mb-0" id="optimalPrice">$0</div>
+                      <div class="text-secondary mt-1" id="optimalReason">highest volume</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Charts -->
+              <div class="row g-3 mb-3">
+                <div class="col-12">
+                  <div class="card">
+                    <div class="card-header">
+                      <h3 class="card-title">Price vs. Volume Analysis</h3>
+                      <div class="card-actions">
+                        <span class="text-muted me-2">Understanding demand at different price points</span>
+                        <a href="#" class="btn-action" data-bs-toggle="tooltip" data-bs-html="true" title="<strong>How to use:</strong><br/>• Each bubble represents a price point<br/>• Y-axis shows total units sold at that price<br/>• Larger bubbles = more transactions<br/>• Look for clusters to identify optimal pricing<br/><br/><strong>Data:</strong> Aggregates all sales grouped by price ($0.50 increments)">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                        </a>
+                      </div>
+                    </div>
+                    <div class="card-body">
+                      <div id="priceVolumeChart" style="height: 400px;"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row g-3 mb-3">
+                <div class="col-md-6">
+                  <div class="card">
+                    <div class="card-header">
+                      <h3 class="card-title">Price Distribution</h3>
+                      <div class="card-actions">
+                        <a href="#" class="btn-action" data-bs-toggle="tooltip" data-bs-html="true" title="<strong>How to use:</strong><br/>• Shows frequency of transactions at different price ranges<br/>• Taller bars = more sales at that price range<br/>• Identifies most common pricing patterns<br/><br/><strong>Data:</strong> Transaction count distributed across 10 equal price buckets">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                        </a>
+                      </div>
+                    </div>
+                    <div class="card-body">
+                      <div id="priceDistChart" style="height: 300px;"></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="card">
+                    <div class="card-header">
+                      <h3 class="card-title">Revenue by Price Range</h3>
+                      <div class="card-actions">
+                        <a href="#" class="btn-action" data-bs-toggle="tooltip" data-bs-html="true" title="<strong>How to use:</strong><br/>• Shows total revenue generated by each price tier<br/>• Longer bars = more revenue from that range<br/>• Helps identify which price segments drive revenue<br/><br/><strong>Data:</strong> Sum of (Price × Quantity) grouped into 5 price bands">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                        </a>
+                      </div>
+                    </div>
+                    <div class="card-body">
+                      <div id="revenueChart" style="height: 300px;"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row g-3 mb-3">
+                <div class="col-12">
+                  <div class="card">
+                    <div class="card-header">
+                      <h3 class="card-title">Sales Trend Over Time</h3>
+                      <div class="card-actions">
+                        <a href="#" class="btn-action" data-bs-toggle="tooltip" data-bs-html="true" title="<strong>How to use:</strong><br/>• Blue bars show monthly sales volume<br/>• Green line shows average price trend<br/>• Compare volume vs. price changes over time<br/>• Identify seasonal patterns and pricing opportunities<br/><br/><strong>Data:</strong> Monthly aggregation of volume and average price from filtered sales data">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                        </a>
+                      </div>
+                    </div>
+                    <div class="card-body">
+                      <div id="timelineChart" style="height: 300px;"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Pricing Recommendations -->
+              <div class="row g-3">
+                <div class="col-12">
+                  <div class="card">
+                    <div class="card-header bg-primary-lt">
+                      <h3 class="card-title">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon me-2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                        Pricing Insights & Recommendations
+                      </h3>
+                    </div>
+                    <div class="card-body">
+                      <div id="recommendations"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Empty State -->
+            <div id="emptyState" class="empty">
+              <div class="empty-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+              </div>
+              <p class="empty-title">No data loaded</p>
+              <p class="empty-subtitle text-secondary">
+                Upload a CSV file with sales data or load the default dataset to begin price elasticity analysis
+              </p>
+              <div class="empty-action">
+                <button onclick="loadDefaultData()" class="btn btn-primary">
+                  Load Default Data
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <footer class="footer footer-transparent d-print-none">
+          <div class="container-xl">
+            <div class="row text-center align-items-center">
+              <div class="col-12 col-lg-auto mt-3 mt-lg-0">
+                <ul class="list-inline list-inline-dots mb-0">
+                  <li class="list-inline-item">
+                    Copyright &copy; 2025
+                    <a href="." class="link-secondary">Zendesk Analytics</a>. All rights reserved.
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </footer>
+      </div>
+    </div>
+    <script src="../original/dist/js/tabler.min.js?1747674014" defer></script>
+    <script src="../original/preview/js/demo.min.js?1747674014" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts@3.44.0/dist/apexcharts.min.js"></script>
+    <script>
+      let rawData = [];
+      let filteredData = [];
+      let charts = {};
+
+      // CSV Parser
+      function parseCSV(text) {
+        const lines = text.trim().split('\n');
+        if (lines.length === 0) return [];
+        
+        const headers = lines[0].split(',').map(h => h.trim());
+        const data = [];
+        
+        for (let i = 1; i < lines.length; i++) {
+          const line = lines[i].trim();
+          if (!line) continue;
+          
+          const values = [];
+          let current = '';
+          let inQuotes = false;
+          
+          for (let j = 0; j < line.length; j++) {
+            const char = line[j];
+            if (char === '"') {
+              inQuotes = !inQuotes;
+            } else if (char === ',' && !inQuotes) {
+              values.push(current.trim());
+              current = '';
+            } else {
+              current += char;
+            }
+          }
+          values.push(current.trim());
+          
+          if (values.length >= headers.length) {
+            const row = {};
+            headers.forEach((header, index) => {
+              row[header] = values[index] || '';
+            });
+            data.push(row);
+          }
+        }
+        return data;
+      }
+
+      // Load default data
+      async function loadDefaultData() {
+        try {
+          const response = await fetch('price_elastcity.csv');
+          const text = await response.text();
+          rawData = parseCSV(text);
+          processData();
+        } catch (error) {
+          alert('Error loading default data: ' + error.message);
+        }
+      }
+
+      // Handle file upload
+      document.getElementById('csvFileInput').addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = function(e) {
+            try {
+              rawData = parseCSV(e.target.result);
+              processData();
+            } catch (error) {
+              alert('Error parsing CSV file: ' + error.message);
+            }
+          };
+          reader.readAsText(file);
+        }
+      });
+
+      // Process loaded data
+      function processData() {
+        if (rawData.length === 0) return;
+
+        // Find date range in data - optimized for large datasets
+        let minDate = new Date(8640000000000000); // Max date
+        let maxDate = new Date(-8640000000000000); // Min date
+        
+        for (let i = 0; i < rawData.length; i++) {
+          const date = new Date(rawData[i].Date);
+          if (!isNaN(date)) {
+            if (date < minDate) minDate = date;
+            if (date > maxDate) maxDate = date;
+          }
+        }
+        
+        // Set date picker min/max attributes
+        const startDateInput = document.getElementById('startDate');
+        const endDateInput = document.getElementById('endDate');
+        
+        startDateInput.min = minDate.toISOString().split('T')[0];
+        startDateInput.max = maxDate.toISOString().split('T')[0];
+        endDateInput.min = minDate.toISOString().split('T')[0];
+        endDateInput.max = maxDate.toISOString().split('T')[0];
+
+        // Update status
+        document.getElementById('dataStatus').innerHTML = 
+          `<span class="badge bg-success">${rawData.length.toLocaleString()} records loaded</span>` +
+          `<span class="badge bg-info ms-2">${minDate.toLocaleDateString()} - ${maxDate.toLocaleDateString()}</span>`;
+        
+        // Show sections
+        document.getElementById('emptyState').style.display = 'none';
+        document.getElementById('filterSection').style.display = 'block';
+        document.getElementById('metricsSection').style.display = 'block';
+
+        // Populate filters
+        populateFilters();
+        
+        // Initial analysis
+        updateAnalysis();
+      }
+
+      // Populate filter dropdowns
+      function populateFilters() {
+        // Get unique values
+        const items = [...new Set(rawData.map(d => d.ItemNumber))].sort();
+        const subpillars = [...new Set(rawData.map(d => d.SubPillar))].sort();
+        const pillars = [...new Set(rawData.map(d => d.Pillar))].sort();
+        const countries = [...new Set(rawData.map(d => d.Country))].sort();
+
+        // Populate item selection (default)
+        const itemSelect = document.getElementById('itemSelection');
+        itemSelect.innerHTML = '<option value="">-- Select Item --</option>' +
+          items.map(item => `<option value="${item}">${item}</option>`).join('');
+
+        // Store subpillars for later
+        itemSelect.dataset.subpillars = JSON.stringify(subpillars);
+        itemSelect.dataset.items = JSON.stringify(items);
+
+        // Populate other filters
+        document.getElementById('pillarFilter').innerHTML = 
+          '<option value="all">All Pillars</option>' +
+          pillars.map(p => `<option value="${p}">${p}</option>`).join('');
+
+        document.getElementById('countryFilter').innerHTML = 
+          '<option value="all">All Countries</option>' +
+          countries.map(c => `<option value="${c}">${c}</option>`).join('');
+      }
+
+      // Update analysis type
+      function updateAnalysis() {
+        const type = document.getElementById('analysisType').value;
+        const itemSelect = document.getElementById('itemSelection');
+        const label = document.getElementById('selectionLabel');
+
+        if (type === 'item') {
+          label.textContent = 'Select Item';
+          const items = JSON.parse(itemSelect.dataset.items || '[]');
+          itemSelect.innerHTML = '<option value="">-- Select Item --</option>' +
+            items.map(item => `<option value="${item}">${item}</option>`).join('');
+        } else {
+          label.textContent = 'Select Category';
+          const subpillars = JSON.parse(itemSelect.dataset.subpillars || '[]');
+          itemSelect.innerHTML = '<option value="">-- Select Category --</option>' +
+            subpillars.map(sp => `<option value="${sp}">${sp}</option>`).join('');
+        }
+
+        updateCharts();
+      }
+
+      // Filter data based on selections
+      function getFilteredData() {
+        const type = document.getElementById('analysisType').value;
+        const selection = document.getElementById('itemSelection').value;
+        const lifecycle = document.getElementById('lifecycleFilter').value;
+        const pillar = document.getElementById('pillarFilter').value;
+        const country = document.getElementById('countryFilter').value;
+        const startDate = document.getElementById('startDate').value;
+        const endDate = document.getElementById('endDate').value;
+
+        let data = rawData.filter(row => {
+          if (!selection) return false;
+          if (type === 'item' && row.ItemNumber !== selection) return false;
+          if (type === 'subpillar' && row.SubPillar !== selection) return false;
+          if (lifecycle !== 'all' && row.LifeCycle !== lifecycle) return false;
+          if (pillar !== 'all' && row.Pillar !== pillar) return false;
+          if (country !== 'all' && row.Country !== country) return false;
+          
+          // Date filtering
+          if (startDate || endDate) {
+            const rowDate = new Date(row.Date);
+            if (startDate && rowDate < new Date(startDate)) return false;
+            if (endDate && rowDate > new Date(endDate)) return false;
+          }
+          
+          return true;
+        });
+
+        return data;
+      }
+      
+      // Reset date filters
+      function resetDateFilters() {
+        document.getElementById('startDate').value = '';
+        document.getElementById('endDate').value = '';
+        updateDateRangeDisplay();
+        updateCharts();
+      }
+      
+      // Update date range display
+      function updateDateRangeDisplay() {
+        const startDate = document.getElementById('startDate').value;
+        const endDate = document.getElementById('endDate').value;
+        const display = document.getElementById('dateRangeDisplay');
+        
+        if (!startDate && !endDate) {
+          display.innerHTML = '<span class="text-success">✓ Using all available data</span>';
+        } else if (startDate && endDate) {
+          display.innerHTML = `<span class="text-primary">📅 ${startDate} to ${endDate}</span>`;
+        } else if (startDate) {
+          display.innerHTML = `<span class="text-primary">📅 From ${startDate} onwards</span>`;
+        } else if (endDate) {
+          display.innerHTML = `<span class="text-primary">📅 Up to ${endDate}</span>`;
+        }
+      }
+
+      // Update all charts and metrics
+      function updateCharts() {
+        filteredData = getFilteredData();
+        updateDateRangeDisplay();
+        
+        if (filteredData.length === 0) {
+          document.getElementById('metricsSection').querySelector('.row').style.opacity = '0.5';
+          return;
+        }
+
+        document.getElementById('metricsSection').querySelector('.row').style.opacity = '1';
+
+        // Calculate metrics
+        calculateMetrics();
+        
+        // Update charts
+        createPriceVolumeChart();
+        createPriceDistributionChart();
+        createRevenueChart();
+        createTimelineChart();
+        generateRecommendations();
+      }
+
+      // Calculate key metrics
+      function calculateMetrics() {
+        const prices = filteredData.map(d => parseFloat(d['Sales price']) || 0);
+        const quantities = filteredData.map(d => parseInt(d.InvoiceQuantity) || 0);
+        
+        const totalVolume = quantities.reduce((a, b) => a + b, 0);
+        const avgPrice = prices.reduce((a, b) => a + b, 0) / prices.length;
+        const minPrice = Math.min(...prices);
+        const maxPrice = Math.max(...prices);
+
+        // Find optimal price (most volume sold at a price point)
+        const priceVolume = {};
+        filteredData.forEach(row => {
+          const price = parseFloat(row['Sales price']) || 0;
+          const qty = parseInt(row.InvoiceQuantity) || 0;
+          const priceRounded = Math.round(price);
+          priceVolume[priceRounded] = (priceVolume[priceRounded] || 0) + qty;
+        });
+
+        const optimalPricePoint = Object.keys(priceVolume).reduce((a, b) => 
+          priceVolume[a] > priceVolume[b] ? a : b
+        );
+
+        document.getElementById('totalVolume').textContent = totalVolume.toLocaleString();
+        document.getElementById('avgPrice').textContent = '$' + avgPrice.toFixed(2);
+        document.getElementById('priceRange').textContent = `$${minPrice.toFixed(2)} - $${maxPrice.toFixed(2)}`;
+        document.getElementById('optimalPrice').textContent = '$' + optimalPricePoint;
+        document.getElementById('optimalReason').textContent = `${priceVolume[optimalPricePoint]} units sold`;
+      }
+
+      // Create Price vs Volume scatter chart
+      function createPriceVolumeChart() {
+        const priceGroups = {};
+        
+        filteredData.forEach(row => {
+          const price = parseFloat(row['Sales price']) || 0;
+          const qty = parseInt(row.InvoiceQuantity) || 0;
+          if (price > 0) {
+            const priceRounded = Math.round(price * 2) / 2; // Group by $0.50
+            
+            if (!priceGroups[priceRounded]) {
+              priceGroups[priceRounded] = { price: priceRounded, volume: 0, count: 0 };
+            }
+            priceGroups[priceRounded].volume += qty;
+            priceGroups[priceRounded].count++;
+          }
+        });
+
+        const data = Object.values(priceGroups)
+          .sort((a, b) => a.price - b.price);
+        
+        if (data.length === 0) {
+          console.log('No data for Price vs Volume chart');
+          return;
+        }
+        
+        // Debug: log volume range
+        const volumes = data.map(d => d.volume);
+        const minVol = Math.min(...volumes);
+        const maxVol = Math.max(...volumes);
+        console.log('Volume range:', minVol, 'to', maxVol);
+        console.log('Data points:', data.length);
+
+        const options = {
+          series: [{
+            name: 'Units Sold',
+            data: data.map(d => {
+              const normalized = (d.volume - minVol) / (maxVol - minVol || 1);
+              const size = 8 + (normalized * 27);
+              return {
+                x: d.price,
+                y: d.volume,
+                z: size,
+                fillColor: '#206bc4',
+                strokeColor: '#fff'
+              };
+            })
+          }],
+          chart: {
+            type: 'bubble',
+            height: 400,
+            toolbar: { show: true },
+            zoom: { enabled: true }
+          },
+          dataLabels: {
+            enabled: false
+          },
+          fill: {
+            opacity: 0.8
+          },
+          xaxis: {
+            type: 'numeric',
+            title: { text: 'Price ($)' },
+            labels: {
+              formatter: function(val) {
+                return '$' + parseFloat(val).toFixed(2);
+              }
+            }
+          },
+          yaxis: {
+            title: { text: 'Total Units Sold' },
+            labels: {
+              formatter: function(val) {
+                return Math.round(val);
+              }
+            }
+          },
+          tooltip: {
+            custom: function({ seriesIndex, dataPointIndex, w }) {
+              const point = data[dataPointIndex];
+              if (!point) return '';
+              return `<div class="p-2">
+                <strong>Price: $${point.price.toFixed(2)}</strong><br/>
+                Units Sold: ${point.volume}<br/>
+                Transactions: ${point.count}
+              </div>`;
+            }
+          },
+          colors: ['#206bc4']
+        };
+
+        if (charts.priceVolume) charts.priceVolume.destroy();
+        charts.priceVolume = new ApexCharts(document.querySelector("#priceVolumeChart"), options);
+        charts.priceVolume.render().catch(err => console.error('Chart render error:', err));
+      }
+
+      // Create price distribution histogram
+      function createPriceDistributionChart() {
+        const prices = filteredData.map(d => parseFloat(d['Sales price']) || 0).filter(p => p > 0);
+        
+        if (prices.length === 0) return;
+        
+        // Find min/max without spread operator to avoid stack overflow
+        let min = prices[0];
+        let max = prices[0];
+        for (let i = 1; i < prices.length; i++) {
+          if (prices[i] < min) min = prices[i];
+          if (prices[i] > max) max = prices[i];
+        }
+        
+        const bucketSize = (max - min) / 10;
+        
+        const buckets = Array(10).fill(0);
+        const bucketLabels = [];
+        
+        for (let i = 0; i < 10; i++) {
+          const start = min + (bucketSize * i);
+          const end = min + (bucketSize * (i + 1));
+          bucketLabels.push(`$${start.toFixed(0)}-${end.toFixed(0)}`);
+        }
+
+        prices.forEach(price => {
+          const bucketIndex = Math.min(Math.floor((price - min) / bucketSize), 9);
+          buckets[bucketIndex]++;
+        });
+
+        const options = {
+          series: [{
+            name: 'Transactions',
+            data: buckets
+          }],
+          chart: {
+            type: 'bar',
+            height: 300,
+            toolbar: { show: false }
+          },
+          plotOptions: {
+            bar: {
+              borderRadius: 4,
+              distributed: false
+            }
+          },
+          dataLabels: {
+            enabled: false
+          },
+          xaxis: {
+            categories: bucketLabels,
+            labels: {
+              rotate: -45
+            }
+          },
+          yaxis: {
+            title: { text: 'Number of Transactions' }
+          },
+          colors: ['#206bc4']
+        };
+
+        if (charts.priceDist) charts.priceDist.destroy();
+        charts.priceDist = new ApexCharts(document.querySelector("#priceDistChart"), options);
+        charts.priceDist.render();
+      }
+
+      // Create revenue by price range chart
+      function createRevenueChart() {
+        const priceGroups = {};
+        
+        filteredData.forEach(row => {
+          const price = parseFloat(row['Sales price']) || 0;
+          const qty = parseInt(row.InvoiceQuantity) || 0;
+          const revenue = price * qty;
+          
+          let range;
+          if (price < 100) range = 'Under $100';
+          else if (price < 250) range = '$100-$250';
+          else if (price < 500) range = '$250-$500';
+          else if (price < 1000) range = '$500-$1000';
+          else range = 'Over $1000';
+          
+          priceGroups[range] = (priceGroups[range] || 0) + revenue;
+        });
+
+        const ranges = ['Under $100', '$100-$250', '$250-$500', '$500-$1000', 'Over $1000'];
+        const revenues = ranges.map(r => priceGroups[r] || 0);
+
+        const options = {
+          series: [{
+            name: 'Revenue',
+            data: revenues
+          }],
+          chart: {
+            type: 'bar',
+            height: 300,
+            toolbar: { show: false }
+          },
+          plotOptions: {
+            bar: {
+              borderRadius: 4,
+              horizontal: true
+            }
+          },
+          dataLabels: {
+            enabled: true,
+            formatter: function(val) {
+              return '$' + (val / 1000).toFixed(2) + 'K';
+            }
+          },
+          xaxis: {
+            categories: ranges,
+            labels: {
+              formatter: function(val) {
+                return '$' + (val / 1000).toFixed(2) + 'K';
+              }
+            }
+          },
+          tooltip: {
+            y: {
+              formatter: function(val) {
+                return '$' + val.toFixed(2);
+              }
+            }
+          },
+          colors: ['#2fb344']
+        };
+
+        if (charts.revenue) charts.revenue.destroy();
+        charts.revenue = new ApexCharts(document.querySelector("#revenueChart"), options);
+        charts.revenue.render();
+      }
+
+      // Create timeline chart
+      function createTimelineChart() {
+        const monthlyData = {};
+        
+        filteredData.forEach(row => {
+          const date = new Date(row.Date);
+          const monthKey = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
+          const qty = parseInt(row.InvoiceQuantity) || 0;
+          const price = parseFloat(row['Sales price']) || 0;
+          
+          if (!monthlyData[monthKey]) {
+            monthlyData[monthKey] = { volume: 0, revenue: 0, count: 0, totalPrice: 0 };
+          }
+          monthlyData[monthKey].volume += qty;
+          monthlyData[monthKey].revenue += price * qty;
+          monthlyData[monthKey].count++;
+          monthlyData[monthKey].totalPrice += price;
+        });
+
+        const sortedMonths = Object.keys(monthlyData).sort();
+        const volumes = sortedMonths.map(m => monthlyData[m].volume);
+        const avgPrices = sortedMonths.map(m => monthlyData[m].totalPrice / monthlyData[m].count);
+
+        const options = {
+          series: [{
+            name: 'Volume',
+            type: 'column',
+            data: volumes
+          }, {
+            name: 'Avg Price',
+            type: 'line',
+            data: avgPrices
+          }],
+          chart: {
+            height: 300,
+            type: 'line',
+            toolbar: { show: true }
+          },
+          stroke: {
+            width: [0, 3]
+          },
+          xaxis: {
+            categories: sortedMonths,
+            labels: {
+              rotate: -45
+            }
+          },
+          yaxis: [{
+            title: { text: 'Volume' },
+            labels: {
+              formatter: function(val) {
+                return Math.round(val);
+              }
+            }
+          }, {
+            opposite: true,
+            title: { text: 'Avg Price ($)' },
+            labels: {
+              formatter: function(val) {
+                return '$' + val.toFixed(0);
+              }
+            }
+          }],
+          colors: ['#206bc4', '#2fb344'],
+          legend: {
+            position: 'top'
+          }
+        };
+
+        if (charts.timeline) charts.timeline.destroy();
+        charts.timeline = new ApexCharts(document.querySelector("#timelineChart"), options);
+        charts.timeline.render();
+      }
+
+      // Generate pricing recommendations
+      function generateRecommendations() {
+        const prices = filteredData.map(d => parseFloat(d['Sales price']) || 0);
+        const quantities = filteredData.map(d => parseInt(d.InvoiceQuantity) || 0);
+        
+        const avgPrice = prices.reduce((a, b) => a + b, 0) / prices.length;
+        const totalVolume = quantities.reduce((a, b) => a + b, 0);
+        
+        // Calculate price-volume correlation
+        const priceGroups = {};
+        filteredData.forEach(row => {
+          const price = Math.round(parseFloat(row['Sales price']) || 0);
+          const qty = parseInt(row.InvoiceQuantity) || 0;
+          priceGroups[price] = (priceGroups[price] || 0) + qty;
+        });
+
+        const sortedPrices = Object.keys(priceGroups).map(Number).sort((a, b) => a - b);
+        const bestVolPrice = sortedPrices.reduce((a, b) => priceGroups[a] > priceGroups[b] ? a : b);
+        const bestRevPrice = sortedPrices.reduce((a, b) => {
+          const revA = a * priceGroups[a];
+          const revB = b * priceGroups[b];
+          return revA > revB ? a : b;
+        });
+
+        let html = '<div class="row g-3">';
+
+        // Recommendation 1: Volume
+        html += `
+          <div class="col-md-4">
+            <div class="alert alert-info mb-0">
+              <h4 class="alert-title">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon me-2"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline><polyline points="16 7 22 7 22 13"></polyline></svg>
+                Volume Maximization
+              </h4>
+              <div class="text-secondary">
+                Price at <strong>$${bestVolPrice}</strong> to maximize unit sales. 
+                This price point achieved <strong>${priceGroups[bestVolPrice]}</strong> units sold.
+              </div>
+            </div>
+          </div>`;
+
+        // Recommendation 2: Revenue
+        html += `
+          <div class="col-md-4">
+            <div class="alert alert-success mb-0">
+              <h4 class="alert-title">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon me-2"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                Revenue Maximization
+              </h4>
+              <div class="text-secondary">
+                Price at <strong>$${bestRevPrice}</strong> to maximize total revenue. 
+                This generates <strong>$${(bestRevPrice * priceGroups[bestRevPrice]).toLocaleString()}</strong> in revenue.
+              </div>
+            </div>
+          </div>`;
+
+        // Recommendation 3: Market position
+        const medianPrice = sortedPrices[Math.floor(sortedPrices.length / 2)];
+        html += `
+          <div class="col-md-4">
+            <div class="alert alert-warning mb-0">
+              <h4 class="alert-title">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon me-2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                Market Positioning
+              </h4>
+              <div class="text-secondary">
+                Current average price is <strong>$${avgPrice.toFixed(2)}</strong>. 
+                Median market price is <strong>$${medianPrice}</strong>. 
+                ${avgPrice > medianPrice ? 'Consider premium positioning.' : 'Opportunity for price increase.'}
+              </div>
+            </div>
+          </div>`;
+
+        html += '</div>';
+
+        // Add elasticity insight
+        const priceRange = Math.max(...sortedPrices) - Math.min(...sortedPrices);
+        const volVariance = Math.max(...Object.values(priceGroups)) - Math.min(...Object.values(priceGroups));
+        const elasticity = volVariance / priceRange;
+
+        html += `
+          <div class="alert alert-primary mt-3">
+            <h4 class="alert-title">Price Elasticity Insight</h4>
+            <p class="mb-0">
+              ${elasticity > 5 ? 
+                `This product shows <strong>high price sensitivity</strong>. Small price changes significantly impact volume. Consider competitive pricing strategies.` :
+                elasticity > 2 ?
+                `This product shows <strong>moderate price sensitivity</strong>. Price changes have a noticeable impact on demand.` :
+                `This product shows <strong>low price sensitivity</strong>. Customers are less responsive to price changes - premium pricing may be viable.`
+              }
+            </p>
+          </div>`;
+
+        document.getElementById('recommendations').innerHTML = html;
+      }
+
+      // Initialize
+      document.addEventListener('DOMContentLoaded', function() {
+        // Auto-load default data on page load
+        setTimeout(loadDefaultData, 500);
+        
+        // Initialize tooltips if bootstrap is available
+        if (typeof bootstrap !== 'undefined') {
+          var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+          var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl, {
+              placement: 'left',
+              trigger: 'hover focus'
+            });
+          });
+        }
+      });
+    </script>
+  </body>
+</html>

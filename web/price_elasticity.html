@@ -12,7 +12,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Product Analytics - Zendesk Analytics Portal</title>
+    <title>Price Elasticity Calculator - Zendesk Analytics Portal</title>
     <!-- BEGIN GLOBAL MANDATORY STYLES -->
     <link href="./original/dist/css/tabler.css?1747674014" rel="stylesheet" />
     <!-- END GLOBAL MANDATORY STYLES -->
@@ -155,7 +155,7 @@
                         <span class="nav-link-title"> Customer Experience </span>
                       </a>
                     </li>
-                    <li class="nav-item active">
+                    <li class="nav-item">
                       <a class="nav-link" href="product.html">
                         <span class="nav-link-icon d-md-none d-lg-inline-block">
                           <svg
@@ -180,7 +180,7 @@
                         <span class="nav-link-title"> Product </span>
                       </a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item active">
                       <a class="nav-link" href="finance.html">
                         <span class="nav-link-icon d-md-none d-lg-inline-block">
                           <svg
@@ -217,8 +217,18 @@
           <div class="container-xl">
             <div class="row g-2 align-items-center">
               <div class="col">
-                <h2 class="page-title">Product Analytics.</h2>
-                <div class="text-secondary mt-1">Product performance insights and feature usage analytics</div>
+                <h2 class="page-title">Price Elasticity Calculator</h2>
+                <div class="text-secondary mt-1">Calculate price elasticity of demand and analyze pricing strategies</div>
+              </div>
+              <div class="col-auto ms-auto d-flex gap-2">
+                <a href="finance.html" class="btn btn-outline-secondary">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon me-1">
+                    <path d="M5 12l14 0"></path>
+                    <path d="M5 12l6 6"></path>
+                    <path d="M5 12l6 -6"></path>
+                  </svg>
+                  Back to Finance
+                </a>
               </div>
             </div>
           </div>
@@ -227,55 +237,108 @@
         <!-- BEGIN PAGE BODY -->
         <div class="page-body">
           <div class="container-xl">
-            <div class="row g-4 justify-content-center">
-              <div class="col-md-8 col-lg-6">
+            <div class="row g-4">
+              <!-- Calculator Card -->
+              <div class="col-lg-6">
                 <div class="card">
-                  <div class="card-body text-center py-5">
-                    <div class="mb-3">
-                      <span class="avatar avatar-xl bg-green-lt">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="48"
-                          height="48"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          stroke-width="1.5"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          class="icon icon-1"
-                        >
-                          <path d="M12 3l8 4.5l0 9l-8 4.5l-8 -4.5l0 -9l8 -4.5" />
-                          <path d="M12 12l8 -4.5" />
-                          <path d="M12 12l0 9" />
-                          <path d="M12 12l-8 -4.5" />
-                          <path d="M16 5.25l-8 4.5" />
-                        </svg>
-                      </span>
+                  <div class="card-header">
+                    <h3 class="card-title">Price Elasticity Calculator</h3>
+                  </div>
+                  <div class="card-body">
+                    <form id="elasticity-form">
+                      <div class="mb-3">
+                        <label class="form-label required">Initial Price ($)</label>
+                        <input type="number" class="form-control" id="initial-price" step="0.01" placeholder="100.00" required>
+                      </div>
+                      <div class="mb-3">
+                        <label class="form-label required">New Price ($)</label>
+                        <input type="number" class="form-control" id="new-price" step="0.01" placeholder="110.00" required>
+                      </div>
+                      <div class="mb-3">
+                        <label class="form-label required">Initial Quantity Sold</label>
+                        <input type="number" class="form-control" id="initial-quantity" placeholder="1000" required>
+                      </div>
+                      <div class="mb-3">
+                        <label class="form-label required">New Quantity Sold</label>
+                        <input type="number" class="form-control" id="new-quantity" placeholder="900" required>
+                      </div>
+                      <button type="submit" class="btn btn-primary w-100">Calculate Elasticity</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Results Card -->
+              <div class="col-lg-6">
+                <div class="card" id="results-card" style="display: none;">
+                  <div class="card-header">
+                    <h3 class="card-title">Results</h3>
+                  </div>
+                  <div class="card-body">
+                    <div class="row g-3 mb-3">
+                      <div class="col-12">
+                        <div class="card card-sm bg-primary-lt">
+                          <div class="card-body text-center">
+                            <div class="text-muted mb-1">Price Elasticity of Demand</div>
+                            <div class="h1 mb-0" id="elasticity-value">-</div>
+                            <div class="mt-2">
+                              <span class="badge" id="elasticity-type">-</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                    <h3 class="card-title">Product Analytics</h3>
-                    <p class="text-secondary">This section is currently under development.</p>
-                    <p class="text-secondary">Product analytics, feature usage metrics, and development insights will be available here soon.</p>
-                    <div class="mt-4">
-                      <a href="index.html" class="btn btn-primary">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="24"
-                          height="24"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          stroke-width="2"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          class="icon icon-2 me-2"
-                        >
-                          <path d="M5 12l-2 0l9 -9l9 9l-2 0" />
-                          <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
-                          <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
-                        </svg>
-                        Back to Portal
-                      </a>
+
+                    <div class="datagrid">
+                      <div class="datagrid-item">
+                        <div class="datagrid-title">% Change in Price</div>
+                        <div class="datagrid-content" id="price-change-percent">-</div>
+                      </div>
+                      <div class="datagrid-item">
+                        <div class="datagrid-title">% Change in Quantity</div>
+                        <div class="datagrid-content" id="quantity-change-percent">-</div>
+                      </div>
+                      <div class="datagrid-item">
+                        <div class="datagrid-title">Initial Revenue</div>
+                        <div class="datagrid-content" id="initial-revenue">-</div>
+                      </div>
+                      <div class="datagrid-item">
+                        <div class="datagrid-title">New Revenue</div>
+                        <div class="datagrid-content" id="new-revenue">-</div>
+                      </div>
+                      <div class="datagrid-item">
+                        <div class="datagrid-title">Revenue Change</div>
+                        <div class="datagrid-content" id="revenue-change">-</div>
+                      </div>
+                    </div>
+
+                    <div class="alert alert-info mt-3" id="interpretation">
+                      <h4 class="alert-title">Interpretation</h4>
+                      <div id="interpretation-text">Enter values to see interpretation</div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Info Card -->
+                <div class="card mt-4" id="info-card">
+                  <div class="card-header">
+                    <h3 class="card-title">About Price Elasticity</h3>
+                  </div>
+                  <div class="card-body">
+                    <p><strong>Price Elasticity of Demand (PED)</strong> measures how responsive the quantity demanded is to a change in price.</p>
+                    <div class="mt-3">
+                      <h4 class="mb-2">Formula:</h4>
+                      <p class="text-center"><code>PED = (% Change in Quantity) / (% Change in Price)</code></p>
+                    </div>
+                    <div class="mt-3">
+                      <h4 class="mb-2">Types:</h4>
+                      <ul>
+                        <li><strong>Elastic (|PED| > 1)</strong>: Demand is sensitive to price changes</li>
+                        <li><strong>Inelastic (|PED| < 1)</strong>: Demand is not very sensitive to price changes</li>
+                        <li><strong>Unit Elastic (|PED| = 1)</strong>: Proportional change in demand and price</li>
+                        <li><strong>Perfectly Inelastic (PED = 0)</strong>: Demand doesn't change with price</li>
+                        <li><strong>Perfectly Elastic (PED = ∞)</strong>: Any price change causes infinite demand change</li>
+                      </ul>
                     </div>
                   </div>
                 </div>
@@ -291,7 +354,7 @@
               <div class="col-lg-auto ms-lg-auto">
                 <ul class="list-inline list-inline-dots mb-0">
                   <li class="list-inline-item"><a href="cx.html" class="link-secondary" rel="noopener">Customer Experience</a></li>
-                  <li class="list-inline-item"><a href="finance.html" class="link-secondary">Finance</a></li>
+                  <li class="list-inline-item"><a href="product.html" class="link-secondary">Product</a></li>
                   <li class="list-inline-item">
                     <a href="#" class="link-secondary">
                       <svg
@@ -336,5 +399,79 @@
     <!-- BEGIN DEMO SCRIPTS -->
     <script src="./original/preview/js/demo.min.js?1747674014" defer></script>
     <!-- END DEMO SCRIPTS -->
+    
+    <!-- Price Elasticity Calculator Script -->
+    <script>
+      document.getElementById('elasticity-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Get input values
+        const initialPrice = parseFloat(document.getElementById('initial-price').value);
+        const newPrice = parseFloat(document.getElementById('new-price').value);
+        const initialQuantity = parseFloat(document.getElementById('initial-quantity').value);
+        const newQuantity = parseFloat(document.getElementById('new-quantity').value);
+        
+        // Calculate percentage changes
+        const priceChange = ((newPrice - initialPrice) / initialPrice) * 100;
+        const quantityChange = ((newQuantity - initialQuantity) / initialQuantity) * 100;
+        
+        // Calculate price elasticity
+        const elasticity = quantityChange / priceChange;
+        const absElasticity = Math.abs(elasticity);
+        
+        // Calculate revenues
+        const initialRevenue = initialPrice * initialQuantity;
+        const newRevenue = newPrice * newQuantity;
+        const revenueChange = newRevenue - initialRevenue;
+        const revenueChangePercent = ((revenueChange / initialRevenue) * 100);
+        
+        // Determine elasticity type
+        let elasticityType, elasticityClass, interpretation;
+        
+        if (absElasticity > 1) {
+          elasticityType = 'Elastic Demand';
+          elasticityClass = 'bg-danger-lt';
+          interpretation = 'The demand is <strong>elastic</strong>. Customers are highly responsive to price changes. A price increase will significantly reduce quantity demanded and may decrease total revenue. Consider lowering prices to increase revenue.';
+        } else if (absElasticity < 1 && absElasticity > 0) {
+          elasticityType = 'Inelastic Demand';
+          elasticityClass = 'bg-success-lt';
+          interpretation = 'The demand is <strong>inelastic</strong>. Customers are not very responsive to price changes. A price increase will result in a smaller decrease in quantity demanded, potentially increasing total revenue. You have pricing power.';
+        } else if (absElasticity === 1) {
+          elasticityType = 'Unit Elastic';
+          elasticityClass = 'bg-warning-lt';
+          interpretation = 'The demand is <strong>unit elastic</strong>. The percentage change in quantity demanded equals the percentage change in price. Total revenue remains relatively stable with price changes.';
+        } else if (elasticity === 0) {
+          elasticityType = 'Perfectly Inelastic';
+          elasticityClass = 'bg-info-lt';
+          interpretation = 'The demand is <strong>perfectly inelastic</strong>. Quantity demanded does not change regardless of price. This is rare but can occur with essential goods with no substitutes.';
+        } else {
+          elasticityType = 'Perfectly Elastic';
+          elasticityClass = 'bg-purple-lt';
+          interpretation = 'The demand is <strong>perfectly elastic</strong>. Any price change causes an infinite change in quantity demanded. This typically occurs in perfectly competitive markets.';
+        }
+        
+        // Display results
+        document.getElementById('results-card').style.display = 'block';
+        document.getElementById('info-card').style.display = 'none';
+        
+        document.getElementById('elasticity-value').textContent = elasticity.toFixed(2);
+        document.getElementById('elasticity-type').textContent = elasticityType;
+        document.getElementById('elasticity-type').className = 'badge ' + elasticityClass;
+        
+        document.getElementById('price-change-percent').textContent = priceChange.toFixed(2) + '%';
+        document.getElementById('quantity-change-percent').textContent = quantityChange.toFixed(2) + '%';
+        document.getElementById('initial-revenue').textContent = '$' + initialRevenue.toLocaleString('en-US', {minimumFractionDigits: 2});
+        document.getElementById('new-revenue').textContent = '$' + newRevenue.toLocaleString('en-US', {minimumFractionDigits: 2});
+        
+        const revenueChangeText = (revenueChange >= 0 ? '+' : '') + '$' + revenueChange.toLocaleString('en-US', {minimumFractionDigits: 2}) + 
+                                   ' (' + (revenueChange >= 0 ? '+' : '') + revenueChangePercent.toFixed(2) + '%)';
+        document.getElementById('revenue-change').innerHTML = '<span class="text-' + (revenueChange >= 0 ? 'success' : 'danger') + '">' + revenueChangeText + '</span>';
+        
+        document.getElementById('interpretation-text').innerHTML = interpretation;
+        
+        // Scroll to results
+        document.getElementById('results-card').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      });
+    </script>
   </body>
 </html>

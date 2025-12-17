@@ -1,7 +1,8 @@
-require('dotenv').config();
+require('dotenv').config({ path: './web/.env' });
 const http = require('http');
 const fs = require('fs');
 const path = require('path');
+const { Client } = require('pg');
 const { generateChatReply } = require('./src/services/gptResponder');
 const CallAnalyticsService = require('./src/services/CallAnalyticsService');
 const TicketAnalyticsService = require('./src/services/TicketAnalyticsService');
@@ -1323,6 +1324,134 @@ async function handleComprehensiveVoiceAnalyticsRequest(req, res) {
   }
 }
 
+// Handle database status request
+async function handleDatabaseStatusRequest(req, res) {
+  console.log('🗄️ Database status check request');
+  
+  const client = new Client({
+    host: process.env.DB_HOST,
+    port: process.env.DB_PORT,
+    database: process.env.DB_NAME,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+  });
+
+  const status = {
+    success: false,
+    connection: {
+      host: process.env.DB_HOST,
+      port: process.env.DB_PORT,
+      database: process.env.DB_NAME,
+      user: process.env.DB_USER,
+      version: null
+    },
+    permissions: {
+      all_passed: false,
+      tests: {
+        create: { success: false, error: null },
+        insert: { success: false, error: null },
+        select: { success: false, error: null },
+        update: { success: false, error: null },
+        delete: { success: false, error: null },
+        drop: { success: false, error: null }
+      }
+    }
+  };
+
+  try {
+    console.log('  📡 Connecting to PostgreSQL...');
+    await client.connect();
+    console.log('  ✅ Connected successfully');
+    
+    // Get database version
+    const versionResult = await client.query('SELECT version()');
+    status.connection.version = versionResult.rows[0].version.split(' ').slice(0, 2).join(' ');
+    console.log('  📊 Version:', status.connection.version);
+    
+    // Test CREATE TABLE permission
+    try {
+      await client.query('CREATE TABLE IF NOT EXISTS test_permissions_check (id SERIAL PRIMARY KEY, name VARCHAR(100), created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP)');
+      status.permissions.tests.create.success = true;
+      console.log('  ✅ CREATE TABLE - Success');
+    } catch (error) {
+      status.permissions.tests.create.error = error.message;
+      console.log('  ❌ CREATE TABLE - Failed:', error.message);
+    }
+
+    // Test INSERT permission
+    try {
+      await client.query("INSERT INTO test_permissions_check (name) VALUES ('test_row_' || NOW())");
+      status.permissions.tests.insert.success = true;
+      console.log('  ✅ INSERT - Success');
+    } catch (error) {
+      status.permissions.tests.insert.error = error.message;
+      console.log('  ❌ INSERT - Failed:', error.message);
+    }
+
+    // Test SELECT permission
+    try {
+      await client.query('SELECT * FROM test_permissions_check LIMIT 1');
+      status.permissions.tests.select.success = true;
+      console.log('  ✅ SELECT - Success');
+    } catch (error) {
+      status.permissions.tests.select.error = error.message;
+      console.log('  ❌ SELECT - Failed:', error.message);
+    }
+
+    // Test UPDATE permission
+    try {
+      await client.query("UPDATE test_permissions_check SET name = 'updated_' || NOW() WHERE name LIKE 'test_row_%' LIMIT 1");
+      status.permissions.tests.update.success = true;
+      console.log('  ✅ UPDATE - Success');
+    } catch (error) {
+      status.permissions.tests.update.error = error.message;
+      console.log('  ❌ UPDATE - Failed:', error.message);
+    }
+
+    // Test DELETE permission
+    try {
+      await client.query("DELETE FROM test_permissions_check WHERE name LIKE 'test_row_%' OR name LIKE 'updated_%'");
+      status.permissions.tests.delete.success = true;
+      console.log('  ✅ DELETE - Success');
+    } catch (error) {
+      status.permissions.tests.delete.error = error.message;
+      console.log('  ❌ DELETE - Failed:', error.message);
+    }
+
+    // Test DROP TABLE permission
+    try {
+      await client.query('DROP TABLE IF EXISTS test_permissions_check');
+      status.permissions.tests.drop.success = true;
+      console.log('  ✅ DROP TABLE - Success');
+    } catch (error) {
+      status.permissions.tests.drop.error = error.message;
+      console.log('  ❌ DROP TABLE - Failed:', error.message);
+    }
+
+    // Check if all permissions passed
+    status.permissions.all_passed = Object.values(status.permissions.tests).every(test => test.success);
+    status.success = true;
+    
+    console.log('  🎉 Database status check completed');
+    sendJson(res, 200, status);
+
+  } catch (error) {
+    console.error('  ❌ Database connection error:', error.message);
+    sendJson(res, 500, {
+      success: false,
+      error: error.message,
+      connection: status.connection
+    });
+  } finally {
+    try {
+      await client.end();
+      console.log('  🔌 Connection closed');
+    } catch (err) {
+      console.error('  ⚠️ Error closing connection:', err.message);
+    }
+  }
+}
+
 const server = http.createServer((req, res) => {
   console.log(`${req.method} ${req.url}`);
   console.log('🔍 Debug - Full URL:', req.url);
@@ -1338,6 +1467,25 @@ const server = http.createServer((req, res) => {
       mode: 'real-time'
     });
     return;
+  }
+
+  // Database status endpoint
+  if (req.url === '/api/database/status') {
+    console.log('🗄️ Database status request');
+    if (req.method === 'OPTIONS') {
+      res.writeHead(200, {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+        'Access-Control-Allow-Methods': 'GET, OPTIONS'
+      });
+      res.end();
+      return;
+    }
+    
+    if (req.method === 'GET') {
+      handleDatabaseStatusRequest(req, res);
+      return;
+    }
   }
 
   // Today's calls endpoint - using incremental API
